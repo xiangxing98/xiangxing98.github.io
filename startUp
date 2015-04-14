@@ -1,0 +1,3 @@
+git clone https://github.com/xiangxing98/xiangxing98.github.io.git
+#删除目录
+rm -rf filenem
