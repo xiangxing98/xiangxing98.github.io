@@ -61,7 +61,23 @@ $ git checkout gh-pages
 
 <h4><a href="DailyDiary20160216.html">DailyDiary20160216.html</a></h4>
 <h4><a href="https://github.com/xiangxing98/">https://github.com/xiangxing98/</a></h4>
-<p>Just test branch</p>
+<code>
+	#Draw Plot
+	par(mfrow=c(2,2))
+	curve(x^2-5*x+2, from=-10, to=10)	#画二次函数图像
+	curve(x^3-3*x^2+7*x, from=-10, to=10)	#画三次函数图像
+	curve(7*x, from=-3, to=3)	#画指数函数图像
+	curve(log10(x), from=10, to=100)	#画10为底的对数函数图像
+	par(mfrow=c(1,1))
+
+	#important 
+	mtcars$car <- rownames(mtcars) #列的名称转换为单独的一列
+	mtcars <- mtcars[, c(12, 1:11)] #把列名换到第一列
+</code>
+
+<p>
+<img src="images/R-Curve-Plot.png" width="572" height="571" border="0" alt="R-Curve-Plot">
+</p>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
