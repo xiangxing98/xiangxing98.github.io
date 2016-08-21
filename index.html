@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>侯祥胡-Stone_Hou's Github Space-Updated 2016/02/28</title>
+    <title>侯祥胡-Stone_Hou's Github Space-Updated 2016/08/13</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -31,11 +31,12 @@
 <a id="welcome-to-xiangxing98-github-pages" class="anchor" href="#welcome-to-xiangxing98-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Xiangxing98 GitHub Pages.</h3>
 
 <p>2015-04-14 19:20 stone hou, hello, github and world.</p>
-<p>2016-04-16 update</p>
+<p>2016-08-13 update and add linkedin information</p>
 
-<p>I'm Stone_Hou,侯祥胡 a process engineer in PVD section, thim film department of <a href="http://www.smics.com">SMIC</a>(beijing).I Edit this page via HUAWEI T9501 D2,and PUSH this to github via SGit.</p>
+<p>I'm Stone_Hou,侯祥胡 a process engineer in PVD section, 4.7 years working experiencein  thim film department of <a href="http://www.smics.com">SMIC</a>(beijing).</p>
+<p><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>I Edit this page via HUAWEI T9501 D2,and PUSH this to github via SGit in 2015-04-13.</p>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
@@ -51,13 +52,32 @@ $ git checkout gh-pages
   <li>SQL</li>
   <li>Python</li>
   <li>VBA</li>
-  <li>Data Visualization</li>
+  <li>Data Analysis & Data Visualization</li>
   <li>DOE</li>
   <li>Git & Programming, Data Structure</li>
+  <li>Update linkedin pages and working experience</li>
+  <li>PVD patent and newest papers, find ways to solving belljar peeling particle</li>
 </ol>
 
 <h4><a href="DailyDiary20160216.html">DailyDiary20160216.html</a></h4>
 <h4><a href="https://github.com/xiangxing98/">https://github.com/xiangxing98/</a></h4>
+<code>
+	#Draw Plot
+	par(mfrow=c(2,2))
+	curve(x^2-5*x+2, from=-10, to=10)	#画二次函数图像
+	curve(x^3-3*x^2+7*x, from=-10, to=10)	#画三次函数图像
+	curve(7*x, from=-3, to=3)	#画指数函数图像
+	curve(log10(x), from=10, to=100)	#画10为底的对数函数图像
+	par(mfrow=c(1,1))
+
+	#important 
+	mtcars$car <- rownames(mtcars) #列的名称转换为单独的一列
+	mtcars <- mtcars[, c(12, 1:11)] #把列名换到第一列
+</code>
+
+<p>
+<img src="images/R-Curve-Plot.png" width="572" height="571" border="0" alt="R-Curve-Plot">
+</p>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
