@@ -6,6 +6,9 @@ hello github
 
 This is [Data camp](http://www.datacamp.com "Data camp") inline link.
 
+This is [侯祥胡的Git Pages](https://xiangxing98.github.io "侯祥胡的Git Pages") link.
+
+
 This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xiangxing98") inline link.
 
 Data Camp
