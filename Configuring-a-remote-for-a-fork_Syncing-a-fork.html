@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Configuring-a-remote-for-a-fork_Syncing-a-fork</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<h1>Configuring a remote for a fork and Syncing a fork</h1>
+
+	<p><a href="https://help.github.com/articles/configuring-a-remote-for-a-fork/" title="configuring-a-remote-for-a-fork">configuring-a-remote-for-a-fork</a></p>
+	<p><a href="https://help.github.com/articles/syncing-a-fork/" title="syncing-a-fork">configuring-a-remote-for-a-fork</a></p>
+	<p>上面两个链接是GitHub官方的帮助文档中关于fork同步的说明。</p>
+
+	<h2>1. 给fork配置远程库</h2>
+	<pre>
+		<code>
+			# use git remote check remote status
+			# 使用git remote -v查看远程状态
+			git remote -v 
+			# Add remote upstream for syncing to your fork
+			# 确定一个将被同步给 fork 远程的上游仓库 
+			git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+			# 再次使用git remote -v查看远程状态，确认是否配置成功。
+			git remote -v 
+		</code>
+	</pre>
+
+	<h2>2. 同步fork</h2>
+	<pre>
+		<code>
+			# 从上游仓库 fetch 分支和提交点，提交给本地 master，
+			# 并会被存储在一个本地分支 upstream/master 
+			git fetch upstream
+			# 切换到本地主分支(如果不在的话) 
+			git checkout master
+			# 把 upstream/master 分支合并到本地 master 上，
+			# 这样就完成了同步，并且不会丢掉本地修改的内容。 
+			git merge upstream/master
+			# 如果想更新到 GitHub 的 fork 上，直接git push origin master就好了
+			git push origin master
+		</code>
+	</pre>
+</body>
+</html>
