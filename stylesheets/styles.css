@@ -257,7 +257,7 @@ pre {
   margin: 0 -20px 20px;
 }
 
-pre .gitcode{
+.gitcode{
   margin: 0;	
 }
 pre code {
