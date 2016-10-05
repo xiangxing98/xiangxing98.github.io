@@ -20,3 +20,26 @@ This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xia
 Data Camp
 Improve your skills - and your career
 No matter what industry you’re in, learning how to analyze and understand your data is critical. That’s why DataCamp provides you with the tools to learn the data science skills you need to start your own data projects.
+
+## git CODE
+``` GIT 
+echo "# learn-centos" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/xiangxing98/learn-centos.git
+git push -u origin master
+
+#SSH
+echo "# learn-centos" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:xiangxing98/learn-centos.git
+git push -u origin master
+
+git clone git@github.com:xiangxing98/learn-centos.git learn-centos
+git add .
+git commit -m "comment here about what your have done"
+git push -u origin master
+```
