@@ -4,10 +4,7 @@
 
 hello github
 
-This is [Data camp](http://www.datacamp.com "Data camp") inline link.
-
 This is [侯祥胡的Git Pages](https://xiangxing98.github.io "侯祥胡的Git Pages") link.
-
 
 This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xiangxing98") inline link.
 
@@ -17,9 +14,14 @@ This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xia
 
 <h4><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></h4>
 
-Data Camp
-Improve your skills - and your career
-No matter what industry you’re in, learning how to analyze and understand your data is critical. That’s why DataCamp provides you with the tools to learn the data science skills you need to start your own data projects.
+## Data Camp - data science
+This is [Data camp](http://www.datacamp.com "Data camp") inline link.
+- Improve your skills - and your career
+- No matter what industry you’re in, learning how to analyze and understand your data is critical. 
+- That’s why DataCamp provides you with the tools to learn the data science skills you need to start your own data projects.
+
+## R Tutorials
+[R Tutorials](https://www.tutorialspoint.com/r/index.htm "R Tutorials")
 
 ## git CODE
 ``` GIT 
