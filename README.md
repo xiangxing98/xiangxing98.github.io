@@ -14,6 +14,8 @@ This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xia
 
 <h4><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></h4>
 
+<h4><a href="https://xiangxing98.github.io/Git_CheatSheet">Git_CheatSheet</a></h4>
+
 ## Data Camp - data science
 This is [Data camp](http://www.datacamp.com "Data camp") inline link.
 - Improve your skills - and your career
