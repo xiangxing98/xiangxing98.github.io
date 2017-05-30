@@ -13,21 +13,17 @@
     <![endif]-->
   </head>
   <body>
-    <div class="wrapper">
+    <div class="wrapper wrapper1024">
 
-      <header>
+      <div>
         <h1>Xiangxing98.GitHub.io </h1>
-        <p>Hello github, i'm comming, hope it's not too late.</p>
-        <p><a href="xiangxing98.github.io">xiangxing98@github</a></p>
-        <p class="view"><a href="https://github.com/xiangxing98">View the Project on GitHub <small>xiangxing98</small></a></p>
-        <ul>
-          <li class="single"><a href="https://github.com/xiangxing98/xiangxing98.github.io">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
+        <p>Hello github, i'm comming, hope it's not too late. <a href="xiangxing98.github.io">xiangxing98@github</a></p>
+        <p class="view"><a href="https://github.com/xiangxing98">View the Project on GitHub <small>xiangxing98</small></a>  <a href="https://github.com/xiangxing98/xiangxing98.github.io">View On <strong>GitHub</strong></a></p>
+      </div>
 
       <img id="header_Avatar" src="images/Avatar.png" border=0 alt="Stone_Hou Avatar" title="Stone_Hou"/ >
+
       <section>
-        
         <hr>
         <h3>
         <a id="welcome-to-xiangxing98-github-pages" class="anchor" href="#welcome-to-xiangxing98-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Xiangxing98 GitHub Pages.</h3>
@@ -36,22 +32,20 @@
         <p>2017-05-06 update r learning progress.</p>
         <p>I'm Stone_Hou,侯祥胡 a process engineer in PVD section, 4.7 years working experiencein  thim film department of <a href="http://www.smics.com">SMIC</a>(beijing).</p>
         <p><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></p>
-        <p>I Edit this page via HUAWEI T9501 D2,and PUSH this to github via SGit in 2015-04-13.</p>
-        <pre><code>$ cd your_repo_root/repo_name
-        $ git fetch origin
-        $ git checkout gh-pages
-        </code></pre>
+        <p>I Edit this page via HUAWEI T9501 D2,and PUSH this to github via SGit in 2015-04-13. 2017-05-30 updated.</p>
 
         <hr>
-        <h3>2017 Self Improvement/Lifelong Learning Progress</h3>
+        <h3>2017 Self Improvement/Lifelong Learning Progress--Git Learning</h3>
+        <ol> 
+          <li><a href="GitLearning\001-Git_Note_Advanced">2017-05-30 GIT: Git_Note_Advanced-tag/branch/conflict/ignore</a></li>          
+          <li><a href="GitLearning\Create-a-new-branch-with-git-and-manage-branches">2017-05-30 GIT: Create-a-new-branch-with-git-and-manage-branches</a></li>
+          <li><a href="GitLearning\Configuring_a_Remote_for_a_Forked_Repository_And_Synchronization">2017-05 GIT: 如何更新自己Fork的代码-全面版</a></li> 
+          <li><a href="GitLearning\Update_Forked_Project_in_Github">2017-05 GIT: 如何更新自己Fork的代码-简洁版</a></li>
+          <li><a href="GitLearning\Git_CheatSheet">2017-05 GIT: Git_CheatSheet</a></li>
+        </ol>
+
+        <h3>2017 Self Improvement/Lifelong Learning Progress--R/Data Science Learning</h3>
         <ol>
-          <li><a href="GitLearning\001-Git_Note_Advanced">2017-05-30 Git_Note_Advanced-tag/branch/conflict/ignore</a></li>          
-          <li><a href="Create-a-new-branch-with-git-and-manage-branches">2017-05-30 GIT: Create-a-new-branch-with-git-and-manage-branches</a></li>
-          <li><a href="Configuring-a-remote-for-a-fork_Syncing-a-fork.html">2017-05 GIT: Configuring-a-remote-for-a-fork_Syncing-a-fork.html</a></li>   
-          <li><a href="Git_CheatSheet">2017-05 GIT: Git_CheatSheet</a></li>
-          <li><a href="Update_Forked_Project_in_Github">2017-05 GIT: Update_Forked_Project_in_Github</a></li>
-          
-          <hr>
           <li><a href="Working_As_Data_Scientists">2017-05 Other: Working_As_Data_Scientists</a></li> 
           <li><a href="Collections/How_to_Find__Good_Software_and_App">2017/05/30 Other: How to Find good software and App,plus good tools for scholar writring.</a></li>
           <li><a href="free-introduction-to-r.html">free-introduction-to-r from datacamp.com</a></li>
@@ -93,21 +87,23 @@
           <li>3D Sketchup for IKEA like bookshelf,IKEA like bookcase</li>
         </ol>
 
-<pre>
-#Draw Plot
-par(mfrow=c(2,2))
-curve(x^2-5*x+2, from=-10, to=10)#画二次函数图像
-curve(x^3-3*x^2+7*x, from=-10, to=10)#画三次函数图像
-curve(7*x, from=-3, to=3)#画指数函数图像
-curve(log10(x), from=10, to=100)#画10为底的对数函数图像
-par(mfrow=c(1,1))
-#important 
-mtcars$car <- rownames(mtcars) #列的名称转换为单独的一列
-mtcars <- mtcars[, c(12, 1:11)] #把列名换到第一列
-</pre>
+    <pre>
+    #Draw Plot
+    par(mfrow=c(2,2))
+    curve(x^2-5*x+2, from=-10, to=10)#画二次函数图像
+    curve(x^3-3*x^2+7*x, from=-10, to=10)#画三次函数图像
+    curve(7*x, from=-3, to=3)#画指数函数图像
+    curve(log10(x), from=10, to=100)#画10为底的对数函数图像
+    par(mfrow=c(1,1))
+    #important 
+    mtcars$car <- rownames(mtcars) #列的名称转换为单独的一列
+    mtcars <- mtcars[, c(12, 1:11)] #把列名换到第一列
+    </pre>
         <p>
         <img src="images/R-Curve-Plot.png" width="572" height="571" border="0" alt="R-Curve-Plot">
         </p>
+
+        <h3>Below Nothing Update</h3>
         <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
         <h3>
         <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>

@@ -658,6 +658,7 @@ git:x:503:503::/home/git:/sbin/nologin
 4. [GitHub 帮助](http://help.github.com/)
 5. [图解 Git](http://marklodato.github.io/visual-git-guide/index-zh-cn.html)
 6. [菜鸟教程-网络技术-推荐](http://www.runoob.com/)
+7. [Pro Git（中文版）](http://git.oschina.net/progit/)
 
 ======
 
