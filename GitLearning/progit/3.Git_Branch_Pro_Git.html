@@ -1,0 +1,1008 @@
+
+<!-- saved from url=(0059)http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html -->
+<html slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>3 Git 分支 - Pro Git</title>
+    
+    <link href="./3.Git_Branch_Pro_Git_files/styles.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="./3.Git_Branch_Pro_Git_files/prettify.css" rel="stylesheet" type="text/css">
+    <script src="./3.Git_Branch_Pro_Git_files/prettify.js.下载" type="text/javascript"></script>
+    <script src="./3.Git_Branch_Pro_Git_files/prettify.js.下载" type="text/javascript"></script>
+    <script src="./3.Git_Branch_Pro_Git_files/jquery-1.8.3.min.js.下载" type="text/javascript"></script>
+    <script src="./3.Git_Branch_Pro_Git_files/book.js.下载" type="text/javascript"></script>
+</head>
+<body youdao="bind">
+<div id="book-chapters">
+<a class="right-home" href="http://git.oschina.net/" style="margin-left: 20px;">返回 码云</a>
+<a class="right-home" href="http://git.oschina.net/progit/index.html">首页(目录)</a>
+    <a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#">章节列表 ▾</a>
+    Pro Git（中文版）
+    <div class="dropdown-panel" id="chapters-dropdown">
+        <div class="three-column">
+            <div class="column-left">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html">1.起步</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.1-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">1.1
+                                    关于版本控制</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.2-Git-%E7%AE%80%E5%8F%B2">1.2 Git 简史</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.3-Git-%E5%9F%BA%E7%A1%80">1.3 Git 基础</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.4-%E5%AE%89%E8%A3%85-Git">1.4 安装 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.5-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C-Git-%E5%89%8D%E7%9A%84%E9%85%8D%E7%BD%AE">1.5
+                                    初次运行 Git 前的配置</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.6-%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9">1.6
+                                获取帮助</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.7-%E5%B0%8F%E7%BB%93">1.7 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html">2.Git 基础</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.1-%E5%8F%96%E5%BE%97%E9%A1%B9%E7%9B%AE%E7%9A%84-Git-%E4%BB%93%E5%BA%93">2.1
+                                    取得项目的 Git 仓库</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.2-%E8%AE%B0%E5%BD%95%E6%AF%8F%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%93%E5%BA%93">2.2
+                                    记录每次更新到仓库</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.3-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">2.3
+                                    查看提交历史</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.4-%E6%92%A4%E6%B6%88%E6%93%8D%E4%BD%9C">2.4
+                                撤消操作</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.5-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">2.5
+                                    远程仓库的使用</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.6-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 打标签</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.7-%E6%8A%80%E5%B7%A7%E5%92%8C%E7%AA%8D%E9%97%A8">2.7
+                                    技巧和窍门</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.8-%E5%B0%8F%E7%BB%93">2.8 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html">3.Git 分支</a></h2>
+                        <ol class="chapter_toc">
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.1-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">3.1
+                                何谓分支</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.2-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6">3.2
+                                    分支的新建与合并</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.3-%E5%88%86%E6%94%AF%E7%9A%84%E7%AE%A1%E7%90%86">3.3
+                                    分支的管理</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.4-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.4
+                                    利用分支进行开发的工作流程</a></li>
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.5-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">3.5
+                                远程分支</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.6-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">3.6
+                                    分支的衍合</a></li>
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.7-%E5%B0%8F%E7%BB%93">3.7 小结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+            <div class="column-middle">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html">4.服务器上的 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.1-%E5%8D%8F%E8%AE%AE">4.1
+                                    协议</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.2-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%83%A8%E7%BD%B2-Git">4.2
+                                    在服务器上部署 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.3-%E7%94%9F%E6%88%90-SSH-%E5%85%AC%E9%92%A5">4.3
+                                    生成 SSH 公钥</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.4-%E6%9E%B6%E8%AE%BE%E6%9C%8D%E5%8A%A1%E5%99%A8">4.4
+                                    架设服务器</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.5-%E5%85%AC%E5%85%B1%E8%AE%BF%E9%97%AE">4.5
+                                    公共访问</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.6-GitWeb">4.6
+                                GitWeb</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.7-Gitosis">4.7
+                                Gitosis</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.8-Gitolite">4.8
+                                Gitolite</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.9-Git-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">4.9
+                                    Git 守护进程</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.10-Git-%E6%89%98%E7%AE%A1%E6%9C%8D%E5%8A%A1">4.10
+                                    Git 托管服务</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.11-%E5%B0%8F%E7%BB%93">4.11
+                                    小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html">5.分布式 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">5.1
+                                    分布式工作流程</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.2-%E4%B8%BA%E9%A1%B9%E7%9B%AE%E4%BD%9C%E8%B4%A1%E7%8C%AE">5.2
+                                    为项目作贡献</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.3-%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86">5.3
+                                    项目的管理</a></li>
+                            <li><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.4-%E5%B0%8F%E7%BB%93">5.4 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html">6.Git 工具</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.1-%E4%BF%AE%E8%AE%A2%E7%89%88%E6%9C%AC%EF%BC%88Revision%EF%BC%89%E9%80%89%E6%8B%A9">6.1
+                                    修订版本（Revision）选择</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.2-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98">6.2
+                                    交互式暂存</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.3-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89">6.3
+                                    储藏（Stashing）</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.4-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2">6.4
+                                重写历史</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.5-%E4%BD%BF%E7%94%A8-Git-%E8%B0%83%E8%AF%95">6.5
+                                使用 Git 调试</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.6-%E5%AD%90%E6%A8%A1%E5%9D%97">6.6 子模块</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.7-%E5%AD%90%E6%A0%91%E5%90%88%E5%B9%B6">6.7
+                                子树合并</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.8-%E6%80%BB%E7%BB%93">6.8 总结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+            <div class="column-right">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html">7.自定义 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.1-%E9%85%8D%E7%BD%AE-Git">7.1 配置
+                                Git</a></li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.2-Git%E5%B1%9E%E6%80%A7">7.2 Git属性</a>
+                            </li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.3-Git%E6%8C%82%E9%92%A9">7.3 Git挂钩</a>
+                            </li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.4-Git-%E5%BC%BA%E5%88%B6%E7%AD%96%E7%95%A5%E5%AE%9E%E4%BE%8B">7.4
+                                    Git 强制策略实例</a></li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.5-%E6%80%BB%E7%BB%93">7.5 总结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html">8.Git 与其他系统</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.1-Git-%E4%B8%8E-Subversion">8.1
+                                    Git 与 Subversion</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.2-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">8.2
+                                    迁移到 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.3-%E6%80%BB%E7%BB%93">8.3
+                                    总结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html">9.Git 内部原理</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4-(Plumbing)-%E5%92%8C%E9%AB%98%E5%B1%82%E5%91%BD%E4%BB%A4-(Porcelain)">9.1
+                                    底层命令 (Plumbing) 和高层命令 (Porcelain)</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.2-Git-%E5%AF%B9%E8%B1%A1">9.2
+                                Git 对象</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.3-Git-References">9.3 Git
+                                References</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.4-Packfiles">9.4
+                                Packfiles</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.5-The-Refspec">9.5 The
+                                Refspec</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.6-%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE">9.6
+                                    传输协议</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.7-%E7%BB%B4%E6%8A%A4%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D">9.7
+                                    维护及数据恢复</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.8-%E6%80%BB%E7%BB%93">9.8
+                                总结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<h1>3 Git 分支</h1>
+<ol class="chapter_toc">
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.1-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">3.1 何谓分支</a></li>
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.2-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6">3.2 分支的新建与合并</a></li>
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.3-%E5%88%86%E6%94%AF%E7%9A%84%E7%AE%A1%E7%90%86">3.3 分支的管理</a></li>
+    <li>
+        <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.4-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.4
+            利用分支进行开发的工作流程</a></li>
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.5-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">3.5 远程分支</a></li>
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.6-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">3.6 分支的衍合</a></li>
+    <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.7-%E5%B0%8F%E7%BB%93">3.7 小结</a></li>
+</ol>
+
+<p>几乎每一种版本控制系统都以某种形式支持分支。使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。在很多版本控制系统中，这是个昂贵的过程，常常需要创建一个源代码目录的完整副本，对大型项目来说会花费很长时间。</p>
+
+<p>有人把 Git 的分支模型称为“必杀技特性”，而正是因为它，将 Git 从版本控制系统家族里区分出来。Git 有何特别之处呢？Git
+    的分支可谓是难以置信的轻量级，它的新建操作几乎可以在瞬间完成，并且在不同分支间切换起来也差不多一样快。和许多其他版本控制系统不同，Git
+    鼓励在工作流程中频繁使用分支与合并，哪怕一天之内进行许多次都没有关系。理解分支的概念并熟练运用后，你才会意识到为什么 Git 是一个如此强大而独特的工具，并从此真正改变你的开发方式。</p>
+
+<h2 id="3.1-何谓分支"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.1-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">3.1 何谓分支</a></h2>
+
+<p>为了理解 Git 分支的实现方式，我们需要回顾一下 Git 是如何储存数据的。或许你还记得第一章的内容，Git 保存的不是文件差异或者变化量，而只是一系列文件快照。</p>
+
+<p>在 Git
+    中提交时，会保存一个提交（commit）对象，该对象包含一个指向暂存内容快照的指针，包含本次提交的作者等相关附属信息，包含零个或多个指向该提交对象的父对象指针：首次提交是没有直接祖先的，普通提交有一个祖先，由两个或多个分支合并产生的提交则有多个祖先。</p>
+
+<p>为直观起见，我们假设在工作目录中有三个文件，准备将它们暂存后提交。暂存操作会对每一个文件计算校验和（即第一章中提到的 SHA-1 哈希字串），然后把当前版本的文件快照保存到 Git 仓库中（Git 使用 blob
+    类型的对象存储这些快照），并将校验和加入暂存区域：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git add README test</span><span class="pun">.</span><span class="pln">rb LICENSE
+    $ git commit </span><span class="pun">-</span><span class="pln">m </span><span class="str">'initial commit of my project'</span></code></pre>
+
+<p>当使用 <code>git commit</code> 新建一个提交对象前，Git 会先计算每一个子目录（本例中就是项目根目录）的校验和，然后在 Git 仓库中将这些目录保存为树（tree）对象。之后 Git
+    创建的提交对象，除了包含相关提交信息以外，还包含着指向这个树对象（项目根目录）的指针，如此它就可以在将来需要的时候，重现此次快照的内容了。</p>
+
+<p>现在，Git 仓库中有五个对象：三个表示文件快照内容的 blob 对象；一个记录着目录树内容及其中各个文件对应 blob 对象索引的 tree 对象；以及一个包含指向 tree 对象（根目录）的索引和其他提交信息元数据的 commit
+    对象。概念上来说，仓库中的各个对象保存的数据和相互关系看起来如图 3-1 所示：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0301-tn.png"></center>
+<br>
+图 3-1. 单个提交对象在仓库中的数据结构<p></p>
+
+<p>作些修改后再次提交，那么这次的提交对象会包含一个指向上次提交对象的指针（译注：即下图中的 parent 对象）。两次提交后，仓库历史会变成图 3-2 的样子：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0302-tn.png"></center>
+<br>
+图 3-2. 多个提交对象之间的链接关系<p></p>
+
+<p>现在来谈分支。Git 中的分支，其实本质上仅仅是个指向 commit 对象的可变指针。Git 会使用 master 作为分支的默认名字。在若干次提交后，你其实已经有了一个指向最后一次提交对象的 master
+    分支，它在每次提交的时候都会自动向前移动。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0303-tn.png"></center>
+<br>
+图 3-3. 分支其实就是从某个提交对象往回看的历史<p></p>
+
+<p>那么，Git 又是如何创建一个新的分支的呢？答案很简单，创建一个新的分支指针。比如新建一个 testing 分支，可以使用 <code>git branch</code> 命令：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch testing</span></code></pre>
+
+<p>这会在当前 commit 对象上新建一个分支指针（见图 3-4）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0304-tn.png"></center>
+<br>
+图 3-4. 多个分支指向提交数据的历史<p></p>
+
+<p>那么，Git 是如何知道你当前在哪个分支上工作的呢？其实答案也很简单，它保存着一个名为 HEAD 的特别指针。请注意它和你熟知的许多其他版本控制系统（比如 Subversion 或 CVS）里的 HEAD 概念大不相同。在 Git
+    中，它是一个指向你正在工作中的本地分支的指针（译注：将 HEAD 想象为当前分支的别名。）。运行 <code>git branch</code>
+    命令，仅仅是建立了一个新的分支，但不会自动切换到这个分支中去，所以在这个例子中，我们依然还在 master 分支里工作（参考图 3-5）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0305-tn.png"></center>
+<br>
+图 3-5. HEAD 指向当前所在的分支<p></p>
+
+<p>要切换到其他分支，可以执行 <code>git checkout</code> 命令。我们现在转换到新建的 testing 分支：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout testing</span></code></pre>
+
+<p>这样 HEAD 就指向了 testing 分支（见图3-6）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0306-tn.png"></center>
+<br>
+图 3-6. HEAD 在你转换分支时指向新的分支<p></p>
+
+<p>这样的实现方式会给我们带来什么好处呢？好吧，现在不妨再提交一次：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ vim test</span><span class="pun">.</span><span class="pln">rb
+    $ git commit </span><span class="pun">-</span><span class="pln">a </span><span class="pun">-</span><span class="pln">m </span><span class="str">'made a change'</span></code></pre>
+
+<p>图 3-7 展示了提交后的结果。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0307-tn.png"></center>
+<br>
+图 3-7. 每次提交后 HEAD 随着分支一起向前移动<p></p>
+
+<p>非常有趣，现在 testing 分支向前移动了一格，而 master 分支仍然指向原先 <code>git checkout</code> 时所在的 commit 对象。现在我们回到 master 分支看看：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master</span></code></pre>
+
+<p>图 3-8 显示了结果。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0308-tn.png"></center>
+<br>
+图 3-8. HEAD 在一次 checkout 之后移动到了另一个分支<p></p>
+
+<p>这条命令做了两件事。它把 HEAD 指针移回到 master 分支，并把工作目录中的文件换成了 master 分支所指向的快照内容。也就是说，现在开始所做的改动，将始于本项目中一个较老的版本。它的主要作用是将 testing
+    分支里作出的修改暂时取消，这样你就可以向另一个方向进行开发。</p>
+
+<p>我们作些修改后再次提交：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ vim test</span><span class="pun">.</span><span class="pln">rb
+    $ git commit </span><span class="pun">-</span><span class="pln">a </span><span class="pun">-</span><span class="pln">m </span><span class="str">'made other changes'</span></code></pre>
+
+<p>现在我们的项目提交历史产生了分叉（如图 3-9
+    所示），因为刚才我们创建了一个分支，转换到其中进行了一些工作，然后又回到原来的主分支进行了另外一些工作。这些改变分别孤立在不同的分支里：我们可以在不同分支里反复切换，并在时机成熟时把它们合并到一起。而所有这些工作，仅仅需要
+    <code>branch</code> 和 <code>checkout</code> 这两条命令就可以完成。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0309-tn.png"></center>
+<br>
+图 3-9. 不同流向的分支历史<p></p>
+
+<p>由于 Git 中的分支实际上仅是一个包含所指对象校验和（40 个字符长度 SHA-1 字串）的文件，所以创建和销毁一个分支就变得非常廉价。说白了，新建一个分支就是向一个文件写入 41
+    个字节（外加一个换行符）那么简单，当然也就很快了。</p>
+
+<p>这和大多数版本控制系统形成了鲜明对比，它们管理分支大多采取备份所有项目文件到特定目录的方式，所以根据项目文件数量和大小不同，可能花费的时间也会有相当大的差别，快则几秒，慢则数分钟。而 Git
+    的实现与项目复杂度无关，它永远可以在几毫秒的时间内完成分支的创建和切换。同时，因为每次提交时都记录了祖先信息（译注：即 <code>parent</code>
+    对象），将来要合并分支时，寻找恰当的合并基础（译注：即共同祖先）的工作其实已经自然而然地摆在那里了，所以实现起来非常容易。Git 鼓励开发者频繁使用分支，正是因为有着这些特性作保障。</p>
+
+<p>接下来看看，我们为什么应该频繁使用分支。</p>
+
+<h2 id="3.2-分支的新建与合并"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.2-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6">3.2
+    分支的新建与合并</a></h2>
+
+<p>现在让我们来看一个简单的分支与合并的例子，实际工作中大体也会用到这样的工作流程：</p>
+
+<ol>
+    <li>开发某个网站。</li>
+    <li>为实现某个新的需求，创建一个分支。</li>
+    <li>在这个分支上开展工作。</li>
+</ol>
+
+<p>假设此时，你突然接到一个电话说有个很严重的问题需要紧急修补，那么可以按照下面的方式处理：</p>
+
+<ol>
+    <li>返回到原先已经发布到生产服务器上的分支。</li>
+    <li>为这次紧急修补建立一个新分支，并在其中修复问题。</li>
+    <li>通过测试后，回到生产服务器所在的分支，将修补分支合并进来，然后再推送到生产服务器上。</li>
+    <li>切换到之前实现新需求的分支，继续工作。</li>
+</ol>
+
+<h3>分支的新建与切换</h3>
+
+<p>首先，我们假设你正在项目中愉快地工作，并且已经提交了几次更新（见图 3-10）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0310-tn.png"></center>
+<br>
+图 3-10. 一个简短的提交历史<p></p>
+
+<p>现在，你决定要修补问题追踪系统上的 #53 问题。顺带说明下，Git 并不同任何特定的问题追踪系统打交道。这里为了说明要解决的问题，才把新建的分支取名为 iss53。要新建并切换到该分支，运行 <code>git
+    checkout</code> 并加上 <code>-b</code> 参数：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout </span><span class="pun">-</span><span class="pln">b iss53
+    </span><span class="typ">Switched</span><span class="pln"> to a </span><span class="kwd">new</span><span class="pln"> branch </span><span class="str">"iss53"</span></code></pre>
+
+<p>这相当于执行下面这两条命令：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch iss53
+    $ git checkout iss53</span></code></pre>
+
+<p>图 3-11 示意该命令的执行结果。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0311-tn.png"></center>
+<br>
+图 3-11. 创建了一个新分支的指针<p></p>
+
+<p>接着你开始尝试修复问题，在提交了若干次更新后，<code>iss53</code> 分支的指针也会随着向前推进，因为它就是当前分支（换句话说，当前的 <code>HEAD</code> 指针正指向 <code>iss53</code>，见图
+    3-12）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ vim index</span><span class="pun">.</span><span class="pln">html
+    $ git commit </span><span class="pun">-</span><span class="pln">a </span><span class="pun">-</span><span class="pln">m </span><span class="str">'added a new footer [issue 53]'</span></code></pre>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0312-tn.png"></center>
+<br>
+图 3-12. iss53 分支随工作进展向前推进<p></p>
+
+<p>现在你就接到了那个网站问题的紧急电话，需要马上修补。有了 Git ，我们就不需要同时发布这个补丁和 <code>iss53</code>
+    里作出的修改，也不需要在创建和发布该补丁到服务器之前花费大力气来复原这些修改。唯一需要的仅仅是切换回 <code>master</code> 分支。</p>
+
+<p>不过在此之前，留心你的暂存区或者工作目录里，那些还没有提交的修改，它会和你即将检出的分支产生冲突从而阻止 Git 为你切换分支。切换分支的时候最好保持一个清洁的工作区域。稍后会介绍几个绕过这种问题的办法（分别叫做 stashing 和
+    commit amending）。目前已经提交了所有的修改，所以接下来可以正常转换到 <code>master</code> 分支：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master
+    </span><span class="typ">Switched</span><span class="pln"> to branch </span><span class="str">"master"</span></code></pre>
+
+<p>此时工作目录中的内容和你在解决问题 #53 之前一模一样，你可以集中精力进行紧急修补。这一点值得牢记：Git
+    会把工作目录的内容恢复为检出某分支时它所指向的那个提交对象的快照。它会自动添加、删除和修改文件以确保目录的内容和你当时提交时完全一样。</p>
+
+<p>接下来，你得进行紧急修补。我们创建一个紧急修补分支 <code>hotfix</code> 来开展工作，直到搞定（见图 3-13）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout </span><span class="pun">-</span><span class="pln">b </span><span class="str">'hotfix'</span><span class="pln">
+    </span><span class="typ">Switched</span><span class="pln"> to a </span><span class="kwd">new</span><span class="pln"> branch </span><span class="str">"hotfix"</span><span class="pln">
+    $ vim index</span><span class="pun">.</span><span class="pln">html
+    $ git commit </span><span class="pun">-</span><span class="pln">a </span><span class="pun">-</span><span class="pln">m </span><span class="str">'fixed the broken email address'</span><span class="pln">
+    </span><span class="pun">[</span><span class="pln">hotfix</span><span class="pun">]:</span><span class="pln"> created </span><span class="lit">3a0874c</span><span class="pun">:</span><span class="pln"> </span><span class="str">"fixed the broken email address"</span><span class="pln">
+    </span><span class="lit">1</span><span class="pln"> files changed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> insertions</span><span class="pun">(+),</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> deletions</span><span class="pun">(-)</span></code></pre>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0313-tn.png"></center>
+<br>
+图 3-13. hotfix 分支是从 master 分支所在点分化出来的<p></p>
+
+<p>有必要作些测试，确保修补是成功的，然后回到 <code>master</code> 分支并把它合并进来，然后发布到生产服务器。用 <code>git merge</code> 命令来进行合并：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master
+    $ git merge hotfix
+    </span><span class="typ">Updating</span><span class="pln"> f42c576</span><span class="pun">..</span><span class="lit">3a0874c</span><span class="pln">
+    </span><span class="typ">Fast</span><span class="pln"> forward
+    README </span><span class="pun">|</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="pun">-</span><span class="pln">
+    </span><span class="lit">1</span><span class="pln"> files changed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> insertions</span><span class="pun">(+),</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> deletions</span><span class="pun">(-)</span></code></pre>
+
+<p>请注意，合并时出现了“Fast forward”的提示。由于当前 <code>master</code> 分支所在的提交对象是要并入的 <code>hotfix</code> 分支的直接上游，Git 只需把
+    <code>master</code> 分支指针直接右移。换句话说，如果顺着一个分支走下去可以到达另一个分支的话，那么 Git
+    在合并两者时，只会简单地把指针右移，因为这种单线的历史分支不存在任何需要解决的分歧，所以这种合并过程可以称为快进（Fast forward）。</p>
+
+<p>现在最新的修改已经在当前 <code>master</code> 分支所指向的提交对象中了，可以部署到生产服务器上去了（见图 3-14）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0314-tn.png"></center>
+<br>
+图 3-14. 合并之后，master 分支和 hotfix 分支指向同一位置。<p></p>
+
+<p>在那个超级重要的修补发布以后，你想要回到被打扰之前的工作。由于当前 <code>hotfix</code> 分支和 <code>master</code> 都指向相同的提交对象，所以 <code>hotfix</code>
+    已经完成了历史使命，可以删掉了。使用 <code>git branch</code> 的 <code>-d</code> 选项执行删除操作：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">d hotfix
+    </span><span class="typ">Deleted</span><span class="pln"> branch hotfix </span><span class="pun">(</span><span class="lit">3a0874c</span><span class="pun">).</span></code></pre>
+
+<p>现在回到之前未完成的 #53 问题修复分支上继续工作（图 3-15）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout iss53
+    </span><span class="typ">Switched</span><span class="pln"> to branch </span><span class="str">"iss53"</span><span class="pln">
+    $ vim index</span><span class="pun">.</span><span class="pln">html
+    $ git commit </span><span class="pun">-</span><span class="pln">a </span><span class="pun">-</span><span class="pln">m </span><span class="str">'finished the new footer [issue 53]'</span><span class="pln">
+    </span><span class="pun">[</span><span class="pln">iss53</span><span class="pun">]:</span><span class="pln"> created ad82d7a</span><span class="pun">:</span><span class="pln"> </span><span class="str">"finished the new footer [issue 53]"</span><span class="pln">
+    </span><span class="lit">1</span><span class="pln"> files changed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> insertions</span><span class="pun">(+),</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> deletions</span><span class="pun">(-)</span></code></pre>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0315-tn.png"></center>
+<br>
+图 3-15. iss53 分支可以不受影响继续推进。<p></p>
+
+<p>不用担心之前 <code>hotfix</code> 分支的修改内容尚未包含到 <code>iss53</code> 中来。如果确实需要纳入此次修补，可以用 <code>git merge master</code> 把 master
+    分支合并到 <code>iss53</code>；或者等 <code>iss53</code> 完成之后，再将 <code>iss53</code> 分支中的更新并入 <code>master</code>。</p>
+
+<h3>分支的合并</h3>
+
+<p>在问题 #53 相关的工作完成之后，可以合并回 <code>master</code> 分支。实际操作同前面合并 <code>hotfix</code> 分支差不多，只需回到 <code>master</code> 分支，运行
+    <code>git merge</code> 命令指定要合并进来的分支：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master
+    $ git merge iss53
+    </span><span class="typ">Merge</span><span class="pln"> made </span><span class="kwd">by</span><span class="pln"> recursive</span><span class="pun">.</span><span class="pln">
+    README </span><span class="pun">|</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+    </span><span class="lit">1</span><span class="pln"> files changed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> insertions</span><span class="pun">(+),</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> deletions</span><span class="pun">(-)</span></code></pre>
+
+<p>请注意，这次合并操作的底层实现，并不同于之前 <code>hotfix</code> 的并入方式。因为这次你的开发历史是从更早的地方开始分叉的。由于当前 <code>master</code> 分支所指向的提交对象（C4）并不是
+    <code>iss53</code> 分支的直接祖先，Git 不得不进行一些额外处理。就此例而言，Git 会用两个分支的末端（C4 和 C5）以及它们的共同祖先（C2）进行一次简单的三方合并计算。图 3-16 用红框标出了 Git
+    用于合并的三个提交对象：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0316-tn.png"></center>
+<br>
+图 3-16. Git 为分支合并自动识别出最佳的同源合并点。<p></p>
+
+<p>这次，Git 没有简单地把分支指针右移，而是对三方合并后的结果重新做一个新的快照，并自动创建一个指向它的提交对象（C6）（见图 3-17）。这个提交对象比较特殊，它有两个祖先（C4 和 C5）。</p>
+
+<p>值得一提的是 Git 可以自己裁决哪个共同祖先才是最佳合并基础；这和 CVS 或 Subversion（1.5 以后的版本）不同，它们需要开发者手工指定合并基础。所以此特性让 Git 的合并操作比其他系统都要简单不少。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0317-tn.png"></center>
+<br>
+图 3-17. Git 自动创建了一个包含了合并结果的提交对象。<p></p>
+
+<p>既然之前的工作成果已经合并到 <code>master</code> 了，那么 <code>iss53</code> 也就没用了。你可以就此删除它，并在问题追踪系统里关闭该问题。</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">d iss53</span></code></pre>
+
+<h3>遇到冲突时的分支合并</h3>
+
+<p>有时候合并操作并不会如此顺利。如果在不同的分支中都修改了同一个文件的同一部分，Git 就无法干净地把两者合到一起（译注：逻辑上说，这种问题只能由人来裁决。）。如果你在解决问题 #53 的过程中修改了
+    <code>hotfix</code> 中修改的部分，将得到类似下面的结果：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git merge iss53
+    </span><span class="typ">Auto</span><span class="pun">-</span><span class="pln">merging index</span><span class="pun">.</span><span class="pln">html
+    CONFLICT </span><span class="pun">(</span><span class="pln">content</span><span class="pun">):</span><span class="pln"> </span><span class="typ">Merge</span><span class="pln"> conflict </span><span class="kwd">in</span><span class="pln"> index</span><span class="pun">.</span><span class="pln">html
+    </span><span class="typ">Automatic</span><span class="pln"> merge failed</span><span class="pun">;</span><span class="pln"> fix conflicts </span><span class="kwd">and</span><span class="pln"> </span><span class="kwd">then</span><span class="pln"> commit the result</span><span class="pun">.</span></code></pre>
+
+<p>Git 作了合并，但没有提交，它会停下来等你解决冲突。要看看哪些文件在合并时发生冲突，可以用 <code>git status</code> 查阅：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pun">[</span><span class="pln">master</span><span class="pun">*]</span><span class="pln">$ git status
+    index</span><span class="pun">.</span><span class="pln">html</span><span class="pun">:</span><span class="pln"> needs merge
+    </span><span class="com"># On branch master</span><span class="pln">
+    </span><span class="com"># Changes not staged for commit:</span><span class="pln">
+    </span><span class="com"># (use "git add &lt;file&gt;..." to update what will be committed)</span><span class="pln">
+    </span><span class="com"># (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)</span><span class="pln">
+    </span><span class="com">#</span><span class="pln">
+    </span><span class="com"># unmerged: index.html</span><span class="pln">
+    </span><span class="com">#</span></code></pre>
+
+<p>任何包含未解决冲突的文件都会以未合并（unmerged）的状态列出。Git 会在有冲突的文件里加入标准的冲突解决标记，可以通过它们来手工定位并解决这些冲突。可以看到此文件包含类似下面这样的部分：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html
+    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"footer"</span><span class="tag">&gt;</span><span class="pln">contact : email.support@github.com</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+    =======
+    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"footer"</span><span class="tag">&gt;</span><span class="pln">
+    please contact us at support@github.com
+    </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+    &gt;&gt;&gt;&gt;&gt;&gt;&gt; iss53:index.html</span></code></pre>
+
+<p>可以看到 <code>=======</code> 隔开的上半部分，是 <code>HEAD</code>（即 <code>master</code> 分支，在运行 <code>merge</code>
+    命令时所切换到的分支）中的内容，下半部分是在 <code>iss53</code> 分支中的内容。解决冲突的办法无非是二者选其一或者由你亲自整合到一起。比如你可以通过把这段内容替换为下面这样来解决：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"footer"</span><span class="tag">&gt;</span><span class="pln">
+    please contact us at email.support@github.com
+    </span><span class="tag">&lt;/div&gt;</span></code></pre>
+
+<p>这个解决方案各采纳了两个分支中的一部分内容，而且我还删除了 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>，<code>=======</code> 和 <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>
+    这些行。在解决了所有文件里的所有冲突后，运行 <code>git add</code>
+    将把它们标记为已解决状态（译注：实际上就是来一次快照保存到暂存区域。）。因为一旦暂存，就表示冲突已经解决。如果你想用一个有图形界面的工具来解决这些问题，不妨运行 <code>git mergetool</code>，它会调用一个可视化的合并工具并引导你解决所有冲突：
+</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git mergetool
+    merge tool candidates</span><span class="pun">:</span><span class="pln"> kdiff3 tkdiff xxdiff meld gvimdiff opendiff emerge vimdiff
+    </span><span class="typ">Merging</span><span class="pln"> the files</span><span class="pun">:</span><span class="pln"> index</span><span class="pun">.</span><span class="pln">html
+
+    </span><span class="typ">Normal</span><span class="pln"> merge conflict </span><span class="kwd">for</span><span class="pln"> </span><span class="str">'index.html'</span><span class="pun">:</span><span class="pln">
+    </span><span class="pun">{</span><span class="kwd">local</span><span class="pun">}:</span><span class="pln"> modified
+    </span><span class="pun">{</span><span class="pln">remote</span><span class="pun">}:</span><span class="pln"> modified
+    </span><span class="typ">Hit</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> to start merge resolution tool </span><span class="pun">(</span><span class="pln">opendiff</span><span class="pun">):</span></code></pre>
+
+<p>如果不想用默认的合并工具（Git 为我默认选择了 <code>opendiff</code>，因为我在 Mac 上运行了该命令），你可以在上方"merge tool candidates"里找到可用的合并工具列表，输入你想用的工具名。我们将在第七章讨论怎样改变环境中的默认值。
+</p>
+
+<p>退出合并工具以后，Git 会询问你合并是否成功。如果回答是，它会为你把相关文件暂存起来，以表明状态为已解决。</p>
+
+<p>再运行一次 <code>git status</code> 来确认所有冲突都已解决：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git status
+    </span><span class="com"># On branch master</span><span class="pln">
+    </span><span class="com"># Changes to be committed:</span><span class="pln">
+    </span><span class="com"># (use "git reset HEAD &lt;file&gt;..." to unstage)</span><span class="pln">
+    </span><span class="com">#</span><span class="pln">
+    </span><span class="com"># modified: index.html</span><span class="pln">
+    </span><span class="com">#</span></code></pre>
+
+<p>如果觉得满意了，并且确认所有冲突都已解决，也就是进入了暂存区，就可以用 <code>git commit</code> 来完成这次合并提交。提交的记录差不多是这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="typ">Merge</span><span class="pln"> branch </span><span class="str">'iss53'</span><span class="pln">
+
+    </span><span class="typ">Conflicts</span><span class="pun">:</span><span class="pln">
+    index</span><span class="pun">.</span><span class="pln">html
+    </span><span class="com">#</span><span class="pln">
+    </span><span class="com"># It looks like you may be committing a MERGE.</span><span class="pln">
+    </span><span class="com"># If this is not correct, please remove the file</span><span class="pln">
+    </span><span class="com"># .git/MERGE_HEAD</span><span class="pln">
+    </span><span class="com"># and try again.</span><span class="pln">
+    </span><span class="com">#</span></code></pre>
+
+<p>如果想给将来看这次合并的人一些方便，可以修改该信息，提供更多合并细节。比如你都作了哪些改动，以及这么做的原因。有时候裁决冲突的理由并不直接或明显，有必要略加注解。</p>
+
+<h2 id="3.3-分支的管理"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.3-%E5%88%86%E6%94%AF%E7%9A%84%E7%AE%A1%E7%90%86">3.3 分支的管理</a></h2>
+
+<p>到目前为止，你已经学会了如何创建、合并和删除分支。除此之外，我们还需要学习如何管理分支，在日后的常规工作中会经常用到下面介绍的管理命令。</p>
+
+<p><code>git branch</code> 命令不仅仅能创建和删除分支，如果不加任何参数，它会给出当前所有分支的清单：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch
+    iss53
+    </span><span class="pun">*</span><span class="pln"> master
+    testing</span></code></pre>
+
+<p>注意看 <code>master</code> 分支前的 <code>*</code> 字符：它表示当前所在的分支。也就是说，如果现在提交更新，<code>master</code>
+    分支将随着开发进度前移。若要查看各个分支最后一个提交对象的信息，运行 <code>git branch -v</code>：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">v
+    iss53 </span><span class="lit">93b412c</span><span class="pln"> fix javascript issue
+    </span><span class="pun">*</span><span class="pln"> master </span><span class="lit">7a98805</span><span class="pln"> </span><span class="typ">Merge</span><span class="pln"> branch </span><span class="str">'iss53'</span><span class="pln">
+    testing </span><span class="lit">782fd34</span><span class="pln"> add scott to the author list </span><span class="kwd">in</span><span class="pln"> the readmes</span></code></pre>
+
+<p>要从该清单中筛选出你已经（或尚未）与当前分支合并的分支，可以用 <code>--merge</code> 和 <code>--no-merged</code> 选项（Git 1.5.6 以上版本）。比如用 <code>git
+    branch --merge</code> 查看哪些分支已被并入当前分支（译注：也就是说哪些分支是当前分支的直接上游。）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">--</span><span class="pln">merged
+    iss53
+    </span><span class="pun">*</span><span class="pln"> master</span></code></pre>
+
+<p>之前我们已经合并了 <code>iss53</code>，所以在这里会看到它。一般来说，列表中没有 <code>*</code> 的分支通常都可以用 <code>git branch -d</code>
+    来删掉。原因很简单，既然已经把它们所包含的工作整合到了其他分支，删掉也不会损失什么。</p>
+
+<p>另外可以用 <code>git branch --no-merged</code> 查看尚未合并的工作：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">--</span><span class="kwd">no</span><span class="pun">-</span><span class="pln">merged
+    testing</span></code></pre>
+
+<p>它会显示还未合并进来的分支。由于这些分支中还包含着尚未合并进来的工作成果，所以简单地用 <code>git branch -d</code> 删除该分支会提示错误，因为那样做会丢失数据：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">d testing
+    error</span><span class="pun">:</span><span class="pln"> </span><span class="typ">The</span><span class="pln"> branch </span><span class="str">'testing'</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> an ancestor of your current HEAD</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">If</span><span class="pln"> you are sure you want to </span><span class="kwd">delete</span><span class="pln"> it</span><span class="pun">,</span><span class="pln"> run </span><span class="str">'git branch -D testing'</span><span class="pun">.</span></code></pre>
+
+<p>不过，如果你确实想要删除该分支上的改动，可以用大写的删除选项 <code>-D</code> 强制执行，就像上面提示信息中给出的那样。</p>
+
+<h2 id="3.4-利用分支进行开发的工作流程"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.4-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.4
+    利用分支进行开发的工作流程</a></h2>
+
+<p>现在我们已经学会了新建分支和合并分支，可以（或应该）用它来做点什么呢？在本节，我们会介绍一些利用分支进行开发的工作流程。而正是由于分支管理的便捷，才衍生出了这类典型的工作模式，你可以根据项目的实际情况选择一种用用看。</p>
+
+<h3>长期分支</h3>
+
+<p>由于 Git
+    使用简单的三方合并，所以就算在较长一段时间内，反复多次把某个分支合并到另一分支，也不是什么难事。也就是说，你可以同时拥有多个开放的分支，每个分支用于完成特定的任务，随着开发的推进，你可以随时把某个特性分支的成果并到其他分支中。</p>
+
+<p>许多使用 Git 的开发者都喜欢用这种方式来开展工作，比如仅在 <code>master</code> 分支中保留完全稳定的代码，即已经发布或即将发布的代码。与此同时，他们还有一个名为 <code>develop</code> 或
+    <code>next</code> 的平行分支，专门用于后续的开发，或仅用于稳定性测试 — 当然并不是说一定要绝对稳定，不过一旦进入某种稳定状态，便可以把它合并到 <code>master</code>
+    里。这样，在确保这些已完成的特性分支（短期分支，比如之前的 <code>iss53</code> 分支）能够通过所有测试，并且不会引入更多错误之后，就可以并到主干分支中，等待下一次的发布。</p>
+
+<p>本质上我们刚才谈论的，是随着提交对象不断右移的指针。稳定分支的指针总是在提交历史中落后一大截，而前沿分支总是比较靠前（见图 3-18）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0318-tn.png"></center>
+<br>
+图 3-18. 稳定分支总是比较老旧。<p></p>
+
+<p>或者把它们想象成工作流水线，或许更好理解一些，经过测试的提交对象集合被遴选到更稳定的流水线（见图 3-19）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0319-tn.png"></center>
+<br>
+图 3-19. 想象成流水线可能会容易点。<p></p>
+
+<p>你可以用这招维护不同层次的稳定性。某些大项目还会有个 <code>proposed</code>（建议）或 <code>pu</code>（proposed updates，建议更新）分支，它包含着那些可能还没有成熟到进入
+    <code>next</code> 或 <code>master</code>
+    的内容。这么做的目的是拥有不同层次的稳定性：当这些分支进入到更稳定的水平时，再把它们合并到更高层分支中去。再次说明下，使用多个长期分支的做法并非必需，不过一般来说，对于特大型项目或特复杂的项目，这么做确实更容易管理。</p>
+
+<h3>特性分支</h3>
+
+<p>在任何规模的项目中都可以使用特性（Topic）分支。一个特性分支是指一个短期的，用来实现单一特性或与其相关工作的分支。可能你在以前的版本控制系统里从未做过类似这样的事情，因为通常创建与合并分支消耗太大。然而在 Git
+    中，一天之内建立、使用、合并再删除多个分支是常见的事。</p>
+
+<p>我们在上节的例子里已经见过这种用法了。我们创建了 <code>iss53</code> 和 <code>hotfix</code>
+    这两个特性分支，在提交了若干更新后，把它们合并到主干分支，然后删除。该技术允许你迅速且完全的进行语境切换 —
+    因为你的工作分散在不同的流水线里，每个分支里的改变都和它的目标特性相关，浏览代码之类的事情因而变得更简单了。你可以把作出的改变保持在特性分支中几分钟，几天甚至几个月，等它们成熟以后再合并，而不用在乎它们建立的顺序或者进度。</p>
+
+<p>现在我们来看一个实际的例子。请看图 3-20，由下往上，起先我们在 <code>master</code> 工作到 C1，然后开始一个新分支 <code>iss91</code> 尝试修复 91 号缺陷，提交到 C6
+    的时候，又冒出一个解决该问题的新办法，于是从之前 C4 的地方又分出一个分支 <code>iss91v2</code>，干到 C8 的时候，又回到主干 <code>master</code> 中提交了 C9 和 C10，再回到
+    <code>iss91v2</code> 继续工作，提交 C11，接着，又冒出个不太确定的想法，从 <code>master</code> 的最新提交 C10 处开了个新的分支 <code>dumbidea</code> 做些试验。
+</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0320-tn.png"></center>
+<br>
+图 3-20. 拥有多个特性分支的提交历史。<p></p>
+
+<p>现在，假定两件事情：我们最终决定使用第二个解决方案，即 <code>iss91v2</code> 中的办法；另外，我们把 <code>dumbidea</code>
+    分支拿给同事们看了以后，发现它竟然是个天才之作。所以接下来，我们准备抛弃原来的 <code>iss91</code> 分支（实际上会丢弃 C5 和 C6），直接在主干中并入另外两个分支。最终的提交历史将变成图 3-21 这样：
+</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0321-tn.png"></center>
+<br>
+图 3-21. 合并了 dumbidea 和 iss91v2 后的分支历史。<p></p>
+
+<p>请务必牢记这些分支全部都是本地分支，这一点很重要。当你在使用分支及合并的时候，一切都是在你自己的 Git 仓库中进行的 — 完全不涉及与服务器的交互。</p>
+
+<h2 id="3.5-远程分支"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.5-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">3.5 远程分支</a></h2>
+
+<p>远程分支（remote branch）是对远程仓库中的分支的索引。它们是一些无法移动的本地分支；只有在 Git 进行网络交互时才会更新。远程分支就像是书签，提醒着你上次连接远程仓库时上面各分支的位置。 </p>
+
+<p>我们用 <code>(远程仓库名)/(分支名)</code> 这样的形式表示远程分支。比如我们想看看上次同 <code>origin</code> 仓库通讯时 <code>master</code> 分支的样子，就应该查看
+    <code>origin/master</code> 分支。如果你和同伴一起修复某个问题，但他们先推送了一个 <code>iss53</code> 分支到远程仓库，虽然你可能也有一个本地的 <code>iss53</code>
+    分支，但指向服务器上最新更新的却应该是 <code>origin/iss53</code> 分支。</p>
+
+<p>可能有点乱，我们不妨举例说明。假设你们团队有个地址为 <code>git.ourcompany.com</code> 的 Git 服务器。如果你从这里克隆，Git 会自动为你将此远程仓库命名为 <code>origin</code>，并下载其中所有的数据，建立一个指向它的
+    <code>master</code> 分支的指针，在本地命名为 <code>origin/master</code>，但你无法在本地更改其数据。接着，Git 建立一个属于你自己的本地 <code>master</code>
+    分支，始于 <code>origin</code> 上 <code>master</code> 分支相同的位置，你可以就此开始工作（见图 3-22）：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0322-tn.png"></center>
+<br>
+图 3-22. 一次 Git 克隆会建立你自己的本地分支 master 和远程分支 origin/master，并且将它们都指向 <code>origin</code> 上的 <code>master</code> 分支。<p></p>
+
+<p>如果你在本地 <code>master</code> 分支做了些改动，与此同时，其他人向 <code>git.ourcompany.com</code> 推送了他们的更新，那么服务器上的 <code>master</code>
+    分支就会向前推进，而于此同时，你在本地的提交历史正朝向不同方向发展。不过只要你不和服务器通讯，你的 <code>origin/master</code> 指针仍然保持原位不会移动（见图 3-23）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0323-tn.png"></center>
+<br>
+图 3-23. 在本地工作的同时有人向远程仓库推送内容会让提交历史开始分流。<p></p>
+
+<p>可以运行 <code>git fetch origin</code> 来同步远程服务器上的数据到本地。该命令首先找到 <code>origin</code> 是哪个服务器（本例为
+    <code>git.ourcompany.com</code>），从上面获取你尚未拥有的数据，更新你本地的数据库，然后把 <code>origin/master</code> 的指针移到它最新的位置上（见图 3-24）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0324-tn.png"></center>
+<br>
+图 3-24. git fetch 命令会更新 remote 索引。<p></p>
+
+<p>为了演示拥有多个远程分支（在不同的远程服务器上）的项目是如何工作的，我们假设你还有另一个仅供你的敏捷开发小组使用的内部服务器 <code>git.team1.ourcompany.com</code>。可以用第二章中提到的
+    <code>git remote add</code> 命令把它加为当前项目的远程分支之一。我们把它命名为 <code>teamone</code>，以便代替完整的 Git URL 以方便使用（见图 3-25）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0325-tn.png"></center>
+<br>
+图 3-25. 把另一个服务器加为远程仓库<p></p>
+
+<p>现在你可以用 <code>git fetch teamone</code> 来获取小组服务器上你还没有的数据了。由于当前该服务器上的内容是你 <code>origin</code> 服务器上的子集，Git
+    不会下载任何数据，而只是简单地创建一个名为 <code>teamone/master</code> 的远程分支，指向 <code>teamone</code> 服务器上 <code>master</code> 分支所在的提交对象
+    <code>31b8e</code>（见图 3-26）。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0326-tn.png"></center>
+<br>
+图 3-26. 你在本地有了一个指向 teamone 服务器上 master 分支的索引。<p></p>
+
+<h3>推送本地分支</h3>
+
+<p>
+    要想和其他人分享某个本地分支，你需要把它推送到一个你拥有写权限的远程仓库。你创建的本地分支不会因为你的写入操作而被自动同步到你引入的远程服务器上，你需要明确地执行推送分支的操作。换句话说，对于无意分享的分支，你尽管保留为私人分支好了，而只推送那些协同工作要用到的特性分支。</p>
+
+<p>如果你有个叫 <code>serverfix</code> 的分支需要和他人一起开发，可以运行 <code>git push (远程仓库名) (分支名)</code>：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git push origin serverfix
+    </span><span class="typ">Counting</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Compressing</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%</span><span class="pln"> </span><span class="pun">(</span><span class="lit">14</span><span class="pun">/</span><span class="lit">14</span><span class="pun">),</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Writing</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%</span><span class="pln"> </span><span class="pun">(</span><span class="lit">15</span><span class="pun">/</span><span class="lit">15</span><span class="pun">),</span><span class="pln"> </span><span class="lit">1.74</span><span class="pln"> </span><span class="typ">KiB</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Total</span><span class="pln"> </span><span class="lit">15</span><span class="pln"> </span><span class="pun">(</span><span class="pln">delta </span><span class="lit">5</span><span class="pun">),</span><span class="pln"> reused </span><span class="lit">0</span><span class="pln"> </span><span class="pun">(</span><span class="pln">delta </span><span class="lit">0</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">To</span><span class="pln"> git@github</span><span class="pun">.</span><span class="pln">com</span><span class="pun">:</span><span class="pln">schacon</span><span class="pun">/</span><span class="pln">simplegit</span><span class="pun">.</span><span class="pln">git
+    </span><span class="pun">*</span><span class="pln"> </span><span class="pun">[</span><span class="kwd">new</span><span class="pln"> branch</span><span class="pun">]</span><span class="pln"> serverfix </span><span class="pun">-&gt;</span><span class="pln"> serverfix</span></code></pre>
+
+<p>这里其实走了一点捷径。Git 自动把 <code>serverfix</code> 分支名扩展为 <code>refs/heads/serverfix:refs/heads/serverfix</code>，意为“取出我在本地的
+    serverfix 分支，推送到远程仓库的 serverfix 分支中去”。我们将在第九章进一步介绍 <code>refs/heads/</code> 部分的细节，不过一般使用的时候都可以省略它。也可以运行 <code>git
+        push origin serverfix:serverfix</code> 来实现相同的效果，它的意思是“上传我本地的 serverfix 分支到远程仓库中去，仍旧称它为 serverfix
+    分支”。通过此语法，你可以把本地分支推送到某个命名不同的远程分支：若想把远程分支叫作 <code>awesomebranch</code>，可以用 <code>git push origin
+        serverfix:awesomebranch</code> 来推送数据。</p>
+
+<p>接下来，当你的协作者再次从服务器上获取数据时，他们将得到一个新的远程分支 <code>origin/serverfix</code>，并指向服务器上 <code>serverfix</code> 所指向的版本：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git fetch origin
+    remote</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Counting</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    remote</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Compressing</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%</span><span class="pln"> </span><span class="pun">(</span><span class="lit">14</span><span class="pun">/</span><span class="lit">14</span><span class="pun">),</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    remote</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Total</span><span class="pln"> </span><span class="lit">15</span><span class="pln"> </span><span class="pun">(</span><span class="pln">delta </span><span class="lit">5</span><span class="pun">),</span><span class="pln"> reused </span><span class="lit">0</span><span class="pln"> </span><span class="pun">(</span><span class="pln">delta </span><span class="lit">0</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">Unpacking</span><span class="pln"> objects</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%</span><span class="pln"> </span><span class="pun">(</span><span class="lit">15</span><span class="pun">/</span><span class="lit">15</span><span class="pun">),</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">From</span><span class="pln"> git@github</span><span class="pun">.</span><span class="pln">com</span><span class="pun">:</span><span class="pln">schacon</span><span class="pun">/</span><span class="pln">simplegit
+    </span><span class="pun">*</span><span class="pln"> </span><span class="pun">[</span><span class="kwd">new</span><span class="pln"> branch</span><span class="pun">]</span><span class="pln"> serverfix </span><span class="pun">-&gt;</span><span class="pln"> origin</span><span class="pun">/</span><span class="pln">serverfix</span></code></pre>
+
+<p>值得注意的是，在 <code>fetch</code> 操作下载好新的远程分支之后，你仍然无法在本地编辑该远程仓库中的分支。换句话说，在本例中，你不会有一个新的 <code>serverfix</code>
+    分支，有的只是一个你无法移动的 <code>origin/serverfix</code> 指针。</p>
+
+<p>如果要把该远程分支的内容合并到当前分支，可以运行 <code>git merge origin/serverfix</code>。如果想要一份自己的 <code>serverfix</code>
+    来开发，可以在远程分支的基础上分化出一个新的分支来：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout </span><span class="pun">-</span><span class="pln">b serverfix origin</span><span class="pun">/</span><span class="pln">serverfix
+    </span><span class="typ">Branch</span><span class="pln"> serverfix </span><span class="kwd">set</span><span class="pln"> up to track remote branch refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">origin</span><span class="pun">/</span><span class="pln">serverfix</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Switched</span><span class="pln"> to a </span><span class="kwd">new</span><span class="pln"> branch </span><span class="str">"serverfix"</span></code></pre>
+
+<p>这会切换到新建的 <code>serverfix</code> 本地分支，其内容同远程分支 <code>origin/serverfix</code> 一致，这样你就可以在里面继续开发了。</p>
+
+<h3>跟踪远程分支</h3>
+
+<p>从远程分支 <code>checkout</code> 出来的本地分支，称为 <em>跟踪分支</em> (tracking branch)。跟踪分支是一种和某个远程分支有直接联系的本地分支。在跟踪分支里输入 <code>git
+    push</code>，Git 会自行推断应该向哪个服务器的哪个分支推送数据。同样，在这些分支里运行 <code>git pull</code> 会获取所有远程索引，并把它们的数据都合并到本地分支中来。</p>
+
+<p>在克隆仓库时，Git 通常会自动创建一个名为 <code>master</code> 的分支来跟踪 <code>origin/master</code>。这正是 <code>git push</code> 和 <code>git
+    pull</code> 一开始就能正常工作的原因。当然，你可以随心所欲地设定为其它跟踪分支，比如 <code>origin</code> 上除了 <code>master</code>
+    之外的其它分支。刚才我们已经看到了这样的一个例子：<code>git checkout -b [分支名] [远程名]/[分支名]</code>。如果你有 1.6.2 以上版本的 Git，还可以用
+    <code>--track</code> 选项简化：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout </span><span class="pun">--</span><span class="pln">track origin</span><span class="pun">/</span><span class="pln">serverfix
+    </span><span class="typ">Branch</span><span class="pln"> serverfix </span><span class="kwd">set</span><span class="pln"> up to track remote branch refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">origin</span><span class="pun">/</span><span class="pln">serverfix</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Switched</span><span class="pln"> to a </span><span class="kwd">new</span><span class="pln"> branch </span><span class="str">"serverfix"</span></code></pre>
+
+<p>要为本地分支设定不同于远程分支的名字，只需在第一个版本的命令里换个名字：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout </span><span class="pun">-</span><span class="pln">b sf origin</span><span class="pun">/</span><span class="pln">serverfix
+    </span><span class="typ">Branch</span><span class="pln"> sf </span><span class="kwd">set</span><span class="pln"> up to track remote branch refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">origin</span><span class="pun">/</span><span class="pln">serverfix</span><span class="pun">.</span><span class="pln">
+    </span><span class="typ">Switched</span><span class="pln"> to a </span><span class="kwd">new</span><span class="pln"> branch </span><span class="str">"sf"</span></code></pre>
+
+<p>现在你的本地分支 <code>sf</code> 会自动将推送和抓取数据的位置定位到 <code>origin/serverfix</code> 了。</p>
+
+<h3>删除远程分支</h3>
+
+<p>如果不再需要某个远程分支了，比如搞定了某个特性并把它合并进了远程的 <code>master</code> 分支（或任何其他存放稳定代码的分支），可以用这个非常无厘头的语法来删除它：<code>git push [远程名]
+    :[分支名]</code>。如果想在服务器上删除 <code>serverfix</code> 分支，运行下面的命令：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git push origin </span><span class="pun">:</span><span class="pln">serverfix
+    </span><span class="typ">To</span><span class="pln"> git@github</span><span class="pun">.</span><span class="pln">com</span><span class="pun">:</span><span class="pln">schacon</span><span class="pun">/</span><span class="pln">simplegit</span><span class="pun">.</span><span class="pln">git
+    </span><span class="pun">-</span><span class="pln"> </span><span class="pun">[</span><span class="pln">deleted</span><span class="pun">]</span><span class="pln"> serverfix</span></code></pre>
+
+<p>咚！服务器上的分支没了。你最好特别留心这一页，因为你一定会用到那个命令，而且你很可能会忘掉它的语法。有种方便记忆这条命令的方法：记住我们不久前见过的 <code>git push [远程名] [本地分支]:[远程分支]</code>
+    语法，如果省略 <code>[本地分支]</code>，那就等于是在说“在这里提取空白然后把它变成<code>[远程分支]</code>”。</p>
+
+<h2 id="3.6-分支的衍合"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.6-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">3.6 分支的衍合</a></h2>
+
+<p>把一个分支中的修改整合到另一个分支的办法有两种：<code>merge</code> 和 <code>rebase</code>（译注：<code>rebase</code>
+    的翻译暂定为“衍合”，大家知道就可以了。）。在本章我们会学习什么是衍合，如何使用衍合，为什么衍合操作如此富有魅力，以及我们应该在什么情况下使用衍合。</p>
+
+<h3>基本的衍合操作</h3>
+
+<p>请回顾之前有关合并的一节（见图 3-27），你会看到开发进程分叉到两个不同分支，又各自提交了更新。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0327-tn.png"></center>
+<br>
+图 3-27. 最初分叉的提交历史。<p></p>
+
+<p>之前介绍过，最容易的整合分支的方法是 <code>merge</code> 命令，它会把两个分支最新的快照（C3 和 C4）以及二者最新的共同祖先（C2）进行三方合并，合并的结果是产生一个新的提交对象（C5）。如图 3-28 所示：
+</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0328-tn.png"></center>
+<br>
+图 3-28. 通过合并一个分支来整合分叉了的历史。<p></p>
+
+<p>其实，还有另外一个选择：你可以把在 C3 里产生的变化补丁在 C4 的基础上重新打一遍。在 Git 里，这种操作叫做<em>衍合（rebase）</em>。有了 <code>rebase</code>
+    命令，就可以把在一个分支里提交的改变移到另一个分支里重放一遍。</p>
+
+<p>在上面这个例子中，运行：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout experiment
+    $ git rebase master
+    </span><span class="typ">First</span><span class="pun">,</span><span class="pln"> rewinding head to replay your work on top of it</span><span class="pun">...</span><span class="pln">
+    </span><span class="typ">Applying</span><span class="pun">:</span><span class="pln"> added staged command</span></code></pre>
+
+<p>它的原理是回到两个分支最近的共同祖先，根据当前分支（也就是要进行衍合的分支 <code>experiment</code>）后续的历次提交对象（这里只有一个 C3），生成一系列文件补丁，然后以基底分支（也就是主干分支 <code>master</code>）最后一个提交对象（C4）为新的出发点，逐个应用之前准备好的补丁文件，最后会生成一个新的合并提交对象（C3'），从而改写
+    <code>experiment</code> 的提交历史，使它成为 <code>master</code> 分支的直接下游，如图 3-29 所示：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0329-tn.png"></center>
+<br>
+图 3-29. 把 C3 里产生的改变到 C4 上重演一遍。<p></p>
+
+<p>现在回到 <code>master</code> 分支，进行一次快进合并（见图 3-30）：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0330-tn.png"></center>
+<br>
+图 3-30. master 分支的快进。<p></p>
+
+<p>现在的 C3' 对应的快照，其实和普通的三方合并，即上个例子中的 C5
+    对应的快照内容一模一样了。虽然最后整合得到的结果没有任何区别，但衍合能产生一个更为整洁的提交历史。如果视察一个衍合过的分支的历史记录，看起来会更清楚：仿佛所有修改都是在一根线上先后进行的，尽管实际上它们原本是同时并行发生的。</p>
+
+<p>一般我们使用衍合的目的，是想要得到一个能在远程分支上干净应用的补丁 — 比如某些项目你不是维护者，但想帮点忙的话，最好用衍合：先在自己的一个分支里进行开发，当准备向主项目提交补丁的时候，根据最新的 <code>origin/master</code>
+    进行一次衍合操作然后再提交，这样维护者就不需要做任何整合工作（译注：实际上是把解决分支补丁同最新主干代码之间冲突的责任，化转为由提交补丁的人来解决。），只需根据你提供的仓库地址作一次快进合并，或者直接采纳你提交的补丁。</p>
+
+<p>请注意，合并结果中最后一次提交所指向的快照，无论是通过衍合，还是三方合并，都会得到相同的快照内容，只不过提交历史不同罢了。衍合是按照每行的修改次序重演一遍修改，而合并是把最终结果合在一起。</p>
+
+<h3>有趣的衍合</h3>
+
+<p>衍合也可以放到其他分支进行，并不一定非得根据分化之前的分支。以图 3-31 的历史为例，我们为了给服务器端代码添加一些功能而创建了特性分支 <code>server</code>，然后提交 C3 和 C4。然后又从 C3
+    的地方再增加一个 <code>client</code> 分支来对客户端代码进行一些相应修改，所以提交了 C8 和 C9。最后，又回到 <code>server</code> 分支提交了 C10。</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0331-tn.png"></center>
+<br>
+图 3-31. 从一个特性分支里再分出一个特性分支的历史。<p></p>
+
+<p>假设在接下来的一次软件发布中，我们决定先把客户端的修改并到主线中，而暂缓并入服务端软件的修改（因为还需要进一步测试）。这个时候，我们就可以把基于 <code>server</code> 分支而非 <code>master</code>
+    分支的改变（即 C8 和 C9），跳过 <code>server</code> 直接放到 <code>master</code> 分支中重演一遍，但这需要用 <code>git rebase</code> 的 <code>--onto</code>
+    选项指定新的基底分支 <code>master</code>：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git rebase </span><span class="pun">--</span><span class="pln">onto master server client</span></code></pre>
+
+<p>这好比在说：“取出 <code>client</code> 分支，找出 <code>client</code> 分支和 <code>server</code> 分支的共同祖先之后的变化，然后把它们在
+    <code>master</code> 上重演一遍”。是不是有点复杂？不过它的结果如图 3-32 所示，非常酷（译注：虽然 <code>client</code> 里的 C8, C9 在 C3 之后，但这仅表明时间上的先后，而非在
+    C3 修改的基础上进一步改动，因为 <code>server</code> 和 <code>client</code> 这两个分支对应的代码应该是两套文件，虽然这么说不是很严格，但应理解为在 C3 时间点之后，对另外的文件所做的
+    C8，C9 修改，放到主干重演。）：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0332-tn.png"></center>
+<br>
+图 3-32. 将特性分支上的另一个特性分支衍合到其他分支。<p></p>
+
+<p>现在可以快进 <code>master</code> 分支了（见图 3-33）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master
+    $ git merge client</span></code></pre>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0333-tn.png"></center>
+<br>
+图 3-33. 快进 master 分支，使之包含 client 分支的变化。<p></p>
+
+<p>现在我们决定把 <code>server</code> 分支的变化也包含进来。我们可以直接把 <code>server</code> 分支衍合到 <code>master</code>，而不用手工切换到
+    <code>server</code> 分支后再执行衍合操作 — <code>git rebase [主分支] [特性分支]</code> 命令会先取出特性分支 <code>server</code>，然后在主分支 <code>master</code>
+    上重演：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git rebase master server</span></code></pre>
+
+<p>于是，<code>server</code> 的进度应用到 <code>master</code> 的基础上，如图 3-34 所示：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0334-tn.png"></center>
+<br>
+图 3-34. 在 master 分支上衍合 server 分支。<p></p>
+
+<p>然后就可以快进主干分支 <code>master</code> 了：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git checkout master
+    $ git merge server</span></code></pre>
+
+<p>现在 <code>client</code> 和 <code>server</code> 分支的变化都已经集成到主干分支来了，可以删掉它们了。最终我们的提交历史会变成图 3-35 的样子：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">d client
+    $ git branch </span><span class="pun">-</span><span class="pln">d server</span></code></pre>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0335-tn.png"></center>
+<br>
+图 3-35. 最终的提交历史<p></p>
+
+<h3>衍合的风险</h3>
+
+<p>呃，奇妙的衍合也并非完美无缺，要用它得遵守一条准则：</p>
+
+<p><strong>一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行衍合操作。</strong></p>
+
+<p>如果你遵循这条金科玉律，就不会出差错。否则，人民群众会仇恨你，你的朋友和家人也会嘲笑你，唾弃你。</p>
+
+<p>在进行衍合的时候，实际上抛弃了一些现存的提交对象而创造了一些类似但不同的新的提交对象。如果你把原来分支中的提交对象发布出去，并且其他人更新下载后在其基础上开展工作，而稍后你又用 <code>git rebase</code>
+    抛弃这些提交对象，把新的重演后的提交对象发布出去的话，你的合作者就不得不重新合并他们的工作，这样当你再次从他们那里获取内容时，提交历史就会变得一团糟。</p>
+
+<p>下面我们用一个实际例子来说明为什么公开的衍合会带来问题。假设你从一个中央服务器克隆然后在它的基础上搞了一些开发，提交历史类似图 3-36 所示：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0336-tn.png"></center>
+<br>
+图 3-36. 克隆一个仓库，在其基础上工作一番。<p></p>
+
+<p>现在，某人在 C1 的基础上做了些改变，并合并他自己的分支得到结果 C6，推送到中央服务器。当你抓取并合并这些数据到你本地的开发分支中后，会得到合并结果 C7，历史提交会变成图 3-37 这样：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0337-tn.png"></center>
+<br>
+图 3-37. 抓取他人提交，并入自己主干。<p></p>
+
+<p>接下来，那个推送 C6 上来的人决定用衍合取代之前的合并操作；继而又用 <code>git push --force</code> 覆盖了服务器上的历史，得到 C4'。而之后当你再从服务器上下载最新提交后，会得到：</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0338-tn.png"></center>
+<br>
+图 3-38. 有人推送了衍合后得到的 C4'，丢弃了你作为开发基础的 C4 和 C6。<p></p>
+
+<p>下载更新后需要合并，但此时衍合产生的提交对象 C4' 的 SHA-1 校验值和之前 C4 完全不同，所以 Git 会把它们当作新的提交对象处理，而实际上此刻你的提交历史 C7 中早已经包含了 C4 的修改内容，于是合并操作会把
+    C7 和 C4' 合并为 C8（见图 3-39）:</p>
+
+<p>
+</p><center><img src="./3.Git_Branch_Pro_Git_files/18333fig0339-tn.png"></center>
+<br>
+图 3-39. 你把相同的内容又合并了一遍，生成一个新的提交 C8。<p></p>
+
+<p>C8 这一步的合并是迟早会发生的，因为只有这样你才能和其他协作者提交的内容保持同步。而在 C8 之后，你的提交历史里就会同时包含 C4 和 C4'，两者有着不同的 SHA-1 校验值，如果用 <code>git
+    log</code> 查看历史，会看到两个提交拥有相同的作者日期与说明，令人费解。而更糟的是，当你把这样的历史推送到服务器后，会再次把这些衍合后的提交引入到中央服务器，进一步困扰其他人（译注：这个例子中，出问题的责任方是那个发布了
+    C6 后又用衍合发布 C4' 的人，其他人会因此反馈双重历史到共享主干，从而混淆大家的视听。）。</p>
+
+<p>如果把衍合当成一种在推送之前清理提交历史的手段，而且仅仅衍合那些尚未公开的提交对象，就没问题。如果衍合那些已经公开的提交对象，并且已经有人基于这些提交对象开展了后续开发工作的话，就会出现叫人沮丧的麻烦。</p>
+
+<h2 id="3.7-小结"><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.7-%E5%B0%8F%E7%BB%93">3.7 小结</a></h2>
+
+<p>读到这里，你应该已经学会了如何创建分支并切换到新分支，在不同分支间转换，合并本地分支，把分支推送到共享服务器上，使用共享分支与他人协作，以及在分享之前进行衍合。</p>
+
+<p class="bottom-nav"><a class="next" href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html">下一节</a><a class="prev" href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html">上一节</a><a href="http://git.oschina.net/progit/index.html">首页（目录）</a> | <a href="http://git.oschina.net/">返回 码云</a></p>
+
+
+<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-top.png&quot;);"></div></div><div id="SL_balloon_obj" alt="0" style="display: block;"><div id="SL_button" class="SL_ImTranslatorLogo" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/imtranslator-s.png&quot;); display: none;"></div><div id="SL_shadow_translation_result2" style="display: none;"></div><div id="SL_shadow_translator"><div id="SL_planshet" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/bg2.png&quot;) rgb(244, 245, 245);"><div id="SL_arrow_up" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/up.png&quot;);"></div><div id="SL_providers"><div class="SL_BL_LABLE_ON" title="Google" id="SL_P0">G</div><div class="SL_BL_LABLE_ON" title="Microsoft" id="SL_P1">M</div><div class="SL_BL_LABLE_ON" title="Translator" id="SL_P2">T</div></div><div id="SL_alert_bbl" style="display: none;"><div id="SLHKclose" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/delete.png&quot;);"></div><div id="SL_alert_cont"></div></div><div id="SL_TB"><div id="SL_bubblelogo" class="SL_ImTranslatorLogo" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/imtranslator-s.png&quot;);"></div><table id="SL_tables" cellspacing="1"><tr><td class="SL_td" width="10%" align="right"><input id="SL_locer" type="checkbox" title="鎖定語言"></td><td class="SL_td" width="20%" align="left"><select id="SL_lng_from"><option value="auto">檢測語言</option><option value="sq">阿尔巴尼亚语</option><option value="ar">阿拉伯语</option><option value="az">阿塞拜疆语</option><option value="ga">爱尔兰语</option><option value="et">爱沙尼亚语</option><option value="eu">巴斯克语</option><option value="be">白俄罗斯语</option><option value="bg">保加利亚语</option><option value="is">冰岛语</option><option value="pl">波兰语</option><option value="bs">波斯尼亚语</option><option value="fa">波斯语</option><option value="af">布尔语(南非荷兰语)</option><option value="da">丹麦语</option><option value="de">德语</option><option value="ru">俄语</option><option value="fr">法语</option><option value="tl">菲律宾语</option><option value="fi">芬兰语</option><option value="km">高棉语</option><option value="ka">格鲁吉亚语</option><option value="gu">古吉拉特语</option><option value="kk">哈萨克语</option><option value="ht">海地克里奥尔语</option><option value="ko">韩语</option><option value="ha">豪萨语</option><option value="nl">荷兰语</option><option value="gl">加利西亚语</option><option value="ca">加泰罗尼亚语</option><option value="cs">捷克语</option><option value="kn">卡纳达语</option><option value="hr">克罗地亚语</option><option value="la">拉丁语</option><option value="lv">拉脱维亚语</option><option value="lo">老挝语</option><option value="lt">立陶宛语</option><option value="ro">罗马尼亚语</option><option value="mg">马尔加什语</option><option value="mt">马耳他语</option><option value="mr">马拉地语</option><option value="ml">马拉雅拉姆语</option><option value="ms">马来语</option><option value="mk">马其顿语</option><option value="mi">毛利语</option><option value="mn">蒙古语</option><option value="bn">孟加拉语</option><option value="my">缅甸语</option><option value="hmn">苗语</option><option value="zu">南非祖鲁语</option><option value="ne">尼泊尔语</option><option value="no">挪威语</option><option value="pa">旁遮普语</option><option value="pt">葡萄牙语</option><option value="ny">齐切瓦语</option><option value="ja">日语</option><option value="sv">瑞典语</option><option value="sr">塞尔维亚语</option><option value="st">塞索托语</option><option value="si">僧伽罗语</option><option value="eo">世界语</option><option value="sk">斯洛伐克语</option><option value="sl">斯洛文尼亚语</option><option value="sw">斯瓦希里语</option><option value="ceb">宿务语</option><option value="so">索马里语</option><option value="tg">塔吉克语</option><option value="te">泰卢固语</option><option value="ta">泰米尔语</option><option value="th">泰语</option><option value="tr">土耳其语</option><option value="cy">威尔士语</option><option value="ur">乌尔都语</option><option value="uk">乌克兰语</option><option value="uz">乌兹别克语</option><option value="iw">希伯来语</option><option value="el">希腊语</option><option value="es">西班牙语</option><option value="hu">匈牙利语</option><option value="hy">亚美尼亚语</option><option value="ig">伊博语</option><option value="it">意大利语</option><option value="yi">意第绪语</option><option value="hi">印地语</option><option value="su">印尼巽他语</option><option value="id">印尼语</option><option value="jw">印尼爪哇语</option><option value="en">英语</option><option value="yo">约鲁巴语</option><option value="vi">越南语</option><option value="zh-CN">中文简体</option><option value="zh-TW">中文繁体</option></select></td><td class="SL_td" width="3" align="center"><div id="SL_switch_b" title="切換語言" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/switchb.png&quot;);"></div></td><td class="SL_td" width="20%" align="left"><select id="SL_lng_to"><option value="sq">阿尔巴尼亚语</option><option value="ar">阿拉伯语</option><option value="az">阿塞拜疆语</option><option value="ga">爱尔兰语</option><option value="et">爱沙尼亚语</option><option value="eu">巴斯克语</option><option value="be">白俄罗斯语</option><option value="bg">保加利亚语</option><option value="is">冰岛语</option><option value="pl">波兰语</option><option value="bs">波斯尼亚语</option><option value="fa">波斯语</option><option value="af">布尔语(南非荷兰语)</option><option value="da">丹麦语</option><option value="de">德语</option><option value="ru">俄语</option><option value="fr">法语</option><option value="tl">菲律宾语</option><option value="fi">芬兰语</option><option value="km">高棉语</option><option value="ka">格鲁吉亚语</option><option value="gu">古吉拉特语</option><option value="kk">哈萨克语</option><option value="ht">海地克里奥尔语</option><option value="ko">韩语</option><option value="ha">豪萨语</option><option value="nl">荷兰语</option><option value="gl">加利西亚语</option><option value="ca">加泰罗尼亚语</option><option value="cs">捷克语</option><option value="kn">卡纳达语</option><option value="hr">克罗地亚语</option><option value="la">拉丁语</option><option value="lv">拉脱维亚语</option><option value="lo">老挝语</option><option value="lt">立陶宛语</option><option value="ro">罗马尼亚语</option><option value="mg">马尔加什语</option><option value="mt">马耳他语</option><option value="mr">马拉地语</option><option value="ml">马拉雅拉姆语</option><option value="ms">马来语</option><option value="mk">马其顿语</option><option value="mi">毛利语</option><option value="mn">蒙古语</option><option value="bn">孟加拉语</option><option value="my">缅甸语</option><option value="hmn">苗语</option><option value="zu">南非祖鲁语</option><option value="ne">尼泊尔语</option><option value="no">挪威语</option><option value="pa">旁遮普语</option><option value="pt">葡萄牙语</option><option value="ny">齐切瓦语</option><option value="ja">日语</option><option value="sv">瑞典语</option><option value="sr">塞尔维亚语</option><option value="st">塞索托语</option><option value="si">僧伽罗语</option><option value="eo">世界语</option><option value="sk">斯洛伐克语</option><option value="sl">斯洛文尼亚语</option><option value="sw">斯瓦希里语</option><option value="ceb">宿务语</option><option value="so">索马里语</option><option value="tg">塔吉克语</option><option value="te">泰卢固语</option><option value="ta">泰米尔语</option><option value="th">泰语</option><option value="tr">土耳其语</option><option value="cy">威尔士语</option><option value="ur">乌尔都语</option><option value="uk">乌克兰语</option><option value="uz">乌兹别克语</option><option value="iw">希伯来语</option><option value="el">希腊语</option><option value="es">西班牙语</option><option value="hu">匈牙利语</option><option value="hy">亚美尼亚语</option><option value="ig">伊博语</option><option value="it">意大利语</option><option value="yi">意第绪语</option><option value="hi">印地语</option><option value="su">印尼巽他语</option><option value="id">印尼语</option><option value="jw">印尼爪哇语</option><option value="en">英语</option><option value="yo">约鲁巴语</option><option value="vi">越南语</option><option selected="selected" value="zh-CN">中文简体</option><option value="zh-TW">中文繁体</option></select></td><td class="SL_td" width="21%" align="center"> </td><td class="SL_td" width="6%" align="center"><div id="SL_TTS_voice" title="聆聽" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/tts-voice.png&quot;);"></div></td><td class="SL_td" width="6%" align="center"><div id="SL_copy" title="複製譯文" class="SL_copy" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/copy_hand.png&quot;);"></div></td><td class="SL_td" width="6%" align="center"><div id="SL_bbl_font_patch"></div><div id="SL_bbl_font" title="字體大小" class="SL_bbl_font" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/font-off.png&quot;);"></div></td><td class="SL_td" width="6%" align="center"><div id="SL_TH" title="翻譯歷史" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/history.png&quot;);"></div></td><td class="SL_td" width="10%"> </td><td class="SL_td" width="8%" align="right"><div id="SL_pin" title="固定彈出窗口" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/pin-on.png&quot;);"></div></td></tr></table></div></div><div id="SL_shadow_translation_result" style="visibility: visible;"></div><div id="SL_loading" class="SL_loading" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/loading.gif&quot;);"></div><div id="SL_player2"></div><div id="SL_alert100">語言功能限200個字符</div><div id="SL_Balloon_options" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/bg3.png&quot;) rgb(255, 255, 255);"><div id="SL_arrow_down" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/down.png&quot;);"></div><table width="100%"><tr><td width="18%" align="left" height="16"><div id="SL_bbl_donate" title="進行一點捐款" style="background: url(&quot;chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/img/util/donate2.png&quot;);"></div></td><td width="68%" align="center"><a href="chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/html/options/options.html?bbl" target="_blank" class="SL_options" title="顯示選項">選項</a> : <a href="chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/html/options/options.html?hist" target="_blank" class="SL_options" title="翻譯歷史">歷史</a> : <a href="http://about.imtranslator.net/tutorials/presentations/imtranslator-for-chrome/chrome-bubble-translator/" target="_blank" class="SL_options" title="幫助">幫助</a> : <a href="chrome-extension://noaijdpnepcgjemiklgfkcfbkokogabh/content/html/options/options.html?feed" target="_blank" class="SL_options" title="反饋">反饋</a></td><td width="15%" align="right"><span id="SL_Balloon_Close" title="關閉">關閉</span></td></tr></table></div></div></div></body></html>

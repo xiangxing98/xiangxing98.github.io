@@ -1,0 +1,993 @@
+
+<!-- saved from url=(0086)http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html -->
+<html slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>8 Git 与其他系统 - Pro Git</title>
+    
+    <link href="./8.Git_And_Other_System_Pro_Git_files/styles.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="./8.Git_And_Other_System_Pro_Git_files/prettify.css" rel="stylesheet" type="text/css">
+    <script src="./8.Git_And_Other_System_Pro_Git_files/prettify.js.下载" type="text/javascript"></script>
+    <script src="./8.Git_And_Other_System_Pro_Git_files/jquery-1.8.3.min.js.下载" type="text/javascript"></script>
+    <script src="./8.Git_And_Other_System_Pro_Git_files/book.js.下载" type="text/javascript"></script>
+</head>
+<body youdao="bind">
+<div id="book-chapters">
+
+    <a class="right-home" href="http://git.oschina.net/" style="margin-left: 20px;">返回 码云</a>
+    <a class="right-home" href="http://git.oschina.net/progit/index.html">首页(目录)</a>
+    <a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#">章节列表 ▾</a>
+    Pro Git（中文版）
+    <div class="dropdown-panel" id="chapters-dropdown">
+        <div class="three-column">
+            <div class="column-left">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html">1.起步</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.1-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">1.1
+                                    关于版本控制</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.2-Git-%E7%AE%80%E5%8F%B2">1.2 Git 简史</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.3-Git-%E5%9F%BA%E7%A1%80">1.3 Git 基础</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.4-%E5%AE%89%E8%A3%85-Git">1.4 安装 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.5-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C-Git-%E5%89%8D%E7%9A%84%E9%85%8D%E7%BD%AE">1.5
+                                    初次运行 Git 前的配置</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.6-%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9">1.6
+                                获取帮助</a></li>
+                            <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.7-%E5%B0%8F%E7%BB%93">1.7 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html">2.Git 基础</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.1-%E5%8F%96%E5%BE%97%E9%A1%B9%E7%9B%AE%E7%9A%84-Git-%E4%BB%93%E5%BA%93">2.1
+                                    取得项目的 Git 仓库</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.2-%E8%AE%B0%E5%BD%95%E6%AF%8F%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%93%E5%BA%93">2.2
+                                    记录每次更新到仓库</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.3-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">2.3
+                                    查看提交历史</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.4-%E6%92%A4%E6%B6%88%E6%93%8D%E4%BD%9C">2.4
+                                撤消操作</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.5-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">2.5
+                                    远程仓库的使用</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.6-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 打标签</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.7-%E6%8A%80%E5%B7%A7%E5%92%8C%E7%AA%8D%E9%97%A8">2.7
+                                    技巧和窍门</a></li>
+                            <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.8-%E5%B0%8F%E7%BB%93">2.8 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html">3.Git 分支</a></h2>
+                        <ol class="chapter_toc">
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.1-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">3.1
+                                何谓分支</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.2-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6">3.2
+                                    分支的新建与合并</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.3-%E5%88%86%E6%94%AF%E7%9A%84%E7%AE%A1%E7%90%86">3.3
+                                    分支的管理</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.4-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.4
+                                    利用分支进行开发的工作流程</a></li>
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.5-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">3.5
+                                远程分支</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.6-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">3.6
+                                    分支的衍合</a></li>
+                            <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.7-%E5%B0%8F%E7%BB%93">3.7 小结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+            <div class="column-middle">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html">4.服务器上的 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.1-%E5%8D%8F%E8%AE%AE">4.1
+                                    协议</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.2-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%83%A8%E7%BD%B2-Git">4.2
+                                    在服务器上部署 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.3-%E7%94%9F%E6%88%90-SSH-%E5%85%AC%E9%92%A5">4.3
+                                    生成 SSH 公钥</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.4-%E6%9E%B6%E8%AE%BE%E6%9C%8D%E5%8A%A1%E5%99%A8">4.4
+                                    架设服务器</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.5-%E5%85%AC%E5%85%B1%E8%AE%BF%E9%97%AE">4.5
+                                    公共访问</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.6-GitWeb">4.6
+                                GitWeb</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.7-Gitosis">4.7
+                                Gitosis</a></li>
+                            <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.8-Gitolite">4.8
+                                Gitolite</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.9-Git-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">4.9
+                                    Git 守护进程</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.10-Git-%E6%89%98%E7%AE%A1%E6%9C%8D%E5%8A%A1">4.10
+                                    Git 托管服务</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.11-%E5%B0%8F%E7%BB%93">4.11
+                                    小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html">5.分布式 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">5.1
+                                    分布式工作流程</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.2-%E4%B8%BA%E9%A1%B9%E7%9B%AE%E4%BD%9C%E8%B4%A1%E7%8C%AE">5.2
+                                    为项目作贡献</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.3-%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86">5.3
+                                    项目的管理</a></li>
+                            <li><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.4-%E5%B0%8F%E7%BB%93">5.4 小结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html">6.Git 工具</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.1-%E4%BF%AE%E8%AE%A2%E7%89%88%E6%9C%AC%EF%BC%88Revision%EF%BC%89%E9%80%89%E6%8B%A9">6.1
+                                    修订版本（Revision）选择</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.2-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98">6.2
+                                    交互式暂存</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.3-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89">6.3
+                                    储藏（Stashing）</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.4-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2">6.4
+                                重写历史</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.5-%E4%BD%BF%E7%94%A8-Git-%E8%B0%83%E8%AF%95">6.5
+                                使用 Git 调试</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.6-%E5%AD%90%E6%A8%A1%E5%9D%97">6.6 子模块</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.7-%E5%AD%90%E6%A0%91%E5%90%88%E5%B9%B6">6.7
+                                子树合并</a></li>
+                            <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.8-%E6%80%BB%E7%BB%93">6.8 总结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+            <div class="column-right">
+                <ol class="book-toc">
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html">7.自定义 Git</a></h2>
+                        <ol class="chapter_toc">
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.1-%E9%85%8D%E7%BD%AE-Git">7.1 配置
+                                Git</a></li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.2-Git%E5%B1%9E%E6%80%A7">7.2 Git属性</a>
+                            </li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.3-Git%E6%8C%82%E9%92%A9">7.3 Git挂钩</a>
+                            </li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.4-Git-%E5%BC%BA%E5%88%B6%E7%AD%96%E7%95%A5%E5%AE%9E%E4%BE%8B">7.4
+                                    Git 强制策略实例</a></li>
+                            <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.5-%E6%80%BB%E7%BB%93">7.5 总结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html">8.Git 与其他系统</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.1-Git-%E4%B8%8E-Subversion">8.1
+                                    Git 与 Subversion</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.2-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">8.2
+                                    迁移到 Git</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.3-%E6%80%BB%E7%BB%93">8.3
+                                    总结</a></li>
+                        </ol>
+                    </li>
+                    <li class="chapter">
+                        <h2><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html">9.Git 内部原理</a></h2>
+                        <ol class="chapter_toc">
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4-(Plumbing)-%E5%92%8C%E9%AB%98%E5%B1%82%E5%91%BD%E4%BB%A4-(Porcelain)">9.1
+                                    底层命令 (Plumbing) 和高层命令 (Porcelain)</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.2-Git-%E5%AF%B9%E8%B1%A1">9.2
+                                Git 对象</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.3-Git-References">9.3 Git
+                                References</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.4-Packfiles">9.4
+                                Packfiles</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.5-The-Refspec">9.5 The
+                                Refspec</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.6-%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE">9.6
+                                    传输协议</a></li>
+                            <li>
+                                <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.7-%E7%BB%B4%E6%8A%A4%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D">9.7
+                                    维护及数据恢复</a></li>
+                            <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.8-%E6%80%BB%E7%BB%93">9.8
+                                总结</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<h1>8 Git 与其他系统</h1>
+<ol class="chapter_toc">
+    <li><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.1-Git-%E4%B8%8E-Subversion">8.1 Git 与 Subversion</a></li>
+    <li><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.2-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">8.2 迁移到 Git</a></li>
+    <li><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.3-%E6%80%BB%E7%BB%93">8.3 总结</a></li>
+</ol>
+
+<p>世界不是完美的。大多数时候，将所有接触到的项目全部转向 Git 是不可能的。有时我们不得不为某个项目使用其他的版本控制系统（VCS, Version Control System ），其中比较常见的是 Subversion
+    。你将在本章的第一部分学习使用 <code>git svn</code> ，Git 为 Subversion 附带的双向桥接工具。</p>
+
+<p>或许现在你已经在考虑将先前的项目转向 Git 。本章的第二部分将介绍如何将项目迁移到 Git：先介绍从 Subversion 的迁移，然后是 Perforce，最后介绍如何使用自定义的脚本进行非标准的导入。</p>
+
+<h2 id="8.1-Git-与-Subversion"><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.1-Git-%E4%B8%8E-Subversion">8.1 Git 与 Subversion</a></h2>
+
+<p>当前，大多数开发中的开源项目以及大量的商业项目都使用 Subversion 来管理源码。作为最流行的开源版本控制系统，Subversion 已经存在了接近十年的时间。它在许多方面与 CVS
+    十分类似，后者是前者出现之前代码控制世界的霸主。</p>
+
+<p>Git 最为重要的特性之一是名为 <code>git svn</code> 的 Subversion 双向桥接工具。该工具把 Git 变成了 Subversion 服务的客户端，从而让你在本地享受到 Git 所有的功能，而后直接向
+    Subversion 服务器推送内容，仿佛在本地使用了 Subversion 客户端。也就是说，在其他人忍受古董的同时，你可以在本地享受分支合并，使暂存区域，衍合以及 单项挑拣等等。这是个让 Git
+    偷偷潜入合作开发环境的好东西，在帮助你的开发同伴们提高效率的同时，它还能帮你劝说团队让整个项目框架转向对 Git 的支持。这个 Subversion 之桥是通向分布式版本控制系统（DVCS, Distributed VCS
+    ）世界的神奇隧道。</p>
+
+<h3>git svn</h3>
+
+<p>Git 中所有 Subversion 桥接命令的基础是 <code>git svn</code> 。所有的命令都从它开始。相关的命令数目不少，你将通过几个简单的工作流程了解到其中常见的一些。</p>
+
+<p>值得警戒的是，在使用 <code>git svn</code> 的时候，你实际是在与 Subversion 交互，Git 比它要高级复杂的多。尽管可以在本地随意的进行分支和合并，最好还是通过衍合保持线性的提交历史，尽量避免类似与远程
+    Git 仓库动态交互这样的操作。</p>
+
+<p>避免修改历史再重新推送的做法，也不要同时推送到并行的 Git 仓库来试图与其他 Git 用户合作。Subersion 只能保存单一的线性提交历史，一不小心就会被搞糊涂。合作团队中同时有人用 SVN 和 Git，一定要确保所有人都使用
+    SVN 服务来协作——这会让生活轻松很多。</p>
+
+<h3>初始设定</h3>
+
+<p>为了展示功能，先要一个具有写权限的 SVN 仓库。如果想尝试这个范例，你必须复制一份其中的测试仓库。比较简单的做法是使用一个名为 <code>svnsync</code> 的工具。较新的 Subversion
+    版本中都带有该工具，它将数据编码为用于网络传输的格式。</p>
+
+<p>要尝试本例，先在本地新建一个 Subversion 仓库：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ mkdir </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">test</span><span class="pun">-</span><span class="pln">svn
+    $ svnadmin create </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">test</span><span class="pun">-</span><span class="pln">svn</span></code></pre>
+
+<p>然后，允许所有用户修改 revprop —— 简单的做法是添加一个总是以 0 作为返回值的 pre-revprop-change 脚本：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ cat </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">test</span><span class="pun">-</span><span class="pln">svn</span><span class="pun">/</span><span class="pln">hooks</span><span class="pun">/</span><span class="pln">pre</span><span class="pun">-</span><span class="pln">revprop</span><span class="pun">-</span><span class="pln">change
+    </span><span class="com">#!/bin/sh</span><span class="pln">
+    </span><span class="kwd">exit</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    $ chmod </span><span class="pun">+</span><span class="pln">x </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">test</span><span class="pun">-</span><span class="pln">svn</span><span class="pun">/</span><span class="pln">hooks</span><span class="pun">/</span><span class="pln">pre</span><span class="pun">-</span><span class="pln">revprop</span><span class="pun">-</span><span class="pln">change</span></code></pre>
+
+<p>现在可以调用 <code>svnsync init</code> 加目标仓库，再加源仓库的格式来把该项目同步到本地了：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ svnsync init file</span><span class="pun">:</span><span class="com">///tmp/test-svn http://progit-example.googlecode.com/svn/</span></code></pre>
+
+<p>这将建立进行同步所需的属性。可以通过运行以下命令来克隆代码：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ svnsync sync file</span><span class="pun">:</span><span class="com">///tmp/test-svn</span><span class="pln">
+    </span><span class="typ">Committed</span><span class="pln"> revision </span><span class="lit">1.</span><span class="pln">
+    </span><span class="typ">Copied</span><span class="pln"> properties </span><span class="kwd">for</span><span class="pln"> revision </span><span class="lit">1.</span><span class="pln">
+    </span><span class="typ">Committed</span><span class="pln"> revision </span><span class="lit">2.</span><span class="pln">
+    </span><span class="typ">Copied</span><span class="pln"> properties </span><span class="kwd">for</span><span class="pln"> revision </span><span class="lit">2.</span><span class="pln">
+    </span><span class="typ">Committed</span><span class="pln"> revision </span><span class="lit">3.</span><span class="pln">
+    </span><span class="pun">...</span></code></pre>
+
+<p>别看这个操作只花掉几分钟，要是你想把源仓库复制到另一个远程仓库，而不是本地仓库，那将花掉接近一个小时，尽管项目中只有不到 100 次的提交。 Subversion
+    每次只复制一次修改，把它推送到另一个仓库里，然后周而复始——惊人的低效，但是我们别无选择。</p>
+
+<h3>入门</h3>
+
+<p>有了可以写入的 Subversion 仓库以后，就可以尝试一下典型的工作流程了。我们从 <code>git svn clone</code> 命令开始，它会把整个 Subversion 仓库导入到一个本地的 Git
+    仓库中。提醒一下，这里导入的是一个货真价实的 Subversion 仓库，所以应该把下面的 <code>file:///tmp/test-svn</code> 换成你所用的 Subversion 仓库的 URL：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn clone file</span><span class="pun">:</span><span class="com">///tmp/test-svn -T trunk -b branches -t tags</span><span class="pln">
+    </span><span class="typ">Initialized</span><span class="pln"> empty </span><span class="typ">Git</span><span class="pln"> repository </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">/</span><span class="typ">Users</span><span class="pun">/</span><span class="pln">schacon</span><span class="pun">/</span><span class="pln">projects</span><span class="pun">/</span><span class="pln">testsvnsync</span><span class="pun">/</span><span class="pln">svn</span><span class="pun">/.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">
+    r1 </span><span class="pun">=</span><span class="pln"> b4e387bc68740b5af56c2a5faf4003ae42bd135c </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    A m4</span><span class="pun">/</span><span class="pln">acx_pthread</span><span class="pun">.</span><span class="pln">m4
+    A m4</span><span class="pun">/</span><span class="pln">stl_hash</span><span class="pun">.</span><span class="pln">m4
+    </span><span class="pun">...</span><span class="pln">
+    r75 </span><span class="pun">=</span><span class="pln"> d1957f3b307922124eec6314e15bcda59e3d9610 </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">Found</span><span class="pln"> possible branch point</span><span class="pun">:</span><span class="pln"> file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk =&gt; \</span><span class="pln">
+    file</span><span class="pun">:</span><span class="com">///tmp/test-svn /branches/my-calc-branch, 75</span><span class="pln">
+    </span><span class="typ">Found</span><span class="pln"> branch parent</span><span class="pun">:</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">calc</span><span class="pun">-</span><span class="pln">branch</span><span class="pun">)</span><span class="pln"> d1957f3b307922124eec6314e15bcda59e3d9610
+    </span><span class="typ">Following</span><span class="pln"> parent </span><span class="kwd">with</span><span class="pln"> do_switch
+    </span><span class="typ">Successfully</span><span class="pln"> followed parent
+    r76 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">8624824ecc0badd73f40ea2f01fce51894189b01</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">calc</span><span class="pun">-</span><span class="pln">branch</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">Checked</span><span class="pln"> </span><span class="kwd">out</span><span class="pln"> HEAD</span><span class="pun">:</span><span class="pln">
+    file</span><span class="pun">:</span><span class="com">///tmp/test-svn/branches/my-calc-branch r76</span></code></pre>
+
+<p>这相当于针对所提供的 URL 运行了两条命令—— <code>git svn init</code> 加上 <code>git svn fetch</code> 。可能会花上一段时间。我们所用的测试项目仅仅包含 75
+    次提交并且它的代码量不算大，所以只有几分钟而已。不过，Git 仍然需要提取每一个版本，每次一个，再逐个提交。对于一个包含成百上千次提交的项目，花掉的时间则可能是几小时甚至数天。</p>
+
+<p><code>-T trunk -b branches -t tags</code> 告诉 Git 该 Subversion
+    仓库遵循了基本的分支和标签命名法则。如果你的主干(译注：trunk，相当于非分布式版本控制里的master分支，代表开发的主线），分支或者标签以不同的方式命名，则应做出相应改变。由于该法则的常见性，可以使用
+    <code>-s</code> 来代替整条命令，它意味着标准布局（s 是 Standard layout 的首字母），也就是前面选项的内容。下面的命令有相同的效果：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn clone file</span><span class="pun">:</span><span class="com">///tmp/test-svn -s</span></code></pre>
+
+<p>现在，你有了一个有效的 Git 仓库，包含着导入的分支和标签：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch </span><span class="pun">-</span><span class="pln">a
+    </span><span class="pun">*</span><span class="pln"> master
+    </span><span class="kwd">my</span><span class="pun">-</span><span class="pln">calc</span><span class="pun">-</span><span class="pln">branch
+    tags</span><span class="pun">/</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2</span><span class="pln">
+    tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">1</span><span class="pln">
+    tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2</span><span class="pln">
+    tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2rc1</span><span class="pln">
+    trunk</span></code></pre>
+
+<p>值得注意的是，该工具分配命名空间时和远程引用的方式不尽相同。克隆普通的 Git 仓库时，可以以 <code>origin/[branch]</code> 的形式获取远程服务器上所有可用的分支——分配到远程服务的名称下。然而
+    <code>git svn</code> 假定不存在多个远程服务器，所以把所有指向远程服务的引用不加区分的保存下来。可以用 Git 探测命令 <code>show-ref</code> 来查看所有引用的全名。</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git show</span><span class="pun">-</span><span class="kwd">ref</span><span class="pln">
+    </span><span class="lit">1cbd4904d9982f386d87f88fce1c24ad7c0f0471</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">heads</span><span class="pun">/</span><span class="pln">master
+    aee1ecc26318164f355a883f5d99cff0c852d3c4 refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">calc</span><span class="pun">-</span><span class="pln">branch
+    </span><span class="lit">03d09b0e2aad427e34a6d50ff147128e76c0e0f5</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">tags</span><span class="pun">/</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2</span><span class="pln">
+    </span><span class="lit">50d02cc0adc9da4319eeba0900430ba219b9c376</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">1</span><span class="pln">
+    </span><span class="lit">4caaa711a50c77879a91b8b90380060f672745cb</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2</span><span class="pln">
+    </span><span class="lit">1c4cb508144c513ff1214c3488abe66dcb92916f</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">tags</span><span class="pun">/</span><span class="pln">release</span><span class="pun">-</span><span class="lit">2.0</span><span class="pun">.</span><span class="lit">2rc1</span><span class="pln">
+    </span><span class="lit">1cbd4904d9982f386d87f88fce1c24ad7c0f0471</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk</span></code></pre>
+
+<p>而普通的 Git 仓库应该是这个模样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git show</span><span class="pun">-</span><span class="kwd">ref</span><span class="pln">
+    </span><span class="lit">83e38c7a0af325a9722f2fdc56b10188806d83a1</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">heads</span><span class="pun">/</span><span class="pln">master
+    </span><span class="lit">3e15e38c198baac84223acfc6224bb8b99ff2281</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">gitserver</span><span class="pun">/</span><span class="pln">master
+    </span><span class="lit">0a30dd3b0c795b80212ae723640d4e5d48cabdff</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">origin</span><span class="pun">/</span><span class="pln">master
+    </span><span class="lit">25812380387fdd55f916652be4881c6f11600d6f</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">origin</span><span class="pun">/</span><span class="pln">testing</span></code></pre>
+
+<p>这里有两个远程服务器：一个名为 <code>gitserver</code> ，具有一个 <code>master</code>分支；另一个叫 <code>origin</code>，具有 <code>master</code> 和
+    <code>testing</code> 两个分支。</p>
+
+<p>注意本例中通过 <code>git svn</code> 导入的远程引用，（Subversion 的）标签是当作远程分支添加的，而不是真正的 Git 标签。导入的 Subversion 仓库仿佛是有一个带有不同分支的 tags
+    远程服务器。</p>
+
+<h3>提交到 Subversion</h3>
+
+<p>有了可以开展工作的（本地）仓库以后，你可以开始对该项目做出贡献并向上游仓库提交内容了，Git 这时相当于一个 SVN 客户端。假如编辑了一个文件并进行提交，那么这次提交仅存在于本地的 Git 而非 Subversion
+    服务器上。</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git commit </span><span class="pun">-</span><span class="pln">am </span><span class="str">'Adding git-svn instructions to the README'</span><span class="pln">
+    </span><span class="pun">[</span><span class="pln">master </span><span class="lit">97031e5</span><span class="pun">]</span><span class="pln"> </span><span class="typ">Adding</span><span class="pln"> git</span><span class="pun">-</span><span class="pln">svn instructions to the README
+    </span><span class="lit">1</span><span class="pln"> files changed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> insertions</span><span class="pun">(+),</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> deletions</span><span class="pun">(-)</span></code></pre>
+
+<p>接下来，可以将作出的修改推送到上游。值得注意的是，Subversion 的使用流程也因此改变了——你可以在离线状态下进行多次提交然后一次性的推送到 Subversion 的服务器上。向 Subversion 服务器推送的命令是
+    <code>git svn dcommit</code>：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn dcommit
+    </span><span class="typ">Committing</span><span class="pln"> to file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk ...</span><span class="pln">
+    M README</span><span class="pun">.</span><span class="pln">txt
+    </span><span class="typ">Committed</span><span class="pln"> r79
+    M README</span><span class="pun">.</span><span class="pln">txt
+    r79 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">938b1a547c2cc92033b74d32030e86468294a5c8</span><span class="pln"> </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">No</span><span class="pln"> changes between current HEAD </span><span class="kwd">and</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk
+    </span><span class="typ">Resetting</span><span class="pln"> to the latest refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk</span></code></pre>
+
+<p>所有在原 Subversion 数据基础上提交的 commit 会一一提交到 Subversion，然后你本地 Git 的 commit 将被重写，加入一个特别标识。这一步很重要，因为它意味着所有 commit 的 SHA-1
+    指都会发生变化。这也是同时使用 Git 和 Subversion 两种服务作为远程服务不是个好主意的原因之一。检视以下最后一个 commit，你会找到新添加的 <code>git-svn-id</code>
+    （译注：即本段开头所说的特别标识）：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git log </span><span class="pun">-</span><span class="lit">1</span><span class="pln">
+    commit </span><span class="lit">938b1a547c2cc92033b74d32030e86468294a5c8</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> schacon </span><span class="pun">&lt;</span><span class="pln">schacon@4c93b258</span><span class="pun">-</span><span class="lit">373f</span><span class="pun">-</span><span class="lit">11de</span><span class="pun">-</span><span class="pln">be05</span><span class="pun">-</span><span class="lit">5f7a86268029</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Sat</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="lit">22</span><span class="pun">:</span><span class="lit">06</span><span class="pun">:</span><span class="lit">44</span><span class="pln"> </span><span class="lit">2009</span><span class="pln"> </span><span class="pun">+</span><span class="lit">0000</span><span class="pln">
+
+    </span><span class="typ">Adding</span><span class="pln"> git</span><span class="pun">-</span><span class="pln">svn instructions to the README
+
+    git</span><span class="pun">-</span><span class="pln">svn</span><span class="pun">-</span><span class="pln">id</span><span class="pun">:</span><span class="pln"> file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk@79 4c93b258-373f-11de-be05-5f7a86268029</span></code></pre>
+
+<p>注意看，原本以 <code>97031e5</code> 开头的 SHA-1 校验值在提交完成以后变成了 <code>938b1a5</code> 。如果既要向 Git 远程服务器推送内容，又要推送到 Subversion
+    远程服务器，则必须先向 Subversion 推送（<code>dcommit</code>），因为该操作会改变所提交的数据内容。</p>
+
+<h3>拉取最新进展</h3>
+
+<p>如果要与其他开发者协作，总有那么一天你推送完毕之后，其他人发现他们推送自己修改的时候（与你推送的内容）产生冲突。这些修改在你合并之前将一直被拒绝。在 <code>git svn</code> 里这种情况形似：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn dcommit
+    </span><span class="typ">Committing</span><span class="pln"> to file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk ...</span><span class="pln">
+    </span><span class="typ">Merge</span><span class="pln"> conflict during commit</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Your</span><span class="pln"> file </span><span class="kwd">or</span><span class="pln"> directory </span><span class="str">'README.txt'</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> probably \
+    </span><span class="kwd">out</span><span class="pun">-</span><span class="pln">of</span><span class="pun">-</span><span class="pln">date</span><span class="pun">:</span><span class="pln"> resource </span><span class="kwd">out</span><span class="pln"> of date</span><span class="pun">;</span><span class="pln"> </span><span class="kwd">try</span><span class="pln"> updating at </span><span class="pun">/</span><span class="typ">Users</span><span class="pun">/</span><span class="pln">schacon</span><span class="pun">/</span><span class="pln">libexec</span><span class="pun">/</span><span class="pln">git</span><span class="pun">-</span><span class="pln">\
+    core</span><span class="pun">/</span><span class="pln">git</span><span class="pun">-</span><span class="pln">svn line </span><span class="lit">482</span></code></pre>
+
+<p>为了解决该问题，可以运行 <code>git svn rebase</code> ，它会拉取服务器上所有最新的改变，再次基础上衍合你的修改：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn rebase
+    M README</span><span class="pun">.</span><span class="pln">txt
+    r80 </span><span class="pun">=</span><span class="pln"> ff829ab914e8775c7c025d741beb3d523ee30bc4 </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">First</span><span class="pun">,</span><span class="pln"> rewinding head to replay your work on top of it</span><span class="pun">...</span><span class="pln">
+    </span><span class="typ">Applying</span><span class="pun">:</span><span class="pln"> first user change</span></code></pre>
+
+<p>现在，你做出的修改都发生在服务器内容之后，所以可以顺利的运行 <code>dcommit</code> ：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn dcommit
+    </span><span class="typ">Committing</span><span class="pln"> to file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk ...</span><span class="pln">
+    M README</span><span class="pun">.</span><span class="pln">txt
+    </span><span class="typ">Committed</span><span class="pln"> r81
+    M README</span><span class="pun">.</span><span class="pln">txt
+    r81 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">456cbe6337abe49154db70106d1836bc1332deed</span><span class="pln"> </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">No</span><span class="pln"> changes between current HEAD </span><span class="kwd">and</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk
+    </span><span class="typ">Resetting</span><span class="pln"> to the latest refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk</span></code></pre>
+
+<p>需要牢记的一点是，Git 要求我们在推送之前先合并上游仓库中最新的内容，而 <code>git svn</code> 只要求存在冲突的时候才这样做。假如有人向一个文件推送了一些修改，这时你要向另一个文件推送一些修改，那么 <code>dcommit</code>
+    将正常工作：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn dcommit
+    </span><span class="typ">Committing</span><span class="pln"> to file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk ...</span><span class="pln">
+    M configure</span><span class="pun">.</span><span class="pln">ac
+    </span><span class="typ">Committed</span><span class="pln"> r84
+    M autogen</span><span class="pun">.</span><span class="pln">sh
+    r83 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">8aa54a74d452f82eee10076ab2584c1fc424853b</span><span class="pln"> </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    M configure</span><span class="pun">.</span><span class="pln">ac
+    r84 </span><span class="pun">=</span><span class="pln"> cdbac939211ccb18aa744e581e46563af5d962d0 </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    W</span><span class="pun">:</span><span class="pln"> d2f23b80f67aaaa1f6f5aaef48fce3263ac71a92 </span><span class="kwd">and</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk differ</span><span class="pun">,</span><span class="pln"> \
+    </span><span class="kwd">using</span><span class="pln"> rebase</span><span class="pun">:</span><span class="pln">
+    </span><span class="pun">:</span><span class="lit">100755</span><span class="pln"> </span><span class="lit">100755</span><span class="pln"> efa5a59965fbbb5b2b0a12890f1b351bb5493c18 \
+    </span><span class="lit">015e4c98c482f0fa71e4d5434338014530b37fa6</span><span class="pln"> M autogen</span><span class="pun">.</span><span class="pln">sh
+    </span><span class="typ">First</span><span class="pun">,</span><span class="pln"> rewinding head to replay your work on top of it</span><span class="pun">...</span><span class="pln">
+    </span><span class="typ">Nothing</span><span class="pln"> to </span><span class="kwd">do</span><span class="pun">.</span></code></pre>
+
+<p>这一点需要牢记，因为它的结果是推送之后项目处于一个不完整存在与任何主机上的状态。如果做出的修改无法兼容但没有产生冲突，则可能造成一些很难确诊的难题。这和使用 Git 服务器是不同的——在 Git
+    世界里，发布之前，你可以在客户端系统里完整的测试项目的状态，而在 SVN 永远都没法确保提交前后项目的状态完全一样。</p>
+
+<p>即使还没打算进行提交，你也应该用这个命令从 Subversion 服务器拉取最新修改。<code>sit svn fetch</code> 能获取最新的数据，不过 <code>git svn rebase</code>
+    才会在获取之后在本地进行更新 。</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn rebase
+    M generate_descriptor_proto</span><span class="pun">.</span><span class="pln">sh
+    r82 </span><span class="pun">=</span><span class="pln"> bd16df9173e424c6f52c337ab6efa7f7643282f1 </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">First</span><span class="pun">,</span><span class="pln"> rewinding head to replay your work on top of it</span><span class="pun">...</span><span class="pln">
+    </span><span class="typ">Fast</span><span class="pun">-</span><span class="pln">forwarded master to refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk</span><span class="pun">.</span></code></pre>
+
+<p>不时地运行一下 <code>git svn rebase</code> 可以确保你的代码没有过时。不过，运行该命令时需要确保工作目录的整洁。如果在本地做了修改，则必须在运行 <code>git svn rebase</code>
+    之前或暂存工作，或暂时提交内容——否则，该命令会发现衍合的结果包含着冲突因而终止。</p>
+
+<h3>Git 分支问题</h3>
+
+<p>习惯了 Git 的工作流程以后，你可能会创建一些特性分支，完成相关的开发工作，然后合并他们。如果要用 git svn 向 Subversion 推送内容，那么最好是每次用衍合来并入一个单一分支，而不是直接合并。使用衍合的原因是
+    Subversion 只有一个线性的历史而不像 Git 那样处理合并，所以 Git svn 在把快照转换为 Subversion 的 commit 时只能包含第一个祖先。</p>
+
+<p>假设分支历史如下：创建一个 <code>experiment</code> 分支，进行两次提交，然后合并到 <code>master</code> 。在 <code>dcommit</code> 的时候会得到如下输出：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn dcommit
+    </span><span class="typ">Committing</span><span class="pln"> to file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk ...</span><span class="pln">
+    M CHANGES</span><span class="pun">.</span><span class="pln">txt
+    </span><span class="typ">Committed</span><span class="pln"> r85
+    M CHANGES</span><span class="pun">.</span><span class="pln">txt
+    r85 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">4bfebeec434d156c36f2bcd18f4e3d97dc3269a2</span><span class="pln"> </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">No</span><span class="pln"> changes between current HEAD </span><span class="kwd">and</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk
+    </span><span class="typ">Resetting</span><span class="pln"> to the latest refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk
+    COPYING</span><span class="pun">.</span><span class="pln">txt</span><span class="pun">:</span><span class="pln"> locally modified
+    INSTALL</span><span class="pun">.</span><span class="pln">txt</span><span class="pun">:</span><span class="pln"> locally modified
+    M COPYING</span><span class="pun">.</span><span class="pln">txt
+    M INSTALL</span><span class="pun">.</span><span class="pln">txt
+    </span><span class="typ">Committed</span><span class="pln"> r86
+    M INSTALL</span><span class="pun">.</span><span class="pln">txt
+    M COPYING</span><span class="pun">.</span><span class="pln">txt
+    r86 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2647f6b86ccfcaad4ec58c520e369ec81f7c283c</span><span class="pln"> </span><span class="pun">(</span><span class="pln">trunk</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">No</span><span class="pln"> changes between current HEAD </span><span class="kwd">and</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk
+    </span><span class="typ">Resetting</span><span class="pln"> to the latest refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">trunk</span></code></pre>
+
+<p>在一个包含了合并历史的分支上使用 <code>dcommit</code> 可以成功运行，不过在 Git 项目的历史中，它没有重写你在 <code>experiment</code> 分支中的两个 commit
+    ——另一方面，这些改变却出现在了 SVN 版本中同一个合并 commit 中。</p>
+
+<p>在别人克隆该项目的时候，只能看到这个合并 commit 包含了所有发生过的修改；他们无法获知修改的作者和时间等提交信息。</p>
+
+<h3>Subversion 分支</h3>
+
+<p>Subversion 的分支和 Git 中的不尽相同；避免过多的使用可能是最好方案。不过，用 git svn 创建和提交不同的 Subversion 分支仍是可行的。</p>
+
+<h4>创建新的 SVN 分支</h4>
+
+<p>要在 Subversion 中建立一个新分支，需要运行 <code>git svn branch [分支名]</code> ：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn branch opera
+    </span><span class="typ">Copying</span><span class="pln"> file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk at r87 to file:///tmp/test-svn/branches/opera...</span><span class="pln">
+    </span><span class="typ">Found</span><span class="pln"> possible branch point</span><span class="pun">:</span><span class="pln"> file</span><span class="pun">:</span><span class="com">///tmp/test-svn/trunk =&gt; \</span><span class="pln">
+    file</span><span class="pun">:</span><span class="com">///tmp/test-svn/branches/opera, 87</span><span class="pln">
+    </span><span class="typ">Found</span><span class="pln"> branch parent</span><span class="pun">:</span><span class="pln"> </span><span class="pun">(</span><span class="pln">opera</span><span class="pun">)</span><span class="pln"> </span><span class="lit">1f6bfe471083cbca06ac8d4176f7ad4de0d62e5f</span><span class="pln">
+    </span><span class="typ">Following</span><span class="pln"> parent </span><span class="kwd">with</span><span class="pln"> do_switch
+    </span><span class="typ">Successfully</span><span class="pln"> followed parent
+    r89 </span><span class="pun">=</span><span class="pln"> </span><span class="lit">9b6fe0b90c5c9adf9165f700897518dbc54a7cbf</span><span class="pln"> </span><span class="pun">(</span><span class="pln">opera</span><span class="pun">)</span></code></pre>
+
+<p>这相当于在 Subversion 中的 <code>svn copy trunk branches/opera</code> 命令，并会对 Subversion
+    服务器进行相关操作。值得注意的是它没有检出和转换到那个分支；如果现在进行提交，将提交到服务器上的 <code>trunk</code>， 而非 <code>opera</code>。</p>
+
+<h3>切换当前分支</h3>
+
+<p>Git 通过搜寻提交历史中 Subversion 分支的头部来决定 dcommit 的目的地——而它应该只有一个，那就是当前分支历史中最近一次包含 <code>git-svn-id</code> 的提交。</p>
+
+<p>如果需要同时在多个分支上提交，可以通过导入 Subversion 上某个其他分支的 commit 来建立以该分支为 <code>dcommit</code> 目的地的本地分支。比如你想拥有一个并行维护的
+    <code>opera</code> 分支，可以运行</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git branch opera remotes</span><span class="pun">/</span><span class="pln">opera</span></code></pre>
+
+<p>然后，如果要把 <code>opera</code> 分支并入 <code>trunk</code> （本地的 <code>master</code> 分支），可以使用普通的 <code>git merge</code>。不过最好提供一条描述提交的信息（通过
+    <code>-m</code>），否则这次合并的记录是 <code>Merge branch opera</code> ，而不是任何有用的东西。</p>
+
+<p>记住，虽然使用了 <code>git merge</code> 来进行这次操作，并且合并过程可能比使用 Subversion 简单一些（因为 Git 会自动找到适合的合并基础），这并不是一次普通的 Git 合并提交。最终它将被推送回
+    commit 无法包含多个祖先的 Subversion 服务器上；因而在推送之后，它将变成一个包含了所有在其他分支上做出的改变的单一 commit。把一个分支合并到另一个分支以后，你没法像在 Git
+    中那样轻易的回到那个分支上继续工作。提交时运行的 <code>dcommit</code> 命令擦除了全部有关哪个分支被并入的信息，因而以后的合并基础计算将是不正确的—— dcommit 让 <code>git
+        merge</code> 的结果变得类似于 <code>git merge --squash</code>。不幸的是，我们没有什么好办法来避免该情况—— Subversion
+    无法储存这个信息，所以在使用它作为服务器的时候你将永远为这个缺陷所困。为了不出现这种问题，在把本地分支（本例中的 <code>opera</code>）并入 trunk 以后应该立即将其删除。</p>
+
+<h3>对应 Subversion 的命令</h3>
+
+<p><code>git svn</code> 工具集合了若干个与 Subversion 类似的功能，对应的命令可以简化向 Git 的转化过程。下面这些命令能实现 Subversion 的这些功能。</p>
+
+<h4>SVN 风格的历史</h4>
+
+<p>习惯了 Subversion 的人可能想以 SVN 的风格显示历史，运行 <code>git svn log</code> 可以让提交历史显示为 SVN 格式：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn log
+    </span><span class="pun">------------------------------------------------------------------------</span><span class="pln">
+    r87 </span><span class="pun">|</span><span class="pln"> schacon </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">-</span><span class="lit">05</span><span class="pun">-</span><span class="lit">02</span><span class="pln"> </span><span class="lit">16</span><span class="pun">:</span><span class="lit">07</span><span class="pun">:</span><span class="lit">37</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Sat</span><span class="pun">,</span><span class="pln"> </span><span class="lit">02</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">)</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> lines
+
+    autogen change
+
+    </span><span class="pun">------------------------------------------------------------------------</span><span class="pln">
+    r86 </span><span class="pun">|</span><span class="pln"> schacon </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">-</span><span class="lit">05</span><span class="pun">-</span><span class="lit">02</span><span class="pln"> </span><span class="lit">16</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">21</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Sat</span><span class="pun">,</span><span class="pln"> </span><span class="lit">02</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">)</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> lines
+
+    </span><span class="typ">Merge</span><span class="pln"> branch </span><span class="str">'experiment'</span><span class="pln">
+
+    </span><span class="pun">------------------------------------------------------------------------</span><span class="pln">
+    r85 </span><span class="pun">|</span><span class="pln"> schacon </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">-</span><span class="lit">05</span><span class="pun">-</span><span class="lit">02</span><span class="pln"> </span><span class="lit">16</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">09</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Sat</span><span class="pun">,</span><span class="pln"> </span><span class="lit">02</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">)</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> lines
+
+    updated the changelog</span></code></pre>
+
+<p>关于 <code>git svn log</code> ，有两点需要注意。首先，它可以离线工作，不像 <code>svn log</code> 命令，需要向 Subversion 服务器索取数据。其次，它仅仅显示已经提交到
+    Subversion 服务器上的 commit。在本地尚未 dcommit 的 Git 数据不会出现在这里；其他人向 Subversion 服务器新提交的数据也不会显示。等于说是显示了最近已知 Subversion 服务器上的状态。
+</p>
+
+<h4>SVN 日志</h4>
+
+<p>类似 <code>git svn log</code> 对 <code>git log</code> 的模拟，<code>svn annotate</code> 的等效命令是 <code>git svn blame
+    [文件名]</code>。其输出如下：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn blame README</span><span class="pun">.</span><span class="pln">txt
+    </span><span class="lit">2</span><span class="pln"> temporal </span><span class="typ">Protocol</span><span class="pln"> </span><span class="typ">Buffers</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> </span><span class="typ">Google</span><span class="str">'s data interchange format
+    2 temporal Copyright 2008 Google Inc.
+    2 temporal http://code.google.com/apis/protocolbuffers/
+    2 temporal
+    22 temporal C++ Installation - Unix
+    22 temporal =======================
+    2 temporal
+    79 schacon Committing in git-svn.
+    78 schacon
+    2 temporal To build and install the C++ Protocol Buffer runtime and the Protocol
+    2 temporal Buffer compiler (protoc) execute the following:
+    2 temporal</span></code></pre>
+
+<p>同样，它不显示本地的 Git 提交以及 Subversion 上后来更新的内容。</p>
+
+<h4>SVN 服务器信息</h4>
+
+<p>还可以使用 <code>git svn info</code> 来获取与运行 <code>svn info</code> 类似的信息：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn info
+    </span><span class="typ">Path</span><span class="pun">:</span><span class="pln"> </span><span class="pun">.</span><span class="pln">
+    URL</span><span class="pun">:</span><span class="pln"> https</span><span class="pun">:</span><span class="com">//schacon-test.googlecode.com/svn/trunk</span><span class="pln">
+    </span><span class="typ">Repository</span><span class="pln"> </span><span class="typ">Root</span><span class="pun">:</span><span class="pln"> https</span><span class="pun">:</span><span class="com">//schacon-test.googlecode.com/svn</span><span class="pln">
+    </span><span class="typ">Repository</span><span class="pln"> UUID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4c93b258</span><span class="pun">-</span><span class="lit">373f</span><span class="pun">-</span><span class="lit">11de</span><span class="pun">-</span><span class="pln">be05</span><span class="pun">-</span><span class="lit">5f7a86268029</span><span class="pln">
+    </span><span class="typ">Revision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">87</span><span class="pln">
+    </span><span class="typ">Node</span><span class="pln"> </span><span class="typ">Kind</span><span class="pun">:</span><span class="pln"> directory
+    </span><span class="typ">Schedule</span><span class="pun">:</span><span class="pln"> normal
+    </span><span class="typ">Last</span><span class="pln"> </span><span class="typ">Changed</span><span class="pln"> </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> schacon
+    </span><span class="typ">Last</span><span class="pln"> </span><span class="typ">Changed</span><span class="pln"> </span><span class="typ">Rev</span><span class="pun">:</span><span class="pln"> </span><span class="lit">87</span><span class="pln">
+    </span><span class="typ">Last</span><span class="pln"> </span><span class="typ">Changed</span><span class="pln"> </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">-</span><span class="lit">05</span><span class="pun">-</span><span class="lit">02</span><span class="pln"> </span><span class="lit">16</span><span class="pun">:</span><span class="lit">07</span><span class="pun">:</span><span class="lit">37</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln"> </span><span class="pun">(</span><span class="typ">Sat</span><span class="pun">,</span><span class="pln"> </span><span class="lit">02</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">2009</span><span class="pun">)</span></code></pre>
+
+<p>它与 <code>blame</code> 和 <code>log</code> 的相同点在于离线运行以及只更新到最后一次与 Subversion 服务器通信的状态。</p>
+
+<h4>略 Subversion 之所略</h4>
+
+<p>假如克隆了一个包含了 <code>svn:ignore</code> 属性的 Subversion 仓库，就有必要建立对应的 <code>.gitignore</code> 文件来防止意外提交一些不应该提交的文件。<code>git
+    svn</code> 有两个有益于改善该问题的命令。第一个是 <code>git svn create-ignore</code>，它自动建立对应的 <code>.gitignore</code>
+    文件，以便下次提交的时候可以包含它。</p>
+
+<p>第二个命令是 <code>git svn show-ignore</code>，它把需要放进 <code>.gitignore</code> 文件中的内容打印到标准输出，方便我们把输出重定向到项目的黑名单文件：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git svn show</span><span class="pun">-</span><span class="pln">ignore </span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">info</span><span class="pun">/</span><span class="pln">exclude</span></code></pre>
+
+<p>这样一来，避免了 <code>.gitignore</code> 对项目的干扰。如果你是一个 Subversion 团队里唯一的 Git 用户，而其他队友不喜欢项目包含 <code>.gitignore</code>，该方法是你的不二之选。
+</p>
+
+<h3>Git-Svn 总结</h3>
+
+<p><code>git svn</code> 工具集在当前不得不使用 Subversion 服务器或者开发环境要求使用 Subversion 服务器的时候格外有用。不妨把它看成一个跛脚的
+    Git，然而，你还是有可能在转换过程中碰到一些困惑你和合作者们的迷题。为了避免麻烦，试着遵守如下守则：</p>
+
+<ul>
+    <li>保持一个不包含由 <code>git merge</code> 生成的 commit 的线性提交历史。将在主线分支外进行的开发通通衍合回主线；避免直接合并。</li>
+    <li>不要单独建立和使用一个 Git 服务来搞合作。可以为了加速新开发者的克隆进程建立一个，但是不要向它提供任何不包含 <code>git-svn-id</code> 条目的内容。甚至可以添加一个 <code>pre-receive</code>
+        挂钩来在每一个提交信息中查找 <code>git-svn-id</code> 并拒绝提交那些不包含它的 commit。
+    </li>
+</ul>
+
+<p>如果遵循这些守则，在 Subversion 上工作还可以接受。然而，如果能迁徙到真正的 Git 服务器，则能为团队带来更多好处。</p>
+
+<h2 id="8.2-迁移到-Git"><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.2-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">8.2 迁移到 Git</a></h2>
+
+<p>如果在其他版本控制系统中保存了某项目的代码而后决定转而使用 Git，那么该项目必须经历某种形式的迁移。本节将介绍 Git 中包含的一些针对常见系统的导入脚本，并将展示编写自定义的导入脚本的方法。</p>
+
+<h3>导入</h3>
+
+<p>你将学习到如何从专业重量级的版本控制系统中导入数据—— Subversion 和 Perforce —— 因为据我所知这二者的用户是（向 Git）转换的主要群体，而且 Git 为此二者附带了高质量的转换工具。</p>
+
+<h3>Subversion</h3>
+
+<p>读过前一节有关 <code>git svn</code> 的内容以后，你应该能轻而易举的根据其中的指导来 <code>git svn clone</code> 一个仓库了；然后，停止 Subversion 的使用，向一个新 Git
+    server 推送，并开始使用它。想保留历史记录，所花的时间应该不过就是从 Subversion 服务器拉取数据的时间（可能要等上好一会就是了）。</p>
+
+<p>然而，这样的导入并不完美；而且还要花那么多时间，不如干脆一次把它做对！首当其冲的任务是作者信息。在 Subversion，每个提交者在都在主机上有一个用户名，记录在提交信息中。上节例子中多处显示了
+    <code>schacon</code> ，比如 <code>blame</code> 的输出以及 <code>git svn log</code>。如果想让这条信息更好的映射到 Git 作者数据里，则需要 从 Subversion
+    用户名到 Git 作者的一个映射关系。建立一个叫做 <code>user.txt</code> 的文件，用如下格式表示映射关系：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">schacon </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@geemail</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    selse </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Someo</span><span class="pln"> </span><span class="typ">Nelse</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">selse@geemail</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span></code></pre>
+
+<p>通过该命令可以获得 SVN 作者的列表：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ svn log </span><span class="pun">--</span><span class="pln">xml </span><span class="pun">|</span><span class="pln"> grep </span><span class="pun">-</span><span class="pln">P </span><span class="str">"^&lt;author"</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> sort </span><span class="pun">-</span><span class="pln">u </span><span class="pun">|</span><span class="pln"> \
+    perl </span><span class="pun">-</span><span class="pln">pe </span><span class="str">'s/&lt;author&gt;(.*?)&lt;\/author&gt;/$1 = /'</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">txt</span></code></pre>
+
+<p>它将输出 XML 格式的日志——你可以找到作者，建立一个单独的列表，然后从 XML 中抽取出需要的信息。（显而易见，本方法要求主机上安装了<code>grep</code>，<code>sort</code> 和
+    <code>perl</code>.）然后把输出重定向到 user.txt 文件，然后就可以在每一项的后面添加相应的 Git 用户数据。</p>
+
+<p>为 <code>git svn</code> 提供该文件可以然它更精确的映射作者数据。你还可以在 <code>clone</code> 或者 <code>init</code>后面添加
+    <code>--no-metadata</code> 来阻止 <code>git svn</code> 包含那些 Subversion 的附加信息。这样 <code>import</code> 命令就变成了：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git</span><span class="pun">-</span><span class="pln">svn clone http</span><span class="pun">:</span><span class="com">//my-project.googlecode.com/svn/ \</span><span class="pln">
+    </span><span class="pun">--</span><span class="pln">authors</span><span class="pun">-</span><span class="pln">file</span><span class="pun">=</span><span class="pln">users</span><span class="pun">.</span><span class="pln">txt </span><span class="pun">--</span><span class="kwd">no</span><span class="pun">-</span><span class="pln">metadata </span><span class="pun">-</span><span class="pln">s my_project</span></code></pre>
+
+<p>现在 <code>my_project</code> 目录下导入的 Subversion 应该比原来整洁多了。原来的 commit 看上去是这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">commit </span><span class="lit">37efa680e8473b615de980fa935944215428a35a</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> schacon </span><span class="pun">&lt;</span><span class="pln">schacon@4c93b258</span><span class="pun">-</span><span class="lit">373f</span><span class="pun">-</span><span class="lit">11de</span><span class="pun">-</span><span class="pln">be05</span><span class="pun">-</span><span class="lit">5f7a86268029</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Sun</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">00</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">22</span><span class="pln"> </span><span class="lit">2009</span><span class="pln"> </span><span class="pun">+</span><span class="lit">0000</span><span class="pln">
+
+    </span><span class="kwd">fixed</span><span class="pln"> install </span><span class="pun">-</span><span class="pln"> go to trunk
+
+    git</span><span class="pun">-</span><span class="pln">svn</span><span class="pun">-</span><span class="pln">id</span><span class="pun">:</span><span class="pln"> https</span><span class="pun">:</span><span class="com">//my-project.googlecode.com/svn/trunk@94 4c93b258-373f-11de-</span><span class="pln">
+    be05</span><span class="pun">-</span><span class="lit">5f7a86268029</span></code></pre>
+
+<p>现在是这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">commit </span><span class="lit">03a8785f44c8ea5cdb0e8834b7c8e6c469be2ff2</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@geemail</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Sun</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">00</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">22</span><span class="pln"> </span><span class="lit">2009</span><span class="pln"> </span><span class="pun">+</span><span class="lit">0000</span><span class="pln">
+
+    </span><span class="kwd">fixed</span><span class="pln"> install </span><span class="pun">-</span><span class="pln"> go to trunk</span></code></pre>
+
+<p>不仅作者一项干净了不少，<code>git-svn-id</code> 也就此消失了。</p>
+
+<p>你还需要一点 <code>post-import（导入后）</code> 清理工作。最起码的，应该清理一下 <code>git svn</code>
+    创建的那些怪异的索引结构。首先要移动标签，把它们从奇怪的远程分支变成实际的标签，然后把剩下的分支移动到本地。</p>
+
+<p>要把标签变成合适的 Git 标签，运行</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ cp </span><span class="pun">-</span><span class="typ">Rf</span><span class="pln"> </span><span class="pun">.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">tags</span><span class="com">/* .git/refs/tags/
+    $ rm -Rf .git/refs/remotes/tags</span></code></pre>
+
+<p>该命令将原本以 <code>tag/</code> 开头的远程分支的索引变成真正的（轻巧的）标签。</p>
+
+<p>接下来，把 <code>refs/remotes</code> 下面剩下的索引变成本地分支：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ cp </span><span class="pun">-</span><span class="typ">Rf</span><span class="pln"> </span><span class="pun">.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="com">/* .git/refs/heads/
+    $ rm -Rf .git/refs/remotes</span></code></pre>
+
+<p>现在所有的旧分支都变成真正的 Git 分支，所有的旧标签也变成真正的 Git 标签。最后一项工作就是把新建的 Git 服务器添加为远程服务器并且向它推送。下面是新增远程服务器的例子：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git remote add origin git@my</span><span class="pun">-</span><span class="pln">git</span><span class="pun">-</span><span class="pln">server</span><span class="pun">:</span><span class="pln">myrepository</span><span class="pun">.</span><span class="pln">git</span></code></pre>
+
+<p>为了让所有的分支和标签都得到上传，我们使用这条命令：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git push origin </span><span class="pun">--</span><span class="pln">all</span></code></pre>
+
+<p>所有的分支和标签现在都应该整齐干净的躺在新的 Git 服务器里了。</p>
+
+<h3>Perforce</h3>
+
+<p>你将了解到的下一个被导入的系统是 Perforce. Git 发行的时候同时也附带了一个 Perforce 导入脚本，不过它是包含在源码的 <code>contrib</code> 部分——而不像 <code>git
+    svn</code> 那样默认可用。运行它之前必须获取 Git 的源码，可以在 git.kernel.org 下载：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git clone git</span><span class="pun">:</span><span class="com">//git.kernel.org/pub/scm/git/git.git</span><span class="pln">
+    $ cd git</span><span class="pun">/</span><span class="pln">contrib</span><span class="pun">/</span><span class="pln">fast</span><span class="pun">-</span><span class="kwd">import</span></code></pre>
+
+<p>在这个 <code>fast-import</code> 目录下，应该有一个叫做 <code>git-p4</code> 的 Python 可执行脚本。主机上必须装有 Python 和 <code>p4</code>
+    工具该导入才能正常进行。例如，你要从 Perforce 公共代码仓库（译注： Perforce Public Depot，Perforce 官方提供的代码寄存服务）导入 Jam 工程。为了设定客户端，我们要把 P4PORT 环境变量
+    export 到 Perforce 仓库：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ </span><span class="kwd">export</span><span class="pln"> P4PORT</span><span class="pun">=</span><span class="kwd">public</span><span class="pun">.</span><span class="pln">perforce</span><span class="pun">.</span><span class="pln">com</span><span class="pun">:</span><span class="lit">1666</span></code></pre>
+
+<p>运行 <code>git-p4 clone</code> 命令将从 Perforce 服务器导入 Jam 项目，我们需要给出仓库和项目的路径以及导入的目标路径：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git</span><span class="pun">-</span><span class="pln">p4 clone </span><span class="com">//public/jam/src@all /opt/p4import</span><span class="pln">
+    </span><span class="typ">Importing</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="com">//public/jam/src@all into /opt/p4import</span><span class="pln">
+    </span><span class="typ">Reinitialized</span><span class="pln"> existing </span><span class="typ">Git</span><span class="pln"> repository </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">p4import</span><span class="pun">/.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">
+    </span><span class="typ">Import</span><span class="pln"> destination</span><span class="pun">:</span><span class="pln"> refs</span><span class="pun">/</span><span class="pln">remotes</span><span class="pun">/</span><span class="pln">p4</span><span class="pun">/</span><span class="pln">master
+    </span><span class="typ">Importing</span><span class="pln"> revision </span><span class="lit">4409</span><span class="pln"> </span><span class="pun">(</span><span class="lit">100</span><span class="pun">%)</span></code></pre>
+
+<p>现在去 <code>/opt/p4import</code> 目录运行一下 <code>git log</code> ，就能看到导入的成果：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git log </span><span class="pun">-</span><span class="lit">2</span><span class="pln">
+    commit </span><span class="lit">1fd4ec126171790efd2db83548b85b1bbbc07dc2</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Perforce</span><span class="pln"> staff </span><span class="pun">&lt;</span><span class="pln">support@perforce</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Thu</span><span class="pln"> </span><span class="typ">Aug</span><span class="pln"> </span><span class="lit">19</span><span class="pln"> </span><span class="lit">10</span><span class="pun">:</span><span class="lit">18</span><span class="pun">:</span><span class="lit">45</span><span class="pln"> </span><span class="lit">2004</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0800</span><span class="pln">
+
+    </span><span class="typ">Drop</span><span class="pln"> </span><span class="str">'rc3'</span><span class="pln"> moniker of jam</span><span class="pun">-</span><span class="lit">2.5</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Folded</span><span class="pln"> rc2 </span><span class="kwd">and</span><span class="pln"> rc3 RELNOTES </span><span class="kwd">into</span><span class="pln">
+    the main part of the document</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Built</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> tar</span><span class="pun">/</span><span class="pln">zip balls</span><span class="pun">.</span><span class="pln">
+
+    </span><span class="typ">Only</span><span class="pln"> </span><span class="lit">16</span><span class="pln"> months later</span><span class="pun">.</span><span class="pln">
+
+    </span><span class="pun">[</span><span class="pln">git</span><span class="pun">-</span><span class="pln">p4</span><span class="pun">:</span><span class="pln"> depot</span><span class="pun">-</span><span class="pln">paths </span><span class="pun">=</span><span class="pln"> </span><span class="str">"//public/jam/src/"</span><span class="pun">:</span><span class="pln"> change </span><span class="pun">=</span><span class="pln"> </span><span class="lit">4409</span><span class="pun">]</span><span class="pln">
+
+    commit ca8870db541a23ed867f38847eda65bf4363371d
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Richard</span><span class="pln"> </span><span class="typ">Geiger</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">rmg@perforce</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Tue</span><span class="pln"> </span><span class="typ">Apr</span><span class="pln"> </span><span class="lit">22</span><span class="pln"> </span><span class="lit">20</span><span class="pun">:</span><span class="lit">51</span><span class="pun">:</span><span class="lit">34</span><span class="pln"> </span><span class="lit">2003</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0800</span><span class="pln">
+
+    </span><span class="typ">Update</span><span class="pln"> derived jamgram</span><span class="pun">.</span><span class="pln">c
+
+    </span><span class="pun">[</span><span class="pln">git</span><span class="pun">-</span><span class="pln">p4</span><span class="pun">:</span><span class="pln"> depot</span><span class="pun">-</span><span class="pln">paths </span><span class="pun">=</span><span class="pln"> </span><span class="str">"//public/jam/src/"</span><span class="pun">:</span><span class="pln"> change </span><span class="pun">=</span><span class="pln"> </span><span class="lit">3108</span><span class="pun">]</span></code></pre>
+
+<p>每一个 commit 里都有一个 <code>git-p4</code> 标识符。这个标识符可以保留，以防以后需要引用 Perforce 的修改版本号。然而，如果想删除这些标识符，现在正是时候——在开启新仓库之前。可以通过
+    <code>git filter-branch</code> 来批量删除这些标识符：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git filter</span><span class="pun">-</span><span class="pln">branch </span><span class="pun">--</span><span class="pln">msg</span><span class="pun">-</span><span class="pln">filter </span><span class="str">'
+    sed -e "/^\[git-p4:/d"
+    '</span><span class="pln">
+    </span><span class="typ">Rewrite</span><span class="pln"> </span><span class="lit">1fd4ec126171790efd2db83548b85b1bbbc07dc2</span><span class="pln"> </span><span class="pun">(</span><span class="lit">123</span><span class="pun">/</span><span class="lit">123</span><span class="pun">)</span><span class="pln">
+    </span><span class="typ">Ref</span><span class="pln"> </span><span class="str">'refs/heads/master'</span><span class="pln"> was rewritten</span></code></pre>
+
+<p>现在运行一下 <code>git log</code>，你会发现这些 commit 的 SHA-1 校验值都发生了改变，而那些 <code>git-p4</code> 字串则从提交信息里消失了：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git log </span><span class="pun">-</span><span class="lit">2</span><span class="pln">
+    commit </span><span class="lit">10a16d60cffca14d454a15c6164378f4082bc5b0</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Perforce</span><span class="pln"> staff </span><span class="pun">&lt;</span><span class="pln">support@perforce</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Thu</span><span class="pln"> </span><span class="typ">Aug</span><span class="pln"> </span><span class="lit">19</span><span class="pln"> </span><span class="lit">10</span><span class="pun">:</span><span class="lit">18</span><span class="pun">:</span><span class="lit">45</span><span class="pln"> </span><span class="lit">2004</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0800</span><span class="pln">
+
+    </span><span class="typ">Drop</span><span class="pln"> </span><span class="str">'rc3'</span><span class="pln"> moniker of jam</span><span class="pun">-</span><span class="lit">2.5</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Folded</span><span class="pln"> rc2 </span><span class="kwd">and</span><span class="pln"> rc3 RELNOTES </span><span class="kwd">into</span><span class="pln">
+    the main part of the document</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Built</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> tar</span><span class="pun">/</span><span class="pln">zip balls</span><span class="pun">.</span><span class="pln">
+
+    </span><span class="typ">Only</span><span class="pln"> </span><span class="lit">16</span><span class="pln"> months later</span><span class="pun">.</span><span class="pln">
+
+    commit </span><span class="lit">2b6c6db311dd76c34c66ec1c40a49405e6b527b2</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Richard</span><span class="pln"> </span><span class="typ">Geiger</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">rmg@perforce</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Tue</span><span class="pln"> </span><span class="typ">Apr</span><span class="pln"> </span><span class="lit">22</span><span class="pln"> </span><span class="lit">20</span><span class="pun">:</span><span class="lit">51</span><span class="pun">:</span><span class="lit">34</span><span class="pln"> </span><span class="lit">2003</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0800</span><span class="pln">
+
+    </span><span class="typ">Update</span><span class="pln"> derived jamgram</span><span class="pun">.</span><span class="pln">c</span></code></pre>
+
+<p>至此导入已经完成，可以开始向新的 Git 服务器推送了。</p>
+
+<h3>自定导入脚本</h3>
+
+<p>如果先前的系统不是 Subversion 或 Perforce 之一，先上网找一下有没有与之对应的导入脚本——导入 CVS，Clear Case，Visual Source
+    Safe，甚至存档目录的导入脚本已经存在。假如这些工具都不适用，或者使用的工具很少见，抑或你需要导入过程具有更多可制定性，则应该使用 <code>git fast-import</code>。该命令从标准输入读取简单的指令来写入具体的
+    Git 数据。这样创建 Git 对象比运行纯 Git
+    命令或者手动写对象要简单的多（更多相关内容见第九章）。通过它，你可以编写一个导入脚本来从导入源读取必要的信息，同时在标准输出直接输出相关指示。你可以运行该脚本并把它的输出管道连接到 <code>git
+        fast-import</code>。</p>
+
+<p>下面演示一下如何编写一个简单的导入脚本。假设你在进行一项工作，并且按时通过把工作目录复制为以时间戳 <code>back_YY_MM_DD</code> 命名的目录来进行备份，现在你需要把它们导入 Git 。目录结构如下：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ ls </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">import_from
+    back_2009_01_02
+    back_2009_01_04
+    back_2009_01_14
+    back_2009_02_03
+    current</span></code></pre>
+
+<p>为了导入到一个 Git 目录，我们首先回顾一下 Git 储存数据的方式。你可能还记得，Git 本质上是一个 commit 对象的链表，每一个对象指向一个内容的快照。而这里需要做的工作就是告诉
+    <code>fast-import</code> 内容快照的位置，什么样的 commit 数据指向它们，以及它们的顺序。我们采取一次处理一个快照的策略，为每一个内容目录建立对应的 commit ，每一个 commit
+    与之前的建立链接。</p>
+
+<p>正如在第七章 "Git 执行策略一例" 一节中一样，我们将使用 Ruby
+    来编写这个脚本，因为它是我日常使用的语言而且阅读起来简单一些。你可以用任何其他熟悉的语言来重写这个例子——它仅需要把必要的信息打印到标准输出而已。同时，如果你在使用
+    Windows，这意味着你要特别留意不要在换行的时候引入回车符（译注：carriage returns，Windows 换行时加入的符号，通常说的 <code>\r</code> ）—— Git 的 fast-import
+    对仅使用换行符（LF）而非 Windows 的回车符（CRLF）要求非常严格。</p>
+
+<p>首先，进入目标目录并且找到所有子目录，每一个子目录将作为一个快照被导入为一个 commit。我们将依次进入每一个子目录并打印所需的命令来导出它们。脚本的主循环大致是这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">last_mark </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">nil</span><span class="pln">
+
+    </span><span class="com"># 循环遍历所有目录</span><span class="pln">
+    </span><span class="typ">Dir</span><span class="pun">.</span><span class="pln">chdir</span><span class="pun">(</span><span class="pln">ARGV</span><span class="pun">[</span><span class="lit">0</span><span class="pun">])</span><span class="pln"> </span><span class="kwd">do</span><span class="pln">
+    </span><span class="typ">Dir</span><span class="pun">.</span><span class="pln">glob</span><span class="pun">(</span><span class="str">"*"</span><span class="pun">).</span><span class="pln">each </span><span class="kwd">do</span><span class="pln"> </span><span class="pun">|</span><span class="pln">dir</span><span class="pun">|</span><span class="pln">
+    </span><span class="kwd">next</span><span class="pln"> </span><span class="kwd">if</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="pln">file</span><span class="pun">?(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln">
+
+    </span><span class="com"># 进入目标目录</span><span class="pln">
+    </span><span class="typ">Dir</span><span class="pun">.</span><span class="pln">chdir</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">do</span><span class="pln">
+    last_mark </span><span class="pun">=</span><span class="pln"> print_export</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">,</span><span class="pln"> last_mark</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">end</span><span class="pln">
+    </span><span class="kwd">end</span><span class="pln">
+    </span><span class="kwd">end</span></code></pre>
+
+<p>我们在每一个目录里运行 <code>print_export</code> ，它会取出上一个快照的索引和标记并返回本次快照的索引和标记；由此我们就可以正确的把二者连接起来。"标记（mark）" 是 <code>fast-import</code>
+    中对 commit 标识符的叫法；在创建 commit 的同时，我们逐一赋予一个标记以便以后在把它连接到其他 commit 时使用。因此，在 <code>print_export</code>
+    方法中要做的第一件事就是根据目录名生成一个标记：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">mark </span><span class="pun">=</span><span class="pln"> convert_dir_to_mark</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span></code></pre>
+
+<p>实现该函数的方法是建立一个目录的数组序列并使用数组的索引值作为标记，因为标记必须是一个整数。这个方法大致是这样的：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$marks </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[]</span><span class="pln">
+    </span><span class="kwd">def</span><span class="pln"> convert_dir_to_mark</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">!</span><span class="pln">$marks</span><span class="pun">.</span><span class="pln">include</span><span class="pun">?(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln">
+    $marks </span><span class="pun">&lt;&lt;</span><span class="pln"> dir
+    </span><span class="kwd">end</span><span class="pln">
+    </span><span class="pun">(</span><span class="pln">$marks</span><span class="pun">.</span><span class="pln">index</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">).</span><span class="pln">to_s
+    </span><span class="kwd">end</span></code></pre>
+
+<p>有了整数来代表每个 commit，我们现在需要提交附加信息中的日期。由于日期是用目录名表示的，我们就从中解析出来。<code>print_export</code> 文件的下一行将是：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">date </span><span class="pun">=</span><span class="pln"> convert_dir_to_date</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span></code></pre>
+
+<p>而 <code>convert_dir_to_date</code> 则定义为</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">def</span><span class="pln"> convert_dir_to_date</span><span class="pun">(</span><span class="pln">dir</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> dir </span><span class="pun">==</span><span class="pln"> </span><span class="str">'current'</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="pln">now</span><span class="pun">().</span><span class="pln">to_i
+    </span><span class="kwd">else</span><span class="pln">
+    dir </span><span class="pun">=</span><span class="pln"> dir</span><span class="pun">.</span><span class="pln">gsub</span><span class="pun">(</span><span class="str">'back_'</span><span class="pun">,</span><span class="pln"> </span><span class="str">''</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">(</span><span class="pln">year</span><span class="pun">,</span><span class="pln"> month</span><span class="pun">,</span><span class="pln"> day</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> dir</span><span class="pun">.</span><span class="pln">split</span><span class="pun">(</span><span class="str">'_'</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Time</span><span class="pun">.</span><span class="kwd">local</span><span class="pun">(</span><span class="pln">year</span><span class="pun">,</span><span class="pln"> month</span><span class="pun">,</span><span class="pln"> day</span><span class="pun">).</span><span class="pln">to_i
+    </span><span class="kwd">end</span><span class="pln">
+    </span><span class="kwd">end</span></code></pre>
+
+<p>它为每个目录返回一个整型值。提交附加信息里最后一项所需的是提交者数据，我们在一个全局变量中直接定义之：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$author </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Scott Chacon &lt;schacon@example.com&gt;'</span></code></pre>
+
+<p>我们差不多可以开始为导入脚本输出提交数据了。第一项信息指明我们定义的是一个 commit 对象以及它所在的分支，随后是我们生成的标记，提交者信息以及提交备注，然后是前一个 commit 的索引，如果有的话。代码大致这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="com"># 打印导入所需的信息</span><span class="pln">
+    puts </span><span class="str">'commit refs/heads/master'</span><span class="pln">
+    puts </span><span class="str">'mark :'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> mark
+    puts </span><span class="str">"committer #{$author} #{date} -0700"</span><span class="pln">
+    export_data</span><span class="pun">(</span><span class="str">'imported from '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> dir</span><span class="pun">)</span><span class="pln">
+    puts </span><span class="str">'from :'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> last_mark </span><span class="kwd">if</span><span class="pln"> last_mark</span></code></pre>
+
+<p>时区（-0700）处于简化目的使用硬编码。如果是从其他版本控制系统导入，则必须以变量的形式指明时区。
+    提交备注必须以特定格式给出：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">data </span><span class="pun">(</span><span class="pln">size</span><span class="pun">)</span><span class="pln">\n</span><span class="pun">(</span><span class="pln">contents</span><span class="pun">)</span></code></pre>
+
+<p>该格式包含了单词 data，所读取数据的大小，一个换行符，最后是数据本身。由于随后指明文件内容的时候要用到相同的格式，我们写一个辅助方法，<code>export_data</code>：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">def</span><span class="pln"> export_data</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">print</span><span class="pln"> </span><span class="str">"data #{string.size}\n#{string}"</span><span class="pln">
+    </span><span class="kwd">end</span></code></pre>
+
+<p>唯一剩下的就是每一个快照的内容了。这简单的很，因为它们分别处于一个目录——你可以输出 <code>deleeall</code> 命令，随后是目录中每个文件的内容。Git 会正确的记录每一个快照：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">puts </span><span class="str">'deleteall'</span><span class="pln">
+    </span><span class="typ">Dir</span><span class="pun">.</span><span class="pln">glob</span><span class="pun">(</span><span class="str">"**/*"</span><span class="pun">).</span><span class="pln">each </span><span class="kwd">do</span><span class="pln"> </span><span class="pun">|</span><span class="pln">file</span><span class="pun">|</span><span class="pln"> </span><span class="kwd">next</span><span class="pln"> </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">!</span><span class="typ">File</span><span class="pun">.</span><span class="pln">file</span><span class="pun">?(</span><span class="pln">file</span><span class="pun">)</span><span class="pln">
+    inline_data</span><span class="pun">(</span><span class="pln">file</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">end</span></code></pre>
+
+<p>注意：由于很多系统把每次修订看作一个 commit 到另一个 commit 的变化量，fast-import
+    也可以依据每次提交获取一个命令来指出哪些文件被添加，删除或者修改过，以及修改的内容。我们将需要计算快照之间的差别并且仅仅给出这项数据，不过该做法要复杂很多——还如不直接把所有数据丢给 Git
+    然它自己搞清楚。假如前面这个方法更适用于你的数据，参考 <code>fast-import</code> 的 man 帮助页面来了解如何以这种方式提供数据。</p>
+
+<p>列举新文件内容或者指明带有新内容的已修改文件的格式如下：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">M </span><span class="lit">644</span><span class="pln"> </span><span class="kwd">inline</span><span class="pln"> path</span><span class="pun">/</span><span class="pln">to</span><span class="pun">/</span><span class="pln">file
+    data </span><span class="pun">(</span><span class="pln">size</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">(</span><span class="pln">file contents</span><span class="pun">)</span></code></pre>
+
+<p>这里，644 是权限模式（加入有可执行文件，则需要探测之并设定为 755），而 inline 说明我们在本行结束之后立即列出文件的内容。我们的 <code>inline_data</code> 方法大致是：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">def</span><span class="pln"> inline_data</span><span class="pun">(</span><span class="pln">file</span><span class="pun">,</span><span class="pln"> code </span><span class="pun">=</span><span class="pln"> </span><span class="str">'M'</span><span class="pun">,</span><span class="pln"> mode </span><span class="pun">=</span><span class="pln"> </span><span class="str">'644'</span><span class="pun">)</span><span class="pln">
+    content </span><span class="pun">=</span><span class="pln"> </span><span class="typ">File</span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">file</span><span class="pun">)</span><span class="pln">
+    puts </span><span class="str">"#{code} #{mode} inline #{file}"</span><span class="pln">
+    export_data</span><span class="pun">(</span><span class="pln">content</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">end</span></code></pre>
+
+<p>我们重用了前面定义过的 <code>export_data</code>，因为这里和指明提交注释的格式如出一辙。</p>
+
+<p>最后一项工作是返回当前的标记以便下次循环的使用。</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">return</span><span class="pln"> mark</span></code></pre>
+
+<p>注意：如果你在用 Windows，一定记得添加一项额外的步骤。前面提过，Windows 使用 CRLF 作为换行字符而 Git fast-import 只接受 LF。为了绕开这个问题来满足 git fast-import，你需要让
+    ruby 用 LF 取代 CRLF：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$stdout</span><span class="pun">.</span><span class="pln">binmode</span></code></pre>
+
+<p>搞定了。现在运行该脚本，你将得到如下内容：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ ruby </span><span class="kwd">import</span><span class="pun">.</span><span class="pln">rb </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">import_from
+    commit refs</span><span class="pun">/</span><span class="pln">heads</span><span class="pun">/</span><span class="pln">master
+    mark </span><span class="pun">:</span><span class="lit">1</span><span class="pln">
+    committer </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@geemail</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">1230883200</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln">
+    data </span><span class="lit">29</span><span class="pln">
+    imported </span><span class="kwd">from</span><span class="pln"> back_2009_01_02deleteall
+    M </span><span class="lit">644</span><span class="pln"> </span><span class="kwd">inline</span><span class="pln"> file</span><span class="pun">.</span><span class="pln">rb
+    data </span><span class="lit">12</span><span class="pln">
+    version two
+    commit refs</span><span class="pun">/</span><span class="pln">heads</span><span class="pun">/</span><span class="pln">master
+    mark </span><span class="pun">:</span><span class="lit">2</span><span class="pln">
+    committer </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@geemail</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">1231056000</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln">
+    data </span><span class="lit">29</span><span class="pln">
+    imported </span><span class="kwd">from</span><span class="pln"> back_2009_01_04from </span><span class="pun">:</span><span class="lit">1</span><span class="pln">
+    deleteall
+    M </span><span class="lit">644</span><span class="pln"> </span><span class="kwd">inline</span><span class="pln"> file</span><span class="pun">.</span><span class="pln">rb
+    data </span><span class="lit">14</span><span class="pln">
+    version three
+    M </span><span class="lit">644</span><span class="pln"> </span><span class="kwd">inline</span><span class="pln"> </span><span class="kwd">new</span><span class="pun">.</span><span class="pln">rb
+    data </span><span class="lit">16</span><span class="pln">
+    </span><span class="kwd">new</span><span class="pln"> version one
+    </span><span class="pun">(...)</span></code></pre>
+
+<p>要运行导入脚本，在需要导入的目录把该内容用管道定向到 <code>git fast-import</code>。你可以建立一个空目录然后运行 <code>git init</code> 作为开头，然后运行该脚本：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git init
+    </span><span class="typ">Initialized</span><span class="pln"> empty </span><span class="typ">Git</span><span class="pln"> repository </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">import_to</span><span class="pun">/.</span><span class="pln">git</span><span class="pun">/</span><span class="pln">
+    $ ruby </span><span class="kwd">import</span><span class="pun">.</span><span class="pln">rb </span><span class="pun">/</span><span class="pln">opt</span><span class="pun">/</span><span class="pln">import_from </span><span class="pun">|</span><span class="pln"> git fast</span><span class="pun">-</span><span class="kwd">import</span><span class="pln">
+    git</span><span class="pun">-</span><span class="pln">fast</span><span class="pun">-</span><span class="kwd">import</span><span class="pln"> statistics</span><span class="pun">:</span><span class="pln">
+    </span><span class="pun">---------------------------------------------------------------------</span><span class="pln">
+    </span><span class="typ">Alloc</span><span class="str">'d objects: 5000
+    Total objects: 18 ( 1 duplicates )
+    blobs : 7 ( 1 duplicates 0 deltas)
+    trees : 6 ( 0 duplicates 1 deltas)
+    commits: 5 ( 0 duplicates 0 deltas)
+    tags : 0 ( 0 duplicates 0 deltas)
+    Total branches: 1 ( 1 loads )
+    marks: 1024 ( 5 unique )
+    atoms: 3
+    Memory total: 2255 KiB
+    pools: 2098 KiB
+    objects: 156 KiB
+    ---------------------------------------------------------------------
+    pack_report: getpagesize() = 4096
+    pack_report: core.packedGitWindowSize = 33554432
+    pack_report: core.packedGitLimit = 268435456
+    pack_report: pack_used_ctr = 9
+    pack_report: pack_mmap_calls = 5
+    pack_report: pack_open_windows = 1 / 1
+    pack_report: pack_mapped = 1356 / 1356
+    ---------------------------------------------------------------------</span></code></pre>
+
+<p>你会发现，在它成功执行完毕以后，会给出一堆有关已完成工作的数据。上例在一个分支导入了5次提交数据，包含了18个对象。现在可以运行 <code>git log</code> 来检视新的历史：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git log </span><span class="pun">-</span><span class="lit">2</span><span class="pln">
+    commit </span><span class="lit">10bfe7d22ce15ee25b60a824c8982157ca593d41</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@example</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Sun</span><span class="pln"> </span><span class="typ">May</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">12</span><span class="pun">:</span><span class="lit">57</span><span class="pun">:</span><span class="lit">39</span><span class="pln"> </span><span class="lit">2009</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln">
+
+    imported </span><span class="kwd">from</span><span class="pln"> current
+
+    commit </span><span class="lit">7e519590de754d079dd73b44d695a42c9d2df452</span><span class="pln">
+    </span><span class="typ">Author</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">schacon@example</span><span class="pun">.</span><span class="pln">com</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Tue</span><span class="pln"> </span><span class="typ">Feb</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="lit">01</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pln"> </span><span class="lit">2009</span><span class="pln"> </span><span class="pun">-</span><span class="lit">0700</span><span class="pln">
+
+    imported </span><span class="kwd">from</span><span class="pln"> back_2009_02_03</span></code></pre>
+
+<p>就它了——一个干净整洁的 Git 仓库。需要注意的是此时没有任何内容被检出——刚开始当前目录里没有任何文件。要获取它们，你得转到 <code>master</code> 分支的所在：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ ls
+    $ git reset </span><span class="pun">--</span><span class="pln">hard master
+    HEAD </span><span class="kwd">is</span><span class="pln"> now at </span><span class="lit">10bfe7d</span><span class="pln"> imported </span><span class="kwd">from</span><span class="pln"> current
+    $ ls
+    file</span><span class="pun">.</span><span class="pln">rb lib</span></code></pre>
+
+<p><code>fast-import</code> 还可以做更多——处理不同的文件模式，二进制文件，多重分支与合并，标签，进展标识等等。一些更加复杂的实例可以在 Git 源码的
+    <code>contib/fast-import</code> 目录里找到；其中较为出众的是前面提过的 <code>git-p4</code> 脚本。</p>
+
+<h2 id="8.3-总结"><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.3-%E6%80%BB%E7%BB%93">8.3 总结</a></h2>
+
+<p>现在的你应该掌握了在 Subversion 上使用 Git 以及把几乎任何先存仓库无损失的导入为 Git 仓库。下一章将介绍 Git 内部的原始数据格式，从而是使你能亲手锻造其中的每一个字节，如果必要的话。</p>
+
+<p class="bottom-nav"><a class="next" href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html">下一节</a><a class="prev" href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html">上一节</a><a href="http://git.oschina.net/progit/index.html">首页（目录）</a> | <a href="http://git.oschina.net/">返回 码云</a></p>
+
+
+<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-top.png&quot;);"></div></div></body></html>

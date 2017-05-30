@@ -1,0 +1,558 @@
+
+<!-- saved from url=(0055)http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html -->
+<html slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>1 起步 - Pro Git</title>
+    
+    <link href="./1.Start_Pro_Git_files/styles.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="./1.Start_Pro_Git_files/prettify.css" rel="stylesheet" type="text/css">
+    <script src="./1.Start_Pro_Git_files/prettify.js.下载" type="text/javascript"></script>
+    <script src="./1.Start_Pro_Git_files/jquery-1.8.3.min.js.下载" type="text/javascript"></script>
+    <script src="./1.Start_Pro_Git_files/book.js.下载" type="text/javascript"></script>
+</head>
+<body youdao="bind">
+<div id="book-chapters">
+<a class="right-home" href="http://git.oschina.net/" style="margin-left: 20px;">返回 码云</a>
+<a class="right-home" href="http://git.oschina.net/progit/index.html">首页(目录)</a>
+<a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#">章节列表 ▾</a>
+Pro Git（中文版）
+
+<div class="dropdown-panel" id="chapters-dropdown">
+<div class="three-column">
+<div class="column-left">
+    <ol class="book-toc">
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html">1.起步</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.1-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">1.1
+                        关于版本控制</a></li>
+                <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.2-Git-%E7%AE%80%E5%8F%B2">1.2 Git 简史</a></li>
+                <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.3-Git-%E5%9F%BA%E7%A1%80">1.3 Git 基础</a></li>
+                <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.4-%E5%AE%89%E8%A3%85-Git">1.4 安装 Git</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.5-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C-Git-%E5%89%8D%E7%9A%84%E9%85%8D%E7%BD%AE">1.5
+                        初次运行 Git 前的配置</a></li>
+                <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.6-%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9">1.6
+                    获取帮助</a></li>
+                <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.7-%E5%B0%8F%E7%BB%93">1.7 小结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html">2.Git 基础</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.1-%E5%8F%96%E5%BE%97%E9%A1%B9%E7%9B%AE%E7%9A%84-Git-%E4%BB%93%E5%BA%93">2.1
+                        取得项目的 Git 仓库</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.2-%E8%AE%B0%E5%BD%95%E6%AF%8F%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%93%E5%BA%93">2.2
+                        记录每次更新到仓库</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.3-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">2.3
+                        查看提交历史</a></li>
+                <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.4-%E6%92%A4%E6%B6%88%E6%93%8D%E4%BD%9C">2.4
+                    撤消操作</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.5-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">2.5
+                        远程仓库的使用</a></li>
+                <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.6-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 打标签</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.7-%E6%8A%80%E5%B7%A7%E5%92%8C%E7%AA%8D%E9%97%A8">2.7
+                        技巧和窍门</a></li>
+                <li><a href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html#2.8-%E5%B0%8F%E7%BB%93">2.8 小结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html">3.Git 分支</a></h2>
+            <ol class="chapter_toc">
+                <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.1-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">3.1
+                    何谓分支</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.2-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6">3.2
+                        分支的新建与合并</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.3-%E5%88%86%E6%94%AF%E7%9A%84%E7%AE%A1%E7%90%86">3.3
+                        分支的管理</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.4-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.4
+                        利用分支进行开发的工作流程</a></li>
+                <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.5-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">3.5
+                    远程分支</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.6-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">3.6
+                        分支的衍合</a></li>
+                <li><a href="http://git.oschina.net/progit/3-Git-%E5%88%86%E6%94%AF.html#3.7-%E5%B0%8F%E7%BB%93">3.7 小结</a></li>
+            </ol>
+        </li>
+    </ol>
+</div>
+<div class="column-middle">
+    <ol class="book-toc">
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html">4.服务器上的 Git</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.1-%E5%8D%8F%E8%AE%AE">4.1
+                        协议</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.2-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%83%A8%E7%BD%B2-Git">4.2
+                        在服务器上部署 Git</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.3-%E7%94%9F%E6%88%90-SSH-%E5%85%AC%E9%92%A5">4.3
+                        生成 SSH 公钥</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.4-%E6%9E%B6%E8%AE%BE%E6%9C%8D%E5%8A%A1%E5%99%A8">4.4
+                        架设服务器</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.5-%E5%85%AC%E5%85%B1%E8%AE%BF%E9%97%AE">4.5
+                        公共访问</a></li>
+                <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.6-GitWeb">4.6
+                    GitWeb</a></li>
+                <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.7-Gitosis">4.7
+                    Gitosis</a></li>
+                <li><a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.8-Gitolite">4.8
+                    Gitolite</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.9-Git-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">4.9
+                        Git 守护进程</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.10-Git-%E6%89%98%E7%AE%A1%E6%9C%8D%E5%8A%A1">4.10
+                        Git 托管服务</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git.html#4.11-%E5%B0%8F%E7%BB%93">4.11
+                        小结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html">5.分布式 Git</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">5.1
+                        分布式工作流程</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.2-%E4%B8%BA%E9%A1%B9%E7%9B%AE%E4%BD%9C%E8%B4%A1%E7%8C%AE">5.2
+                        为项目作贡献</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.3-%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86">5.3
+                        项目的管理</a></li>
+                <li><a href="http://git.oschina.net/progit/5-%E5%88%86%E5%B8%83%E5%BC%8F-Git.html#5.4-%E5%B0%8F%E7%BB%93">5.4 小结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html">6.Git 工具</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.1-%E4%BF%AE%E8%AE%A2%E7%89%88%E6%9C%AC%EF%BC%88Revision%EF%BC%89%E9%80%89%E6%8B%A9">6.1
+                        修订版本（Revision）选择</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.2-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98">6.2
+                        交互式暂存</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.3-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89">6.3
+                        储藏（Stashing）</a></li>
+                <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.4-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2">6.4
+                    重写历史</a></li>
+                <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.5-%E4%BD%BF%E7%94%A8-Git-%E8%B0%83%E8%AF%95">6.5
+                    使用 Git 调试</a></li>
+                <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.6-%E5%AD%90%E6%A8%A1%E5%9D%97">6.6 子模块</a></li>
+                <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.7-%E5%AD%90%E6%A0%91%E5%90%88%E5%B9%B6">6.7
+                    子树合并</a></li>
+                <li><a href="http://git.oschina.net/progit/6-Git-%E5%B7%A5%E5%85%B7.html#6.8-%E6%80%BB%E7%BB%93">6.8 总结</a></li>
+            </ol>
+        </li>
+    </ol>
+</div>
+<div class="column-right">
+    <ol class="book-toc">
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html">7.自定义 Git</a></h2>
+            <ol class="chapter_toc">
+                <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.1-%E9%85%8D%E7%BD%AE-Git">7.1 配置
+                    Git</a></li>
+                <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.2-Git%E5%B1%9E%E6%80%A7">7.2 Git属性</a>
+                </li>
+                <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.3-Git%E6%8C%82%E9%92%A9">7.3 Git挂钩</a>
+                </li>
+                <li>
+                    <a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.4-Git-%E5%BC%BA%E5%88%B6%E7%AD%96%E7%95%A5%E5%AE%9E%E4%BE%8B">7.4
+                        Git 强制策略实例</a></li>
+                <li><a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.5-%E6%80%BB%E7%BB%93">7.5 总结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html">8.Git 与其他系统</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.1-Git-%E4%B8%8E-Subversion">8.1
+                        Git 与 Subversion</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.2-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">8.2
+                        迁移到 Git</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/8-Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F.html#8.3-%E6%80%BB%E7%BB%93">8.3
+                        总结</a></li>
+            </ol>
+        </li>
+        <li class="chapter">
+            <h2><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html">9.Git 内部原理</a></h2>
+            <ol class="chapter_toc">
+                <li>
+                    <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4-(Plumbing)-%E5%92%8C%E9%AB%98%E5%B1%82%E5%91%BD%E4%BB%A4-(Porcelain)">9.1
+                        底层命令 (Plumbing) 和高层命令 (Porcelain)</a></li>
+                <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.2-Git-%E5%AF%B9%E8%B1%A1">9.2
+                    Git 对象</a></li>
+                <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.3-Git-References">9.3 Git
+                    References</a></li>
+                <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.4-Packfiles">9.4
+                    Packfiles</a></li>
+                <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.5-The-Refspec">9.5 The
+                    Refspec</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.6-%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE">9.6
+                        传输协议</a></li>
+                <li>
+                    <a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.7-%E7%BB%B4%E6%8A%A4%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D">9.7
+                        维护及数据恢复</a></li>
+                <li><a href="http://git.oschina.net/progit/9-Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86.html#9.8-%E6%80%BB%E7%BB%93">9.8
+                    总结</a></li>
+            </ol>
+        </li>
+    </ol>
+</div>
+</div>
+</div>
+</div>
+<h1>1 起步</h1>
+<ol class="chapter_toc">
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.1-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">1.1 关于版本控制</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.2-Git-%E7%AE%80%E5%8F%B2">1.2 Git 简史</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.3-Git-%E5%9F%BA%E7%A1%80">1.3 Git 基础</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.4-%E5%AE%89%E8%A3%85-Git">1.4 安装 Git</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.5-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C-Git-%E5%89%8D%E7%9A%84%E9%85%8D%E7%BD%AE">1.5 初次运行 Git
+        前的配置</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.6-%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9">1.6 获取帮助</a></li>
+    <li><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.7-%E5%B0%8F%E7%BB%93">1.7 小结</a></li>
+</ol>
+
+<p>本章介绍开始使用 Git 前的相关知识。我们会先了解一些版本控制工具的历史背景，然后试着让 Git 在你的系统上跑起来，直到最后配置好，可以正常开始开发工作。读完本章，你就会明白为什么 Git
+    会如此流行，为什么你应该立即开始使用它。</p>
+
+<h2 id="1.1-关于版本控制"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.1-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">1.1 关于版本控制</a></h2>
+
+<p>
+    什么是版本控制？我为什么要关心它呢？版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。在本书所展示的例子中，我们仅对保存着软件源代码的文本文件作版本控制管理，但实际上，你可以对任何类型的文件进行版本控制。</p>
+
+<p>
+    如果你是位图形或网页设计师，可能会需要保存某一幅图片或页面布局文件的所有修订版本（这或许是你非常渴望拥有的功能）。采用版本控制系统（VCS）是个明智的选择。有了它你就可以将某个文件回溯到之前的状态，甚至将整个项目都回退到过去某个时间点的状态。你可以比较文件的变化细节，查出最后是谁修改了哪个地方，从而找出导致怪异问题出现的原因，又是谁在何时报告了某个功能缺陷等等。使用版本控制系统通常还意味着，就算你乱来一气把整个项目中的文件改的改删的删，你也照样可以轻松恢复到原先的样子。但额外增加的工作量却微乎其微。</p>
+
+<h3>本地版本控制系统</h3>
+
+<p>许多人习惯用复制整个项目目录的方式来保存不同的版本，或许还会改名加上备份时间以示区别。这么做唯一的好处就是简单。不过坏处也不少：有时候会混淆所在的工作目录，一旦弄错文件丢了数据就没法撤销恢复。</p>
+
+<p>为了解决这个问题，人们很久以前就开发了许多种本地版本控制系统，大多都是采用某种简单的数据库来记录文件的历次更新差异（见图 1-1）。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0101-tn.png"></center>
+<br>
+图 1-1. 本地版本控制系统<p></p>
+
+<p>其中最流行的一种叫做 rcs，现今许多计算机系统上都还看得到它的踪影。甚至在流行的 Mac OS X 系统上安装了开发者工具包之后，也可以使用 rcs
+    命令。它的工作原理基本上就是保存并管理文件补丁（patch）。文件补丁是一种特定格式的文本文件，记录着对应文件修订前后的内容变化。所以，根据每次修订后的补丁，rcs 可以通过不断打补丁，计算出各个版本的文件内容。</p>
+
+<h3>集中化的版本控制系统</h3>
+
+<p>接下来人们又遇到一个问题，如何让在不同系统上的开发者协同工作？于是，集中化的版本控制系统（ Centralized Version Control Systems，简称 CVCS ）应运而生。这类系统，诸如
+    CVS，Subversion 以及 Perforce 等，都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。多年以来，这已成为版本控制系统的标准做法（见图
+    1-2）。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0102-tn.png"></center>
+<br>
+图 1-2. 集中化的版本控制系统<p></p>
+
+<p>这种做法带来了许多好处，特别是相较于老式的本地 VCS 来说。现在，每个人都可以在一定程度上看到项目中的其他人正在做些什么。而管理员也可以轻松掌控每个开发者的权限，并且管理一个 CVCS
+    要远比在各个客户端上维护本地数据库来得轻松容易。</p>
+
+<p>
+    事分两面，有好有坏。这么做最显而易见的缺点是中央服务器的单点故障。如果宕机一小时，那么在这一小时内，谁都无法提交更新，也就无法协同工作。要是中央服务器的磁盘发生故障，碰巧没做备份，或者备份不够及时，就会有丢失数据的风险。最坏的情况是彻底丢失整个项目的所有历史更改记录，而被客户端偶然提取出来的保存在本地的某些快照数据就成了恢复数据的希望。但这样的话依然是个问题，你不能保证所有的数据都已经有人事先完整提取出来过。本地版本控制系统也存在类似问题，只要整个项目的历史记录被保存在单一位置，就有丢失所有历史更新记录的风险。</p>
+
+<h3>分布式版本控制系统</h3>
+
+<p>于是分布式版本控制系统（ Distributed Version Control System，简称 DVCS ）面世了。在这类系统中，像 Git，Mercurial，Bazaar 以及 Darcs
+    等，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。因为每一次的提取操作，实际上都是一次对代码仓库的完整备份（见图
+    1-3）。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0103-tn.png"></center>
+<br>
+图 1-3. 分布式版本控制系统<p></p>
+
+<p>更进一步，许多这类系统都可以指定和若干不同的远端代码仓库进行交互。籍此，你就可以在同一个项目中，分别和不同工作小组的人相互协作。你可以根据需要设定不同的协作流程，比如层次模型式的工作流，而这在以前的集中式系统中是无法实现的。</p>
+
+<h2 id="1.2-Git-简史"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.2-Git-%E7%AE%80%E5%8F%B2">1.2 Git 简史</a></h2>
+
+<p>同生活中的许多伟大事件一样，Git 诞生于一个极富纷争大举创新的年代。Linux 内核开源项目有着为数众广的参与者。绝大多数的 Linux 内核维护工作都花在了提交补丁和保存归档的繁琐事务上（1991－2002年间）。到 2002
+    年，整个项目组开始启用分布式版本控制系统 BitKeeper 来管理和维护代码。</p>
+
+<p>到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了免费使用 BitKeeper 的权力。这就迫使 Linux 开源社区（特别是 Linux 的缔造者 Linus
+    Torvalds ）不得不吸取教训，只有开发一套属于自己的版本控制系统才不至于重蹈覆辙。他们对新的系统制订了若干目标：</p>
+
+<ul>
+    <li>速度</li>
+    <li>简单的设计</li>
+    <li>对非线性开发模式的强力支持（允许上千个并行开发的分支）</li>
+    <li>完全分布式</li>
+    <li>有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）</li>
+</ul>
+
+<p>自诞生于 2005 年以来，Git 日臻成熟完善，在高度易用的同时，仍然保留着初期设定的目标。它的速度飞快，极其适合管理大项目，它还有着令人难以置信的非线性分支管理系统（见第三章），可以应付各种复杂的项目开发需求。</p>
+
+<h2 id="1.3-Git-基础"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.3-Git-%E5%9F%BA%E7%A1%80">1.3 Git 基础</a></h2>
+
+<p>那么，简单地说，Git 究竟是怎样的一个系统呢？请注意，接下来的内容非常重要，若是理解了 Git 的思想和基本工作原理，用起来就会知其所以然，游刃有余。在开始学习 Git 的时候，请不要尝试把各种概念和其他版本控制系统（诸如
+    Subversion 和 Perforce 等）相比拟，否则容易混淆每个操作的实际意义。Git 在保存和处理各种信息的时候，虽然操作起来的命令形式非常相近，但它与其他版本控制系统的做法颇为不同。理解这些差异将有助于你准确地使用
+    Git 提供的各种工具。</p>
+
+<h3>直接记录快照，而非差异比较</h3>
+
+<p>Git 和其他版本控制系统的主要差别在于，Git 只关心文件数据的整体是否发生变化，而大多数其他系统则只关心文件内容的具体差异。这类系统（CVS，Subversion，Perforce，Bazaar
+    等等）每次记录有哪些文件作了更新，以及都更新了哪些行的什么内容，请看图 1-4。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0104-tn.png"></center>
+<br>
+图 1-4. 其他系统在每个版本中记录着各个文件的具体差异<p></p>
+
+<p>Git 并不保存这些前后变化的差异数据。实际上，Git
+    更像是把变化的文件作快照后，记录在一个微型的文件系统中。每次提交更新时，它会纵览一遍所有文件的指纹信息并对文件作一快照，然后保存一个指向这次快照的索引。为提高性能，若文件没有变化，Git
+    不会再次保存，而只对上次保存的快照作一链接。Git 的工作方式就像图 1-5 所示。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0105-tn.png"></center>
+<br>
+图 1-5. Git 保存每次更新时的文件快照<p></p>
+
+<p>这是 Git 同其他系统的重要区别。它完全颠覆了传统版本控制的套路，并对各个环节的实现方式作了新的设计。Git 更像是个小型的文件系统，但它同时还提供了许多以此为基础的超强工具，而不只是一个简单的 VCS。稍后在第三章讨论 Git
+    分支管理的时候，我们会再看看这样的设计究竟会带来哪些好处。</p>
+
+<h3>近乎所有操作都是本地执行</h3>
+
+<p>在 Git 中的绝大多数操作都只需要访问本地文件和资源，不用连网。但如果用 CVCS 的话，差不多所有操作都需要连接网络。因为 Git 在本地磁盘上就保存着所有当前项目的历史更新，所以处理起来速度飞快。</p>
+
+<p>举个例子，如果要浏览项目的历史更新摘要，Git 不用跑到外面的服务器上去取数据回来，而直接从本地数据库读取后展示给你看。所以任何时候你都可以马上翻阅，无需等待。如果想要看当前版本的文件和一个月前的版本之间有何差异，Git
+    会取出一个月前的快照和当前文件作一次差异运算，而不用请求远程服务器来做这件事，或是把老版本的文件拉到本地来作比较。</p>
+
+<p>用 CVCS 的话，没有网络或者断开 VPN 你就无法做任何事情。但用 Git 的话，就算你在飞机或者火车上，都可以非常愉快地频繁提交更新，等到了有网络的时候再上传到远程仓库。同样，在回家的路上，不用连接 VPN
+    你也可以继续工作。换作其他版本控制系统，这么做几乎不可能，抑或非常麻烦。比如 Perforce，如果不连到服务器，几乎什么都做不了（译注：默认无法发出命令 <code>p4 edit file</code> 开始编辑文件，因为
+    Perforce 需要联网通知系统声明该文件正在被谁修订。但实际上手工修改文件权限可以绕过这个限制，只是完成后还是无法提交更新。）；如果是 Subversion 或
+    CVS，虽然可以编辑文件，但无法提交更新，因为数据库在网络上。看上去好像这些都不是什么大问题，但实际体验过之后，你就会惊喜地发现，这其实是会带来很大不同的。</p>
+
+<h3>时刻保持数据完整性</h3>
+
+<p>在保存到 Git 之前，所有数据都要进行内容的校验和（checksum）计算，并将此结果作为数据的唯一标识和索引。换句话说，不可能在你修改了文件或目录之后，Git 一无所知。这项特性作为 Git
+    的设计哲学，建在整体架构的最底层。所以如果文件在传输时变得不完整，或者磁盘损坏导致文件数据缺失，Git 都能立即察觉。</p>
+
+<p>Git 使用 SHA-1 算法计算数据的校验和，通过对文件的内容或目录的结构计算出一个 SHA-1 哈希值，作为指纹字符串。该字串由 40 个十六进制字符（0-9 及 a-f）组成，看起来就像是：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="lit">24b9da6552252987aa493b52f8696cd6d3b00373</span></code></pre>
+
+<p>Git 的工作完全依赖于这类指纹字串，所以你会经常看到这样的哈希值。实际上，所有保存在 Git 数据库中的东西都是用此哈希值来作索引的，而不是靠文件名。 </p>
+
+<h3>多数操作仅添加数据</h3>
+
+<p>常用的 Git 操作大多仅仅是把数据添加到数据库。因为任何一种不可逆的操作，比如删除数据，都会使回退或重现历史版本变得困难重重。在别的 VCS 中，若还未提交更新，就有可能丢失或者混淆一些修改的内容，但在 Git
+    里，一旦提交快照之后就完全不用担心丢失数据，特别是养成定期推送到其他仓库的习惯的话。</p>
+
+<p>这种高可靠性令我们的开发工作安心不少，尽管去做各种试验性的尝试好了，再怎样也不会弄丢数据。至于 Git 内部究竟是如何保存和恢复数据的，我们会在第九章讨论 Git 内部原理时再作详述。</p>
+
+<h3>文件的三种状态</h3>
+
+<p>好，现在请注意，接下来要讲的概念非常重要。对于任何一个文件，在 Git
+    内都只有三种状态：已提交（committed），已修改（modified）和已暂存（staged）。已提交表示该文件已经被安全地保存在本地数据库中了；已修改表示修改了某个文件，但还没有提交保存；已暂存表示把已修改的文件放在下次提交时要保存的清单中。</p>
+
+<p>由此我们看到 Git 管理项目时，文件流转的三个工作区域：Git 的工作目录，暂存区域，以及本地仓库。</p>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0106-tn.png"></center>
+<br>
+图 1-6. 工作目录，暂存区域，以及本地仓库<p></p>
+
+<p>每个项目都有一个 Git 目录（译注：如果 <code>git clone</code> 出来的话，就是其中 <code>.git</code> 的目录；如果 <code>git clone --bare</code>
+    的话，新建的目录本身就是 Git 目录。），它是 Git 用来保存元数据和对象数据库的地方。该目录非常重要，每次克隆镜像仓库的时候，实际拷贝的就是这个目录里面的数据。</p>
+
+<p>从项目中取出某个版本的所有文件和目录，用以开始后续工作的叫做工作目录。这些文件实际上都是从 Git 目录中的压缩对象数据库中提取出来的，接下来就可以在工作目录中对这些文件进行编辑。</p>
+
+<p>所谓的暂存区域只不过是个简单的文件，一般都放在 Git 目录中。有时候人们会把这个文件叫做索引文件，不过标准说法还是叫暂存区域。</p>
+
+<p>基本的 Git 工作流程如下：</p>
+
+<ol>
+    <li>在工作目录中修改某些文件。</li>
+    <li>对修改后的文件进行快照，然后保存到暂存区域。</li>
+    <li>提交更新，将保存在暂存区域的文件快照永久转储到 Git 目录中。</li>
+</ol>
+
+<p>所以，我们可以从文件所处的位置来判断状态：如果是 Git
+    目录中保存着的特定版本文件，就属于已提交状态；如果作了修改并已放入暂存区域，就属于已暂存状态；如果自上次取出后，作了修改但还没有放到暂存区域，就是已修改状态。到第二章的时候，我们会进一步了解其中细节，并学会如何根据文件状态实施后续操作，以及怎样跳过暂存直接提交。</p>
+
+<h2 id="1.4-安装-Git"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.4-%E5%AE%89%E8%A3%85-Git">1.4 安装 Git</a></h2>
+
+<p>是时候动手尝试下 Git 了，不过得先安装好它。有许多种安装方式，主要分为两种，一种是通过编译源代码来安装；另一种是使用为特定平台预编译好的安装包。</p>
+
+<h3>从源代码安装</h3>
+
+<p>若是条件允许，从源代码安装有很多好处，至少可以安装最新的版本。Git 的每个版本都在不断尝试改进用户体验，所以能通过源代码自己编译安装最新版本就再好不过了。有些 Linux 版本自带的安装包更新起来并不及时，所以除非你在用最新的
+    distro 或者 backports，那么从源代码安装其实该算是最佳选择。</p>
+
+<p>Git 的工作需要调用 curl，zlib，openssl，expat，libiconv 等库的代码，所以需要先安装这些依赖工具。在有 yum 的系统上（比如 Fedora）或者有 apt-get 的系统上（比如 Debian
+    体系），可以用下面的命令安装：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ yum install curl</span><span class="pun">-</span><span class="pln">devel expat</span><span class="pun">-</span><span class="pln">devel gettext</span><span class="pun">-</span><span class="pln">devel \
+    openssl</span><span class="pun">-</span><span class="pln">devel zlib</span><span class="pun">-</span><span class="pln">devel
+
+    $ apt</span><span class="pun">-</span><span class="kwd">get</span><span class="pln"> install libcurl4</span><span class="pun">-</span><span class="pln">gnutls</span><span class="pun">-</span><span class="pln">dev libexpat1</span><span class="pun">-</span><span class="pln">dev gettext \
+    libz</span><span class="pun">-</span><span class="pln">dev libssl</span><span class="pun">-</span><span class="pln">dev</span></code></pre>
+
+<p>之后，从下面的 Git 官方站点下载最新版本源代码：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">http</span><span class="pun">:</span><span class="com">//git-scm.com/download</span></code></pre>
+
+<p>然后编译并安装：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ tar </span><span class="pun">-</span><span class="pln">zxf git</span><span class="pun">-</span><span class="lit">1.7</span><span class="pun">.</span><span class="lit">2.2</span><span class="pun">.</span><span class="pln">tar</span><span class="pun">.</span><span class="pln">gz
+    $ cd git</span><span class="pun">-</span><span class="lit">1.7</span><span class="pun">.</span><span class="lit">2.2</span><span class="pln">
+    $ make prefix</span><span class="pun">=</span><span class="str">/usr/</span><span class="kwd">local</span><span class="pln"> all
+    $ sudo make prefix</span><span class="pun">=</span><span class="str">/usr/</span><span class="kwd">local</span><span class="pln"> install</span></code></pre>
+
+<p>现在已经可以用 <code>git</code> 命令了，用 <code>git</code> 把 Git 项目仓库克隆到本地，以便日后随时更新：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git clone git</span><span class="pun">:</span><span class="com">//git.kernel.org/pub/scm/git/git.git</span></code></pre>
+
+<h3>在 Linux 上安装</h3>
+
+<p>如果要在 Linux 上安装预编译好的 Git 二进制安装包，可以直接用系统提供的包管理工具。在 Fedora 上用 yum 安装：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ yum install git</span><span class="pun">-</span><span class="pln">core</span></code></pre>
+
+<p>在 Ubuntu 这类 Debian 体系的系统上，可以用 apt-get 安装：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ apt</span><span class="pun">-</span><span class="kwd">get</span><span class="pln"> install git</span></code></pre>
+
+<h3>在 Mac 上安装</h3>
+
+<p>在 Mac 上安装 Git 有两种方式。最容易的当属使用图形化的 Git 安装工具，界面如图 1-7，下载地址在：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">http</span><span class="pun">:</span><span class="com">//code.google.com/p/git-osx-installer</span></code></pre>
+
+<p>
+</p><center><img src="./1.Start_Pro_Git_files/18333fig0107-tn.png"></center>
+<br>
+图 1-7. Git OS X 安装工具<p></p>
+
+<p>另一种是通过 MacPorts (<code>http://www.macports.org</code>) 安装。如果已经装好了 MacPorts，用下面的命令安装 Git：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ sudo port install git</span><span class="pun">-</span><span class="pln">core </span><span class="pun">+</span><span class="pln">svn </span><span class="pun">+</span><span class="pln">doc </span><span class="pun">+</span><span class="pln">bash_completion </span><span class="pun">+</span><span class="pln">gitweb</span></code></pre>
+
+<p>这种方式就不需要再自己安装依赖库了，Macports 会帮你搞定这些麻烦事。一般上面列出的安装选项已经够用，要是你想用 Git 连接 Subversion 的代码仓库，还可以加上 +svn
+    选项，具体将在第八章作介绍。（译注：还有一种是使用 homebrew（<code>https://github.com/mxcl/homebrew</code>）：<code>brew install git</code>。）
+</p>
+
+<h3>在 Windows 上安装</h3>
+
+<p>在 Windows 上安装 Git 同样轻松，有个叫做 msysGit 的项目提供了安装包，可以到 GitHub 的页面上下载 exe 安装文件并运行：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">http</span><span class="pun">:</span><span class="com">//msysgit.github.com/</span></code></pre>
+
+<p>完成安装之后，就可以使用命令行的 <code>git</code> 工具（已经自带了 ssh 客户端）了，另外还有一个图形界面的 Git 项目管理工具。</p>
+
+<h2 id="1.5-初次运行-Git-前的配置"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.5-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C-Git-%E5%89%8D%E7%9A%84%E9%85%8D%E7%BD%AE">1.5
+    初次运行 Git 前的配置</a></h2>
+
+<p>一般在新的系统上，我们都需要先配置下自己的 Git 工作环境。配置工作只需一次，以后升级时还会沿用现在的配置。当然，如果需要，你随时可以用相同的命令修改已有的配置。</p>
+
+<p>Git 提供了一个叫做 git config 的工具（译注：实际是 <code>git-config</code> 命令，只不过可以通过 <code>git</code>
+    加一个名字来呼叫此命令。），专门用来配置或读取相应的工作环境变量。而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。这些变量可以存放在以下三个不同的地方：</p>
+
+<ul>
+    <li><code>/etc/gitconfig</code> 文件：系统中对所有用户都普遍适用的配置。若使用 <code>git config</code> 时用 <code>--system</code>
+        选项，读写的就是这个文件。
+    </li>
+    <li><code>~/.gitconfig</code> 文件：用户目录下的配置文件只适用于该用户。若使用 <code>git config</code> 时用 <code>--global</code>
+        选项，读写的就是这个文件。
+    </li>
+    <li>当前项目的 git 目录中的配置文件（也就是工作目录中的 <code>.git/config</code> 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以 <code>.git/config</code>
+        里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。
+    </li>
+</ul>
+
+<p>在 Windows 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code> 文件。主目录即 <code>$HOME</code> 变量指定的目录，一般都是 <code>C:\Documents and
+    Settings\$USER</code>。此外，Git 还会尝试找寻 <code>/etc/gitconfig</code> 文件，只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
+
+<h3>用户信息</h3>
+
+<p>第一个要配置的是你个人的用户名称和电子邮件地址。这两条配置很重要，每次 Git 提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git config </span><span class="pun">--</span><span class="kwd">global</span><span class="pln"> user</span><span class="pun">.</span><span class="pln">name </span><span class="str">"John Doe"</span><span class="pln">
+    $ git config </span><span class="pun">--</span><span class="kwd">global</span><span class="pln"> user</span><span class="pun">.</span><span class="pln">email johndoe@example</span><span class="pun">.</span><span class="pln">com</span></code></pre>
+
+<p>如果用了 <code>--global</code> 选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉 <code>--global</code>
+    选项重新配置即可，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
+
+<h3>文本编辑器</h3>
+
+<p>接下来要设置的是默认使用的文本编辑器。Git 需要你输入一些额外消息的时候，会自动调用一个外部文本编辑器给你用。默认会使用操作系统指定的默认编辑器，一般可能会是 Vi 或者 Vim。如果你有其他偏好，比如 Emacs
+    的话，可以重新设置：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git config </span><span class="pun">--</span><span class="kwd">global</span><span class="pln"> core</span><span class="pun">.</span><span class="pln">editor emacs</span></code></pre>
+
+<h3>差异分析工具</h3>
+
+<p>还有一个比较常用的是，在解决合并冲突时使用哪种差异分析工具。比如要改用 vimdiff 的话：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git config </span><span class="pun">--</span><span class="kwd">global</span><span class="pln"> merge</span><span class="pun">.</span><span class="pln">tool vimdiff</span></code></pre>
+
+<p>Git 可以理解 kdiff3，tkdiff，meld，xxdiff，emerge，vimdiff，gvimdiff，ecmerge，和 opendiff
+    等合并工具的输出信息。当然，你也可以指定使用自己开发的工具，具体怎么做可以参阅第七章。</p>
+
+<h3>查看配置信息</h3>
+
+<p>要检查已有的配置信息，可以使用 <code>git config --list</code> 命令：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git config </span><span class="pun">--</span><span class="pln">list
+    user</span><span class="pun">.</span><span class="pln">name</span><span class="pun">=</span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span><span class="pln">
+    user</span><span class="pun">.</span><span class="pln">email</span><span class="pun">=</span><span class="pln">schacon@gmail</span><span class="pun">.</span><span class="pln">com
+    color</span><span class="pun">.</span><span class="pln">status</span><span class="pun">=</span><span class="kwd">auto</span><span class="pln">
+    color</span><span class="pun">.</span><span class="pln">branch</span><span class="pun">=</span><span class="kwd">auto</span><span class="pln">
+    color</span><span class="pun">.</span><span class="pln">interactive</span><span class="pun">=</span><span class="kwd">auto</span><span class="pln">
+    color</span><span class="pun">.</span><span class="pln">diff</span><span class="pun">=</span><span class="kwd">auto</span><span class="pln">
+    </span><span class="pun">...</span></code></pre>
+
+<p>有时候会看到重复的变量名，那就说明它们来自不同的配置文件（比如 <code>/etc/gitconfig</code> 和 <code>~/.gitconfig</code>），不过最终 Git 实际采用的是最后一个。</p>
+
+<p>也可以直接查阅某个环境变量的设定，只要把特定的名字跟在后面即可，像这样：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git config user</span><span class="pun">.</span><span class="pln">name
+    </span><span class="typ">Scott</span><span class="pln"> </span><span class="typ">Chacon</span></code></pre>
+
+<h2 id="1.6-获取帮助"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.6-%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9">1.6 获取帮助</a></h2>
+
+<p>想了解 Git 的各式工具该怎么用，可以阅读它们的使用帮助，方法有三：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git help </span><span class="str">&lt;verb&gt;</span><span class="pln">
+    $ git </span><span class="str">&lt;verb&gt;</span><span class="pln"> </span><span class="pun">--</span><span class="pln">help
+    $ man git</span><span class="pun">-&lt;</span><span class="pln">verb</span><span class="pun">&gt;</span></code></pre>
+
+<p>比如，要学习 config 命令可以怎么用，运行：</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pln">$ git help config</span></code></pre>
+
+<p>我们随时都可以浏览这些帮助信息而无需连网。不过，要是你觉得还不够，可以到 Frenode IRC 服务器（irc.freenode.net）上的 <code>#git</code> 或 <code>#github</code>
+    频道寻求他人帮助。这两个频道上总有着上百号人，大多都有着丰富的 git 知识，并且乐于助人。</p>
+
+<h2 id="1.7-小结"><a href="http://git.oschina.net/progit/1-%E8%B5%B7%E6%AD%A5.html#1.7-%E5%B0%8F%E7%BB%93">1.7 小结</a></h2>
+
+<p>至此，你该对 Git 有了点基本认识，包括它和以前你使用的 CVCS 之间的差别。现在，在你的系统上应该已经装好了 Git，设置了自己的名字和电邮。接下来让我们继续学习 Git 的基础知识。</p>
+
+<p class="bottom-nav"><a class="next" href="http://git.oschina.net/progit/2-Git-%E5%9F%BA%E7%A1%80.html">下一节</a><a href="http://git.oschina.net/progit/index.html">首页（目录）</a> | <a href="http://git.oschina.net/">返回 码云</a></p>
+
+
+<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-top.png&quot;);"></div></div></body></html>
