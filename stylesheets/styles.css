@@ -369,3 +369,12 @@ footer p + p {
     content: 'at https://github.com/';
   }
 }
+
+.wrapper.h3{
+    padding-bottom: 20px;
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #586069;
+    border-bottom: 1px solid #e6ebf1;
+}
