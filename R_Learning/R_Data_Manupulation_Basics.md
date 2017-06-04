@@ -3,6 +3,20 @@
 假设我们有一个字符向量，包括了三个字符串。我们的目标是从中抽取电邮地址。
 
 R语言中很多字符函数都能识别正则表达式，而最重要的函数就是gregexpr()。
+```
+gregexpr
+function (pattern, text, ignore.case = FALSE, perl = FALSE, fixed = FALSE, 
+    useBytes = FALSE) 
+{
+    if (!is.character(text)) 
+        text <- as.character(text)
+    .Internal(gregexpr(as.character(pattern), text, ignore.case, 
+        perl, fixed, useBytes))
+}
+<bytecode: 0x09331de4>
+<environment: namespace:base>
+
+```
 该函数的第一个参数是正则表达式，前后需要用引号，对元字符进行转义时要用\\。
 第二个参数是等待处理的文本。
 那么用如下三行代码，我们从word字符向量中得到一个列表，
