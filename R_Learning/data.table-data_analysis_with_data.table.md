@@ -551,3 +551,5 @@ DT[,.(Avg_DepDelay_byWeekdays = mean(na.omit(DepDelay))), by=.(Origin,Weekdays =
 
 
 
+
+
