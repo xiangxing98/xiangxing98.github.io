@@ -209,3 +209,223 @@ $ git update-ref refs/tags/test-tag c56dce
 
 其他的比如git还有些底层的命令，我在文中所列举的，包括之前基础篇的都是一些高级命令。
 可以使用这些底层命名直接对git库进行一些操作，有关git底层命名的详细内容，可以到网上去找找。
+
+## git rebase修改已经提交的commit说明
+```
+# 01. 先用git log查看commit信息：
+git log
+
+# 02. 我打算更改下面那个commit，使用git rebase -i 版本号^
+
+# 03. 执行命令后，会进入pick这样的界面,
+# 它把我们传入的版本号之上的commit条目都显示出来了，
+# 这里只关注我们要改的那一条。将第一个`pick`修改为`reword`，保存并退出。
+
+# 04. 过一会儿，它会再进入这样的界面：
+# 将第一行的Android的ListView改为这个更改后的message，保存并退出。
+
+# 05. 再用`git log`查看
+# 不仅commit message被更改了，从被更改的commit开始，commit id都会重新生成。
+```
+
+## git rebase合并commit
+```
+# 01. 先用git log查看commit信息：
+
+# 02. 如果你想把最近的四个commit合并成一个commit，有两种方法。
+# 一种是用git reset --soft d7ac，在git commit -m "新的commit message"，
+# 另一种是用git rebase。接下来讲第二种。
+# 首先根据上图的commit id，我想把afe14f之后的commit合并到afe14f里面，
+# 执行 git rebase -i afe14f^。进入编辑界面：
+
+# 03. 看图文界面
+# 根据提示，squash会把所在的commit合并到前一个commit上面。
+# 我们要合并到afe14f，所以修改后三个。
+# 而在合并之后，我们需要修改afe14f的commit message，所以使用reword。
+# 你也可以用缩写，比如squash的缩写是s。而reword的缩写是s
+
+# 04. 保存并退出，会进入下一个界面。
+# 修改第一行的commit message，即reword的那个message，为添加Android学习笔记，
+# 特别是ListView的介绍；添加对git commit的修改教程。如下图：
+
+# 05. 保存并退出。自动进入下一个界面：
+# This is a combination of n commit
+# 此时要将其他三个message去掉，只要在那三行前面加#注释掉就行了。如下图：
+
+# 06. 保存并退出，等待git处理完成。
+
+# 07. 再次使用git log查看commit信息,完成！
+
+```
+
+## 解决merge时出现的冲突
+
+当你和其他团队成员对同一个文件进行修改后，merge的时候有可能会出现冲突。
+
+你可以打开每个冲突的文件，手工解决冲突；也可以借助冲突处理工具来解决冲突。
+
+这里分别介绍这两种方式：
+
+### 1. 手工解决冲突
+
+冲突提示如下图所示：
+
+CONFLICT表示有冲突，在这一行的末尾，显示冲突文件。这里有两个文件冲突，分别是README.md和app.iml
+这里以README.md为例，解决冲突：
+
+被红框框住的符号 ======= 是冲突的分割线。
+
+<<<<<<< HEAD 和分割线之间的是本地的文本，
+分割线和 >>>>>>> upstream/dev 之间的是远程分支的文本
+
+你可以选择保留其中一个版本的文本，然后将三个冲突符号都删除。这样表示已解决冲突。
+如果你想同时保留两个版本，那么只需将冲突符号删除。
+
+解决冲突后如下图所示：
+
+### 2. 借助冲突处理工具
+
+个人认为Meld这个工具比较好用，Android Studio自带的冲突处理工具和它很相似。
+我用过tortoisegit的工具，感觉没有Meld好用，这里就不介绍了。
+（1） 首先去Meld的官网下载安装文件并安装。->点此进入Meld官网
+（2） 安装完后，打开你的git工具，比如msysgit。
+执行 `git config --edit --global` ，此时会打开一个配置文件。在文件最后添加以下四行：
+```
+    [merge]  
+             tool = meld  
+    [mergetool "meld"] 
+             path = e:/software/MeldMergeTool/Meld.exe  
+```
+提示：path是根据你安装Meld的路径来决定的，同时要把路径中的 \ 改成 / 。
+从上面可以看出我的安装路径为 e:\software\MeldMergeTool\ 。
+（3） 在merge的时候，如果出现冲突，运行命令 git mergetool 这时就会打开Meld。
+（4） Meld的界面如下：
+
+冲突的地方会显示红色，如果你想保留本地的代码，则点击左边的 → 箭头。
+把所有红色（冲突）区域解决后，可以根据实际情况去解决绿色（添加）和灰色（更改）。
+一般保存中间的修改就行。如上图红框处。
+
+## Commit message写法规范
+
+```
+$ git log <last tag> HEAD --pretty=format:%s
+```
+每次提交，Commit message 都包括三个部分：Header，Body 和 Footer。
+```
+<type>(<scope>): <subject>
+// 空一行
+<body>
+// 空一行
+<footer>
+```
+其中，Header 是必需的，Body 和 Footer 可以省略。
+不管是哪一个部分，任何一行都不得超过72个字符（或100个字符）。
+这是为了避免自动换行影响美观。
+
+### 1. Header部分
+
+只有一行，包括三个字段：type（必需）、scope（可选）和subject（必需）
+（1）type
+type用于说明 commit 的类别，只允许使用下面7个标识。
+feat：新功能（feature）
+fix：修补bug
+docs：文档（documentation）
+style： 格式（不影响代码运行的变动）
+refactor：重构（即不是新增功能，也不是修改bug的代码变动）
+test：增加测试
+chore：构建过程或辅助工具的变动
+如果type为feat和fix，则该 commit 将肯定出现在 Change log 之中。其他情况（docs、chore、style、refactor、test）由你决定，要不要放入 Change log，建议是不要。
+（2）scope
+scope用于说明 commit 影响的范围，比如数据层、控制层、视图层等等，视项目不同而不同。
+（3）subject
+subject是 commit 目的的简短描述，不超过50个字符。
+以动词开头，使用第一人称现在时，比如change，而不是changed或changes
+第一个字母小写
+结尾不加句号（.）
+
+### 2. Body
+
+Body 部分是对本次 commit 的详细描述，可以分成多行。下面是一个范例。
+More detailed explanatory text, if necessary.  Wrap it to 
+about 72 characters or so. 
+Further paragraphs come after blank lines.
+- Bullet points are okay, too
+- Use a hanging indent
+有两个注意点。
+（1）使用第一人称现在时，比如使用change而不是changed或changes。
+（2）应该说明代码变动的动机，以及与以前行为的对比。
+
+### 3. Footer
+
+Footer 部分只用于两种情况。
+（1）不兼容变动
+如果当前代码与上一个版本不兼容，则 Footer 部分以BREAKING CHANGE开头，后面是对变动的描述、以及变动理由和迁移方法。
+BREAKING CHANGE: isolate scope bindings definition has changed.
+    To migrate the code follow the example below:
+    Before:
+    scope: {
+      myAttr: 'attribute',
+    }
+
+    After:
+    scope: {
+      myAttr: '@',
+    }
+
+    The removed `inject` wasn't generaly useful for directives so there should be no code using it.
+
+（2）关闭 Issue
+如果当前 commit 针对某个issue，那么可以在 Footer 部分关闭这个 issue 。
+Closes #234
+也可以一次关闭多个 issue 。
+Closes #123, #245, #992
+
+# 环境准备--MD TEMPLATE
+
+参加培训的学员，事先应该准备好开发环境。
+
+## 安装 Git
+
+请到官网 [git-scm.com](https://git-scm.com/) 或国内的下载站，下载安装包。
+
+## 安装 Node
+
+请到 Node 官网[nodejs.org](https://nodejs.org)，或者国内镜像[npm.taobao.org/mirrors/node](https://npm.taobao.org/mirrors/node)，下载最新版本的安装包。
+
+安装完成后，命令行执行下面的命令，确认是否安装成功。
+
+```bash
+$ node -v
+```
+
+Node 的模块管理器 npm 会一起安装好。由于 Node 的官方模块仓库网速太慢，模块仓库需要切换到阿里的源。
+
+```bash
+$ npm config set registry https://registry.npm.taobao.org/
+```
+
+执行下面的命令，确认是否切换成功。
+
+```bash
+$ npm config get registry
+```
+
+## 安装 Postman
+
+Postman 是一个 HTTP 通信测试工具，REST API 的练习会用到它。
+
+请到官网 [GetPostman.com](https://www.getpostman.com/) 下载独立安装包；也可以参考这篇文章[www.cnblogs.com/mafly/p/postman.html](http://www.cnblogs.com/mafly/p/postman.html)，下载 Chrome 浏览器的插件，它们的效果一样。
+
+## 安装示例库
+
+所有的讲义和练习源码，都是开源的，网址是 [github.com/ruanyf/jstraining](https://github.com/ruanyf/jstraining)。执行下面的命令，将这个库拷贝到你的硬盘上。
+
+```bash
+# Linux & Mac
+$ git clone git@github.com:ruanyf/jstraining.git
+
+# Windows
+$ git clone https://github.com/ruanyf/jstraining.git
+```
+
+如果因为种种原因，Git 命令行无法使用，也可以直接下载压缩包，地址是 https://github.com/ruanyf/jstraining/archive/master.zip 。

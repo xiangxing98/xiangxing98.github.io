@@ -1,3 +1,4 @@
+# config文件在C:\Users\你的用户名\.gitconfig
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -17,6 +18,7 @@
 	autocrlf = true
 	excludesfile = D:\\用户目录\\我的文档\\gitignore_global.txt
 	editor = 'D:/Program Files/Sublime Text 3/sublime_text.exe' -n -w
+	quotepath = false	
 [push]
 	default = upstream
 [merge]

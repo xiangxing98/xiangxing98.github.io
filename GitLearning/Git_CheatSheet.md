@@ -76,11 +76,17 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 # 可以放心地告诉任何人。
 # 登陆GitHub，打开“Account settings”，“SSH Keys”页面,点“Add SSH Key”，填上任意Title，在Key文本框里粘贴公钥id_rsa.pub文件的内容.
 
+#测试SSH 执行
+$ ssh -T git@github.com
+# 对于 oschina 的 “码云” ，执行 ssh -T git@git.oschina.net
+# 对于 coding 的 “码市” ，执行 ssh -T git@git.coding.net
+
 # 显示当前的Git配置
 $ git config --list
 
-# 编辑Git配置文件
-$ git config -e [--global]
+# 编辑Git配置文件，# .config文件在C:\Users\你的用户名\.gitconfig
+$ git config -e --global
+$ git config --global --edit
 
 # 设置提交代码时的用户信息
 $ git config [--global] user.name "[name]"
