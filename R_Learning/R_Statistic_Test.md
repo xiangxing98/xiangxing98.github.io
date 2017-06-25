@@ -1,10 +1,19 @@
 # R_Statistic_Test.md
 
+<!-- TOC -->
+
+- [R_Statistic_Test.md](#r_statistic_testmd)
+    - [构建数据框](#构建数据框)
+        - [构建数据框第一种方法](#构建数据框第一种方法)
+        - [构建数据框第二种方法](#构建数据框第二种方法)
+
+<!-- /TOC -->
+
 Two Sample t-test and  Exact Two-Sample Fisher-Pitman Permutation Test
 
 > http://www.jianshu.com/p/4b0e6fa098a5
 
-```
+```r
 # 载入包，并生成数据
 library(coin)
 score <- c(40, 57, 45, 55, 58, 57, 64, 55, 62, 65)
@@ -33,7 +42,7 @@ t.test(score ~ treatment, data = mydata, var.equal = TRUE)
 对独立样本进行置换检验，结果表明，T检验显著，
 但是置换检验不显著，置换结果更准确，需要增加样本数。
 
-```
+```r
 oneway_test(score ~ treatment, data = mydata, distribution = "exact")
 #     Exact Two-Sample Fisher-Pitman Permutation Test
 # 
@@ -43,8 +52,10 @@ oneway_test(score ~ treatment, data = mydata, distribution = "exact")
 ```
 
 ## 构建数据框
+
 ### 构建数据框第一种方法
-```
+
+```r
 商品名称<-c("鼠标","键盘","mp3","4gu盘")
 平均月销量<-c(124,90,88,120)
 sale<-data.frame(商品名称,平均月销量)
@@ -58,7 +69,8 @@ sale<-data.frame(商品名称,平均月销量)
 ```
 
 ### 构建数据框第二种方法
-```
+
+```r
 mylist<-list(商品名称=商品名称,平均月销量=平均月销量)#先创建列表
 mylist
 $商品名称
@@ -79,6 +91,3 @@ str(sale)#以简洁的方式对任意的R对象进行总结
 # $ 商品名称 : Factor w/ 4 levels "4gu盘","mp3",..: 4 3 2 1
 # $ 平均月销量: num 124 90 88 120
 ```
-
-
-
