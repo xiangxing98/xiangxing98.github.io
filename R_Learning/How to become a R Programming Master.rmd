@@ -1,0 +1,95 @@
+# 如何学习好R语言-肖凯.rmd
+
+## 学习 R 的方法
+知识和耐心，是成为强者的唯一方法。
+- 通过阅读来学习。
+  包括了阅读经典的教材、代码、论文、学习公开课。
+- 通过牛人来学习。
+ 包括同行的聚会、讨论、大牛的博客、微博、twitter、RSS。
+- 通过练习来学习。
+ 包括代码练习题、参加kaggle比赛、解决实际工作中的难题。
+- 通过分享来学习。
+ 包括自己写笔记、写博客、写书、翻译书，和同伴分享交流、培训新人。
+
+## 阅读清单
+
+###  一、初学入门：
+《R in Action》
+从统计角度入手，分高中低三部分由浅入深的讲解了如何用R来实现统计分析。
+《The Art of_R Programming》
+从程序编写的角度入手，对R的本身特点进行了清晰的介绍。
+《learning R》
+这本书没有单纯的讲语法，而是和数据分析的流程结合了起来，从数据获取到数据整理再到分析和报告，有一气呵成的感觉，此外最后两章讲如何写稳健的R代码以及写包都是非常精彩的。
+
+### 二、统计进阶：
+《A Handbook of Statistical Analyses_Using_R》
+《Modern Applied Statistics With S》
+这两本书基本上涵盖了统计的一些高阶内容，例如多元分析、多层回归模型、荟萃分析、生存分析等内容。案例丰富，公式不多，值得反复学习参考。
+
+### 三、科学计算：
+《Introduction to Scientific Programming and Simulation Using R》
+《Mastering Scientific Computing with R》
+除了统计分析外，独特之处在于使用R来做数值分析，如求根，最优化，数值积分。还包括了一些常见的模拟技术。书后的习题和最后的案例非常有用。
+
+### 四、数据挖掘：
+《Practical Data Science with R》
+以R本身的扩展包和函数入手，很有体系的介绍了数据科学的各个方面。
+《An Introduction to Statistical Learning》这本书可以说是另一本数据挖掘大作《The Elements of Statistical Learning》的R实现手册，体系结构基本一致，更强调用R来实现，更难得的地方是提供了很好的习题。
+《Data Mining with R Learning with Case Studies》
+《Machine Learning for Hackers》
+两本侧重于数据挖掘的R书，全是以案例为线索，示范的代码量很大。跟一遍下来会有很大的收获。
+《Data Mining explain using R》
+用基本函数来实现各种机器学习算法，对理解算法底层很有帮助。
+《Data Science in R》
+以案例为主的书，需要一定的数据挖掘基础。
+
+### 五、数据绘图：
+《ggplot2 Elegant Graphics for Data Analysis》
+ggplot2还有什么好说的呢，R中最优秀的绘图包，但由于近期该包升级很快，这书显得有些过时。好在中文版进行了大幅更新，即将面世。
+《R Graphics Cookbook》这本书也是RStudio公司的人出的，似乎是Hadley的学生吧，主要是各种ggplot2包的例子，也包括了用其它包来画图，建议通读一遍。
+
+### 六、参考手册：
+《R Cookbook》
+《R in a Nutshell》
+有时候我们需要类似词典的案头参考手册，以方便随时查阅。又或者可以通读一遍以查漏补缺。上面两本书虽然有些厚度，但仍然推荐之。后者的中文版也在翻译状态。
+
+### 七、高级编程：
+《R Programming for Bioinformatics》
+《software for data analysis programming with R》
+如果你是初学者，不要去看上面两本书。如果你想进阶为专家级R用户，那你需要精读它们。前者讲解了R少为人知的一面，例如字符处理、正则表达和XML，还有报错处理以及与其它语言的交互。后者更是编写生产级代码的圣经指南。
+《Advanced R programming》Hadley的力作，清楚的讲解了R的函数式编程思想和写R包的各种细节，要迈入R高手，不得不读。
+李舰和肖凯的作品《数据科学中的R语言》（六月份出版）
+
+## 阅读建议：
+- 在阅读时做笔记，以记下一些重点或心得
+- 在阅读代码时，要在 R 环境中亲手键入代码并理解其意义
+- 坚持练习,尝试利用身边的数据进行应用分析
+- 理解扩展包和函数背后的原理（引用论文?glm）
+
+## 网络资源
+- [R语言官方站](http://www.r-project.org/)
+- [R-blogger](http://www.r-bloggers.com/)
+- [R语言资源汇总](https://github.com/qinwf/awesome-R)
+- [R语言搜索引擎](http://www.rseek.org/)
+- [R函数在线帮助](http://www.rdocumentation.org/)
+- [关于R的问答网站](http://stackoverflow.com/questions/tagged/r)
+- [一个入门级的R在线教程](http://tryr.codeschool.com/)
+- [交互式的R在线教程](https://www.datacamp.com)
+- [统计之都](http://cos.name/)
+- [我的博客](http://xccds1977.blogspot.com)
+- [美国计算机世界杂志提供的Ｒ语言初学者入门资料](http://www.computerworld.com/s/article/9239625/Beginner_s_guide_to_R_Introduction)
+- 各种cheatsheet
+ http://cran.r-project.org/doc/contrib/Short-refcard.pdf
+ http://www.rstudio.com/resources/cheatsheets/
+
+## 视频资源
+- [Google Developers' Intro to R](http://www.youtube.com/watch?v=iffR3fWv4xw&list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP)
+- [Twotorials](http://www.twotorials.com/)
+- [Coursera]
+-《真实数据分析师》之R语言系列（http://study.163.com/course/introduction/967017.htm ）
+
+## 练习清单
+- Euler Project
+https://projecteuler.NET/
+- kaggle
+http://www.kaggle.com/

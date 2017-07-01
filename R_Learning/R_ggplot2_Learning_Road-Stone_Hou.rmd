@@ -1,0 +1,1654 @@
+---
+title: "201706 ggplot2 Learning Road-Stone_Hou.md"
+output: html_notebook
+---
+
+# Here is R Notebook Guideline
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r plotcars, echo=TRUE}
+plot(cars)
+```
+
+```{r Load ggplot2 package}
+# Load ggplot2 package
+if(!suppressWarnings(require(ggplot2)))
+{
+    install.packages('ggplot2')
+    require(ggplot2)
+}
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+# 201706 ggplot2 Learning Road-Stone_Hou.md
+
+
+## Grammar of Graphics(gg) ggplot2的图形语法
+
+### Understanding the root of ggplot2
+
+> A  statistical graphic is a mapping from data to aesthetic attributes (colour,shape, size) of geometric objects (points, lines, bars). By Handley(author of dplyr, plyr,stringr,ggplot2,rvest packages, and of cause, tidy verse(ggplot2 for ))
+
+### tidy verse package for data science
+
+ggplot2, for data visualisation.
+dplyr, for data manipulation.
+tidyr, for data tidying.
+readr, for data import.
+purrr, for functional programming.
+tibble, for tibbles, a modern re-imagining of data frames
+
+Before vs After
+
+```{r ggplot2 example}
+x <- rnorm(100,14,5) 
+y <- x + rnorm(100,0,1) 
+p <- ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  geom_point(color = "darkred") +  #添加点
+  annotate("text",x =13 , y = 20,parse = T,
+           label = "x[1] == x[2]") #添加注释
+p
+```
+
+ggplot图的元素可以主要可以概括如下：
+最大的是plot（指整张图，包括background和title），
+
+其次是axis（包括stick，text，title和stick）、legend（包括backgroud、text、title）、facet这是第二层次，其中facet可以分为外部strip部分（包括backgroud和text）和内部panel部分（包括backgroud、boder和网格线grid，其中粗的叫grid.major，细的叫grid.minor）。
+
+ggplot2风格的绘图的第一步就是初始化，说白了就是载入数据空间、选择数据以及选择默认aes。
+
+```{r initial of ggplot}
+p <- ggplot(data = , aes(x = , y = ))
+```
+
+data就是载入你要画的数据所在的数据框，指定为你的绘图环境，载入之后，就可以免去写大量的$来提取data.frame之中的向量。
+
+当然，如果你的数据都是向量，也可不指定，但是要在申明中标注data = NULL，不然就会得到不必要的报错。
+
+
+Key Point: 
+
+> 1. ggplot2的核心理念是将绘图与数据分离，数据相关的绘图与数据无关的绘图分离
+
+> 2. ggplot2是按图层作图
+
+> 3. ggplot2保有命令式作图的调整函数，使其更具灵活性
+
+> 4. ggplot2将常见的统计变换融入到了绘图中。
+
+> [how_to_use_gggplot2](http://www.cellyse.com/how_to_use_gggplot2_part1/)
+
+尽管qplot作为ggplot2的快速作图(quick plot)函数, 能够极大的简化作图步骤, 容易入门和上手, 但是qplot却不是泛型函数, 而ggplot()作为泛型函数, 能对任意类型的R对象进行可视化操作, 是ggplot2的精髓所在, 因而在本文中主要的绘图都是通过ggplot()来完成的。有关于qplot的介绍可以细看Hadley的官方介绍。
+
+在Hadley的ggplot2官方文档中, Hadely这样对Wilkinson的图形语法进行了描述：
+
+> “一张统计图形就是从数据到几何对象(geometric object, 缩写为geom, 包括点、线、条形等)的图形属性(aesthetic attributes, 缩写为aes, 包括颜色、形状、大小等)的一个映射。此外, 图形中还可能包含数据的统计变换(statistical transformation, 缩写为stats), 最后绘制在某个特定的坐标系(coordinate system,  缩写为coord)中, 而分面(facet, 指将绘图窗口划分为若干个子窗口)则可以用来生成数据中不同子集的图形。”
+
+因此在ggplot2中, 图形语法中至少包括了如下7个图形部件以及两个效率组件（主题，存储+输出）：
+
+### 1. 数据(data)
+
+数据(data)包含了变量variable与数值
+
+1. 在ggplot2中, 所接受的数据集必须为数据框(data.frame)格式, 如内置的mtcars数据集：
+```{r mtcars dataset}
+head(mtcars)
+#                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+# Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+# Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+# Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+# Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+# Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+# Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+```
+
+2. 这种格式带来的好处是数据易于存储, 也能在保留原有的绘图参数下, 用%+%方便地变更已有数据集。
+
+为通过”+”以图层的方式加入点的几何对象 
+
+```{r use plus to add layer}
+p <- ggplot(mtcars, aes(mpg, wt, colour = cyl)) +
+  geom_point() #geom_point()为通过”+”以图层的方式加入点的几何对象
+p
+
+# Data transform
+mtcars.c <- transform(mtcars, mpg = mpg^2)
+
+#用mtcars.c替换mtcars
+p %+% mtcars.c 
+```
+
+3. 而ggplot2进行数据分组时必须根据行, 而不能根据列, 例如在mtcars的数据集中, 可以把汽车按汽缸数进行分组, 但不能按汽车的档位数和汽缸数这两个变量分为两组。这要求把“宽”数据转化为“长”数据。所谓的长数据是变量不再是放在各个列上, 而是排成一列, 每一个变量都分别占其中的几行, 这样就能方便的对每个变量进行分组。reshape2中melt()和cast()能够灵活的融合(melt)和重铸(cast)在数据框中的数据。
+
+```{r reshap2 melt data}
+
+# Load reshape2 package
+if(!suppressWarnings(require(reshape2)))
+{
+    install.packages('reshape2')
+    require(reshape2)
+}
+
+# 融合档位数gear和汽缸数cyl这两个变量到一列，对应的值到另一列
+# mpg cyl disp  hp drat    wt  qsec vs am gear carb
+mtcars.m <- melt(mtcars, id = c("mpg", "disp", "hp", "drat", "wt", "qsec", "vs", "carb")) 
+
+#head(mtcars.m,20)
+head(mtcars)
+head(mtcars.m)
+```
+
+
+### 2. 映射(mapping)
+
+#### (1) 映射的概念
+
+`aes()`函数是ggplot2中的映射函数, 所谓的映射即为数据集中的数据值关联到相应的图形属性(aesthetic)过程中一种对应关系, 图形属性（aesthetic)包括：横纵坐标、点的大小、颜色、形状、填充色等。attributes，简称aes?? 例如：
+```{r ggplot2 aes()}
+p1 <- ggplot(data = mtcars)
+summary(p1)
+# data: mpg, cyl, disp, hp, drat, wt, qsec, vs,
+#   am, gear, carb [32x11]
+# faceting: <ggproto object: Class FacetNull, Facet>
+#     compute_layout: function
+#     draw_back: function
+#     draw_front: function
+#     draw_labels: function
+#     draw_panels: function
+#     finish_data: function
+#     init_scales: function
+#     map: function
+#     map_data: function
+#     params: list
+#     render_back: function
+#     render_front: function
+#     render_panels: function
+#     setup_data: function
+#     setup_params: function
+#     shrink: TRUE
+#     train: function
+#     train_positions: function
+#     train_scales: function
+#     vars: function
+#     super:  <ggproto object: Class FacetNull, Facet>
+
+p2 <- ggplot(data = mtcars, mapping = aes(x = wt, y = hp, color = gear))
+summary(p2)
+# data: mpg, cyl, disp, hp, drat, wt, qsec, vs,
+#   am, gear, carb [32x11]
+# mapping:  x = wt, y = hp, colour = gear
+# faceting: <ggproto object: Class FacetNull, Facet>
+#     compute_layout: function
+#     draw_back: function
+#     draw_front: function
+#     draw_labels: function
+#     draw_panels: function
+#     finish_data: function
+#     init_scales: function
+#     map: function
+#     map_data: function
+#     params: list
+#     render_back: function
+#     render_front: function
+#     render_panels: function
+#     setup_data: function
+#     setup_params: function
+#     shrink: TRUE
+#     train: function
+#     train_positions: function
+#     train_scales: function
+#     vars: function
+#     super:  <ggproto object: Class FacetNull, Facet>
+```
+可以发现, 在p2中, 通过aes()指定了横纵坐标分别为wt和hp, 颜色为gear这三种图形属性,在mapping里边了。 在ggplot2中不同的几何对象对应着不同的图形属性, 有关于几何对象的将在下面的小节讲解。
+
+任何与数据向量顺序相关，需要逐个指定的参数都必须写在aes里。
+
+
+#### (2) 设定和映射
+
+映射是将一个变量中离散或连续的数据与一个图形属性中以不同的参数来相互关联, 而设定能够将这个变量中所有的数据统一为一个图形属性。
+
+```{r aesthetic and mapping}
+p <- ggplot(mtcars, aes(wt, mpg))
+
+#设定散点的颜色为蓝色
+p + geom_point(color = "blue") 
+
+# 下面的最后一行语句为错误的映射关系, 
+# 在aes中, color = “blue”的实际意思是把”blue”当为一个变量, 
+# 用这个变量里的数据去关联图形属性中的参数,
+# 因为”blue”只含有一个字符变量, 默认情况下为离散变量,
+# 按默认的颜色标度标记为桃红色
+p + geom_point(aes(color = "blue"))
+```
+
+
+#### (3) 分组(group)
+
+分组(group)也是ggplot2种映射关系的一种, 默认情况下ggplot2把所有观测点分为了一组, 如果需要把观测点按额外的离散变量进行分组处理, 必须修改默认的分组设置。
+
+```{r group}
+p1 <- ggplot(data = mtcars, mapping = aes(x = wt, y = hp)) + geom_line() 
+#默认分组设置, 即group=1
+#geom_line为折线图的几何对象
+p2 <- ggplot(data = mtcars, mapping = aes(x = wt, y = hp, group = factor(gear))) + geom_line() 
+#把wt和hp所对应的观测点按gear(gear以因子化变为离散变量)进行分组
+
+```
+#### (4) 图层(layer)
+
+这些组件之间是通过“+”, 以图层(layer)的方式来粘合构图的, 所以图层是ggplot2中一个重要的概念。
+
+在上文中通过对数据和映射的讲解中, 我们已经采用过”+”来添加图层, ggplot2中图层的概念和PS中图层的概念很像, 可以这样理解ggplot2中的图层：每个图层可以代表一个图形组件, 例如下面要介绍的几何对象、统计变换等图形组件, 这些组件以图层的方式叠加在一起构成一个绘图的整体, 在每个图层中的图形组件又可以分别设定数据、映射或其他相关参数, 因此组件之间又是具有相对独立性的。ggplot2中图层的设定是十分成功的, 因为这一过程是如此实用、方便而富有逻辑性。
+
+##### (1) 在几何对象中设定映射
+
+前面我们已在ggplot()中设定了映射了关系, 这种映射关系是默认的, 我们可以在后面的几何对象中沿用已设定的默认映射关系, 也可以随时在几何对象中进行更改。
+```{r aes add/modify}
+p <- ggplot(mtcars, aes(x = mpg, y = wt, color = factor(gear)))
+#设定默认的映射关系
+
+p + geom_point()
+#沿用默认的映射关系来绘制散点图
+
+p + geom_point(aes(shape = factor(carb))) 
+#添加图层中的shape的映射关系
+
+p + geom_point(aes(y = carb))
+#修改默认的y的映射关系, 注意图中y轴名称仍然以默认的wt表示
+
+p + geom_point(aes(color = NULL))
+ #删除默认的color映射关系
+```
+尽管上面三个有关例子在实际应用中很少去涉及, 但是很好的说明了图层、数据和映射之间的关系。
+
+##### (2) 采用多个数据集或向量数据绘图
+在很多种绘图场合中, 我们会运用到多个数据集或向量数据来进行图层叠加, 具体的例子如下
+```{r use different dataset}
+#构建不同于mtcars的数据集mtcars.c
+mtcars.c <- transform(mtcars, mpg = mpg^2)
+
+ggplot()+
+  geom_point(aes(x = hp, y = mpg), data = mtcars, color = "red") + 
+  geom_point(aes(x = mtcars$hp, y = mtcars$disp), color = "green")+ 
+  #选用向量数据
+  geom_point(aes(x = hp, y= mpg), data = mtcars.c, color = "blue") 
+  #选用不同的数据集
+```
+
+##### (3) 加注释
+
+所有注释的实现都是通过annotate函数实现的，其实annotate就是一个最简单的geom_单元，它一次只添加一个位置上的图形（可以通过设置向量来实现同时绘制多个图形，但这个理念和注释的理念有所偏差）。annotate的geom就是指定注释的类型，其属性按照geom的不同而发生变化。
+
+
+### 3. 几何对象(geom)
+
+上面指定的图形属性需要呈现在一定的几何对象上才能被我们看到，这些承载图形属性的对象可能是点，可能是线，可能是bar。几何对象执行着图层的实际渲染, 控制着生成的图像类型。
+
+例如用geom_point()将会生成散点图, 而geom_line会生成折线图。
+
+最常见的图有散点图、折线图、曲线图、条形图、直方图，分别对应geom_point(), geom_line(), geom_smooth(), geom_bar(), geom_histogram()。相应的aes中的变量不一定是x和y，对于条形图和直方图就只有一个变量x。
+
+
+> 每一个几何对象都有一个默认的统计变换, 并且每一个统计变换都有一个默认的几何对象。正因如此, 这一设定将会使绘图过程变的灵活多变。
+
+在ggplot2的官方索引中, 已对ggplot2中所有的geom和stat组件进行了汇总, 更详细的内容, 可直接点开相应图形组件所对应的链接。下面对几个常用的几何对象和统计变换进行举例描述。
+
+#### (1) geom_point()散点图
+```{r geom_point}
+p <- ggplot(mtcars, aes(wt, mpg))
+p + geom_point()
+
+#更改颜色-连续变量
+p + geom_point(aes(color = qsec))
+# p + geom_point(aes(color = factor(qsec)))
+
+#更改颜色-离散变量
+p + geom_point(aes(color = factor(gear)))
+
+#更改透明度
+p + geom_point(aes(alpha = qsec))
+
+#更改形状
+p + geom_point(aes(shape = factor(gear)))
+
+#更改点大小
+p + geom_point(aes(size = qsec))
+
+
+#两种颜色的叠加
+p + geom_point(color = "grey50", size = 5) + geom_point(aes(color = qsec), size = 4)
+
+#颜色和形状的叠加
+p + geom_point(color = "grey50", size = 5) + geom_point(aes(shape = factor(gear)), size = 3)
+
+p + geom_point(aes(size = qsec, shape = factor(gear), color = factor(gear)))
+
+```
+
+#### (2) geom_histogram()
+```{r geom_histogram}
+rating <- runif(1000,min = 1, max = 10)
+id <- 1:1000
+movies <- data.frame(id, rating)
+
+m <- ggplot(movies, aes(rating)) 
+#这里使用movies数据集
+
+m + geom_histogram()
+m + geom_histogram(binwidth = 0.5)
+#调整分箱(bin)数据
+m + geom_histogram(binwidth = 1)
+m + geom_histogram(binwidth = 2)
+```
+
+geom_histogram()这个几何对象默认使用stat_bin这个统计变换, 而这个统计变换会生成
+(1)count：每个组里观测值的数目,
+(2)density：每个组里观测值的密度和
+(3)x：组的中心位置
+这三个变量。
+生成的这三个变量在ggplot()中的再使用..围起来, 因此可以用来生成如下的图
+```{r stat_bin这个统计变换}
+m + geom_histogram(binwidth = 0.5, aes(fill =..count..))
+m + geom_histogram(binwidth = 0.5, aes(y = ..density..)) + geom_density()
+```
+
+柱形图元素位置的调整
+
+元素位置的调整共有5种：
+(1)dodge：并排方式; 
+(2)fill：堆叠图像元素, 并将高度标准化为1, 
+(3)identity：不做任何调整;
+(4)jitter：给点增加扰动避免重合, 
+jitter使某每一个点在x轴的方向上产生随机的偏移, 从而减少了图形重叠的问题, 另一种介绍重叠的方式是改变点的透明度, 将在实战中的地图讨论。
+(5)stack：堆叠图像元素。 
+
+```{r position}
+d <- ggplot(diamonds, aes(x = clarity, fill = cut ))
+# dodge
+d + geom_histogram(position = "dodge", stat = "count")
+
+# fill and standard to 1 stack
+d + geom_histogram(position = "fill", stat = "count")
+
+# just stack
+d + geom_histogram(position = "stack", stat = "count")
+
+# jitter
+ggplot(diamonds) + geom_point(aes(color, price/carat), position = "jitter")
+```
+很多情况下, 我们会采用固定的x轴和y轴值来进行作图, 此时需要用stat = “identity” 来申明, 即表示不对数据进行统计变换
+```{r identity}
+A <- c(1, 2, 3, 4, 5, 6, 7, 8)
+B <- c(2, 10, 11, 5, 6, 1, 10, 20)
+ggplot() + geom_histogram(aes(x = A, y = B), stat = "identity")
+```
+
+#### (3) geom_smooth()
+
+geom_smooth()用来给数据添加平滑曲线, 所能采用的方法包括了lm, glm, gam, loess, rlm等, 这些方法需要通过加载公式来实现。
+```{r geom_smooth}
+m <- ggplot(mtcars, aes(qsec, wt))
+# m
+
+# 添加平滑曲线 + 点图
+m + stat_smooth() + geom_point()
+
+#取消平滑曲线默认的置信区间 + 点图
+m + stat_smooth(se = FALSE) + geom_point()
+
+#更改置信区间和线条颜色
+m + stat_smooth(fill = "red", size = 2, alpha = 0.5, color = "green") + geom_point()
+
+#用一元一次(线性回归)方程拟合
+m + stat_smooth(method = "lm") + geom_point() 
+
+#使用一元二次方程拟合
+m + stat_smooth(method = "lm", formula = y ~ poly(x, 3)) + geom_point() 
+
+
+# 加载splines和MASS包, 使用自由度为3的自然样条来进行拟合
+require(splines)
+require(MASS)
+m + stat_smooth(method = "lm", formula = y ~ ns(x, 3)) + geom_point()
+
+m <- ggplot(mtcars, aes(y = wt, x = mpg, group = factor(cyl)))
+
+#按cyl这个离散变量进行分组, 分别拟合数据
+m + stat_smooth(method = lm, aes(color = factor(cyl), fill = factor(cyl))) + geom_point( aes(color = factor(cyl)))
+
+```
+
+得益于r包的丰富性, 我们可以采用极大似然或最小二乘法, 对多种现有的函数或自编函数来拟合曲线。例如, 在对剂量-效应曲线绘图的实战中, 采用drc包中的log-logistics四参数方程来拟合剂量-效应曲线。
+
+在这偏不长的博文中, 很难对ggplot2中所有几何对象和统计变换一一详尽, 更详细的内容可以在[ggplot2的官方索引](http://docs.ggplot2.org/current/)找到。但是通过前一小节有关于图层的讲解, 我们已能很容易的通过这些组件整合出一些复杂的图形, 而这些组件的原理也是相同的。
+
+
+### 4. 统计变换(stats)
+
+当我们需要展示出某个变量的某种统计特征的时候，需要用到统计变换。比如求均值，求方差等，通常以某种方式对数据信息进行汇总, 例如通过stat_smooth()添加光滑曲线。
+
+> 每一个几何对象都有一个默认的统计变换, 并且每一个统计变换都有一个默认的几何对象。正因如此, 这一设定将会使绘图过程变的灵活多变。
+
+很多人在解释ggplot2的时候喜欢说，ggplot2绘图有两种函数，一类是geom_，绘图用的；一类是stat_，统计变换用的。这样说不是不对，只是很不恰当，很多人就会问出一些问题，比如，统计变换竟然是做运算用的，为什么可以用来画图？为什么stat_bin和geom_histgram画出来的图是一样，竟然一样，为什么要重复？事实上，任何一个ggplot2图层都包括stat和geom俩部分，或者说两个步骤（其实还包括position）。 而stat_identity则表示不做任何的统计变换。我们来举个例子，还是上面的代码，为了更直观，我在此作了修改：
+
+```{r stat}
+x <- c(rnorm(100,14,5),rep(20,20)) 
+y <- c(rnorm(100,14,5) + rnorm(100,0,1),rep(20,20))
+ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  geom_point(color = "darkred")
+```
+
+我们查看码源，就知道geom_point的默认stat是identity，即不做任何统计变换：
+
+```{r}
+geom_point
+# function (mapping = NULL, data = NULL, stat = "identity", position = "identity", 
+#     na.rm = FALSE, ...) 
+# {
+#     GeomPoint$new(mapping = mapping, data = data, stat = stat, 
+#         position = position, na.rm = na.rm, ...)
+# }
+# <environment: namespace:ggplot2>
+```
+
+大家可以发现，我在（20，20）这个点的数据事实上是有20个的，但由于没做统计转换(20,20)这个点被画了20次，因此我们理论上看到的点其实是最后一次画的那个点。可能这不够直观，没关系，我们调整一下透明度到10%：
+```{r alpha}
+ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  geom_point(color = "darkred",alpha = 0.1)
+```
+
+这样应该就很明显了，由于(20,20)点被画了20次，所以透明度会叠加为20*10% = 200%实际只展现100%。我们现在就使用坐标转换来重新画这个图：
+
+```{r}
+ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  geom_point(color = "darkred",stat = "sum")
+```
+
+好了，解释一下，stat_sum实际的意思就是按照某一点占所有点出现频率然后换算成大小来作图，因此，以上代码就可以得到下面这张图，因为(20,20)这个点出现频率为20/120=16.667%：
+
+好了，我们可以发现了，一个单纯的geom_point里面也是带有stat_的，因此，其实geom_和stat_实际上是一回事。可能你会问了，那照我的说法，以上这幅图用的是geom_point里的一个参数，而不是再用stat_sum，这是一回事吗？bingo！这个问题相当好，的确，按照以上的推理，应该存在一种以stat_sum作为主函数的方法来绘制这幅图，搞不好，里面还有个参数geom，要设置成“point”。我们来实践一下吧：
+
+```{r stat_sum}
+ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  stat_sum(color = "darkred",geom = "point")
+
+# statistics 其实geom都包含了默认的stat，
+# 比如geom_bar默认的就是geom_bar(stat = "count")。
+# 所以下面例子里用stat_count( )的结果和geom_bar( )一样。
+ggplot(mpg, aes(class)) +
+  stat_count()
+
+ggplot(mpg, aes(class)) +
+  geom_bar(stat = "count")
+```
+
+还真可以，还长得一模一样。
+
+现在就讲通了，对于有过经验的同学现在应该重新修正这个观点——stat_和geom_是两种绘图方法。
+
+这是错的，其实它们是ggplot2每一个图层绘制都必须有的，是一个图层的一体两面。
+
+在这一步之中，我们也要回到我们在第一步时出现的问题，aes到底是什么？为什么说任何与数据向量顺序相关，需要逐个指定的参数都必须写在aes里？什么时候color、shape、size、fill写外面，什么时候写里面？
+
+aes实际上做的是将aes里的向量的顺序逐个地绘制。譬如以下代码（转自geom_point帮助文档中的实例）：
+
+```{r}
+p <- ggplot(mtcars, aes(wt, mpg)) #<---- code 1
+# code 1: ggplot首先载入了这个mtcars的集合，然后指定给了mpg作为其x坐标位置，wt为y坐标位置。
+
+p + geom_point(aes(colour = qsec)) #<---- code 2
+# code 2: 指定了qsec作为其染色的标准（分组），qsec为numeric变量，因此，应该选择连续型的标尺，而不是分组染色。然后开始绘制，读取mtcars$mpg[1]、mtcars$wt[1]，确定位置，然后为其染成mtcars$qsec[1]颜色；再绘制第二点。。。
+```
+
+因此，aes里的美学特征其实就是按照向量顺序指定每个位置的美学特征，大家可以比较tapply函数的写法。
+
+好了，现在问题就来了。我想为所有点的颜色都染成绿色，怎么办？其实很简单，如果不需要指定这么一个染色的顺序，而选择将整个图层染成一种颜色，则只需要将color写在aes外：
+
+```{r}
+p + geom_point(color = "green") 
+```
+
+哦，怪不得写在aes里染出来的颜色不是绿色，但为什么写到里面就不可以了，为了写到里面，然出来的是粉色？
+
+好了，我们再来分析一下把color = "green"写到了aes里，到底发生了什么。
+
+```{r}
+p + geom_point(aes(colour = "green"))
+```
+
+
+首先，数据的初始化跟上面那个例子是相同的。然后，因为color放到了aes里，于是ggplot开始搜索mtcars里面的向量了，发现没有叫"green"的，然后又找了global，也没有。于是，ggplot就开始把它认作了一个新的向量。
+
+等等，有个问题，我要按照这个向量来分别染色，而事实上，这个向量长度为1，怎么办？ggplot就先把他展开成了`factor(rep("green",nrow(mtcars)),levels = unique("green"))`，bingo！
+
+现在开始染色了。啊第一个数据`mtcars$mpg[1]`、`mtcars$wt[1]`，其颜色变量是"green",因子水平是1，染成默认调色第一种，哦，就是这个蛋蛋的粉红色；再染第二个，还是"green"，因子水平也是1，染成蛋蛋的粉红色；...
+
+终于完成了，咦？怎么都是蛋蛋的粉红色。通过举了这个染色的例子大家应该都弄懂了，aes到底在干什么了。其他的美学特征其实也是完全一致的。只是需要解释group=1的意思就是说不做分组来进行绘图。
+
+什么？还是搞不清该放aes里面还是外面？那就记着:
+
+> 想统一整个图层时就放到aes外，想分成不同组调整，并且已经有一个与x、y长度一致的分组变量了，那就放到aes里。
+
+在这一步里，还要要说的就是我们要讲的是ggplot2大致内置了哪些图：
+
+1. 点（point, text）：往往只有x、y指定位置，有shape但没有fill
+
+2. 线(line,vline,abline,hline,stat_function等)：一般是基于函数来处理位置
+
+3. 有向射线(segment)：特征是指定位置有xend和yend，表示射线方向
+
+4. 面(tile, rect)：这类一般有xmax,xmin,ymax,ymin指定位置
+
+5. 棒(boxplot,bin,bar,histogram)：往往是二维或一维变量，具有width属性
+
+6. 带(ribbon,smooth):透明是特征，是透明的fill
+
+7. 补：包括rug图，误差棒(errorbar,errorbarh)
+
+然后，就是按照你的需要一步步加图层了（使用“+”）。
+
+
+
+
+
+
+### 5. 标度(scale)
+坐标的比例值
+标度控制着数据到图形属性的映射, 更重要的一点是标度将我们的数据转化为视觉上可以感知的东西, 如大小、颜色、位置和形状。所以通过标度可以修改坐标轴和图例的参数。
+
+按表1所示, 所有标度构建器(scale constructor)都拥有一套通用的命名方案。它们以scale_开头, 接下来是图形属性的名称(例如,  color_、shape_或x_)最后以标度的名称结尾(例如gradient、hue或manual)。从表中可以发现, 标度是区分离散和连续变量的, 因此再对标度进行调整一定要注意区分。
+
+ggplot2中的标度可以粗略的分为4类：
+(1)位置标度:用于将连续型、离散型和日期-时间型变量映射到绘图区域, 以及构造对应的坐标轴;
+
+(2)颜色标度：用于将连续型和离散型变量映射到颜色;
+
+(3)手动离散型标度：用于将离散型变量映射到我们选择的符号大小、线条类型、形状或颜色, 以及创建对应的图例;
+以及(4)同一型标度：用于直接将变量值绘制为图形属性, 而不去映射他们。
+
+实际应用中修改标度最长用的有3个方面
+(1) 修改图例
+(2) 修改图形属性
+(3) 修改坐标轴
+
+介于标度内容的复杂性, 建议详细的参考如下链接：
+(1)索引中有关scale的内容：
+http://docs.ggplot2.org/current/index.html
+
+(2)cookbook中有关图例的修改:
+http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/
+
+(3)cookbook中有关坐标轴的修改:
+http://www.cookbook-r.com/Graphs/Axes_(ggplot2)/
+
+(4)ColorBrewers配色方案：
+http://colorbrewer.org
+
+在后面的实例中, 每一张完美的图都需要对其标度进行细致的修改。
+
+### 6. 坐标系(coord)
+
+coordinate 常用的是coord_cartesian，用法是`coord_cartesian(xlim = c(xmin, xmax), ylim = c(ymin, ymax))`。coordinate系统主要控制坐标轴，告诉ggplot坐标轴上取值的范围。还是以上图为例，把y轴的范围设置成0到80：
+```{r coord_cartesian}
+ggplot(mpg, aes(class)) +
+  geom_bar() +
+  coord_cartesian(ylim = c(0, 80))
+```
+
+
+
+### 7. 分面(facet)
+
+分面和图层将原数据切割称多个小数据集，即每个图层的每个分面面板都含有一个小数据集。
+
+你可以把它想象成一个三维矩阵：分面面板形成了一个2维网格，图层在第三维的方向上叠加。
+
+分面这个概念使得分组对比图的绘制非常方便。
+
+而图层的概念使得我们用R绘图跟艺术家绘图别无二致。
+
+如gglot()函数如同开启了一块画布，通过“+”叠加的几何对象：简称geom，控制生成的图像类型，如geom_line(),geom_point()，可以进行图层的叠加，也就相当于是层层绘制，把同一来源的数据通过不同的图形类型展示在同一幅图中，或者把不同来源的数据很方便的展示在同一个图形对象中。也可以理解成每一块画布是透明的，通过画布的叠加来丰富我们的图形对象。
+
+分面(facet)即在一个页面上自动摆放多幅图形, 这一过程先将数据划分为多个子集, 然后将每个子集依次绘制到页面的不同面板中。
+
+ggplot2提供两种分面类型：网格型(facet_grid)和封装封面型(facet_wrap)。
+
+网格分面生成的是一个2维的面板网格, 面板的行与列通过变量来定义, 本质是2维的;
+
+封装分面则先生成一个1维的面板条块, 然后再分装到2维中, 本质是1维的。
+
+在很多情况下, 我们可能需要绘制有两个y轴的坐标系, 而在ggplot2中, 这种做法特别不提倡[stackover的讨论](http://stackoverflow.com/questions/3099219/how-to-use-ggplot2-make-plot-with-2-y-axes-one-y-axis-on-the-left-and-another), 可解决的方法要么是把变量归一化, 要么便是采用分面方法。
+
+```{r facet}
+p <- ggplot(mtcars, aes(mpg, wt)) + geom_point()
+
+#以cyl为分类变量,按列排
+p + facet_grid(. ~ cyl) 
+
+#wrap与grid的区别
+p + facet_wrap( ~ cyl, nrow = 3)
+
+#以cyl为分类变量
+p + facet_grid(cyl ~ .) 
+
+#wrap与grid的区别
+p + facet_wrap( ~ cyl, ncol = 3) 
+# p + facet_wrap( ~ cyl, nrow = 3) 
+
+#行以vs和列以am为分类变量
+p + facet_grid(vs ~ am)
+
+p + facet_wrap(vs ~ am, ncol = 2) #wrap与grid 的区别
+
+```
+
+facet另外一个案例margins
+
+```{r facet example margins}
+p <- p + geom_smooth(method = "lm", se =F, aes(color = factor(cyl))) + 
+  geom_point(aes(color = factor(cyl)))
+p + facet_grid(vs ~ am)
+
+#使用margins来描述边际图
+p + facet_grid(vs ~ am, margins = T) 
+
+p + facet_grid( ~ cyl, scales = "free")
+p + facet_grid( ~ cyl, scales = "free_x")
+```
+
+facet另外一个案例scales
+
+```{r facet example 2}
+p <- ggplot(aes(cty, hwy), data = mpg) + geom_point()
+
+#调整scales的标度, 共有fixed, free, free_x和free_y四种变换
+p + facet_wrap( ~ cyl)
+
+# 这里标度更改为free
+p + facet_wrap( ~ cyl, scales = "free") 
+
+#space设置为free时, 每列的宽度与该列的标度范围成比例
+p + facet_grid(. ~ cyl, scales = "free", space = "free") 
+
+##使用自由标度来替代 双坐标轴 的实战的一个例子
+```
+
+facet另外一个案例
+facet可以把一张图按变量分割成若干小图。下面的例子用facet_wrap按生产商分车型：
+```{r}
+facet_example <- ggplot(mpg, aes(class)) +
+  geom_bar() +
+  facet_wrap(~manufacturer)
+
+facet_example
+```
+
+
+### 8. 主题(theme)调整
+
+主题系统控制着图形中的非数据元素外观, 它不会影响几何对象和标度等数据元素。主题修改是一个对绘图精雕细琢的过程, 主要对标题、坐标轴标签、图例标签等文字调整, 以及网格线、背景、轴须的颜色搭配。
+
+```{r theme example}
+rating <- runif(1000,min = 1, max = 10)
+id <- 1:1000
+movies <- data.frame(id, rating)
+
+p <- ggplot(movies,  aes(x = rating)) + geom_histogram(binwidth = 1)
+
+#白色背景
+p + theme_bw()
+
+#默认浅灰色背景
+p + theme_grey() 
+
+#classic, white background
+classicTheme <- ggplot(mpg, aes(class)) +
+              geom_bar() +
+              theme_classic()
+classicTheme
+```
+
+主题由控制图形外观的多个元素组成, 详见[官方索引](http://docs.ggplot2.org/current/)
+
+```{r theme modify label and title}
+##element_text()修改标签和标题
+p <- p + labs(title = "histogram")
+p + theme(
+  plot.title = element_text(size = 20, 
+                            color = "red", 
+                            hjust = 0, 
+                            face = "bold", 
+                            angle = 180))
+```
+
+内置元素共有四个基础类型：文本(text), 线条(line)、矩形(rectangle)、空白(blank), text与其他类型操作相类似, 具体的例子可参考索引, 此处用element_blank()来去除灰色背景。
+```{r no background}
+p + theme(panel.background = element_blank()) #blank是去掉某种绘图元素
+```
+
+#### 一个丧心病狂的主题设置
+```{r theme setting}
+ggplot(mpg, aes(class)) +
+  geom_bar() +
+  theme(panel.background = element_blank(),
+        legend.key = element_blank(),
+        legend.background = element_blank(),
+        strip.background = element_blank(),
+        plot.background = element_rect(fill = "#FEE0D2", color = "black", size = 3),
+        panel.grid = element_blank(),
+        axis.line = element_line(color = "black"),
+        axis.ticks = element_line(color = "black"),
+        strip.text = element_text(size = 16, color = "#99000D"),
+        axis.title.y = element_text(color = "#99000D", hjust = 0, face = "italic"),
+        axis.title.x = element_text(color = "#99000D", hjust = 0, face = "italic"),
+        axis.text = element_text(color = "black"),
+        legend.position = "none")
+```
+
+
+
+
+#### 调整的学问
+
+这里的调整主要是使用微调图形这大类的函数做美学特征、坐标轴、标题、绘图主题的调整。这部分也就是继承了命令式作图的思想，使ggplot2的灵活性增加。
+
+如何搜索你要用什么美学特征调整函数，其实就是按照美学特征的名字来，例如，你要调整的是fill，就找scale_fill_之后就有一些不同的染色方法（关于色彩，如果有时间还会添加相关知识）；调整的是横坐标标尺，就找scale_x_然后后面跟上你的横坐标类型；其他雷同。
+
+在调整主题这方面，值得褒奖的是，theme函数其实最妙的地方是将对于数据相关的美学调整和与数据无关的美学调整分离了。
+
+譬如说，我们要改变x轴的颜色，或者panel的底色，这个其实与数据处理无关，这种分离就会使得我们可以如此流程化地操作作图，而不需要在考虑数据的时候还要关注到与数据无关的美学参数。
+
+有人有时候会觉得ggplot2很奇怪的地方就是为什么调整legend的时候，有时要用scale_，有时又要用theme，其实这都是对于ggplot2这个设计理念的不理解，作者的设计思路是要将数据处理与数据美学分开，数据美学与数据无关的调整分开。其次，theme函数采用了四个简单地函数来调整所有的主题特征：
+
+element_text调整字体，
+element_line调整主题内的所有线，
+element_rect调整所有的块，
+element_blank清空。
+
+这种设计相当地棒。由此，一个极具诚意的作图应该长成下面这个样子：
+
+```{r better ggplot Structure}
+ggplot(data = , aes(x = , y = )) + 
+    geom_XXX(...) + ... + stat_XXX(...) + ... +
+    annotate(...) + ... +
+    scale_XXX(...) + coord_XXX(...) + guides(...) + theme(...)
+
+```
+
+
+
+### 9. 存储和输出ggsave
+
+ggsave()是ggplot2种特有的输出函数, 是一种极为方便的出图方式
+
+```{r ggsave}
+p <- ggplot(mtcars, aes(x = mpg, y = disp)) + geom_point()
+
+ggsave( file = "mtcars_plot.png", 
+        width = 5, 
+        height = 6, 
+        type = "cairo", 
+        dpi = 600) 
+#cairo为抗锯齿包, ggplot默认输出即为cairo处理
+```
+
+ggplot2支持eps矢量图输出, 其他可以支持的格式包括png, jpg, pdf等, 并通过ggsave可以方便的进行修改。
+
+
+#### 高质量图片输出
+
+绘图完成后最后一步便是图片输出，高质量的图片输出让人赏心悦目，而不正确的输出方式或者直接采用截图的方式从图形设备中截取，得到的图片往往是低劣的。
+
+一幅高质量的图片应当控制图片尺寸和字体大小，并对矢量图进行高质量渲染，即所谓的抗锯齿。
+
+R语言通过支持Cairo矢量图形处理的类库，可以创建高质量的矢量图形(PDF，PostScript，SVG) 和 位图(PNG，JPEG， TIFF)，同时支持在后台程序中高质量渲染。
+
+在ggplot2我比较推荐的图片输出格式为经过Cairo包处理的PDF，因为PDF格式体积小，同时可以储存为其他任何格式，随后再将PDF储存为eps格式并在Photoshop中打开做最终的调整，例如调整比例、色彩空间和dpi（一般杂志和出版社要求dpi=300以上）等。
+
+额外需要注意的是ggplot2中的字体大小问题，在cookbook-r一书中指出，在ggplot2中绝大多数情况下，size的大小以mm记，详细的讨论也可以参考stackover的讨论.
+
+而在theme()中对element_text()里的size进行调整，此时的size是以磅值（points, pts）来进行表示。
+
+下面以3种ggplot2种常用的图片输出方式，输出一幅主标题为20pts，横纵坐标标题为15pts，长为80mm(3.15in)，宽为60mm(2.36in)的图为例。
+
+```{r output print quality image}
+require(ggplot2)
+require(Cairo)
+
+ggplot() +
+  geom_text(aes(x = 16, y = 16), label = "ABC", size = 11.28) + #尺寸为11.28mm，即为32磅
+  geom_text(aes(x = 16, y = 14.5), label = "ABC", size = 32) + #尺寸为32mm
+  labs( x = "x axis", y = "y axis") +
+  ylim( c(14, 16.5)) +
+  xlim( c(15.75, 16.25)) +
+  theme(
+    axis.title.x = element_text(size = 32),#尺寸为32磅
+    axis.title.y = element_text(size = 32))#尺寸为32磅
+ 
+x <- seq(-4,4, length.out = 1000)
+y <-dnorm(x)
+data <- data.frame(x, y)
+ 
+#用Cairo包输出
+require(Cairo)
+CairoPDF("plot1.pdf", 3.15, 3.15) #单位为英寸
+ggplot(data, aes(x = x, y = y)) + geom_line(size = 1) +
+  theme_bw()
+dev.off() #关闭图像设备，同时储存图片
+ 
+plot2 <- ggplot(data, aes(x = x, y = y)) + geom_line(size = 1) +
+  theme_bw()
+plot2
+#用ggsave输出，默认即以用Cairo包进行抗锯齿处理
+ggsave("plot2.pdf", plot2, width = 3.15, height = 3.15) 
+ 
+#RStudio输出
+```
+
+#### 更改字体
+
+更改默认字体或者采用中文输出图片是十分恼人的一件事情，好在我们还有各种拓展包和功能强大的Rstudio来实现。
+
+用extrafont输出英文字体
+extrafont包能够直接调用字体文件，再通过Ghostscript(需要安装）将写入的字体插入生成的PDF中，具体代码可参考了作者说明[extrafont](https://github.com/wch/extrafont)
+
+好玩的showtext
+邱怡轩大神写了一个好玩的[showtext](http://cos.name/2014/01/showtext-interesting-fonts-and-graphs/)，确实好好玩~
+
+简单易用的RStudio输出
+最简单实用的输出方法还是使用RStudio输出，直接调用系统字体(我的是win7，mac和linux下还没有试过）并输出即可
+```{r showtext}
+#showtext
+# Load package
+if(!suppressWarnings(require("showtext")))
+{
+    install.packages("showtext")
+    require("showtext")
+}
+
+require(showtext)
+require(ggplot2)
+require(Cairo)
+# font.add("BlackoakStd", "C://Windows//Fonts//BlackoakStd.otf")
+font.add("BRUSHSCI", "C://Windows//Fonts//BRUSHSCI.TTF")
+font.add("times", "C://Windows//Fonts//times.ttf")
+font.add("STHUPO", "C://Windows//Fonts//STHUPO.ttf")
+CairoPDF("showtext_output", 8, 8)
+showtext.begin()
+ggplot() +
+  geom_text(aes(x = 16, y = 16.25), label = "Blackoak Std", size = 8, 
+            family = "BlackoakStd") +
+  geom_text(aes(x = 16, y = 16), label ="Brush Script Std", size = 16,
+            family = "BrushScriptStd") +
+  geom_text(aes(x = 16, y = 15.75), label = "Times New Roman", size = 16,
+            family = "times") +
+  geom_text(aes(x = 16, y = 15.50), label = "华文琥珀", size = 16,
+            family = "STHUPO") +
+  ylim(c(15.25, 16.50)) +
+  labs(x = "", y = "") +
+  theme_bw() #在用RStudio输出
+```
+
+
+
+
+
+
+
+### 10 ggplot2作图实战
+
+#### 1. 时间序列图
+ggplot_timeseries_data.csv
+
+```{r ggplot draw time series plot}
+#用excel导入数据, 格式为csv
+ori.data <- read.csv("E:/Github/xiangxing98.github.io/R_Learning/ggplot_timeseries_data.csv", header = F)
+head(ori.data)
+#                             V1
+# 1 Sun Jul  8 23:59:02 HKT 2012
+# 2                         1922
+# 3                        91938
+# 4 Mon Jul  9 23:59:01 HKT 2012
+# 5                         2345
+# 6                       108521
+
+#以矩阵的方式读入数据, 按行排列, 每三列换一行,时间，IP，PV
+data <- matrix(as.matrix(ori.data), nrow(ori.data) / 3, 3, byrow = TRUE)
+head(data)
+#      [,1]                           [,2]   [,3]    
+# [1,] "Sun Jul  8 23:59:02 HKT 2012" "1922" "91938" 
+# [2,] "Mon Jul  9 23:59:01 HKT 2012" "2345" "108521"
+# [3,] "Tue Jul 10 23:59:01 HKT 2012" "2255" "89036" 
+# [4,] "Wed Jul 11 23:59:01 HKT 2012" "2179" "84149" 
+# [5,] "Thu Jul 12 23:59:02 HKT 2012" "2225" "85583" 
+# [6,] "Fri Jul 13 23:59:01 HKT 2012" "2392" "79507" 
+
+
+# Get Sys.getlocale for recovery, use Sys.setlocale("LC_TIME", lct)
+lct <- Sys.getlocale("LC_TIME")
+
+#关闭区域特定的时间编码方式
+Sys.setlocale("LC_TIME", "C")
+#x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
+#z <- strptime(x, "%d%b%Y")
+#z
+
+#用as.POSIXlt()读入字符串数据并转化为date数据, 赋值给date, 或as.Date()
+date <- as.POSIXlt(data[, 1], tz = "", "%a %b %d %H:%M:%S HKT %Y")
+#date <- strptime(data[, 1], "%a %b %d %H:%M:%S HKT %Y")
+#strptime("Fri Jul 13 23:59:01 HKT 2012", "%a %b %d %H:%M:%S HKT %Y")
+# Fri Jul 13 23:59:01 HKT 2012
+#strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "%a, %d %b %Y %H:%M:%S %z")
+
+#check data
+head(data)
+
+#对ip和pv所在的列转化为数值型
+IP <- as.numeric(data[, 2])
+PV <- as.numeric(data[, 3])
+
+#恢复区域特地的时间编码方式
+Sys.setlocale("LC_TIME", lct)
+
+#用ggplot2绘图
+require(ggplot2)
+#用reshape包中的melt函数分解数据
+require(reshape2)
+
+p.data <- data.frame(date, IP, PV)
+# 融合数据，只留下日期列，变量分组列以及对应的数值
+meltdata <- melt(p.data, id = (c("date")))
+#check meltdata
+head(meltdata);tail(meltdata)
+#                  date variable value
+# 1 2012-07-08 23:59:02       IP  1922
+# 2 2012-07-09 23:59:01       IP  2345
+# 3 2012-07-10 23:59:01       IP  2255
+# 4 2012-07-11 23:59:01       IP  2179
+# 5 2012-07-12 23:59:02       IP  2225
+# 6 2012-07-13 23:59:01       IP  2392
+#                    date variable  value
+# 161 2012-09-23 23:59:01       PV 118785
+# 162 2012-09-24 23:59:01       PV 144766
+# 163 2012-09-25 23:59:01       PV 120141
+# 164 2012-09-26 23:59:01       PV 115623
+# 165 2012-09-27 23:59:01       PV 118966
+# 166 2012-09-28 23:59:02       PV 132440
+
+#用对IP和PV做分页处理, y轴刻度自由变化
+graphic <- ggplot(data = meltdata, 
+                  aes(x = date, y = value, color = variable)) + 
+            geom_line() + 
+            geom_point()
+# 分页
+graphic <- graphic + facet_grid(variable ~ ., scales = "free_y")
+# graphic
+
+#美化, 添加标题, 坐标, 更改图例
+graphic<- graphic + labs(x = "日期", y = "人次", title = "某网站7月至10月IP/PV统计") +
+  theme(plot.title = element_text(size = 20, face = "bold")) +
+  scale_colour_discrete(name = "",labels = c("IP","PV")) +
+  theme(strip.text.y = element_text(angle = 0))
+
+# check the graphic
+graphic
+```
+
+#### 2. 人口分布图-结合地图-Draw City Population Map
+
+```{r Draw City Population Map}
+require(maps)
+require(ggplot2)
+#用直方图看下pop整体的分布
+#可以发现数据分布较变化较大, 所以对pop做log转化
+qplot(pop, data = us.cities, binwidth = 0000, geom = "histogram")
+qplot(log(pop), data = us.cities, binwidth = 0.03, geom = "histogram")
+ 
+#绘制背景地图
+USA.POP <- ggplot(us.cities, aes(x = long, y = lat)) + xlim(-130, -65) + borders("state", size=0.5)+
+  geom_point(aes(size = log(pop), color = factor(capital), alpha = 1/50))+
+  #对size标度的调整参考http://docs.ggplot2.org/0.9.3.1/scale_size.html
+  scale_size(range=c(0, 7), name = "log(City population)")+
+  #对离散型颜色变量的标度调整参考http://docs.ggplot2.org/0.9.3.1/scale_manual.html
+  #对连续型颜色标量的标度调整参考http://docs.ggplot2.org/0.9.3.1/scale_brewer.html
+  #和http://docs.ggplot2.org/0.9.3.1/scale_gradient2.html
+  scale_color_manual(values = c("black", "red"), labels = c("state capital", "city"))+
+  #调整图例
+  guides(color = guide_legend(title=NULL)) + scale_alpha(guide = FALSE)+
+  #绘制标题和坐标轴
+  labs(x = "longtitude", y = "latitude", title = "City Population in the United States")+
+  theme(plot.title = element_text(size=20))
+
+USA.POP
+
+#输出图像 并用cairo包进行抗锯齿处理
+ggsave(USA.POP, file = "E:/Github/xiangxing98.github.io/R_Learning/USA_POP.png", type = "cairo", width = 10, height = 6.75)
+
+```
+
+当然, 这只是简单的地图绘制方法,统计之都上也有很多大牛来用R绘制各种各样精美的地图(1[Map](http://cos.name/?s=%E5%9C%B0%E5%9B%BE), 2[visualizing-flights-data](http://cos.name/2014/09/visualizing-flights-data/)。
+
+#### 3. 剂量-效应曲线图-Draw dose-effect plot
+
+R中的drc包[http://www.bioassay.dk/index-filer/start/DraftDrcManual.pdf]([http://www.bioassay.dk/index-filer/start/DraftDrcManual.pdf)很容易对各种剂量-效应曲线进行绘图, 此处采用较为常用的log-logistic四参数方程拟合了剂量-效应曲线。
+
+```{r draw dr curve}
+ori.data <- read.csv("E:/Github/xiangxing98.github.io/R_Learning/D-R_curve.csv")
+require(drc)
+require(reshape2)
+#把数据融合
+melt.data <- melt(ori.data, id = c("dose"), value.name = "response")[, -2]
+#用drc包中的log-logistic四参数方程进行拟合建模
+model <- drm(response ~ dose, data = melt.data, fct = LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50")))
+#确定x轴范围并构建数据集
+min <- range(ori.data$dose)[1]
+max <- range(ori.data$dose)[2]
+line.data <- data.frame(d.predict = seq(min, max, length.out = 1000))
+#用模型预测数据构建数据集
+line.data$p.predict <- predict(model, newdata = line.data)
+#构建绘图数据, 能够计算误差棒
+require(plyr)
+p.data <- ddply(melt.data, .(dose), colwise(mean))
+p.data$sd <- ddply(melt.data, .(dose), colwise(sd))[,2]
+ 
+require(ggplot2)
+p <- ggplot() +
+  geom_errorbar(data = p.data, width = 0.1, size = 1,
+                aes(ymax = response + sd, ymin = response - sd, x = dose)) +
+  geom_point(data = p.data, aes(x = dose, y = response), 
+             color = "red", alpha = 0.5, size = 5) +
+  geom_line(data = line.data, aes(x = d.predict, y = p.predict), 
+              size = 1, color = "blue") +
+  #改变坐标轴间隔
+  scale_x_log10(name = "Dose",
+                breaks=c(0.05, 0.1, 0.5, 1, 5, 10, 50, 100)) +
+  scale_y_continuous(name = "Response") +
+  theme_bw()
+p
+#查看拟合模型参数
+summary(model)
+```
+
+#### 4. 乳房曲线图-Breast Curve--Baybe's favorite
+```{r breast curve}
+##用ggplot2来画函数
+library(ggplot2)
+#确定x轴区域
+f <- ggplot(data.frame(x = c(0.00001, 1)), 
+            aes(x, color="pink", size=2))
+breast_curve <- function(x) {(1/36)*exp(-((36*x-36/2.71828182845905)^4))-3*x*log10(x)}
+f <- f + stat_function(fun = breast_curve) + 
+  theme(legend.position="none") +
+  #旋转坐标轴
+  coord_flip()
+f
+```
+
+####  5. Michaelis-Menten动力学方程
+
+[how_to_use_gggplot2_part2/](http://www.cellyse.com/how_to_use_gggplot2_part2/)
+
+这个例子中采用出自文献中的一组有关于浮萍氮摄取的数据，共2两个变量8个观测值，其中底物浓度与浮萍的氮取速率之间可以通过M-M动力学方程来进行描述。在这个例子中首先通过nls()根据M-M动力学方程进行模型拟合，然后用预测值进行了ggplot2绘图，主要采用了R里面的数学表示方法plotmath在图中展示了公式，并通过ggplot2种的theme对图像进行了修饰。需要注意的在geom_text()并不能直接使用expression，需要开启parse = TURE，且用字符串表示。
+
+```{r Michaelis-Menten function}
+conc <- c(2.856829, 5.005303, 7.519473, 22.101664, 27.769976, 39.198025, 45.483269, 203.784238)
+rate <- c(14.58342, 24.74123, 31.34551, 72.96985, 77.50099, 96.08794, 96.96624, 108.88374)
+L.minor <- data.frame(conc, rate)
+L.minor.m1 <- nls(rate ~ Vm * conc/(K + conc), data = L.minor, #采用M-M动力学方程
+                  start = list(K = 20, Vm = 120), #初始值设置为K=20，Vm=120
+                  trace = TRUE) #占线拟合过程
+#确定x轴范围并构建数据集
+min <- range(L.minor$conc)[1]
+max <- range(L.minor$conc)[2]
+line.data <- data.frame(conc = seq(min, max, length.out = 1000))
+#用模型预测数据构建数据集
+line.data$p.predict <- predict(L.minor.m1, newdata = line.data)
+ 
+require(ggplot2)
+M_Mfunction <- ggplot() +
+  geom_point(aes(x = conc, y = rate), data = L.minor,
+             alpha = 0.5, size = 5, color = "red") +
+  geom_line(aes(x = conc, y = p.predict), data = line.data,
+            size = 1, color = "blue") +
+  scale_x_continuous(
+    name = expression(Substrate ~~ concentration(mmol ~~ m^3)),#采用expression来表示数学公式
+    breaks = seq(0, 200, by = 25)) +
+  scale_y_continuous(
+    name = "Uptake rate (weight/h)",
+    breaks = seq(0, 120, by = 10)) +
+  geom_text(aes(x = 100, y = 60),
+            label = "bolditalic(f(list(x, (list(K, V[m])))) == frac(V[m]%.%x, K+x))",
+            #注意 geom_text中如果用expression()来进行表达，必须开启parse = TRUE
+            #同时以字符串""的形式表示，不能使用expression
+            parse = TRUE, 
+            size = 5, family = "times"
+            ) +
+  theme_bw() +
+  theme(
+        axis.title.x=element_text(size=16),
+        axis.title.y=element_text(size=16),
+        axis.text.x=element_text(size=12),
+        axis.text.y=element_text(size=12))
+M_Mfunction
+```
+
+#### 6. 热图-heatmap
+
+热图是一种极好的数据可视化方式，能够清楚的显示出多维数据之间的关联性和差异性，糗世界已经为我们展现了R里面所常用的heatmap，ggplot2和lattice3种热图绘制方式，当然随着R的不断进步，已经有多种包提供了更丰富和更简单的热图绘制方式，例如gplots中的heatmap.2，pheatmap，heatmap.plus等等。ggplot2进行热图的绘制也十分方便，热图的关键是聚类，两个可行的方案是对聚类结果进行排序和将聚类结果因子化后固定，通过结合plyr包，可以很方便的实现。这里采用一组来源于WHO国家数据来对热图的绘制进行，首先数据标准化和正态化后按Index的D（为各国的人口数据）进行排序，再将其因子化后固定，用geom_tile()进行热图的绘制，在ggplot2种已能通过scale_fill_gradient2在三种基本色进行渐变。
+```{r heatmap}
+WHO <- read.csv("E:/Github/xiangxing98.github.io/R_Learning/WHO.csv", header = TRUE)
+require(plyr)
+#按总人口数排列数据
+WHO <- arrange(WHO, desc(D))
+#将数据的名字转换为因子，并固定已拍好的country，
+#同理可以按照聚类的结果进行排列
+WHO <- transform(WHO, Country = factor(Country, levels = unique(Country)))
+ 
+require(reshape2)
+require(ggplot2)
+require(scales)
+require(grid)
+
+#melt数据
+m.WHO <- melt(WHO)
+#标准化，每排数据映射到按最小值和最大值映射到(0,1)区间
+m.WHO <- ddply(m.WHO, .(variable), transform, rescale = rescale(value))
+#标准化并正态化数据
+s.WHO <- ddply(m.WHO, .(variable), transform, rescale = scale(value))
+require(ggplot2)
+p <- ggplot(s.WHO, aes(variable, Country)) +
+  #用tile来进行绘热力图
+  geom_tile(aes(fill=rescale)) +
+  scale_fill_gradient2(mid="black", high="red", low="green", name = "Intensity") +
+  labs(x="Country", y="Index", face = "bold") +
+  theme_bw() +
+  theme(
+    axis.title.x=element_text(size=16),
+    axis.title.y=element_text(size=16),
+    axis.text.x=element_text(size=12, colour="grey50"),
+    axis.text.y=element_text(size=12, colour="grey50"),
+    legend.title=element_text(size=14),
+    legend.text=element_text(size=12),
+    legend.key.size = unit(0.8, "cm"))#需要载入grid包来调整legend的大小
+
+p
+```
+
+#### 7. 火山图vacano map
+
+火山图是散点图的一种，能够快速的辨别出大型数据集重复变量之间的差异，具体的介绍可以参考wiki和Colin Gillespie的博客，下面的代码和图是使用ggplot2的实现方式。
+```{r vacano map}
+require(ggplot2)
+##change theme##
+old_theme <- theme_update(
+  axis.ticks=element_line(colour="black"),
+  panel.grid.major=element_blank(),
+  panel.grid.minor=element_blank(),
+  panel.background=element_blank(),
+  axis.line=element_line(size=0.5)
+)
+
+##Highlight genes that have an absolute fold change > 2 and a p-value < Bonferroni cut-off
+a <- read.table("E:/Github/xiangxing98.github.io/R_Learning/flu.txt",header=TRUE,sep="\t")
+P.Value <- c(a$P.Value)
+FC <- c(a$FC)
+df <- data.frame(P.Value, FC)
+df.G <- subset(df, log2(FC) < -1& P.Value < 0.05) #define Green
+df.G <- cbind(df.G, rep(1, nrow(df.G)))
+colnames(df.G)[3] <- "Color"
+df.B <- subset(df, (log2(FC) >= -1 & log2(FC) <= 1) | P.Value >= 0.05) #define Black
+df.B <- cbind(df.B, rep(2, nrow(df.B)))
+colnames(df.B)[3] <- "Color"
+df.R <- subset(df, log2(FC) > 1 & P.Value < 0.05) #define Red
+df.R <- cbind(df.R, rep(3, nrow(df.R)))
+colnames(df.R)[3] <- "Color"
+df.t <- rbind(df.G, df.B, df.R)
+df.t$Color <- as.factor(df.t$Color)
+##Construct the plot object
+ggplot(data = df.t, aes(x = log2(FC), y = -log10(P.Value), color= Color )) +
+  geom_point(alpha = 0.5, size = 1.75) +
+  theme( legend.position = "none") +
+  xlim(c(-5, 5)) + ylim(c(0, 20)) +
+  scale_color_manual(values = c("green", "black", "red")) +
+  labs(x=expression(log[2](FC)), y=expression( -log[10](P.Value))) +
+  theme(axis.title.x=element_text(size=20), 
+        axis.text.x=element_text(size=15)) +
+  theme(axis.title.y=element_text(size=20),
+        axis.text.y=element_text(size=15))
+```
+
+#### 8. 散点图scatter plot
+
+```{r scatter plot}
+scatter <-
+  ggplot(mtcars, aes(
+    x = wt,
+    y = mpg,
+    color = as.factor(cyl),
+    shape = as.factor(cyl)
+  )) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, fullrange = TRUE) +
+  labs(title = "Miles per gallon \n according to the weight",
+  x = "Weight (lb/1000)", y = "Miles/(US) gallon") +
+  theme_classic() +
+  scale_color_brewer(palette = "Accent") +
+  theme_minimal()
+scatter
+```
+
+scatter plot 2
+```{r scatter plot example2}
+scatterplot2 <- ggplot(mpg, aes(cty, hwy)) +
+                geom_point() +
+                geom_smooth()
+
+scatterplot2
+```
+
+
+
+#### 9. Diamonds
+```{r diamonds}
+require("ggplot2")
+p <- ggplot(data = diamonds,
+            aes(x = carat, y = price, colour = cut))
+
+# add layer function 1 layer
+p1 <- p + layer(geom = "point", stat = "identity", position = "dodge")
+p1
+
+# quick add layer
+p + geom_point()
+```
+
+
+#### 10. 直方图-Bar plot
+```{r bar plot example1}
+library(ggplot2)
+library(gridExtra)
+hist1 <- ggplot(data = diamonds, aes(x = clarity, fill = cut))+
+  geom_histogram(position = "dodge", stat="count")
+hist1
+
+hist2 <- ggplot(data = diamonds, aes(x = clarity, fill = cut))+
+  geom_histogram(position = "fill", stat="count")
+hist2
+
+hist3 <- ggplot(data = diamonds, aes(x = clarity, fill = cut))+
+  geom_histogram(position = "stack", stat="count")
+hist3
+
+grid.arrange(hist1,hist2,hist3, ncol = 3, nrow = 1)
+```
+
+bar plot example 2
+
+```{r bar plot example2}
+d<-ggplot(data = diamonds, aes(x = carat))
+d1<-d+
+  stat_bin(aes(ymax = ..count..), binwidth = 0.1,geom = "area")
+d2<-d+
+  stat_bin(aes(size = ..density..),binwidth = 0.1, geom = "point",position = "identity")
+
+grid.arrange(d1, d2, ncol = 2, nrow = 1)
+```
+
+bar plot example 3
+```{r bar plot example 3}
+barplot3 <- ggplot(mpg, aes(class)) +
+            geom_bar()
+
+barplot3 
+
+# color group manufacturer
+barplot4 <- ggplot(mpg, aes(class, fill = manufacturer)) +
+            geom_bar()
+barplot4
+
+
+color <- ggplot(mpg, aes(cty, hwy, color = class)) + 
+          geom_point()
+color
+
+size <- ggplot(mpg, aes(cty, hwy, size = class)) + 
+          geom_point()
+size
+
+shape <- ggplot(mpg, aes(cty, hwy, shape = class)) +
+          geom_point()
+shape
+
+```
+
+#### 11. 将不同来源的数据画在同一张图上
+
+例如用模型拟合出来的预测值扩充原始数据
+```{r addition data}
+#例子来源于stackoverflow
+df1<-data.frame(x=1:10,y=rnorm(10))
+df2<-data.frame(x=1:10,y=rnorm(10))
+
+Draw_add_data <- ggplot(df1,aes(x,y)) + 
+            geom_line(aes(color="First line")) + 
+            geom_line(data=df2,aes(color="Second line")) + 
+            labs(color="Legend text")
+Draw_add_data
+```
+
+我很喜欢的一个例子来自Wickham，在同一张图上画了美国的历史失业率和总统任期：
+```{r presidential vs economics}
+presidential <- subset(presidential, start > economics$date[1])
+ggplot(economics) + #第一个数据集economics
+  geom_rect( #用第二个数据集presidential画长方形（rectangle），用不同颜色表示不同党派
+  aes(xmin = start, xmax = end, fill = party), ymin = -Inf, ymax = Inf, alpha = 0.2,
+  data = presidential #数据和第一层所用的数据不一样，所以要明确data = ...
+  ) + 
+  geom_vline( #还是用presidential在每位总统上任时间画竖线（vertical line）
+  aes(xintercept = as.numeric(start)), 
+  data = presidential,
+  colour = "grey50", alpha = 0.5
+  ) + 
+  geom_text( #仍然是用presidential在每段任期内y轴2500的地方“画”出总统的名字
+  aes(x = start, y = 2500, label = name),
+  data = presidential,
+  size = 3, vjust = 0, hjust = 0, nudge_x = 50
+  ) +
+  geom_line(aes(date, unemploy)) + #以时间和失业人数作为x轴和y轴画折线图
+  scale_fill_manual(values = c("blue", "red")) #手动设置填充颜色
+
+```
+
+
+
+#### 12. ggplot2 plot sequence 堆积木
+
+推荐一个好的ggplot2的做图流程
+1. 数据导入，坐标轴映射（指定谁横着站在X，谁竖着站在Y）
+2. 竖着站的数值如何用图形表示，是不是还要做一些变换
+3. 添加一些注释说明，解释一些异常？
+4. 坐标刻度、轴怎么设置
+5. guides是什么？
+6. 主题微调美化
+ggplot(data = , aes(x = , y = )) + 
+    geom_XXX(...) + ... + stat_XXX(...) + ... +
+    annotate(...) + ... +
+    scale_XXX(...) + coord_XXX(...) + guides(...) + theme(...)
+    
+```{r ggplot2 plot sequence}
+## 先设定默认的数据与默认的图形属性映射(属性为点的x轴和y轴坐标位置)
+p <- ggplot(dsmall) + aes (carat , price)
+
+## 开始填加几何对象
+p+ geom_point()
+p+ geom_point() +geom_smooth()
+
+## 开始填加几何对象的属性(颜色来表示信息)
+p+ geom_point(aes(colour=color) )
+p+ geom_point(aes(colour=cut) )
+p+ geom_text(aes(label=color))
+
+## 改变一下y轴表示的信息
+p+ geom_point ( aes ( y = log ( price) ) )
+
+## 分组的线图
+p <- ggplot(Oxboys, aes(age,height, group= Subject)) + geom_line()
+p
+p + geom_smooth(aes(group=1), method = "lm", size = 2, se=F)
+
+```
+
+#### 13. ggplot2 change data set to draw plot
+
+使用ggplot2还可以更灵活地使用多个数据集，如下面的例子。
+```{r}
+## 更改一个数据作图，只需要%+%
+p <- ggplot(dsmall, aes(carat, price))+ geom_point()
+p %+% diamonds
+
+# 可以方便地加入标题与元数据
+## 加上标题(加上labs)
+p+labs(title="这是一个图")
+
+## 标注出价格最高的那个点（再加上一个geom_point）
+highest = subset (dsmall , price == max (price))
+p + geom_point(data=highest, size=6, colour= "red",alpha=0.5)
+
+## 主题的使用
+p + theme_grey()
+p + theme_bw()
+p + theme_classic()
+
+library("ggthemes")
+p + theme_stata()
+
+```
+
+#### 图标标题
+
+```{r title-xlab-ylab}
+title_xlab_ylab <- ggplot(mpg, aes(cty, hwy)) +
+  geom_point() +
+  xlab("city miles per gallon") + #x轴名称
+  ylab("highway miles per gallon") + #y轴名称
+  ggtitle("city vs. highway miles per gallon") #图标标题
+title_xlab_ylab
+```
+
+
+
+
+
+
+
+geom:
+including:point, bar, boxplot, line
+
+scaling:
+基本上是把我们的数据转化为电脑可识别的数据
+比如将坐标映射到[0, 1]的一个数 将颜色映射到三维颜色空间中的一个点 将形状映射为一个整数
+
+一个图包括三个部分:
+1) data: 也就是geom
+2) scales and coordinate system: 包括坐标轴和图例
+3) plot annotations: 背景和标题
+
+Scaling分为三个部分: transforming, training, mapping
+
+Layers:
+Scales:
+Coordinate system:
+Faceting:
+
+数据结构:
+每个图包括以下几个部分
+data, mapping, layers, scales, coordinates, facet, options
+
+## Day 1 Reference book
+
+内容是基于这本书[ggplot2: Elegant Graphics for Data Analysis](http://www.amazon.com/dp/0387981403)
+
+另外据说这本也是个不错的参考[R Graphics Cookbook](http://www.amazon.com/dp/1449316956)
+
+下面是ggplot2的一些文档和github上的源代码
+http://docs.ggplot2.org/current/
+https://github.com/hadley/ggplot2
+
+本篇文章涉及ggplot2: Elegant Graphics for Data Analysis 中的第二章
+在正式开始学习ggplot2命令之前 我们首先讨论qplot
+qplot是quick plot的缩写 旨在用最简短的命令画出我们所需的图
+
+### 1. 数据
+
+首先在R中安装ggplot2 and Import Data
+```{r Load ggplot2 package and import data }
+# Load ggplot2 package
+if(!suppressWarnings(require(ggplot2)))
+{
+    install.packages('ggplot2')
+    require(ggplot2)
+}
+
+# Read data
+X <- read.delim("http://www.stat.ubc.ca/~rickw/gapminderDataFiveYear.txt")
+
+# output as csv data
+write.csv(X,file = "E:\\Github\\xiangxing98.github.io\\R_Learning\\gapminderDataFiveYear.csv", row.names = TRUE)
+
+
+# Check Data X structure
+str(X)
+# 'data.frame':	1704 obs. of  6 variables:
+#  $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+#  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+#  $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+#  $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+#  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+#  $ gdpPercap: num  779 821 853 836 740 ...
+```
+
+
+### 2. qplot基本用法
+
+qplot最简单的使用方法和R base中的plot基本一样 可以用来画散点图
+
+```{r draw gdppercapital vs lifeexpand}
+qplot(gdpPercap, lifeExp, data=X)
+```
+
+使用 color = year 可以将该变量用不同颜色标示出来
+这里year是个连续的变量 所以颜色以谱的形式标示
+用 log = "x" 表示对横轴的变量进行log变换
+```{r scatterplot color groupby year}
+qplot(gdpPercap, lifeExp, data=X, log = "x", color = year)
+```
+
+
+也可以将year变成factor 此时会用离散的颜色标示
+```{r color}
+qplot(gdpPercap, lifeExp, data=X, log = "x", color = factor(year))
+```
+
+使用 size = pop 用标志的大小显示该变量的大小
+```{r size}
+qplot(gdpPercap, lifeExp, data=X, log = "x", color = year, size = pop)
+```
+
+
+还可以使用 shape = continent 用不同的标志来显示该变量
+```{r shape}
+qplot(gdpPercap, lifeExp, data=X, log = "x", color = year, shape = continent)
+```
+
+
+最后 alpha=I(0.25) 指定透明度 0为全透明 1为不透明
+当数据重叠严重时比较有用
+```{r alpha test}
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.25))
+```
+
+### 3. geom
+
+geom是geometric object的简称 用来生成不同种类的图
+
+#### 3.1 smooth
+
+首先是smooth 用来描述数据的平滑趋势
+注意此处 c("point", "smooth") 表示先画point 再画smooth
+```{r geom point and smooth}
+#smooth line at top
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.5), geom=c("point", "smooth"))
+```
+
+相反的 c("smooth", "point") 就是先画smooth 再画point
+```{r geom smoth and point}
+#point at top
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.5), geom=c("smooth", "point"))
+```
+
+除了默认的平滑方法之外 还可以自行指定 比如线性模型
+```{r linear modle}
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.5), geom=c("point", "smooth"), method=lm)
+```
+
+另外还可以自行指定公式 例如多项式回归
+```{r formula}
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.5), geom=c("point", "smooth"), method=lm, formula = y ~ poly(x, 3))
+```
+
+#### 3.2 line和path
+
+line会将数据沿横轴方向按顺序连接起来 一般用来表示时间序列数据
+```{r line}
+qplot(pop, lifeExp, data=X, log = "x", alpha=I(0.5), color=year, geom="line")
+```
+
+path会将原始数据中相邻的两个点连接起来 一般用来表示二维数据随时间的变化
+```{r path}
+qplot(gdpPercap, lifeExp, data=X, log = "x", alpha=I(0.5), color=year, geom=c("point", "path"))
+```
+
+#### 3.3 boxplot和jitter
+
+和R base中的boxplot一样 横轴的数据需要是factor
+注意 color=I("red") 中的I()是必须的 否则"red"会被当做一个新的factor
+
+```{r boxplot}
+X$year.fac <- factor(X$year)
+qplot(year.fac, lifeExp, data=X, color=I("red"), geom="boxplot")
+```
+
+jitter和boxplot类似
+```{r jitter}
+qplot(year.fac, lifeExp, data=X, color=I("red"), geom="jitter")
+```
+
+#### 3.4 histogram和density
+
+这里使用 fill=continent 将直方图按不同的continent分割开
+```{r histogram}
+qplot(lifeExp,data=X, geom="histogram", fill=continent)
+```
+
+density与histogram类似
+```{r density}
+qplot(lifeExp,data=X, alpha=I(0.5), geom="density", color=continent)
+```
+
+### 4. facets
+
+使用facets可以将一个图根据一个或两个变量的值分别显示出来 有利于更直观地进行比较
+~左边表示每一行的变量 右边表示每一列的变量
+比如 continent~. 根据continent值的不同 将density的图在每一行里显示出来
+```{r}
+qplot(lifeExp,data=X, geom="density", facets=continent~.)
+
+qplot(gdpPercap,data=X, geom="density", facets=continent~.)
+```
+
+
+
+类似的 facets=year~continent 根据每一行year和每一列continent值的不同 将histogram的图显示出来
+```{r}
+qplot(lifeExp,data=X, geom="histogram", facets=year~continent)
+```
+
+
+## R Graphics Cookbook
+
+rggvis package
+ggplot2 package
+plotly package
+
+```{r}
+library(gcookbook)
+simpledat
+```
