@@ -1,0 +1,272 @@
+---
+title: "Introduction to reshape2"
+output: html_notebook
+---
+
+This is an [Introduction to reshape2](http://seananderson.ca/2013/10/19/reshape.html). 
+
+> October 19, 2013
+
+# An Introduction to reshape2
+
+[reshape2](http://cran.r-project.org/web/packages/reshape2/index.html) is an R package written by [Hadley Wickham](http://had.co.nz/) that makes it easy to transform data between wide and long formats.
+
+## What makes data wide or long?
+
+Wide data has a column for each variable. For example, this is wide-format data:
+```{r wide-format data}
+# wide-format data
+#   ozone   wind  temp
+# 1 23.62 11.623 65.55
+# 2 29.44 10.267 79.10
+# 3 59.12  8.942 83.90
+# 4 59.96  8.794 83.97
+```
+
+And this is long-format data:
+```{r long-format data}
+# long-format data
+#    variable  value
+# 1     ozone 23.615
+# 2     ozone 29.444
+# 3     ozone 59.115
+# 4     ozone 59.962
+# 5      wind 11.623
+# 6      wind 10.267
+# 7      wind  8.942
+# 8      wind  8.794
+# 9      temp 65.548
+# 10     temp 79.100
+# 11     temp 83.903
+# 12     temp 83.968
+```
+
+Long-format data has a column for possible variable types and a column for the values of those variables. Long-format data isn’t necessarily only two columns. For example, we might have ozone measurements for each day of the year. In that case, we could have another column for day. In other words, there are different levels of “longness”. The ultimate shape you want to get your data into will depend on what you are doing with it.
+
+It turns out that you need wide-format data for some types of data analysis and long-format data for others. In reality, you need long-format data much more commonly than wide-format data. For example, ggplot2 requires long-format data (technically tidy data), plyr requires long-format data, and most modelling functions (such as lm(), glm(), and gam()) require long-format data. But people often find it easier to record their data in wide format.
+
+## The reshape2 package
+
+`reshape2` is based around two key functions: `melt` and `cast`:
+
+`melt` takes wide-format data and melts it into long-format data.
+
+`cast` takes long-format data and casts it into wide-format data.
+
+Think of working with metal: if you melt metal, it drips and becomes long. If you cast it into a mould, it becomes wide.
+
+## Wide- to long-format data: the melt function
+
+For this example we’ll work with the airquality dataset that is built into R. First we’ll change the column names to lower case to make them easier to work with. Then we’ll look at the data:
+
+```{r reshape airquality data example}
+names(airquality) <- tolower(names(airquality))
+head(airquality)
+#   ozone solar.r wind temp month day
+# 1    41     190  7.4   67     5   1
+# 2    36     118  8.0   72     5   2
+# 3    12     149 12.6   74     5   3
+# 4    18     313 11.5   62     5   4
+# 5    NA      NA 14.3   56     5   5
+# 6    28      NA 14.9   66     5   6
+```
+
+What happens if we run the function melt with all the default argument values?
+
+```{r reshape melt with all the default argument values}
+# aql:[a]ir [q]uality [l]ong format
+aql <- melt(airquality) 
+
+head(aql)
+#   variable value
+# 1    ozone    41
+# 2    ozone    36
+# 3    ozone    12
+# 4    ozone    18
+# 5    ozone    NA
+# 6    ozone    28
+tail(aql)
+#     variable value
+# 913      day    25
+# 914      day    26
+# 915      day    27
+# 916      day    28
+# 917      day    29
+# 918      day    30
+```
+
+By default, melt has assumed that all columns with numeric values are variables with values. Often this is what you want. Maybe here we want to know the values of ozone, solar.r, wind, and temp for each month and day. We can do that with melt by telling it that we want month and day to be “ID variables”. ID variables are the variables that identify individual rows of data.
+
+```{r reshape identify individual rows, keep column}
+aql <- melt(airquality, id.vars = c("month", "day"))
+head(aql)
+#   month day variable value
+# 1     5   1    ozone    41
+# 2     5   2    ozone    36
+# 3     5   3    ozone    12
+# 4     5   4    ozone    18
+# 5     5   5    ozone    NA
+# 6     5   6    ozone    28
+```
+
+
+What if we wanted to control the column names in our long-format data? melt lets us set those too all in one step:
+```{r rename column name}
+aql <- melt(airquality, id.vars = c("month", "day"),
+  variable.name = "climate_variable", 
+  value.name = "climate_value")
+head(aql)
+#   month day climate_variable climate_value
+# 1     5   1            ozone            41
+# 2     5   2            ozone            36
+# 3     5   3            ozone            12
+# 4     5   4            ozone            18
+# 5     5   5            ozone            NA
+# 6     5   6            ozone            28
+```
+
+## Long- to wide-format data: the cast functions
+
+Whereas going from wide- to long-format data is pretty straightforward, going from long- to wide-format data can take a bit more thought. It usually involves some head scratching and some trial and error for all but the simplest cases. Let’s go through some examples.
+
+In reshape2 there are multiple cast functions. Since you will most commonly work with `data.frame` objects, we’ll explore the `dcast` function. (There is also `acast` to return a vector, matrix, or array.)
+
+Let’s take the long-format airquality data and cast it into some different wide formats. To start with, we’ll recover the same format we started with and compare the two.
+
+`dcast` uses a formula to describe the shape of the data. The arguments on the left refer to the ID variables and the arguments on the right refer to the measured variables. Coming up with the right formula can take some trial and error at first. So, if you’re stuck don’t feel bad about just experimenting with formulas. There are usually only so many ways you can write the formula.
+
+Here, we need to tell `dcast` that month and day are the ID variables (we want a column for each) and that variable describes the measured variables. Since there is only one remaining column, `dcast` will figure out that it contains the values themselves. We could explicitly declare this with `value.var`. (And in some cases it will be necessary to do so.)
+
+```{r dcast demo}
+# airquality long format
+aql <- melt(airquality, id.vars = c("month", "day"))
+rbind(head(aql, 5),tail(aql, 5))
+
+# airquality wide format
+aqw <- dcast(aql, month + day ~ variable)
+head(aqw)
+#   month day ozone solar.r wind temp
+# 1     5   1    41     190  7.4   67
+# 2     5   2    36     118  8.0   72
+# 3     5   3    12     149 12.6   74
+# 4     5   4    18     313 11.5   62
+# 5     5   5    NA      NA 14.3   56
+# 6     5   6    28      NA 14.9   66
+
+
+# original data
+head(airquality) 
+#   ozone solar.r wind temp month day
+# 1    41     190  7.4   67     5   1
+# 2    36     118  8.0   72     5   2
+# 3    12     149 12.6   74     5   3
+# 4    18     313 11.5   62     5   4
+# 5    NA      NA 14.3   56     5   5
+# 6    28      NA 14.9   66     5   6
+```
+
+So, besides re-arranging the columns, we’ve recovered our original data.
+
+If it isn’t clear to you what just happened there, then have a look at this illustration:
+
+
+Figure 1: An illustration of the `dcast` function. The blue shading indicates ID variables that we want to represent individual rows. The red shading represents variable names that we want to swing into column names. The grey shading represents the data values that we want to fill in the cells with.
+
+One confusing “mistake” you might make is casting a dataset in which there is more than one value per data cell. For example, this time we won’t include day as an ID variable:
+```{r dcast demo 2}
+dcast(aql, month ~ variable)
+#   month ozone solar.r wind temp
+# 1     5    31      31   31   31
+# 2     6    30      30   30   30
+# 3     7    31      31   31   31
+# 4     8    31      31   31   31
+# 5     9    30      30   30   30
+
+```
+
+
+When you run this in R, you’ll notice the warning message:
+
+`# Aggregation function missing: defaulting to length`
+
+And if you look at the output, the cells are filled with the number of data rows for each month-climate combination. The numbers we’re seeing are the number of days recorded in each month. When you `cast` your data and there are multiple values per cell, you also need to tell dcast how to aggregate the data. For example, maybe you want to take the `mean`, or the `median`, or the `sum`. Let’s try the last example, but this time we’ll take the mean of the climate values. We’ll also pass the option `na.rm = TRUE` through the ... argument to remove NA values. (The ... let’s you pass on additional arguments to your `fun.aggregate` function, here `mean`.)
+
+```{r dcast aggregate function}
+dcast(aql, month ~ variable, fun.aggregate = mean, 
+  na.rm = TRUE)
+#   month ozone solar.r   wind  temp
+# 1     5 23.62   181.3 11.623 65.55
+# 2     6 29.44   190.2 10.267 79.10
+# 3     7 59.12   216.5  8.942 83.90
+# 4     8 59.96   171.9  8.794 83.97
+# 5     9 31.45   167.4 10.180 76.90
+```
+
+
+Unlike melt, there are some other fancy things you can do with dcast that I’m not covering here. It’s worth reading the help file ?dcast. For example, you can compute summaries for rows and columns, subset the columns, and fill in missing cells in one call to dcast.
+
+## Additional help
+
+Read the package help: `help(package = "reshape2")`
+
+See the reshape2 website: [reshape](http://had.co.nz/reshape/)
+
+And read the paper on reshape: Wickham, H. (2007). [Reshaping data with the reshape package. 21(12):1–20.](http://www.jstatsoft.org/v21/i12)
+
+(But note that the paper is written for the reshape package not the reshape2 package.)
+
+## R笔记：formula和Formula
+
+R笔记（1）：formula和Formula
+
+### 1.基本的R公式对象formula
+
+在R当中，公式fomula是一个把响应变量（在~左侧）和解释变量（在~右侧）联系起来的对象。formula可以用在线性/一般线性模型（如lm(),glm()），树方法（如rpart()）和图形表示（如coplot()）以及其它一些场合（如table()）。formula在这些场合中给出了关于统计模型的简洁而统一的符号模型形式`y ~ model`。
+
+关于formula这种处理方法的思想可能最早来自于方差分析。在 Chambers and Hastie (1993) “Statistical Models in S” 这本书当中给出了S语言（以及后来的R语言）formula的明确参考。他们把统计模型的形式分为三个部分，其中“a formula that defines the structural part of the model-that is, what data are being modeled and by what other data, in what form”。
+
+（1）formula的例：
+
+```{r formula}
+fit2 <- lm(weight ~ height + I(height^2), data = women)
+```
+
+（2）关于formula所常用的符号，参见下表（取自R in action ）:
+
+（3）创建包含很多个解释变量的公式的一种方法是使用paste（）：
+
+```{r formula construction}
+xnam <- paste0("x", c(1:10, 15, 20:25))
+(f <- as.formula(paste("y ~ ", paste(xnam, collapse = "+"))))
+## y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x15 + 
+## x20 + x21 + x22 + x23 + x24 + x25
+
+# 或者
+xnam <- paste("x", c(1:10, 15, 20:25), sep = "")
+(f <- as.formula(paste("y ~ ", paste(xnam, collapse = "+"))))
+## y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x15 + 
+## x20 + x21 + x22 + x23 + x24 + x25
+```
+
+formula对象的细节参考：?formula
+
+### 2.Fomula包
+
+Formula包提供了关于R中模型公式的一个扩展，可以在~右侧(RHS)和（或）左侧(LHS)加入多个部分，相应的模型对象叫做Fomula。
+
+这个包的目的是解决formula对象的一些局限：不支持多个响应变量也不方便处理由几个不同部分处理的公式。在一些R的扩展包当中用各自的方法处理这些问题，Forluma包希望给出一种统一的方法。
+
+在形式上，Formula对象对于formula对象的扩展在于：引入新的运算符|以容纳模型的多个部分，并可将formula的运算符应用于LHS。
+
+一个简单的例子：
+```{r Formula package}
+library(Formula)
+f1 <- y1 | y2 + y3 ~ x1 + I(x2^2) | 0 + log(x1) | x3/x4
+F1 <- Formula(f1)
+length(F1)
+## [1] 2 3
+# length()的结果说明这个Fomula的左侧有两个部分，右侧有三个部分。
+```
+
+
+关于这个包的细节可参考： Zeileis A, Croissant Y (2010). “Extended Model Formulas in R: Multiple Parts and Multiple Responses.” Journal of Statistical Software, 34(1), 1–13. http://www.jstatsoft.org/v34/i01/.
