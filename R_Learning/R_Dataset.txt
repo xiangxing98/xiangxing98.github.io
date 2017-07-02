@@ -1,0 +1,732 @@
+Package 	Item 	Title 	csv 	doc
+datasets	AirPassengers	Monthly Airline Passenger Numbers 1949-1960	CSV	DOC
+datasets	BJsales	Sales Data with Leading Indicator	CSV	DOC
+datasets	BOD	Biochemical Oxygen Demand	CSV	DOC
+datasets	Formaldehyde	Determination of Formaldehyde	CSV	DOC
+datasets	HairEyeColor	Hair and Eye Color of Statistics Students	CSV	DOC
+datasets	InsectSprays	Effectiveness of Insect Sprays	CSV	DOC
+datasets	JohnsonJohnson	Quarterly Earnings per Johnson & Johnson Share	CSV	DOC
+datasets	LakeHuron	Level of Lake Huron 1875-1972	CSV	DOC
+datasets	LifeCycleSavings	Intercountry Life-Cycle Savings Data	CSV	DOC
+datasets	Nile	Flow of the River Nile	CSV	DOC
+datasets	OrchardSprays	Potency of Orchard Sprays	CSV	DOC
+datasets	PlantGrowth	Results from an Experiment on Plant Growth	CSV	DOC
+datasets	Puromycin	Reaction Velocity of an Enzymatic Reaction	CSV	DOC
+datasets	Titanic	Survival of passengers on the Titanic	CSV	DOC
+datasets	ToothGrowth	The Effect of Vitamin C on Tooth Growth in Guinea Pigs	CSV	DOC
+datasets	UCBAdmissions	Student Admissions at UC Berkeley	CSV	DOC
+datasets	UKDriverDeaths	Road Casualties in Great Britain 1969-84	CSV	DOC
+datasets	UKgas	UK Quarterly Gas Consumption	CSV	DOC
+datasets	USAccDeaths	Accidental Deaths in the US 1973-1978	CSV	DOC
+datasets	USArrests	Violent Crime Rates by US State	CSV	DOC
+datasets	USJudgeRatings	Lawyers' Ratings of State Judges in the US Superior Court	CSV	DOC
+datasets	USPersonalExpenditure	Personal Expenditure Data	CSV	DOC
+datasets	VADeaths	Death Rates in Virginia (1940)	CSV	DOC
+datasets	WWWusage	Internet Usage per Minute	CSV	DOC
+datasets	WorldPhones	The World's Telephones	CSV	DOC
+datasets	airmiles	Passenger Miles on Commercial US Airlines, 1937-1960	CSV	DOC
+datasets	airquality	New York Air Quality Measurements	CSV	DOC
+datasets	anscombe	Anscombe's Quartet of 'Identical' Simple Linear Regressions	CSV	DOC
+datasets	attenu	The Joyner-Boore Attenuation Data	CSV	DOC
+datasets	attitude	The Chatterjee-Price Attitude Data	CSV	DOC
+datasets	austres	Quarterly Time Series of the Number of Australian Residents	CSV	DOC
+datasets	cars	Speed and Stopping Distances of Cars	CSV	DOC
+datasets	chickwts	Chicken Weights by Feed Type	CSV	DOC
+datasets	co2	Mauna Loa Atmospheric CO2 Concentration	CSV	DOC
+datasets	crimtab	Student's 3000 Criminals Data	CSV	DOC
+datasets	discoveries	Yearly Numbers of Important Discoveries	CSV	DOC
+datasets	esoph	Smoking, Alcohol and (O)esophageal Cancer	CSV	DOC
+datasets	euro	Conversion Rates of Euro Currencies	CSV	DOC
+datasets	faithful	Old Faithful Geyser Data	CSV	DOC
+datasets	freeny	Freeny's Revenue Data	CSV	DOC
+datasets	infert	Infertility after Spontaneous and Induced Abortion	CSV	DOC
+datasets	iris	Edgar Anderson's Iris Data	CSV	DOC
+datasets	islands	Areas of the World's Major Landmasses	CSV	DOC
+datasets	lh	Luteinizing Hormone in Blood Samples	CSV	DOC
+datasets	longley	Longley's Economic Regression Data	CSV	DOC
+datasets	lynx	Annual Canadian Lynx trappings 1821-1934	CSV	DOC
+datasets	morley	Michelson Speed of Light Data	CSV	DOC
+datasets	mtcars	Motor Trend Car Road Tests	CSV	DOC
+datasets	nhtemp	Average Yearly Temperatures in New Haven	CSV	DOC
+datasets	nottem	Average Monthly Temperatures at Nottingham, 1920-1939	CSV	DOC
+datasets	npk	Classical N, P, K Factorial Experiment	CSV	DOC
+datasets	occupationalStatus	Occupational Status of Fathers and their Sons	CSV	DOC
+datasets	precip	Annual Precipitation in US Cities	CSV	DOC
+datasets	presidents	Quarterly Approval Ratings of US Presidents	CSV	DOC
+datasets	pressure	Vapor Pressure of Mercury as a Function of Temperature	CSV	DOC
+datasets	quakes	Locations of Earthquakes off Fiji	CSV	DOC
+datasets	randu	Random Numbers from Congruential Generator RANDU	CSV	DOC
+datasets	rivers	Lengths of Major North American Rivers	CSV	DOC
+datasets	rock	Measurements on Petroleum Rock Samples	CSV	DOC
+datasets	sleep	Student's Sleep Data	CSV	DOC
+datasets	stackloss	Brownlee's Stack Loss Plant Data	CSV	DOC
+datasets	sunspot.month	Monthly Sunspot Data, from 1749 to "Present"	CSV	DOC
+datasets	sunspot.year	Yearly Sunspot Data, 1700-1988	CSV	DOC
+datasets	sunspots	Monthly Sunspot Numbers, 1749-1983	CSV	DOC
+datasets	swiss	Swiss Fertility and Socioeconomic Indicators (1888) Data	CSV	DOC
+datasets	treering	Yearly Treering Data, -6000-1979	CSV	DOC
+datasets	trees	Girth, Height and Volume for Black Cherry Trees	CSV	DOC
+datasets	uspop	Populations Recorded by the US Census	CSV	DOC
+datasets	volcano	Topographic Information on Auckland's Maunga Whau Volcano	CSV	DOC
+datasets	warpbreaks	The Number of Breaks in Yarn during Weaving	CSV	DOC
+datasets	women	Average Heights and Weights for American Women	CSV	DOC
+boot	acme	Monthly Excess Returns	CSV	DOC
+boot	aids	Delay in AIDS Reporting in England and Wales	CSV	DOC
+boot	aircondit	Failures of Air-conditioning Equipment	CSV	DOC
+boot	aircondit7	Failures of Air-conditioning Equipment	CSV	DOC
+boot	amis	Car Speeding and Warning Signs	CSV	DOC
+boot	aml	Remission Times for Acute Myelogenous Leukaemia	CSV	DOC
+boot	bigcity	Population of U.S. Cities	CSV	DOC
+boot	brambles	Spatial Location of Bramble Canes	CSV	DOC
+boot	breslow	Smoking Deaths Among Doctors	CSV	DOC
+boot	calcium	Calcium Uptake Data	CSV	DOC
+boot	cane	Sugar-cane Disease Data	CSV	DOC
+boot	capability	Simulated Manufacturing Process Data	CSV	DOC
+boot	catsM	Weight Data for Domestic Cats	CSV	DOC
+boot	cav	Position of Muscle Caveolae	CSV	DOC
+boot	cd4	CD4 Counts for HIV-Positive Patients	CSV	DOC
+boot	channing	Channing House Data	CSV	DOC
+boot	city	Population of U.S. Cities	CSV	DOC
+boot	claridge	Genetic Links to Left-handedness	CSV	DOC
+boot	cloth	Number of Flaws in Cloth	CSV	DOC
+boot	co.transfer	Carbon Monoxide Transfer	CSV	DOC
+boot	coal	Dates of Coal Mining Disasters	CSV	DOC
+boot	darwin	Darwin's Plant Height Differences	CSV	DOC
+boot	dogs	Cardiac Data for Domestic Dogs	CSV	DOC
+boot	downs.bc	Incidence of Down's Syndrome in British Columbia	CSV	DOC
+boot	ducks	Behavioral and Plumage Characteristics of Hybrid Ducks	CSV	DOC
+boot	fir	Counts of Balsam-fir Seedlings	CSV	DOC
+boot	frets	Head Dimensions in Brothers	CSV	DOC
+boot	grav	Acceleration Due to Gravity	CSV	DOC
+boot	gravity	Acceleration Due to Gravity	CSV	DOC
+boot	hirose	Failure Time of PET Film	CSV	DOC
+boot	islay	Jura Quartzite Azimuths on Islay	CSV	DOC
+boot	manaus	Average Heights of the Rio Negro river at Manaus	CSV	DOC
+boot	melanoma	Survival from Malignant Melanoma	CSV	DOC
+boot	motor	Data from a Simulated Motorcycle Accident	CSV	DOC
+boot	neuro	Neurophysiological Point Process Data	CSV	DOC
+boot	nitrofen	Toxicity of Nitrofen in Aquatic Systems	CSV	DOC
+boot	nodal	Nodal Involvement in Prostate Cancer	CSV	DOC
+boot	nuclear	Nuclear Power Station Construction Data	CSV	DOC
+boot	paulsen	Neurotransmission in Guinea Pig Brains	CSV	DOC
+boot	poisons	Animal Survival Times	CSV	DOC
+boot	polar	Pole Positions of New Caledonian Laterites	CSV	DOC
+boot	remission	Cancer Remission and Cell Activity	CSV	DOC
+boot	salinity	Water Salinity and River Discharge	CSV	DOC
+boot	survival	Survival of Rats after Radiation Doses	CSV	DOC
+boot	tau	Tau Particle Decay Modes	CSV	DOC
+boot	tuna	Tuna Sighting Data	CSV	DOC
+boot	urine	Urine Analysis Data	CSV	DOC
+boot	wool	Australian Relative Wool Prices	CSV	DOC
+KMsurv	aids	data from Section 1.19	CSV	DOC
+KMsurv	alloauto	data from Section 1.9	CSV	DOC
+KMsurv	allograft	data from Exercise 13.1, p418	CSV	DOC
+KMsurv	azt	data from Exercise 4.7, p122	CSV	DOC
+KMsurv	baboon	data from Exercise 5.8, p147	CSV	DOC
+KMsurv	bcdeter	data from Section 1.18	CSV	DOC
+KMsurv	bfeed	data from Section 1.14	CSV	DOC
+KMsurv	bmt	data from Section 1.3	CSV	DOC
+KMsurv	bnct	data from Exercise 7.7, p223	CSV	DOC
+KMsurv	btrial	data from Section 1.5	CSV	DOC
+KMsurv	burn	data from Section 1.6	CSV	DOC
+KMsurv	channing	data from Section 1.16	CSV	DOC
+KMsurv	drug6mp	data from Section 1.2	CSV	DOC
+KMsurv	drughiv	data from Exercise 7.6, p222	CSV	DOC
+KMsurv	hodg	data from Section 1.10	CSV	DOC
+KMsurv	kidney	data from Section 1.4	CSV	DOC
+KMsurv	kidrecurr	Data on 38 individuals using a kidney dialysis machine	CSV	DOC
+KMsurv	kidtran	data from Section 1.7	CSV	DOC
+KMsurv	larynx	data from Section 1.8	CSV	DOC
+KMsurv	lung	data from Exercise 4.4, p120	CSV	DOC
+KMsurv	pneumon	data from Section 1.13	CSV	DOC
+KMsurv	psych	data from Section 1.15	CSV	DOC
+KMsurv	rats	data from Exercise 7.13, p225	CSV	DOC
+KMsurv	std	data from Section 1.12	CSV	DOC
+KMsurv	stddiag	data from Exercise 5.6, p146	CSV	DOC
+KMsurv	tongue	data from Section 1.11	CSV	DOC
+KMsurv	twins	data from Exercise 7.14, p225	CSV	DOC
+robustbase	Animals2	Brain and Body Weights for 65 Species of Land Animals	CSV	DOC
+robustbase	CrohnD	Crohn's Disease Adverse Events Data	CSV	DOC
+robustbase	NOxEmissions	NOx Air Pollution Data	CSV	DOC
+robustbase	SiegelsEx	Siegel's Exact Fit Example Data	CSV	DOC
+robustbase	aircraft	Aircraft Data	CSV	DOC
+robustbase	airmay	Air Quality Data	CSV	DOC
+robustbase	alcohol	Alcohol Solubility in Water Data	CSV	DOC
+robustbase	ambientNOxCH	Daily Means of NOx (mono-nitrogen oxides) in air	CSV	DOC
+robustbase	bushfire	Campbell Bushfire Data	CSV	DOC
+robustbase	carrots	Insect Damages on Carrots	CSV	DOC
+robustbase	cloud	Cloud point of a Liquid	CSV	DOC
+robustbase	coleman	Coleman Data Set	CSV	DOC
+robustbase	condroz	Condroz Data	CSV	DOC
+robustbase	cushny	Cushny and Peebles Prolongation of Sleep Data	CSV	DOC
+robustbase	delivery	Delivery Time Data	CSV	DOC
+robustbase	education	Education Expenditure Data	CSV	DOC
+robustbase	epilepsy	Epilepsy Attacks Data Set	CSV	DOC
+robustbase	exAM	Example Data of Antille and May - for Simple Regression	CSV	DOC
+robustbase	foodstamp	Food Stamp Program Participation	CSV	DOC
+robustbase	hbk	Hawkins, Bradu, Kass's Artificial Data	CSV	DOC
+robustbase	heart	Heart Catherization Data	CSV	DOC
+robustbase	kootenay	Waterflow Measurements of Kootenay River in Libby and Newgate	CSV	DOC
+robustbase	lactic	Lactic Acid Concentration Measurement Data	CSV	DOC
+robustbase	milk	Daudin's Milk Composition Data	CSV	DOC
+robustbase	pension	Pension Funds Data	CSV	DOC
+robustbase	phosphor	Phosphorus Content Data	CSV	DOC
+robustbase	pilot	Pilot-Plant Data	CSV	DOC
+robustbase	possumDiv	Possum Diversity Data	CSV	DOC
+robustbase	pulpfiber	Pulp Fiber and Paper Data	CSV	DOC
+robustbase	radarImage	Satellite Radar Image Data from near Munich	CSV	DOC
+robustbase	salinity	Salinity Data	CSV	DOC
+robustbase	starsCYG	Hertzsprung-Russell Diagram Data of Star Cluster CYG OB1	CSV	DOC
+robustbase	telef	Number of International Calls from Belgium	CSV	DOC
+robustbase	toxicity	Toxicity of Carboxylic Acids Data	CSV	DOC
+robustbase	vaso	Vaso Constriction Skin Data Set	CSV	DOC
+robustbase	wagnerGrowth	Wagner's Hannover Employment Growth Data	CSV	DOC
+robustbase	wood	Modified Data on Wood Specific Gravity	CSV	DOC
+car	AMSsurvey	American Math Society Survey Data	CSV	DOC
+car	Adler	Experimenter Expectations	CSV	DOC
+car	Angell	Moral Integration of American Cities	CSV	DOC
+car	Anscombe	U. S. State Public-School Expenditures	CSV	DOC
+car	Baumann	Methods of Teaching Reading Comprehension	CSV	DOC
+car	Bfox	Canadian Women's Labour-Force Participation	CSV	DOC
+car	Blackmoor	Exercise Histories of Eating-Disordered and Control Subjects	CSV	DOC
+car	Burt	Fraudulent Data on IQs of Twins Raised Apart	CSV	DOC
+car	CanPop	Canadian Population Data	CSV	DOC
+car	Chile	Voting Intentions in the 1988 Chilean Plebiscite	CSV	DOC
+car	Chirot	The 1907 Romanian Peasant Rebellion	CSV	DOC
+car	Cowles	Cowles and Davis's Data on Volunteering	CSV	DOC
+car	Davis	Self-Reports of Height and Weight	CSV	DOC
+car	DavisThin	Davis's Data on Drive for Thinness	CSV	DOC
+car	Depredations	Minnesota Wolf Depredation Data	CSV	DOC
+car	Duncan	Duncan's Occupational Prestige Data	CSV	DOC
+car	Ericksen	The 1980 U.S. Census Undercount	CSV	DOC
+car	Florida	Florida County Voting	CSV	DOC
+car	Freedman	Crowding and Crime in U. S. Metropolitan Areas	CSV	DOC
+car	Friendly	Format Effects on Recall	CSV	DOC
+car	Ginzberg	Data on Depression	CSV	DOC
+car	Greene	Refugee Appeals	CSV	DOC
+car	Guyer	Anonymity and Cooperation	CSV	DOC
+car	Hartnagel	Canadian Crime-Rates Time Series	CSV	DOC
+car	Highway1	Highway Accidents	CSV	DOC
+car	Leinhardt	Data on Infant-Mortality	CSV	DOC
+car	Mandel	Contrived Collinear Data	CSV	DOC
+car	Migration	Canadian Interprovincial Migration Data	CSV	DOC
+car	Moore	Status, Authoritarianism, and Conformity	CSV	DOC
+car	Mroz	U.S. Women's Labor-Force Participation	CSV	DOC
+car	OBrienKaiser	O'Brien and Kaiser's Repeated-Measures Data	CSV	DOC
+car	Ornstein	Interlocking Directorates Among Major Canadian Firms	CSV	DOC
+car	Pottery	Chemical Composition of Pottery	CSV	DOC
+car	Prestige	Prestige of Canadian Occupations	CSV	DOC
+car	Quartet	Four Regression Datasets	CSV	DOC
+car	Robey	Fertility and Contraception	CSV	DOC
+car	SLID	Survey of Labour and Income Dynamics	CSV	DOC
+car	Sahlins	Agricultural Production in Mazulu Village	CSV	DOC
+car	Salaries	Salaries for Professors	CSV	DOC
+car	Soils	Soil Compositions of Physical and Chemical Characteristics	CSV	DOC
+car	States	Education and Related Statistics for the U.S. States	CSV	DOC
+car	Transact	Transaction data	CSV	DOC
+car	UN	GDP and Infant Mortality	CSV	DOC
+car	USPop	Population of the United States	CSV	DOC
+car	Vocab	Vocabulary and Education	CSV	DOC
+car	WeightLoss	Weight Loss Data	CSV	DOC
+car	Womenlf	Canadian Women's Labour-Force Participation	CSV	DOC
+car	Wool	Wool data	CSV	DOC
+cluster	agriculture	European Union Agricultural Workforces	CSV	DOC
+cluster	animals	Attributes of Animals	CSV	DOC
+cluster	chorSub	Subset of C-horizon of Kola Data	CSV	DOC
+cluster	flower	Flower Characteristics	CSV	DOC
+cluster	plantTraits	Plant Species Traits Data	CSV	DOC
+cluster	pluton	Isotopic Composition Plutonium Batches	CSV	DOC
+cluster	ruspini	Ruspini Data	CSV	DOC
+cluster	votes.repub	Votes for Republican Candidate in Presidential Elections	CSV	DOC
+cluster	xclara	Bivariate Data Set with 3 Clusters	CSV	DOC
+COUNT	affairs	affairs	CSV	DOC
+COUNT	azdrg112	azdrg112	CSV	DOC
+COUNT	azpro	azpro	CSV	DOC
+COUNT	badhealth	badhealth	CSV	DOC
+COUNT	fasttrakg	fasttrakg	CSV	DOC
+COUNT	lbw	lbw	CSV	DOC
+COUNT	lbwgrp	lbwgrp	CSV	DOC
+COUNT	loomis	loomis	CSV	DOC
+COUNT	mdvis	mdvis	CSV	DOC
+COUNT	medpar	medpar	CSV	DOC
+COUNT	rwm	rwm	CSV	DOC
+COUNT	rwm5yr	rwm5yr	CSV	DOC
+COUNT	ships	ships	CSV	DOC
+COUNT	titanic	titanic	CSV	DOC
+COUNT	titgrp	titgrp	CSV	DOC
+Ecdat	Accident	Ship Accidents	CSV	DOC
+Ecdat	Airline	Cost for U.S. Airlines	CSV	DOC
+Ecdat	Airq	Air Quality for Californian Metropolitan Areas	CSV	DOC
+Ecdat	Benefits	Unemployement of Blue Collar Workers	CSV	DOC
+Ecdat	Bids	Bids Received By U.S. Firms	CSV	DOC
+Ecdat	BudgetFood	Budget Share of Food for Spanish Households	CSV	DOC
+Ecdat	BudgetItaly	Budget Shares for Italian Households	CSV	DOC
+Ecdat	BudgetUK	Budget Shares of British Households	CSV	DOC
+Ecdat	Bwages	Wages in Belgium	CSV	DOC
+Ecdat	CPSch3	Earnings from the Current Population Survey	CSV	DOC
+Ecdat	Capm	Stock Market Data	CSV	DOC
+Ecdat	Car	Stated Preferences for Car Choice	CSV	DOC
+Ecdat	Caschool	The California Test Score Data Set	CSV	DOC
+Ecdat	Catsup	Choice of Brand for Catsup	CSV	DOC
+Ecdat	Cigar	Cigarette Consumption	CSV	DOC
+Ecdat	Cigarette	The Cigarette Consumption Panel Data Set	CSV	DOC
+Ecdat	Clothing	Sales Data of Men's Fashion Stores	CSV	DOC
+Ecdat	Computers	Prices of Personal Computers	CSV	DOC
+Ecdat	Cracker	Choice of Brand for Crakers	CSV	DOC
+Ecdat	Crime	Crime in North Carolina	CSV	DOC
+Ecdat	DM	DM Dollar Exchange Rate	CSV	DOC
+Ecdat	Diamond	Pricing the C's of Diamond Stones	CSV	DOC
+Ecdat	Doctor	Number of Doctor Visits	CSV	DOC
+Ecdat	DoctorAUS	Doctor Visits in Australia	CSV	DOC
+Ecdat	DoctorContacts	Contacts With Medical Doctor	CSV	DOC
+Ecdat	Earnings	Earnings for Three Age Groups	CSV	DOC
+Ecdat	Electricity	Cost Function for Electricity Producers	CSV	DOC
+Ecdat	Fair	Extramarital Affairs Data	CSV	DOC
+Ecdat	Fatality	Drunk Driving Laws and Traffic Deaths	CSV	DOC
+Ecdat	Fishing	Choice of Fishing Mode	CSV	DOC
+Ecdat	Forward	Exchange Rates of US Dollar Against Other Currencies	CSV	DOC
+Ecdat	FriendFoe	Data from the Television Game Show Friend Or Foe ?	CSV	DOC
+Ecdat	Garch	Daily Observations on Exchange Rates of the US Dollar Against Other Currencies	CSV	DOC
+Ecdat	Gasoline	Gasoline Consumption	CSV	DOC
+Ecdat	Griliches	Wage Datas	CSV	DOC
+Ecdat	Grunfeld	Grunfeld Investment Data	CSV	DOC
+Ecdat	HC	Heating and Cooling System Choice in Newly Built Houses in California	CSV	DOC
+Ecdat	HI	Health Insurance and Hours Worked By Wives	CSV	DOC
+Ecdat	Hdma	The Boston HDMA Data Set	CSV	DOC
+Ecdat	Heating	Heating System Choice in California Houses	CSV	DOC
+Ecdat	Hedonic	Hedonic Prices of Cencus Tracts in Boston	CSV	DOC
+Ecdat	Housing	Sales Prices of Houses in the City of Windsor	CSV	DOC
+Ecdat	Icecream	Ice Cream Consumption	CSV	DOC
+Ecdat	Journals	Economic Journals Dat Set	CSV	DOC
+Ecdat	Kakadu	Willingness to Pay for the Preservation of the Kakadu National Park	CSV	DOC
+Ecdat	Ketchup	Choice of Brand for Ketchup	CSV	DOC
+Ecdat	Klein	Klein's Model I	CSV	DOC
+Ecdat	LaborSupply	Wages and Hours Worked	CSV	DOC
+Ecdat	Labour	Belgian Firms	CSV	DOC
+Ecdat	MCAS	The Massashusets Test Score Data Set	CSV	DOC
+Ecdat	Males	Wages and Education of Young Males	CSV	DOC
+Ecdat	Mathlevel	Level of Calculus Attained for Students Taking Advanced Micro-economics	CSV	DOC
+Ecdat	MedExp	Structure of Demand for Medical Care	CSV	DOC
+Ecdat	Metal	Production for SIC 33	CSV	DOC
+Ecdat	Mode	Mode Choice	CSV	DOC
+Ecdat	ModeChoice	Data to Study Travel Mode Choice	CSV	DOC
+Ecdat	Mofa	International Expansion of U.S. Mofa's (majority-owned Foreign Affiliates in Fire (finance, Insurance and Real Estate)	CSV	DOC
+Ecdat	Mroz	Labor Supply Data	CSV	DOC
+Ecdat	MunExp	Municipal Expenditure Data	CSV	DOC
+Ecdat	NaturalPark	Willingness to Pay for the Preservation of the Alentejo Natural Park	CSV	DOC
+Ecdat	Nerlove	Cost Function for Electricity Producers, 1955	CSV	DOC
+Ecdat	OFP	Visits to Physician Office	CSV	DOC
+Ecdat	Oil	Oil Investment	CSV	DOC
+Ecdat	PSID	Panel Survey of Income Dynamics	CSV	DOC
+Ecdat	Participation	Labor Force Participation	CSV	DOC
+Ecdat	PatentsHGH	Dynamic Relation Between Patents and R&D	CSV	DOC
+Ecdat	PatentsRD	Patents, R&D and Technological Spillovers for a Panel of Firms	CSV	DOC
+Ecdat	Pound	Pound-dollar Exchange Rate	CSV	DOC
+Ecdat	Produc	Us States Production	CSV	DOC
+Ecdat	RetSchool	Return to Schooling	CSV	DOC
+Ecdat	SP500	Returns on Standard & Poor's 500 Index	CSV	DOC
+Ecdat	Schooling	Wages and Schooling	CSV	DOC
+Ecdat	Somerville	Visits to Lake Somerville	CSV	DOC
+Ecdat	Star	Effects on Learning of Small Class Sizes	CSV	DOC
+Ecdat	Strike	Strike Duration Data	CSV	DOC
+Ecdat	StrikeDur	Strikes Duration	CSV	DOC
+Ecdat	StrikeNb	Number of Strikes in Us Manufacturing	CSV	DOC
+Ecdat	SumHes	The Penn Table	CSV	DOC
+Ecdat	Tobacco	Households Tobacco Budget Share	CSV	DOC
+Ecdat	Train	Stated Preferences for Train Traveling	CSV	DOC
+Ecdat	TranspEq	Statewide Data on Transportation Equipment Manufacturing	CSV	DOC
+Ecdat	Treatment	Evaluating Treatment Effect of Training on Earnings	CSV	DOC
+Ecdat	Tuna	Choice of Brand for Tuna	CSV	DOC
+Ecdat	USFinanceIndustry	US Finance Industry Profits	CSV	DOC
+Ecdat	USstateAbbreviations	Standard abbreviations for states of the United States	CSV	DOC
+Ecdat	UStaxWords	Number of Words in US Tax Law	CSV	DOC
+Ecdat	UnempDur	Unemployment Duration	CSV	DOC
+Ecdat	Unemployment	Unemployment Duration	CSV	DOC
+Ecdat	University	Provision of University Teaching and Research	CSV	DOC
+Ecdat	VietNamH	Medical Expenses in Viet-nam (household Level)	CSV	DOC
+Ecdat	VietNamI	Medical Expenses in Viet-nam (individual Level)	CSV	DOC
+Ecdat	Wages	Panel Datas of Individual Wages	CSV	DOC
+Ecdat	Wages1	Wages, Experience and Schooling	CSV	DOC
+Ecdat	Workinghours	Wife Working Hours	CSV	DOC
+Ecdat	Yen	Yen-dollar Exchange Rate	CSV	DOC
+Ecdat	Yogurt	Choice of Brand for Yogurts	CSV	DOC
+Ecdat	bankingCrises	Countries in Banking Crises	CSV	DOC
+Ecdat	incomeInequality	Income Inequality in the US	CSV	DOC
+Ecdat	nonEnglishNames	Names with Character Set Problems	CSV	DOC
+gap	PD	A study of Parkinson's disease and APOE, LRRK2, SNCA makers	CSV	DOC
+gap	aldh2	ALDH2 markers and Alcoholism	CSV	DOC
+gap	apoeapoc	APOE/APOC1 markers and Alzheimer's	CSV	DOC
+gap	cf	Cystic fibrosis data	CSV	DOC
+gap	crohn	Crohn's disease data	CSV	DOC
+gap	fa	Friedreich Ataxia data	CSV	DOC
+gap	fsnps	A case-control data involving four SNPs with missing genotype	CSV	DOC
+gap	hla	The HLA data	CSV	DOC
+gap	hr1420	An example data for Manhattan plot with annotation	CSV	DOC
+gap	l51	An example pedigree data	CSV	DOC
+gap	lukas	An example pedigree	CSV	DOC
+gap	mao	A study of Parkinson's disease and MAO gene	CSV	DOC
+gap	mfblong	Example data for ACEnucfam	CSV	DOC
+gap	mhtdata	An example data for Manhattan plot	CSV	DOC
+gap	nep499	A study of Alzheimer's disease with eight SNPs and APOE	CSV	DOC
+ggplot2	diamonds	Prices of 50,000 round cut diamonds	CSV	DOC
+ggplot2	economics	US economic time series.	CSV	DOC
+ggplot2	midwest	Midwest demographics.	CSV	DOC
+ggplot2	movies	Movie information and user ratings from IMDB.com.	CSV	DOC
+ggplot2	mpg	Fuel economy data from 1999 and 2008 for 38 popular models of car	CSV	DOC
+ggplot2	msleep	An updated and expanded version of the mammals sleep dataset.	CSV	DOC
+ggplot2	presidential	Terms of 10 presidents from Eisenhower to Bush W.	CSV	DOC
+ggplot2	seals	Vector field of seal movements.	CSV	DOC
+HistData	Arbuthnot	Arbuthnot's data on male and female birth ratios in London from 1629-1710.	CSV	DOC
+HistData	Bowley	Bowley's data on values of British and Irish trade, 1855-1899	CSV	DOC
+HistData	Cavendish	Cavendish's Determinations of the Density of the Earth	CSV	DOC
+HistData	ChestSizes	Chest measurements of 5738 Scottish Militiamen	CSV	DOC
+HistData	CushnyPeebles	Cushny-Peebles Data: Soporific Effects of Scopolamine Derivatives	CSV	DOC
+HistData	CushnyPeeblesN	Cushny-Peebles Data: Soporific Effects of Scopolamine Derivatives	CSV	DOC
+HistData	Dactyl	Edgeworth's counts of dactyls in Virgil's Aeneid	CSV	DOC
+HistData	DrinksWages	Elderton and Pearson's (1910) data on drinking and wages	CSV	DOC
+HistData	Fingerprints	Waite's data on Patterns in Fingerprints	CSV	DOC
+HistData	Galton	Galton's data on the heights of parents and their children	CSV	DOC
+HistData	GaltonFamilies	Galton's data on the heights of parents and their children, by child	CSV	DOC
+HistData	Guerry	Data from A.-M. Guerry, "Essay on the Moral Statistics of France"	CSV	DOC
+HistData	Jevons	W. Stanley Jevons' data on numerical discrimination	CSV	DOC
+HistData	Langren.all	van Langren's Data on Longitude Distance between Toledo and Rome	CSV	DOC
+HistData	Langren1644	van Langren's Data on Longitude Distance between Toledo and Rome	CSV	DOC
+HistData	Macdonell	Macdonell's Data on Height and Finger Length of Criminals, used by Gosset (1908)	CSV	DOC
+HistData	MacdonellDF	Macdonell's Data on Height and Finger Length of Criminals, used by Gosset (1908)	CSV	DOC
+HistData	Michelson	Michelson's Determinations of the Velocity of Light	CSV	DOC
+HistData	MichelsonSets	Michelson's Determinations of the Velocity of Light	CSV	DOC
+HistData	Minard.cities	Data from Minard's famous graphic map of Napoleon's march on Moscow	CSV	DOC
+HistData	Minard.temp	Data from Minard's famous graphic map of Napoleon's march on Moscow	CSV	DOC
+HistData	Minard.troops	Data from Minard's famous graphic map of Napoleon's march on Moscow	CSV	DOC
+HistData	Nightingale	Florence Nightingale's data on deaths from various causes in the Crimean War	CSV	DOC
+HistData	OldMaps	Latitudes and Longitudes of 39 Points in 11 Old Maps	CSV	DOC
+HistData	PearsonLee	Pearson and Lee's data on the heights of parents and children classified by gender	CSV	DOC
+HistData	PolioTrials	Polio Field Trials Data	CSV	DOC
+HistData	Prostitutes	Parent-Duchatelet's time-series data on the number of prostitutes in Paris	CSV	DOC
+HistData	Pyx	Trial of the Pyx	CSV	DOC
+HistData	Quarrels	Statistics of Deadly Quarrels	CSV	DOC
+HistData	Snow.deaths	John Snow's map and data on the 1854 London Cholera outbreak	CSV	DOC
+HistData	Snow.polygons	John Snow's map and data on the 1854 London Cholera outbreak	CSV	DOC
+HistData	Snow.pumps	John Snow's map and data on the 1854 London Cholera outbreak	CSV	DOC
+HistData	Snow.streets	John Snow's map and data on the 1854 London Cholera outbreak	CSV	DOC
+HistData	Wheat	Playfair's Data on Wages and the Price of Wheat	CSV	DOC
+HistData	Wheat.monarchs	Playfair's Data on Wages and the Price of Wheat	CSV	DOC
+HistData	Yeast	Student's (1906) Yeast Cell Counts	CSV	DOC
+HistData	YeastD.mat	Student's (1906) Yeast Cell Counts	CSV	DOC
+HistData	ZeaMays	Darwin's Heights of Cross- and Self-fertilized Zea May Pairs	CSV	DOC
+lattice	barley	Yield data from a Minnesota barley trial	CSV	DOC
+lattice	environmental	Atmospheric environmental conditions in New York City	CSV	DOC
+lattice	ethanol	Engine exhaust fumes from burning ethanol	CSV	DOC
+lattice	melanoma	Melanoma skin cancer incidence	CSV	DOC
+lattice	singer	Heights of New York Choral Society singers	CSV	DOC
+MASS	Aids2	Australian AIDS Survival Data	CSV	DOC
+MASS	Animals	Brain and Body Weights for 28 Species	CSV	DOC
+MASS	Boston	Housing Values in Suburbs of Boston	CSV	DOC
+MASS	Cars93	Data from 93 Cars on Sale in the USA in 1993	CSV	DOC
+MASS	Cushings	Diagnostic Tests on Patients with Cushing's Syndrome	CSV	DOC
+MASS	DDT	DDT in Kale	CSV	DOC
+MASS	GAGurine	Level of GAG in Urine of Children	CSV	DOC
+MASS	Insurance	Numbers of Car Insurance claims	CSV	DOC
+MASS	Melanoma	Survival from Malignant Melanoma	CSV	DOC
+MASS	OME	Tests of Auditory Perception in Children with OME	CSV	DOC
+MASS	Pima.te	Diabetes in Pima Indian Women	CSV	DOC
+MASS	Pima.tr	Diabetes in Pima Indian Women	CSV	DOC
+MASS	Pima.tr2	Diabetes in Pima Indian Women	CSV	DOC
+MASS	Rabbit	Blood Pressure in Rabbits	CSV	DOC
+MASS	Rubber	Accelerated Testing of Tyre Rubber	CSV	DOC
+MASS	SP500	Returns of the Standard and Poors 500	CSV	DOC
+MASS	Sitka	Growth Curves for Sitka Spruce Trees in 1988	CSV	DOC
+MASS	Sitka89	Growth Curves for Sitka Spruce Trees in 1989	CSV	DOC
+MASS	Skye	AFM Compositions of Aphyric Skye Lavas	CSV	DOC
+MASS	Traffic	Effect of Swedish Speed Limits on Accidents	CSV	DOC
+MASS	UScereal	Nutritional and Marketing Information on US Cereals	CSV	DOC
+MASS	UScrime	The Effect of Punishment Regimes on Crime Rates	CSV	DOC
+MASS	VA	Veteran's Administration Lung Cancer Trial	CSV	DOC
+MASS	abbey	Determinations of Nickel Content	CSV	DOC
+MASS	accdeaths	Accidental Deaths in the US 1973-1978	CSV	DOC
+MASS	anorexia	Anorexia Data on Weight Change	CSV	DOC
+MASS	bacteria	Presence of Bacteria after Drug Treatments	CSV	DOC
+MASS	beav1	Body Temperature Series of Beaver 1	CSV	DOC
+MASS	beav2	Body Temperature Series of Beaver 2	CSV	DOC
+MASS	biopsy	Biopsy Data on Breast Cancer Patients	CSV	DOC
+MASS	birthwt	Risk Factors Associated with Low Infant Birth Weight	CSV	DOC
+MASS	cabbages	Data from a cabbage field trial	CSV	DOC
+MASS	caith	Colours of Eyes and Hair of People in Caithness	CSV	DOC
+MASS	cats	Anatomical Data from Domestic Cats	CSV	DOC
+MASS	cement	Heat Evolved by Setting Cements	CSV	DOC
+MASS	chem	Copper in Wholemeal Flour	CSV	DOC
+MASS	coop	Co-operative Trial in Analytical Chemistry	CSV	DOC
+MASS	cpus	Performance of Computer CPUs	CSV	DOC
+MASS	crabs	Morphological Measurements on Leptograpsus Crabs	CSV	DOC
+MASS	deaths	Monthly Deaths from Lung Diseases in the UK	CSV	DOC
+MASS	drivers	Deaths of Car Drivers in Great Britain 1969-84	CSV	DOC
+MASS	eagles	Foraging Ecology of Bald Eagles	CSV	DOC
+MASS	epil	Seizure Counts for Epileptics	CSV	DOC
+MASS	farms	Ecological Factors in Farm Management	CSV	DOC
+MASS	fgl	Measurements of Forensic Glass Fragments	CSV	DOC
+MASS	forbes	Forbes' Data on Boiling Points in the Alps	CSV	DOC
+MASS	galaxies	Velocities for 82 Galaxies	CSV	DOC
+MASS	gehan	Remission Times of Leukaemia Patients	CSV	DOC
+MASS	genotype	Rat Genotype Data	CSV	DOC
+MASS	geyser	Old Faithful Geyser Data	CSV	DOC
+MASS	gilgais	Line Transect of Soil in Gilgai Territory	CSV	DOC
+MASS	hills	Record Times in Scottish Hill Races	CSV	DOC
+MASS	housing	Frequency Table from a Copenhagen Housing Conditions Survey	CSV	DOC
+MASS	immer	Yields from a Barley Field Trial	CSV	DOC
+MASS	leuk	Survival Times and White Blood Counts for Leukaemia Patients	CSV	DOC
+MASS	mammals	Brain and Body Weights for 62 Species of Land Mammals	CSV	DOC
+MASS	mcycle	Data from a Simulated Motorcycle Accident	CSV	DOC
+MASS	menarche	Age of Menarche in Warsaw	CSV	DOC
+MASS	michelson	Michelson's Speed of Light Data	CSV	DOC
+MASS	minn38	Minnesota High School Graduates of 1938	CSV	DOC
+MASS	motors	Accelerated Life Testing of Motorettes	CSV	DOC
+MASS	muscle	Effect of Calcium Chloride on Muscle Contraction in Rat Hearts	CSV	DOC
+MASS	newcomb	Newcomb's Measurements of the Passage Time of Light	CSV	DOC
+MASS	nlschools	Eighth-Grade Pupils in the Netherlands	CSV	DOC
+MASS	npk	Classical N, P, K Factorial Experiment	CSV	DOC
+MASS	npr1	US Naval Petroleum Reserve No. 1 data	CSV	DOC
+MASS	oats	Data from an Oats Field Trial	CSV	DOC
+MASS	painters	The Painter's Data of de Piles	CSV	DOC
+MASS	petrol	N. L. Prater's Petrol Refinery Data	CSV	DOC
+MASS	quine	Absenteeism from School in Rural New South Wales	CSV	DOC
+MASS	road	Road Accident Deaths in US States	CSV	DOC
+MASS	rotifer	Numbers of Rotifers by Fluid Density	CSV	DOC
+MASS	ships	Ships Damage Data	CSV	DOC
+MASS	shrimp	Percentage of Shrimp in Shrimp Cocktail	CSV	DOC
+MASS	shuttle	Space Shuttle Autolander Problem	CSV	DOC
+MASS	snails	Snail Mortality Data	CSV	DOC
+MASS	steam	The Saturated Steam Pressure Data	CSV	DOC
+MASS	stormer	The Stormer Viscometer Data	CSV	DOC
+MASS	survey	Student Survey Data	CSV	DOC
+MASS	synth.te	Synthetic Classification Problem	CSV	DOC
+MASS	synth.tr	Synthetic Classification Problem	CSV	DOC
+MASS	topo	Spatial Topographic Data	CSV	DOC
+MASS	waders	Counts of Waders at 15 Sites in South Africa	CSV	DOC
+MASS	whiteside	House Insulation: Whiteside's Data	CSV	DOC
+MASS	wtloss	Weight Loss Data from an Obese Patient	CSV	DOC
+plm	Cigar	Cigarette Consumption	CSV	DOC
+plm	Crime	Crime in North Carolina	CSV	DOC
+plm	EmplUK	Employment and Wages in the United Kingdom	CSV	DOC
+plm	Gasoline	Gasoline Consumption	CSV	DOC
+plm	Grunfeld	Grunfeld's Investment Data	CSV	DOC
+plm	Hedonic	Hedonic Prices of Census Tracts in the Boston Area	CSV	DOC
+plm	LaborSupply	Wages and Hours Worked	CSV	DOC
+plm	Males	Wages and Education of Young Males	CSV	DOC
+plm	Produc	US States Production	CSV	DOC
+plm	Snmesp	Employment and Wages in Spain	CSV	DOC
+plm	SumHes	The Penn World Table, v. 5	CSV	DOC
+plm	Wages	Panel Data of Individual Wages	CSV	DOC
+plyr	baseball	Yearly batting records for all major league baseball players	CSV	DOC
+pscl	AustralianElectionPolling	Political opinion polls in Australia, 2004-07	CSV	DOC
+pscl	AustralianElections	elections to Australian House of Representatives, 1949-2007	CSV	DOC
+pscl	EfronMorris	Batting Averages for 18 major league baseball players, 1970	CSV	DOC
+pscl	RockTheVote	Voter turnout experiment, using Rock The Vote ads	CSV	DOC
+pscl	UKHouseOfCommons	1992 United Kingdom electoral returns	CSV	DOC
+pscl	absentee	Absentee and Machine Ballots in Pennsylvania State Senate Races	CSV	DOC
+pscl	admit	Applications to a Political Science PhD Program	CSV	DOC
+pscl	bioChemists	article production by graduate students in biochemistry Ph.D. programs	CSV	DOC
+pscl	ca2006	California Congressional Districts in 2006	CSV	DOC
+pscl	iraqVote	U.S. Senate vote on the use of force against Iraq, 2002.	CSV	DOC
+pscl	politicalInformation	Interviewer ratings of respondent levels of political information	CSV	DOC
+pscl	presidentialElections	elections for U.S. President, 1932-2008, by state	CSV	DOC
+pscl	prussian	Prussian army horse kick data	CSV	DOC
+pscl	unionDensity	cross national rates of trade union density	CSV	DOC
+pscl	vote92	Reports of voting in the 1992 U.S. Presidential election.	CSV	DOC
+reshape2	french_fries	Sensory data from a french fries experiment.	CSV	DOC
+reshape2	smiths	Demo data describing the Smiths.	CSV	DOC
+reshape2	tips	Tipping data	CSV	DOC
+rpart	car.test.frame	Automobile Data from 'Consumer Reports' 1990	CSV	DOC
+rpart	car90	Automobile Data from 'Consumer Reports' 1990	CSV	DOC
+rpart	cu.summary	Automobile Data from 'Consumer Reports' 1990	CSV	DOC
+rpart	kyphosis	Data on Children who have had Corrective Spinal Surgery	CSV	DOC
+rpart	solder	Soldering of Components on Printed-Circuit Boards	CSV	DOC
+rpart	stagec	Stage C Prostate Cancer	CSV	DOC
+sandwich	PublicSchools	US Expenditures for Public Schools	CSV	DOC
+sem	Bollen	Bollen's Data on Industrialization and Political Democracy	CSV	DOC
+sem	CNES	Variables from the 1997 Canadian National Election Study	CSV	DOC
+sem	Klein	Klein's Data on the U. S. Economy	CSV	DOC
+sem	Kmenta	Partly Artificial Data on the U. S. Economy	CSV	DOC
+sem	Tests	Six Mental Tests	CSV	DOC
+survival	bladder	Bladder Cancer Recurrences	CSV	DOC
+survival	cancer	NCCTG Lung Cancer Data	CSV	DOC
+survival	cgd	Chronic Granulotomous Disease data	CSV	DOC
+survival	colon	Chemotherapy for Stage B/C colon cancer	CSV	DOC
+survival	flchain	Assay of serum free light chain for 7874 subjects.	CSV	DOC
+survival	heart	Stanford Heart Transplant data	CSV	DOC
+survival	kidney	Kidney catheter data	CSV	DOC
+survival	leukemia	Acute Myelogenous Leukemia survival data	CSV	DOC
+survival	logan	Data from the 1972-78 GSS data used by Logan	CSV	DOC
+survival	lung	NCCTG Lung Cancer Data	CSV	DOC
+survival	mgus	Monoclonal gammapothy data	CSV	DOC
+survival	nwtco	Data from the National Wilm's Tumor Study	CSV	DOC
+survival	ovarian	Ovarian Cancer Survival Data	CSV	DOC
+survival	pbc	Mayo Clinic Primary Biliary Cirrhosis Data	CSV	DOC
+survival	rats	Rat treatment data from Mantel et al	CSV	DOC
+survival	stanford2	More Stanford Heart Transplant data	CSV	DOC
+survival	tobin	Tobin's Tobit data	CSV	DOC
+survival	veteran	Veterans' Administration Lung Cancer study	CSV	DOC
+vcd	Arthritis	Arthritis Treatment Data	CSV	DOC
+vcd	Baseball	Baseball Data	CSV	DOC
+vcd	BrokenMarriage	Broken Marriage Data	CSV	DOC
+vcd	Bundesliga	Ergebnisse der Fussball-Bundesliga	CSV	DOC
+vcd	Bundestag2005	Votes in German Bundestag Election 2005	CSV	DOC
+vcd	Butterfly	Butterfly Species in Malaya	CSV	DOC
+vcd	CoalMiners	Breathlessness and Wheeze in Coal Miners	CSV	DOC
+vcd	DanishWelfare	Danish Welfare Study Data	CSV	DOC
+vcd	Employment	Employment Status	CSV	DOC
+vcd	Federalist	'May' in Federalist Papers	CSV	DOC
+vcd	Hitters	Hitters Data	CSV	DOC
+vcd	HorseKicks	Death by Horse Kicks	CSV	DOC
+vcd	Hospital	Hospital data	CSV	DOC
+vcd	JobSatisfaction	Job Satisfaction Data	CSV	DOC
+vcd	JointSports	Opinions About Joint Sports	CSV	DOC
+vcd	Lifeboats	Lifeboats on the Titanic	CSV	DOC
+vcd	NonResponse	Non-Response Survey Data	CSV	DOC
+vcd	OvaryCancer	Ovary Cancer Data	CSV	DOC
+vcd	PreSex	Pre-marital Sex and Divorce	CSV	DOC
+vcd	Punishment	Corporal Punishment Data	CSV	DOC
+vcd	RepVict	Repeat Victimization Data	CSV	DOC
+vcd	Saxony	Families in Saxony	CSV	DOC
+vcd	SexualFun	Sex is Fun	CSV	DOC
+vcd	SpaceShuttle	Space Shuttle O-ring Failures	CSV	DOC
+vcd	Suicide	Suicide Rates in Germany	CSV	DOC
+vcd	Trucks	Truck Accidents Data	CSV	DOC
+vcd	UKSoccer	UK Soccer Scores	CSV	DOC
+vcd	VisualAcuity	Visual Acuity in Left and Right Eyes	CSV	DOC
+vcd	VonBort	Von Bortkiewicz Horse Kicks Data	CSV	DOC
+vcd	WeldonDice	Weldon's Dice Data	CSV	DOC
+vcd	WomenQueue	Women in Queues	CSV	DOC
+Zelig	MatchIt.url	Table of links for Zelig	CSV	DOC
+Zelig	PErisk	Political Economic Risk Data from 62 Countries in 1987	CSV	DOC
+Zelig	SupremeCourt	U.S. Supreme Court Vote Matrix	CSV	DOC
+Zelig	Weimar	1932 Weimar election data	CSV	DOC
+Zelig	Zelig.url	Table of links for Zelig	CSV	DOC
+Zelig	approval	U.S. Presidential Approval Data	CSV	DOC
+Zelig	bivariate	Sample data for bivariate probit regression	CSV	DOC
+Zelig	coalition	Coalition Dissolution in Parliamentary Democracies	CSV	DOC
+Zelig	coalition2	Coalition Dissolution in Parliamentary Democracies, Modified Version	CSV	DOC
+Zelig	eidat	Simulation Data for Ecological Inference	CSV	DOC
+Zelig	free1	Freedom of Speech Data	CSV	DOC
+Zelig	free2	Freedom of Speech Data	CSV	DOC
+Zelig	friendship	Simulated Example of Schoolchildren Friendship Network	CSV	DOC
+Zelig	grunfeld	Simulation Data for model Seemingly Unrelated Regression (sur) that corresponds to method SUR of systemfit	CSV	DOC
+Zelig	hoff	Social Security Expenditure Data	CSV	DOC
+Zelig	homerun	Sample Data on Home Runs Hit By Mark McGwire and Sammy Sosa in 1998.	CSV	DOC
+Zelig	immi1	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	immi2	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	immi3	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	immi4	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	immi5	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	immigration	Individual Preferences Over Immigration Policy	CSV	DOC
+Zelig	klein	Simulation Data for model Two-Stage Least Square (twosls) that corresponds to method 2SLS of systemfit	CSV	DOC
+Zelig	kmenta	Simulation Data for model Three-Stage Least Square (threesls) that corresponds to method 3SLS of systemfit	CSV	DOC
+Zelig	macro	Macroeconomic Data	CSV	DOC
+Zelig	mexico	Voting Data from the 1988 Mexican Presidental Election	CSV	DOC
+Zelig	mid	Militarized Interstate Disputes	CSV	DOC
+Zelig	newpainters	The Discretized Painter's Data of de Piles	CSV	DOC
+Zelig	sanction	Multilateral Economic Sanctions	CSV	DOC
+Zelig	sna.ex	Simulated Example of Social Network Data	CSV	DOC
+Zelig	swiss	Swiss Fertility and Socioeconomic Indicators (1888) Data	CSV	DOC
+Zelig	tobin	Tobin's Tobit Data	CSV	DOC
+Zelig	turnout	Turnout Data Set from the National Election Survey	CSV	DOC
+Zelig	voteincome	Sample Turnout and Demographic Data from the 2000 Current Population Survey	CSV	DOC
+HSAUR	BCG	BCG Vaccine Data	CSV	DOC
+HSAUR	BtheB	Beat the Blues Data	CSV	DOC
+HSAUR	CYGOB1	CYG OB1 Star Cluster Data	CSV	DOC
+HSAUR	Forbes2000	The Forbes 2000 Ranking of the World's Biggest Companies (Year 2004)	CSV	DOC
+HSAUR	GHQ	General Health Questionnaire	CSV	DOC
+HSAUR	Lanza	Prevention of Gastointestinal Damages	CSV	DOC
+HSAUR	agefat	Total Body Composision Data	CSV	DOC
+HSAUR	aspirin	Aspirin Data	CSV	DOC
+HSAUR	birthdeathrates	Birth and Death Rates Data	CSV	DOC
+HSAUR	bladdercancer	Bladder Cancer Data	CSV	DOC
+HSAUR	clouds	Cloud Seeding Data	CSV	DOC
+HSAUR	epilepsy	Epilepsy Data	CSV	DOC
+HSAUR	foster	Foster Feeding Experiment	CSV	DOC
+HSAUR	heptathlon	Olympic Heptathlon Seoul 1988	CSV	DOC
+HSAUR	mastectomy	Survival Times after Mastectomy of Breast Cancer Patients	CSV	DOC
+HSAUR	meteo	Meteorological Measurements for 11 Years	CSV	DOC
+HSAUR	orallesions	Oral Lesions in Rural India	CSV	DOC
+HSAUR	phosphate	Phosphate Level Data	CSV	DOC
+HSAUR	pistonrings	Piston Rings Failures	CSV	DOC
+HSAUR	planets	Exoplanets Data	CSV	DOC
+HSAUR	plasma	Blood Screening Data	CSV	DOC
+HSAUR	polyps	Familial Andenomatous Polyposis	CSV	DOC
+HSAUR	polyps3	Familial Andenomatous Polyposis	CSV	DOC
+HSAUR	pottery	Romano-British Pottery Data	CSV	DOC
+HSAUR	rearrests	Rearrests of Juvenile Felons	CSV	DOC
+HSAUR	respiratory	Respiratory Illness Data	CSV	DOC
+HSAUR	roomwidth	Students Estimates of Lecture Room Width	CSV	DOC
+HSAUR	schizophrenia	Age of Onset of Schizophrenia Data	CSV	DOC
+HSAUR	schizophrenia2	Schizophrenia Data	CSV	DOC
+HSAUR	schooldays	Days not Spent at School	CSV	DOC
+HSAUR	skulls	Egyptian Skulls	CSV	DOC
+HSAUR	smoking	Nicotine Gum and Smoking Cessation	CSV	DOC
+HSAUR	students	Student Risk Taking	CSV	DOC
+HSAUR	suicides	Crowd Baiting Behaviour and Suicides	CSV	DOC
+HSAUR	toothpaste	Toothpaste Data	CSV	DOC
+HSAUR	voting	House of Representatives Voting Data	CSV	DOC
+HSAUR	water	Mortality and Water Hardness	CSV	DOC
+HSAUR	watervoles	Water Voles Data	CSV	DOC
+HSAUR	waves	Electricity from Wave Power at Sea	CSV	DOC
+HSAUR	weightgain	Gain in Weight of Rats	CSV	DOC
+HSAUR	womensrole	Womens Role in Society	CSV	DOC
+psych	Bechtoldt	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Bechtoldt.1	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Bechtoldt.2	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Dwyer	8 cognitive variables used by Dwyer for an example.	CSV	DOC
+psych	Gleser	Example data from Gleser, Cronbach and Rajaratnam (1965) to show basic principles of generalizability theory.	CSV	DOC
+psych	Gorsuch	Example data set from Gorsuch (1997) for an example factor extension.	CSV	DOC
+psych	Harman.5	5 socio-economic variables from Harman (1967)	CSV	DOC
+psych	Harman.8	Correlations of eight physical variables (from Harman, 1966)	CSV	DOC
+psych	Harman.political	Eight political variables used by Harman (1967) as example 8.17	CSV	DOC
+psych	Holzinger	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Holzinger.9	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Reise	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Schmid	12 variables created by Schmid and Leiman to show the Schmid-Leiman Transformation	CSV	DOC
+psych	Thurstone	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Thurstone.33	Seven data sets showing a bifactor solution.	CSV	DOC
+psych	Tucker	9 Cognitive variables discussed by Tucker and Lewis (1973)	CSV	DOC
+psych	ability	16 ability items scored as correct or incorrect.	CSV	DOC
+psych	affect	Two data sets of affect and arousal scores as a function of personality and movie conditions	CSV	DOC
+psych	bfi	25 Personality items representing 5 factors	CSV	DOC
+psych	bfi.dictionary	25 Personality items representing 5 factors	CSV	DOC
+psych	blot	Bond's Logical Operations Test - BLOT	CSV	DOC
+psych	burt	11 emotional variables from Burt (1915)	CSV	DOC
+psych	cities	Distances between 11 US cities	CSV	DOC
+psych	cubits	Galton's example of the relationship between height and 'cubit' or forearm length	CSV	DOC
+psych	cushny	A data set from Cushny and Peebles (1905) on the effect of three drugs on hours of sleep, used by Student (1908)	CSV	DOC
+psych	epi	Eysenck Personality Inventory (EPI) data for 3570 participants	CSV	DOC
+psych	epi.bfi	13 personality scales from the Eysenck Personality Inventory and Big 5 inventory	CSV	DOC
+psych	epi.dictionary	Eysenck Personality Inventory (EPI) data for 3570 participants	CSV	DOC
+psych	galton	Galton's Mid parent child height data	CSV	DOC
+psych	heights	A data.frame of the Galton (1888) height and cubit data set.	CSV	DOC
+psych	income	US family income from US census 2008	CSV	DOC
+psych	iqitems	16 multiple choice IQ items	CSV	DOC
+psych	msq	75 mood items from the Motivational State Questionnaire for 3896 participants	CSV	DOC
+psych	neo	NEO correlation matrix from the NEO_PI_R manual	CSV	DOC
+psych	peas	Galton's Peas	CSV	DOC
+psych	sat.act	3 Measures of ability: SATV, SATQ, ACT	CSV	DOC
+psych	withinBetween	An example of the distinction between within group and between group correlations	CSV	DOC
+quantreg	Bosco	Boscovich Data	CSV	DOC
+quantreg	CobarOre	Cobar Ore data	CSV	DOC
+quantreg	Mammals	Garland(1983) Data on Running Speed of Mammals	CSV	DOC
+quantreg	barro	Barro Data	CSV	DOC
+quantreg	engel	Engel Data	CSV	DOC
+quantreg	uis	UIS Drug Treatment study data	CSV	DOC
+geepack	dietox	Growth curves of pigs in a 3x3 factorial experiment	CSV	DOC
+geepack	koch	Ordinal Data from Koch	CSV	DOC
+geepack	ohio	Ohio Children Wheeze Status	CSV	DOC
+geepack	respdis	Clustered Ordinal Respiratory Disorder	CSV	DOC
+geepack	respiratory	Data from a clinical trial comparing two treatments for a respiratory illness	CSV	DOC
+geepack	seizure	Epiliptic Seizures	CSV	DOC
+geepack	sitka89	Growth of Sitka Spruce Trees	CSV	DOC
+geepack	spruce	Log-size of 79 Sitka spruce trees	CSV	DOC
+texmex	liver	Liver related laboratory data	CSV	DOC
+texmex	portpirie	Rain, wavesurge and portpirie datasets.	CSV	DOC
+texmex	rain	Rain, wavesurge and portpirie datasets.	CSV	DOC
+texmex	summer	Air pollution data, separately for summer and winter months	CSV	DOC
+texmex	wavesurge	Rain, wavesurge and portpirie datasets.	CSV	DOC
+texmex	winter	Air pollution data, separately for summer and winter months	CSV	DOC
+multgee	arthritis	Rheumatoid Arthritis Clinical Trial	CSV	DOC
+multgee	housing	Homeless Data	CSV	DOC
