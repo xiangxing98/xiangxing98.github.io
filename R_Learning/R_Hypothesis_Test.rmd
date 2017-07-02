@@ -8,12 +8,17 @@ output: html_notebook
 Assume the predetermined significance level is 0.05.
 假设预定的显着性水平是0.05。
 
-## 1 Shapiro-Wilk Test
+## 1 Shapiro-Wilk Test W检验（Shapiro–Wilk (夏皮罗–威克尔 ) W统计量检验)
 
 Null hypothesis:
 零假设:
 The sample came from a normally distributed population.
 样本来自正态分布总体
+
+检验数据是否符合正态分布，R函数：shapiro.test().
+
+结果含义：当p值小于某个显著性水平α(比如0.05)时，则认为
+样本不是来自正态分布的总体，否则则承认样本来自正态分布的总体。
 
 ```{r R Hypothesis Test}
 install.packages("stats")
@@ -111,11 +116,26 @@ res$p.value # < 0.05
 ```
 
 
-## 3 Correlation Test
+## 3 Correlation Test 相关性检验
+
+R函数：cor.test()
 
 Null hypothesis:
 The correlation is zero.
 样本相关性为0
+
+结果含义：如果p值很小，则拒绝原假设，认为x,y是相关的。否则认为是不相关的。
+
+```{r}
+library(stats)
+cor.test(x, y,
+  alternative = c("two.sided", "less", "greater"),
+  method = c("pearson", "kendall", "spearman"),
+  exact = NULL, 
+  conf.level = 0.95, ...)
+```
+
+另外一个例子：
 
 ```{r }
 install.packages("stats")
@@ -524,4 +544,117 @@ sjd.vecm@cval # 10.36 < r<=1 = 22.00
 # Conclusion: There are 1 cointegrated vector.
 # 结论：有1个协整向量。
 ```
+
+## 10 K检验(经验分布的Kolmogorov-Smirnov检验)
+
+R函数:ks.test()
+
+如果P值很小，说明拒绝原假设，表明数据不符合F(n,m)分布。
+
+
+## 11 T-test T检验
+
+用于正态总体均值假设检验，单样本，双样本都可以。可以双边检验，也可以单边检验。
+
+对于单样本，与给定的均值做比较：
+（1）双边检验，也就是
+Null hypothesis:
+这个样本的均值与给定均值相等：H0： u = u0
+
+Alternative hypothesis:
+这个样本的均值与给定均值不相等：H1： u ≠ u0
+
+（2）单边检验，也就是
+单边检验I
+Null hypothesis:
+这个样本的均值小于给定均值：H0： u ≤ u0
+
+Alternative hypothesis:
+这个样本的均值大于给定均值：H1： u ＞ u0
+
+单边检验II（单边检验I反过来）
+Null hypothesis:
+这个样本的均值大于等于给定均值：H0： u ≥ u0
+
+Alternative hypothesis:
+这个样本的均值小于给定均值：H1： u ＜ u0
+
+对于双样本，就是两个样本的均值做比较。单边、双边检验与单样本一样。
+
+结果意义：P值小于显著性水平时拒绝原假设，否则，接受原假设。具体的假设要看所选择的是双边假设还是单边假设（又分小于和大于）
+
+```{r t.test1}
+t.test(x, y = NULL,
+alternative = c("two.sided", "less", "greater"),
+mu = 0, paired = FALSE, var.equal = FALSE,
+conf.level = 0.95, ...)
+```
+
+## 12 正态总体方差检验
+
+用于正态总体方差假设检验，单样本，双样本都可以。可以双边检验，也可以单边检验。与均值假设检验类似，不过检验的对象变成方差了。
+
+结果含义：P值小于显著性水平时拒绝原假设，否则，接受原假设。具体的假设要看所选择的是双边假设还是单边假设（又分小于和大于）
+
+```{r t.test2}
+t.test(x, y = NULL,
+alternative = c("two.sided", "less", "greater"),
+mu = 0, paired = FALSE, var.equal = FALSE,
+conf.level = 0.95, ...)
+```
+
+## 13 二项分布总体假设检验
+```{r binom.test}
+binom.test(x, n, p = 0.5,
+alternative = c("two.sided", "less", "greater"),
+conf.level = 0.95)
+```
+
+## 14 Pearson 拟合优度χ2检验
+
+原假设H0：X符合F分布。
+p-值小于某个显著性水平，则表示拒绝原假设，否则接受原假设。
+```{r chisq.test}
+chisq.test(x, y = NULL, correct = TRUE,
+p = rep(1/length(x), length(x)), rescale.p = FALSE,
+simulate.p.value = FALSE, B = 2000)
+```
+
+## 15 Fisher精确的独立检验：
+原假设：X,Y相关
+
+```{r fisher.test}
+fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
+control = list(), or = 1, alternative = "two.sided",
+conf.int = TRUE, conf.level = 0.95)
+```
+
+## 16 McNemar检验：
+原假设：两组数据的频数没有区别。
+```{r mcnemar.test}
+mcnemar.test(x, y = NULL, correct = TRUE)
+```
+
+## 17 秩相关检验
+
+原假设：x,y相关.
+```{r spearman cor.test}
+cor.test(x, y,
+alternative = c("two.sided", "less", "greater"),
+method = "spearman", conf.level = 0.95, ...)
+```
+
+## 18 Wilcoxon秩检验
+
+原假设：中位数大于，小于，不等于mu.
+```{r wilcox.test}
+wilcox.test(x, y = NULL,
+alternative = c("two.sided", "less", "greater"),
+mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
+conf.int = FALSE, conf.level = 0.95, ...)
+```
+
+
+
+
           
