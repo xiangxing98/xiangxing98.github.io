@@ -974,4 +974,80 @@ sqlQueryResults
 
 ```
 
+## Chapter13 Example dplyr and pipeline operator
+
+> [dplyr Examples with pipeline](https://renkun.me/pipeR-tutorial/Examples/dplyr.html)
+
+> [rlist Examples with pipeline](https://renkun.me/pipeR-tutorial/Examples/rlist.html)
+
+
+`hflights` is a dataset contains information about flights that departed Houston in 2011. In the description the author writes:
+
+> This dataset contains all flights departing from Houston airports IAH (George Bush Intercontinental) and HOU (Houston Hobby). The data comes from the Research and Innovation Technology Administration at the Bureau of Transporation statistics: [http://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120&Link=0](http://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120&Link=0)
+
+Having known what the data is all about, then we load the libraries and take a look at the structure of the data.
+
+```{r}
+install.packages(c("dplyr","hflights"))
+library(dplyr)
+library(pipeR)
+# or use
+library(magrittr)
+library(hflights) # install.packages("hflights")
+data(hflights)
+
+str(hflights)
+# 'data.frame':	227496 obs. of  21 variables:
+#  $ Year             : int  2011 2011 2011 2011 2011 2011 2011 2011 2011 2011 ...
+#  $ Month            : int  1 1 1 1 1 1 1 1 1 1 ...
+#  $ DayofMonth       : int  1 2 3 4 5 6 7 8 9 10 ...
+#  $ DayOfWeek        : int  6 7 1 2 3 4 5 6 7 1 ...
+#  $ DepTime          : int  1400 1401 1352 1403 1405 1359 1359 1355 1443 1443 ...
+#  $ ArrTime          : int  1500 1501 1502 1513 1507 1503 1509 1454 1554 1553 ...
+#  $ UniqueCarrier    : chr  "AA" "AA" "AA" "AA" ...
+#  $ FlightNum        : int  428 428 428 428 428 428 428 428 428 428 ...
+#  $ TailNum          : chr  "N576AA" "N557AA" "N541AA" "N403AA" ...
+#  $ ActualElapsedTime: int  60 60 70 70 62 64 70 59 71 70 ...
+#  $ AirTime          : int  40 45 48 39 44 45 43 40 41 45 ...
+#  $ ArrDelay         : int  -10 -9 -8 3 -3 -7 -1 -16 44 43 ...
+#  $ DepDelay         : int  0 1 -8 3 5 -1 -1 -5 43 43 ...
+#  $ Origin           : chr  "IAH" "IAH" "IAH" "IAH" ...
+#  $ Dest             : chr  "DFW" "DFW" "DFW" "DFW" ...
+#  $ Distance         : int  224 224 224 224 224 224 224 224 224 224 ...
+#  $ TaxiIn           : int  7 6 5 9 9 6 12 7 8 6 ...
+#  $ TaxiOut          : int  13 9 17 22 9 13 15 12 22 19 ...
+#  $ Cancelled        : int  0 0 0 0 0 0 0 0 0 0 ...
+#  $ CancellationCode : chr  "" "" "" "" ...
+#  $ Diverted         : int  0 0 0 0 0 0 0 0 0 0 ...
+```
+
+The data is tabular and very well fit in a data frame. Remarkably it has 227496 rows which is much larger than small datasets like mtcars.
+
+Two columns in the data frame attracts our attention: `Distance` and `ActualElapsedTime`. If we divide Distance by ActualElapsedTime we can get the actual flight speed. Therefore, in this example, we use dplyr functions to transform the data in pipeline and see which carrier has faster flights.
+
+```{r}
+hflights %>% 
+  # 1. filter out no canceld flight
+  filter(Cancelled == 0) %>%
+  # 2. mutate new column speed
+  mutate(speed = Distance / ActualElapsedTime) %>%
+  # 3. save to hflights2
+  (~ hflights2) %>% 
+  # 4. group_by UniqueCarrier
+    group_by(UniqueCarrier) %>%
+    #group_by(.data = .,UniqueCarrier)  %>%
+  # 5. summarize
+  summarize(mean_speed = mean(speed,na.rm = TRUE)) %>%
+  # 6. arrange, by speed desc
+  arrange(desc(mean_speed)) %>%
+  # 7. barplot, why with?
+  with(barplot(mean_speed,names.arg = UniqueCarrier,
+    main = "Average flight speed"))
+```
+
+
+
+
 ## End 2017-06-10 By Stone.Hou
+
+Updated in 20170702, add example

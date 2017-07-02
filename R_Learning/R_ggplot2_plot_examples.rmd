@@ -1,0 +1,518 @@
+---
+title: "R ggplot2 Plot Examples Notebook"
+output: 
+  html_notebook: 
+    toc: yes
+    toc_depth: 4
+---
+
+
+# R ggplot2 Plot Examples
+
+> [ggplot2-gyakubiki-book](https://kazutan.github.io/ggplot2-gyakubiki-book/Plotting_two_variables.html)
+
+## 1. Plotting_two_variables
+
+```{r Plotting_two_variables, echo=TRUE}
+# Load ggplot2 package
+if(!suppressWarnings(require(ggplot2)))
+{
+    install.packages('ggplot2')
+    require("ggplot2")
+}
+
+# data
+test_data <- data.frame(
+  var0 = 100 + c(0, cumsum(runif(49, -20, 20))),
+  var1 = 150 + c(0, cumsum(runif(49, -10, 10))),
+  date = seq.Date(as.Date("2002-01-01"), by="1 month", length.out=100))
+str(test_data)
+# 'data.frame':	100 obs. of  3 variables:
+#  $ var0: num  100 116 129 132 129 ...
+#  $ var1: num  150 150 157 151 154 ...
+#  $ date: Date, format:  ...
+
+head(test_data, 5);tail(test_data, 5);
+
+# use wide format data to draw plot
+p1 <- ggplot(test_data, aes(date)) +
+  geom_line(aes(y = var0, colour = "var0")) +
+  geom_line(aes(y = var1, colour = "var1"))
+
+p1
+
+test_data_long <- reshape2::melt(test_data,id.vars = c("date"),
+  variable.name = "variable", 
+  value.name = "value")
+#         date variable     value
+# 1 2002-01-01     var0 100.00000
+# 2 2002-02-01     var0 112.84507
+# 3 2002-03-01     var0 115.37682
+# 4 2002-04-01     var0 108.17863
+# 5 2002-05-01     var0  99.08404
+# 6 2002-06-01     var0 107.86098
+
+# use long format data to draw plot
+p2 <- ggplot(data=test_data_long, aes(x=date, y=value, colour=variable)) +
+  geom_line()
+
+p2
+```
+
+## 2. Showing_data_values_on_stacked_bar
+
+```{r Showing_data_values_on_stacked_bar}
+Year <- c(rep(c("2006-07", "2007-08", "2008-09", "2009-10"
+), each = 4))
+
+Category <- c(rep(c("A", "B", "C", "D"), times = 4))
+
+Frequency <- c(168,  259,  226,  340,  216,  431,  319,  368,  423,  645,  234,  685,  166,  467,  274,  251)
+
+Data <- data.frame(Year, Category, Frequency)
+
+str(Data)
+
+require(ggplot2)
+
+p <- ggplot(Data, aes(Year, Frequency, fill = Category)) +
+    geom_bar(stat = "identity") +
+    theme_bw()
+
+p + geom_text(aes(label = Frequency),
+    size = 3,
+    hjust = 0.5,
+    vjust = 3,
+    position = "stack") 
+
+## method2
+library(plyr)
+library(ggplot2)
+
+# calculate midpoints of bars (simplified using comment by @DWin)
+Data <- ddply(Data, .(Year), transform, pos = cumsum(Frequency) - (0.5 * Frequency))
+
+# plot bars and add text
+p <- ggplot(Data, aes(x = Year, y = Frequency)) +
+     geom_bar(aes(fill = Category), stat="identity") +
+     geom_text(aes(label = Frequency, y = pos), size = 3)
+p
+
+## method 3
+library(plyr)
+library(ggplot2)
+Year      <- c(rep(c("2006-07", "2007-08", "2008-09", "2009-10"), each = 4))
+Category  <- c(rep(c("A", "B", "C", "D"), times = 4))
+Frequency <- c(168, 259, 226, 340, 216, 431, 319, 368, 423, 645, 234, 685, 166, 467, 274, 251)
+Data      <- data.frame(Year, Category, Frequency)
+
+# calculate midpoints of bars (simplified using comment by @DWin)
+Data <- ddply(Data, .(Year), transform, pos = cumsum(Frequency) - (0.5 * Frequency))
+
+# plot bars and add text
+p <- ggplot(Data, aes(x = Year, y = Frequency)) +
+     geom_bar(aes(fill = Category), stat="identity") +
+     geom_text(aes(label = Frequency, y = pos), size = 3)
+p
+
+## method 4
+p <- ggplot(Data, aes(x = Year, y = Frequency)) +
+  geom_bar(aes(fill = Category), stat="identity") +
+  geom_text(aes(label = Frequency), size = 3, position = "stack", vjust = Frequency/75)
+p
+
+```
+
+## 3. ggplot2 font
+
+```{r font for ggplot2}
+font_A <- "Consolas"
+font_B <- "Courier"
+font_C <- "Courier New"
+font_D <- "宋体"
+font_E <- "楷体"
+font_F <- "隶书"
+font_G <- "黑体"
+
+library(ggplot2)
+
+d <- data.frame(X=rep(1:5, 2), Y=c(1:5, 5:1), A=rep(c('a','b'), each=5))
+
+ggplot(data=d, aes(x=X, y=Y, group=A, color=A)) +
+  geom_line(size=2) +
+  labs(x="你是X", y="你是Y", color="blue", title="测试字体Font") + 
+  theme(text = element_text(family = font_F))
+
+ggplot(data=d, aes(x=X, y=Y, group=A, color=A))+
+  geom_line(size=2) +
+  labs(x="你是X", y="你是Y", color="blue", title="测试字体Font") + 
+  theme(text = element_text(family = font_A),  #all
+        title = element_text(family = font_B),  #title
+        axis.title = element_text(family = font_A),  #axis.title 
+        axis.title.x = element_text(family = font_B),  #axis.title.x
+        axis.text = element_text(family = font_A),  #axis.text
+        axis.text.y = element_text(family = font_B),  #axis.text.y
+        legend.text = element_text(family = font_A),  #legend.text
+        legend.title = element_text(family = font_B),  #legend.title
+        plot.title = element_text(family = font_A)  #plot.title
+        ) 
+
+```
+
+## 4. adding_space_between_bars_in_ggplot2
+
+```{r adding_space_between_bars_in_ggplot2}
+library(ggplot2)
+
+Treatment <- rep(c('T','C'),each=2)
+Gender <- rep(c('M','F'),2)
+Response <- sample(1:100,4)
+df <- data.frame(Treatment, Gender, Response)
+
+hist <- ggplot(df, aes(x=Gender, y=Response, fill=Treatment))
+hist + geom_bar(position = "dodge", stat = "identity") + scale_y_continuous(limits = c(0, 
+    100), name = "") 
+
+# adding_space_between_bars_in_ggplot2
+hist + geom_bar(width = 0.4, position = position_dodge(width = 0.5))
+
+
+plot <- ggplot(df, aes(x=Gender, y=Response, fill=Treatment)) + 
+  scale_y_continuous(limits = c(0, 100), name = "") +
+  theme(legend.position = "none") +
+  facet_wrap(~p) +
+  mapply(function(w, pw)
+    geom_bar(data = transform(df, p=sprintf("w_%.02f_pw_%.02f", w, pw)), stat = "identity", width= w, position = position_dodge(width = pw)),
+    w = c(0.6,0.6,0.6,0.3,0.3,0.3), pw = c(0.4,0.7,1.0,0.4,0.7,1.0))
+plot
+
+# error bar
+ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(am))) + 
+  stat_summary(fun.data = mean_se, position = position_dodge(width = 0.9), geom = "linerange") +
+  stat_summary(fun.y = mean, geom = "bar", position = position_dodge(width = 0.9))
+
+# error bar2
+ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(am))) + 
+  stat_summary(fun.data = mean_se, position = position_dodge(width = 0.8), geom = "linerange") +
+  layer(geom = "bar", params = list(width = 0.6, fun.data = mean_se), stat = "summary", 
+        position = position_dodge(width = 0.8))
+
+```
+
+## 5. bandgraph_ggplot2
+
+```{r bandgraph_ggplot2}
+library(ggplot2)
+p <- ggplot(mtcars, aes(x = as.factor(gear), fill = as.factor(vs))) +
+  geom_bar()
+p
+
+# position = fill
+p <- ggplot(mtcars, aes(x = as.factor(gear), fill = as.factor(vs))) +
+  geom_bar(position = "fill")
+p
+
+# scale_y_continuous(labels=percent)
+require(scales)
+p <- ggplot(mtcars, aes(x = as.factor(gear), fill = as.factor(vs))) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = percent)
+p
+
+# transfer X as Y
+require(scales)
+p <- ggplot(mtcars, aes(x = as.factor(gear), fill = as.factor(vs))) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = percent) +
+  coord_flip()
+p
+
+# transfer X as Y 2
+require(scales)
+mtcars.v2 <- transform(mtcars, gear2 = gear * -1)
+p <- ggplot(mtcars.v2, aes(x = reorder(gear, gear2), fill = as.factor(vs))) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = percent) +
+  coord_flip()
+p
+
+```
+
+## 6. flipped_cartesian_coordinates
+
+```{r flipped_cartesian_coordinates}
+library(ggplot2)
+
+ggplot(mtcars, aes(x = as.factor(gear))) +
+  geom_bar()
+
+# coord_flip() x as y
+ggplot(mtcars, aes(x = as.factor(gear))) +
+  geom_bar() +
+  coord_flip()
+
+# ylim
+ggplot(mtcars, aes(x = as.factor(gear))) +
+  geom_bar() +
+  coord_flip() +
+  ylim(c(0,20))
+
+# reorder
+ggplot(mtcars, aes(x = reorder(as.factor(gear), gear * -1))) +
+  geom_bar() +
+  coord_flip()
+
+# reorder/reverse
+ggplot(mtcars, aes(x = gear)) +
+  geom_bar() +
+  coord_flip() +
+  scale_x_reverse()
+
+```
+
+## 7. ggplot2_element_function
+```{r ggplot2_element_function}
+require(ggplot2)
+
+# add vline
+p <- ggplot(aes(x = mpg, y = hp), data = mtcars)
+p + geom_vline(xintercept = 20) + geom_point(data = mtcars)
+
+
+myFunction <- function() {
+  return(
+    geom_vline(xintercept = 20) + geom_point(data = mtcars)
+  )
+}
+p <- ggplot(aes(x = mpg, y = hp), data = mtcars)
+p
+# p + myFunction()
+# p + myFunction()
+
+
+# add vline
+myFunction <- function()
+ list(geom_vline(xintercept = 20),
+      geom_point(data = mtcars))
+
+p <- ggplot(aes(x = mpg, y = hp), data = mtcars)
+p + myFunction()
+
+
+# error bar、se
+lay = list(stat_summary(fun.y = mean, geom = "line"),
+           stat_summary(fun.data = mean_se))
+
+ggplot(mtcars, aes(am, mpg, colour = factor(vs), group=factor(vs))) + lay
+
+ggplot(iris, aes(Species, Sepal.Length, group=1)) + lay
+
+
+## 
+
+p <- ggplot(iris, aes(y=Sepal.Width, x=Species)) +
+  stat_summary(fun.y=mean, geom = "bar") + 
+  ylim(0,6) + 
+  lapply(1:3, function(i) geom_segment(x=i-0.4, y=7-i, xend=i+0.4, yend=7-i))
+p
+
+##
+p = ggplot(data.frame(x = c(-10, 10)), aes(x)) +
+  mapply(function(m, s, co) stat_function(fun = dnorm, args = list(mean = m, sd = s), colour = co), 
+         -1:1, c(0.5, 1, 1.5), rainbow(3))
+p
+
+```
+
+## 8. set_only_lower_bound
+```{r set_only_lower_bound}
+
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+
+# scale_y_continuous
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() + 
+  scale_y_continuous(limits = c(0, NA))
+
+#
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() + 
+  ylim(c(0, NA)) +
+  xlim(c(-2, NA))
+
+#
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() + 
+  expand_limits(y=0)
+
+```
+
+## 9. sort_legend_in_ggplot2
+```{r sort_legend_in_ggplot2}
+
+require(ggplot2)
+p <- ggplot(diamonds, aes(cut, fill = clarity)) + 
+  geom_bar()
+p
+
+#guides
+p <- ggplot(diamonds, aes(cut, fill = clarity)) + 
+  geom_bar() +
+  guides(fill = guide_legend(reverse = TRUE))
+p
+
+#fill，guide_legend
+p <- ggplot(diamonds, aes(cut, colour = clarity)) + 
+  geom_bar(fill = "white") +
+  guides(colour = guide_legend(reverse = TRUE))
+p
+
+#
+p <- ggplot(diamonds, aes(carat, price, colour = clarity, shape = cut)) +
+  geom_point() +
+  theme(legend.position = "top")
+p
+
+#guide_legend
+
+p <- ggplot(diamonds, aes(carat, price, colour = clarity, shape = cut)) +
+  geom_point() +
+  theme(legend.position = "top") +
+  guides(shape = guide_legend(order = 2),
+         colour = guide_legend(order = 1))
+p
+
+#
+p + guides(shape = guide_legend(order = 1),
+         colour = guide_legend(order = 2))
+
+#
+p <- ggplot(iris, aes(x = Species, y = Sepal.Length, colour = Sepal.Width)) + 
+  geom_point()
+p
+
+#
+p <- ggplot(iris, aes(x = Species, y = Sepal.Length, colour = Sepal.Width)) + 
+  geom_point() +
+  guides(colour = guide_colourbar(reverse = TRUE))
+p
+
+#
+p <- ggplot(diamonds, aes(carat, price, colour = depth, shape = cut)) +
+  geom_point() +
+  theme(legend.position = "top") +
+  guides(shape = guide_legend(order = 1),
+         colour = guide_colourbar(order = 2))
+p
+
+```
+
+## 10. sort_x-axis
+```{r sort_x-axis}
+library(ggplot2)
+
+p <- ggplot(mtcars, aes(x = gear, y = wt)) + 
+  geom_point()
+p
+
+# revert x
+p <- ggplot(mtcars, aes(x = gear, y = wt)) + 
+  geom_point() +
+  scale_x_reverse()
+p
+
+#box plot
+p <- ggplot(mtcars, aes(x = as.factor(gear), y = wt)) +
+  geom_boxplot()
+p
+
+#transform
+mtcars.v2 <- transform(mtcars, gear2 = gear * -1) # 値の順序が逆転する変数gear2を作成
+p <- ggplot(mtcars.v2, aes(x = reorder(gear, gear2), y = wt)) +
+  geom_boxplot()
+p
+
+# factor
+ggplot(iris, aes(x = Species, y = Sepal.Width)) +
+  stat_summary(fun.y = mean, geom = "bar")
+
+#reorder
+ggplot(iris, aes(x = reorder(x = Species, X = Sepal.Width, FUN = mean), y = Sepal.Width)) +
+  stat_summary(fun.y = mean, geom = "bar")
+```
+
+## 11. spline_ggplot2
+```{r spline_ggplot2}
+
+# geom_smooth(aes(x=(spline(y~x)$x, y=spline(y~x)$y))
+library(ggplot2)
+n <- 10
+d <- data.frame(x = 1:n, y = rnorm(n))
+ggplot(d,aes(x,y)) + geom_point() + 
+  geom_line(data=data.frame(spline(d, n=n*10)))
+
+```
+
+## 11. transparent_bg_using_ggplot2
+```{r transparent_bg_using_ggplot2}
+d <- rnorm(100) #data
+
+# transparent
+png('tr_tst1.png',width=300,height=300,units="px",bg = "transparent")
+boxplot(d)
+dev.off()
+
+# ggplot2 plot
+df <- data.frame(y=d,x=1)
+p <- ggplot(df) + stat_boxplot(aes(x=x,y=y)) 
+p <- p + theme(
+    panel.background = element_rect(fill = "transparent",color = NA),
+    panel.grid.minor = element_line(color = NA), 
+    panel.grid.major = element_line(color = NA)
+)
+# save png
+png('tr_tst2.png',width=300,height=300,units="px",bg = "transparent")
+p
+dev.off()
+```
+
+### use theme to set transparent
+```{r transparent}
+d <- rnorm(100)
+df <- data.frame(y=d,x=1)
+p <- ggplot(df) + stat_boxplot(aes(x = x,y=y)) 
+p <- p + theme(
+    panel.background = element_rect(fill = "transparent",color = NA),
+    panel.grid.minor = element_line(color = NA), 
+    panel.grid.major = element_line(color = NA),
+    plot.background = element_rect(fill = "transparent",color = NA)  # add
+)
+p
+```
+
+### use ggsave
+```{r ggsave}
+ggsave("tr_tst3.png", p, bg = "transparent")
+sessionInfo()
+
+require(ggthemes)
+p + theme_wsj()
+```
+
+## 12. other
+
+```{r other}
+f <- data.frame(x=c(x1,x2,x3), y=rep(y,3), type=rep(LETTERS[1:3], each=length(y)))
+
+p
+```
+
+
+
+
+
+
+

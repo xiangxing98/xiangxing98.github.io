@@ -1,0 +1,527 @@
+---
+title: "R Hypothesis Test Notebook"
+output: html_notebook
+---
+
+# R Hypothesis Test
+
+Assume the predetermined significance level is 0.05.
+假设预定的显着性水平是0.05。
+
+## 1 Shapiro-Wilk Test
+
+Null hypothesis:
+零假设:
+The sample came from a normally distributed population.
+样本来自正态分布总体
+
+```{r R Hypothesis Test}
+install.packages("stats")
+library(stats)
+# args() function displays the argument names and corresponding default values of a function or primitive.
+# args()函数显示一个函数的参数名称和相应的默认值。
+args(shapiro.test)
+#function (x) 
+#NULL
+
+# Example 1:
+# Test random sample from a normal distribution.
+# 测试来自正态分布的随机抽样。
+set.seed(1)
+x <- rnorm(150)
+res <- shapiro.test(x)
+
+res$p.value # > 0.05
+[1] 0.7885523
+# Conclusion: We are unable to reject the null hypothesis.
+# 结论：我们无法拒绝零假设。
+
+# Example 2:
+# Test daily observations of S&P 500 from 1981-01 to 1991-04.
+# 测试S＆P500指数从1981-01到1991-04的日观察值。
+install.packages("Ecdat")
+library(Ecdat)
+data(SP500)
+class(SP500)
+# [1] "data.frame"
+SPreturn = SP500$r500 # use the $ to index a column of the data.frame
+# 用$符号取出数据框中的一列
+(res <- shapiro.test(SPreturn))
+#         Shapiro-Wilk normality test
+# data: SPreturn
+# W = 0.8413, p-value < 2.2e-16
+
+names(res)
+# [1] "statistic" "p.value" "method" "data.name"
+
+res$p.value # < 0.05
+# [1] 2.156881e-46
+# Conclusion: We should reject the null hypothesis.
+# 结论：我们应该拒绝零假设。
+```
+
+
+## 2 Jarque-Bera Test
+
+Null hypothesis:
+The skewness and the excess kurtosis of samples are zero.
+样本的偏度和多余峰度均为零
+
+```{r Jarque-Bera Test}
+install.packages("tseries")
+library(tseries)
+args(jarque.bera.test)
+# function (x) 
+# NULL
+
+# Example 1: 
+# Test random sample from a normal distribution
+set.seed(1)
+x <- rnorm(150)
+res <- jarque.bera.test(x)
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "method" "data.name"
+
+res$p.value # > 0.05
+# X-squared 
+# 0.8601533 
+# Conclusion: We should not reject the null hypothesis. 
+
+# Example 2:
+# Test daily observations of S&P 500 from 1981–01 to 1991–04
+install.packages("Ecdat")
+library(Ecdat)
+data(SP500)
+class(SP500)
+# [1] "data.frame"
+SPreturn = SP500$r500 # use the $ to index a column of the data.frame
+(res <- jarque.bera.test(SPreturn))
+#         Jarque Bera Test
+# data: SPreturn
+# X-squared = 648508.6, df = 2, p-value < 2.2e-16
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "method" "data.name"
+
+res$p.value # < 0.05
+# X-squared 
+#         0 
+# Conclusion: We should reject the null hypothesis.
+```
+
+
+## 3 Correlation Test
+
+Null hypothesis:
+The correlation is zero.
+样本相关性为0
+
+```{r }
+install.packages("stats")
+library(stats)
+args(getS3method("cor.test","default"))
+# function (x, y, alternative = c("two.sided", "less", "greater"), 
+#     method = c("pearson", "kendall", "spearman"), exact = NULL, 
+#     conf.level = 0.95, continuity = FALSE, ...) 
+# NULL
+
+# x, y: numeric vectors of the data to be tested
+# x, y: 进行测试的数据的数值向量
+
+# alternative: controls two-sided test or one-sided test
+# alternative: 控制进行双侧检验或单侧检验
+
+# method: "pearson", "kendall", or "spearman"
+
+# conf.level: confidence level for confidence interval
+# conf.level: 置信区间的置信水平
+
+
+# Example:
+# Test the correlation between the food industry and the market portfolio.
+# 测试在食品行业的收益和市场投资组合之间的相关性。
+data(Capm,package="Ecdat")
+(res <- cor.test(Capm$rfood,Capm$rmrf))
+#         Pearson's product-moment correlation
+# 皮尔逊积矩相关
+# data: Capm$rfood and Capm$rmrf
+# t = 27.6313, df = 514, p-value < 2.2e-16
+# alternative hypothesis: true correlation is not equal to 0
+# 备择假设：真正的相关性不等于0
+# 95 percent confidence interval:
+# 95%置信区间
+#  0.7358626 0.8056348
+# sample estimates:
+# 样本估计
+#       cor 
+# 0.7730767 
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "estimate" 
+# [5] "null.value" "alternative" "method" "data.name" 
+# [9] "conf.int" 
+
+res$p.value # < 0.05
+# [1] 0
+# Conclusion: We should reject the null hypothesis.
+
+```
+
+## 4 Durbin-Watson Test
+
+Null hypothesis:
+The autocorrelation of the disturbance is 0.
+干扰的自相关为0
+
+```{r Durbin-Watson Test}
+install.packages("car")
+library(car)
+args(durbinWatsonTest) 
+# dwt is an abbreviation for durbinWatsonTest
+# dwt是durbinWatsonTest的简称。
+# function (model, ...) 
+# NULL
+# model: a linear-model object, or a vector of residuals from a linear model
+# model: 一个线性模型对象，或线性模式的残差向量
+
+install.packages("lmtest")
+library(lmtest)
+args(dwtest)
+# function (formula, order.by = NULL, alternative = c("greater", 
+#     "two.sided", "less"), iterations = 15, exact = NULL, tol = 1e-10, 
+#     data = list()) 
+# NULL
+
+# Example:
+# Test autocorrelation in residuals of the CAPM model
+# CAPM模型的残差自相关测试
+fit.lm <- lm(Capm$rfood ~ Capm$rmrf)
+(res <- dwt(fit.lm))
+ # lag Autocorrelation D-W Statistic p-value
+ #   1 0.1163382 1.765306 0.014
+ # Alternative hypothesis: rho != 0
+
+names(res)
+# [1] "r" "dw" "p" "alternative"
+
+res$p # < 0.05
+# [1] 0.014
+# Conclusion: We should reject the null hypothesis.
+
+(res <- dwtest(fit.lm))
+#         Durbin-Watson test
+# data: fit.lm
+# DW = 1.7653, p-value = 0.003757
+# alternative hypothesis: true autocorrelation is greater than 0
+# 备择假设：真正的自相关大于0
+
+names(res)
+# [1] "statistic" "method" "alternative" "p.value" 
+# [5] "data.name" 
+
+res$p.value # < 0.05
+# [1] 0.003756644
+# Conclusion: We should reject the null hypothesis.
+```
+
+
+## 5 Ljung-Box Test
+
+Null hypothesis:
+The data are independently distributed, i.e. the autocorrelation coefficients are all zero.
+
+数据是独立分布的，也就是说，它的自相关系数都是零
+
+```{r Ljung-Box Test}
+install.packages("stats")
+library(stats)
+args(Box.test)
+# function (x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0) 
+# NULL
+
+install.packages("FinTS")
+library(FinTS)
+args(AutocorTest)
+# function (x, lag = ceiling(log(length(x))), type = c("Ljung-Box", 
+#     "Box-Pierce", "rank"), df = lag) 
+# NULL
+
+# Example:
+# To test first n-lag autocorrelation coefficients are all zero.
+# 测试前n次滞后自相关系数均为零。
+(res <- Box.test(residuals(fit.lm),lag=5,type="Ljung-Box"))
+        # Box-Ljung test
+# data: residuals(fit.lm)
+# X-squared = 13.7663, df = 5, p-value = 0.01716
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "method" "data.name"
+
+res$p.value # < 0.05
+# [1] 0.01716429
+# Conclusion: We should reject the null hypothesis.
+
+(res <- AutocorTest(residuals(fit.lm),lag=5,type="Ljung-Box"))
+        Box-Ljung test
+# data: residuals(fit.lm)
+# X-squared = 13.7663, df = 5, p-value = 0.01716
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "method" 
+# [5] "data.name" "Total.observ"
+
+res$p.value # < 0.05
+# [1] 0.01716429
+# Conclusion: We should reject the null hypothesis.
+```
+
+
+## 6 Lagrange Multiplier Test
+
+Null hypothesis:
+No ARCH effect.
+无ARCH效应
+
+```{r Lagrange Multiplier Test}
+
+install.packages("FinTS")
+library(FinTS)
+args(ArchTest)
+# function (x, lags = 12, demean = FALSE) 
+# NULL
+
+# Example:
+# Test the residuals for Autoregressive Conditional Heteroscedasticity (volatility clustering).
+# 测试残差的自回归条件异方差（波动集聚性）。
+
+(res <- ArchTest(residuals(fit.lm)))
+        # ARCH LM-test; Null hypothesis: no ARCH effects
+# data: residuals(fit.lm)
+# Chi-squared = 182.0362, df = 12, p-value < 2.2e-16
+
+names(res)
+# [1] "statistic" "parameter" "p.value" "method" "data.name"
+
+res$p.value # < 0.05
+# Chi-squared 
+          # 0 
+# Conclusion: We should reject the null hypothesis.
+```
+
+
+## 7 Dickey-Fuller Test
+
+Null hypothesis:
+There is a unit root.
+单位根存在
+
+```{r Dickey-Fuller Test}
+install.packages("urca")
+library(urca)
+args(ur.df)
+
+# function (y, type = c("none", "drift", "trend"), lags = 1, selectlags = c("Fixed", 
+#     "AIC", "BIC")) 
+# NULL
+# y: time series
+# y: 时间序列
+# type: "none", "drift", or "trend" for regression model
+# type: “无”，“漂移”，或“趋势”回归模型
+# lags: number of lags or max number of lags if using selectlags
+# lags: 滞后量，或在设置selectlags参数后的最大滞后量
+# selectlags: "fixed", or either "AIC" or "BIC" for auto-selection
+# selectlags: "fixed", 或者用于自动选择的"AIC"或"BIC"
+
+# Example:
+library(FinTS)
+data(d.sp9003lev)
+sp500.level <- window(d.sp9003lev,start="1995-01-01")
+(ht <- ur.df(sp500.level,type="trend",lags=20,selectlags="BIC"))
+####################################### 
+# Augmented Dickey-Fuller Test Unit Root / Cointegration Test # 
+####################################### 
+# The value of the test statistic is: -1.4807 1.631 1.8925 
+# 检验统计量的值分别为：-1.4807 1.631 1.8925
+
+attributes(ht)$teststat # tau3 = -1.480685
+#                tau3 phi2 phi3
+# statistic -1.480685 1.631008 1.892498
+
+attributes(ht)$cval # > tau3 5pct = -3.41
+#       1pct 5pct 10pct
+# tau3 -3.96 -3.41 -3.12
+# phi2 6.09 4.68 4.03
+# phi3 8.27 6.25 5.34
+
+# Conclusion: We cannot reject the null-hypothesis of a unit root
+# (tau3 is less negative than its critical value of -3.41)
+# 结论：（tau3没有临界值-3.41显著）
+```
+
+
+## 8 Phillips & Ouliaris Test
+
+Null hypothesis:
+No cointegration.
+没有协整关系
+
+```{r}
+install.packages("urca")
+library(urca)
+args(ca.po)
+
+# function (z, demean = c("none", "constant", "trend"), lag = c("short", 
+#     "long"), type = c("Pu", "Pz"), tol = NULL) 
+# NULL
+# x: matrix or multivariate time series to be tested
+# x: 用于测试的矩阵或多维时间序列
+# demean: "none", "constant", or "trend"
+# lag: "short" or "long" for the length of lags
+# lag: 滞后长度，"short"或者"long"
+# type: "Pu" or "Pz"
+
+install.packages("tseries")
+library(tseries)
+args(po.test)
+# function (x, demean = TRUE, lshort = TRUE) 
+# NULL
+# x: matrix or multivariate time series to be tested
+# demean: should an intercept be included in the cointegration
+# demean: 协整是否包含截距
+# regression: (T/F)
+# lshort: T = short number of lags, F = long number of lags
+# lshort: T = 短滞后阶数, F = 长滞后阶数
+
+# Example:
+data(ecb) # Macroeconomic data of the Euro Zone
+# 欧元区宏观经济数据
+m3.real <- ecb[,"m3"]/ecb[,"gdp.defl"]
+gdp.real <- ecb[,"gdp.nom"]/ecb[,"gdp.defl"]
+rl <- ecb[,"rl"]
+ecb.data <- cbind(m3.real, gdp.real, rl)
+
+(m3d.po <- ca.po(ecb.data, type="Pz"))
+################################# 
+# Phillips and Ouliaris Unit Root / Cointegration Test # 
+################################# 
+# The value of the test statistic is: 18.4658 
+slotNames(m3d.po)
+# [1] "z" "type" "model" "lag" "cval" 
+# [6] "res" "teststat" "testreg" "test.name"
+m3d.po@teststat
+# [1] 18.46584
+m3d.po@cval
+#                   10pct 5pct 1pct
+# critical values 62.1436 71.2751 89.6679
+# Conclusion: We should not reject the null hypothesis.
+# (not as extreme as its critical value)
+# (不如临界值显著)
+
+(m3d.po <- po.test(ecb.data))
+#         Phillips-Ouliaris Cointegration Test
+# data: ecb.data
+# Phillips-Ouliaris demeaned = -4.4665, Truncation lag
+# parameter = 0, p-value = 0.15
+
+names(m3d.po)
+# [1] "statistic" "parameter" "p.value" "method" "data.name"
+
+m3d.po$p.value
+# [1] 0.15
+# Conclusion: We should not reject the null hypothesis.
+```
+
+## 9 Johansen Procedure Test
+
+Null hypothesis:
+There are n cointegrated vectors.
+有n个协整向量
+
+```{r Johansen Procedure Test}
+install.packages("urca")
+library(urca)
+args(ca.jo)
+# function (x, type = c("eigen", "trace"), ecdet = c("none", "const", 
+#     "trend"), K = 2, spec = c("longrun", "transitory"), season = NULL, 
+#     dumvar = NULL) 
+# NULL
+# x: data matrix to be investigated for cointegration
+# x: 用于检查协整的数据矩阵
+# type: "eigen" or "trace"
+# ecdet: "none", "const", or "trend"
+# K: number of lags
+# K: 滞后阶数
+# spec: VECM specification, "longrun" or "transitory"
+# spec: VECM规范："longrun"或"transitory"
+
+# Example:
+data(denmark)
+sjd <- denmark[, c("LRM", "LRY", "IBO", "IDE")]
+(sjd.vecm <- ca.jo(sjd, ecdet = "const", type="eigen", K=2,
++ spec="longrun",season=4))
+
+################################# 
+# Johansen-Procedure Unit Root / Cointegration Test # 
+################################# 
+# The value of the test statistic is: 2.3522 6.3427 10.362 30.0875 
+summary(sjd.vecm)
+###################### 
+# Johansen-Procedure # 
+###################### 
+# Test type: maximal eigenvalue statistic (lambda max) , without linear trend and constant in cointegration 
+# 测试类型：没有线性趋势并协整恒定的最大特征值统计（λ最大）
+# Eigenvalues (lambda):
+# 特征值（λ）：
+# [1] 4.331654e-01 1.775836e-01 1.127905e-01 4.341130e-02
+# [5] -8.947236e-16
+# Values of teststatistic and critical values of test:
+# 测试检验统计量的值和临界值：
+#           test 10pct 5pct 1pct
+# r <= 3 | 2.35 7.52 9.24 12.97
+# r <= 2 | 6.34 13.75 15.67 20.20
+# r <= 1 | 10.36 19.77 22.00 26.81
+# r = 0 | 30.09 25.56 28.14 33.24
+# Eigenvectors, normalised to first column:
+# 归一化的特征向量
+# (These are the cointegration relations)
+# 没有协整关系
+#             LRM.l2 LRY.l2 IBO.l2 IDE.l2 constant
+# LRM.l2 1.000000 1.0000000 1.0000000 1.000000 1.0000000
+# LRY.l2 -1.032949 -1.3681031 -3.2266580 -1.883625 -0.6336946
+# IBO.l2 5.206919 0.2429825 0.5382847 24.399487 1.6965828
+# IDE.l2 -4.215879 6.8411103 -5.6473903 -14.298037 -1.8951589
+# constant -6.059932 -4.2708474 7.8963696 -2.263224 -8.0330127
+# Weights W:
+# (This is the loading matrix)
+# （这是载荷矩阵）
+#            LRM.l2 LRY.l2 IBO.l2 IDE.l2
+# LRM.d -0.21295494 -0.00481498 0.035011128 2.028908e-03
+# LRY.d 0.11502204 0.01975028 0.049938460 1.108654e-03
+# IBO.d 0.02317724 -0.01059605 0.003480357 -1.573742e-03
+# IDE.d 0.02941109 -0.03022917 -0.002811506 -4.767627e-05
+#            constant
+# LRM.d -4.183363e-13
+# LRY.d 4.618135e-13
+# IBO.d 3.673136e-14
+# IDE.d -1.115087e-14
+
+slotNames(sjd.vecm)
+#  [1] "x" "Z0" "Z1" "ZK" "type" 
+#  [6] "model" "ecdet" "lag" "P" "season" 
+# [11] "dumvar" "cval" "teststat" "lambda" "Vorg" 
+# [16] "V" "W" "PI" "DELTA" "GAMMA" 
+# [21] "R0" "RK" "bp" "spec" "call" 
+# [26] "test.name"
+sjd.vecm@teststat
+# [1] 2.352233 6.342730 10.361950 30.087451
+sjd.vecm@cval # 10.36 < r<=1 = 22.00 
+#          10pct 5pct 1pct
+# r <= 3 | 7.52 9.24 12.97
+# r <= 2 | 13.75 15.67 20.20
+# r <= 1 | 19.77 22.00 26.81
+# r = 0 | 25.56 28.14 33.24
+# Conclusion: There are 1 cointegrated vector.
+# 结论：有1个协整向量。
+```
+          

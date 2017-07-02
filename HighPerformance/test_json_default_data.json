@@ -1,0 +1,7 @@
+{
+  "name": "default",
+  "n": 20,
+  "random": ["rnorm", "runif", "rnorm"],
+  "range": [0.2, 0.8],
+  "columns": ["a","b","c"]
+}
