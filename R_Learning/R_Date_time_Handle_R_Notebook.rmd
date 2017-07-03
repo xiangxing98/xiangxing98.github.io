@@ -1,0 +1,320 @@
+---
+title: "R_Date_time_Handle_R Notebook"
+output: 
+  html_notebook: 
+    toc: yes
+---
+
+# R_Date_time_Handle_R Notebook
+
+## 1、取出当前日期
+```{r}
+Sys.Date()
+# [1] "2014-10-29"
+date()  #注意：这种方法返回的是字符串类型
+# [1] "Wed Oct 29 20:36:07 2014"
+```
+
+## 2、在R中日期实际是double类型，是从1970年1月1日以来的天数
+```{r}
+typeof(Sys.Date())
+# [1] "double"
+```
+
+## 3、转换为日期
+
+用`as.Date()`可以将一个字符串转换为日期值，默认格式是`yyyy-mm-dd`。
+```{r}
+as.Date("2007-02-01")   #得到"2007-02-01"，显示为字符串，但实际是用double存储的
+as.double(as.Date("1970-01-01"))  #结果为0，是从1970年1月1日以来的天数。
+
+# 可以把定制的日期字符串转换为日期型
+as.Date("2007年2月1日", "%Y年%m月%d日") 
+# [1] "2007-02-01"
+
+x<-as.Date("1970-01-01")   
+unclass(x)   
+# [1] 0  
+
+unclass(as.Date("1970-02-01")) #19700201代表第31天  
+# [1] 31  
+# unclass可以将日期变成以天来计数，
+# 比如1970-02-01输出的31，就代表着距离1970-01-01有31天。
+
+
+```
+
+格式  意义
+%Y  年份，以四位数字表示，2007
+%m  月份，以数字形式表示，从01到12
+%d  月份中当的天数，从01到31
+%b  月份，缩写，Feb
+%B  月份，完整的月份名，指英文，February
+%y  年份，以二位数字表示，07
+
+## 4、把日期值输出为字符串
+```{r}
+today <- Sys.Date()
+format(today, "%Y年%m月%d日")
+# [1] "2014年10月29日"
+```
+
+## 5、计算日期差
+
+由于日期内部是用double存储的天数，所以是可以相减的。
+```{r}
+today <- Sys.Date()
+gtd <- as.Date("2011-07-01")   
+today - gtd
+# Time difference of 1216 days  
+```
+
+用`difftime()`函数可以计算相关的秒数、分钟数、小时数、天数、周数
+```{r}
+difftime(today, gtd, units="weeks")  
+#还可以是“secs”, “mins”, “hours”, “days”
+# Time difference of 173.7143 weeks
+```
+
+## 6. 日期型数据
+
+在R中自带的日期形式为：as.Date();以数值形式存储；
+
+对于规则的格式，则不需要用format指定格式；
+如果输入的格式不规则，可以通过format指定的格式读入；
+
+标准格式：
+年-月-日或者年/月/日；
+如果不是以上二种格式，则会提供错误；
+
+```{r}
+as.Date('23-2013-1')
+# 错误于charTo按照Date(x) : 字符串的格式不够标准明确
+
+as.Date('23-2013-1',format='%d-%Y-%m')
+# [1] "2013-01-23"
+```
+
+格式  意义
+%Y  年份，以四位数字表示，2007
+%m  月份，以数字形式表示，从01到12
+%d  月份中当的天数，从01到31
+%b  月份，缩写，Feb
+%B  月份，完整的月份名，指英文，February
+%y  年份，以二位数字表示，07
+
+## 其它日期相关函数
+
+`weekdays()` 取日期对象所处的周几；
+`months()` 取日期对象的月份；
+`quarters()` 取日期对象的季度；
+
+## 7. POSIX类
+
+The POSIXct class stores date/time values as the number of seconds since January 1, 1970, while the POSIXlt class stores them as a list with elements for second, minute, hour, day, month, and year, among others.
+
+POSIXct 是以1970年1月1号开始的以秒进行存储，如果是负数，则是1970年以前；正数则是1970年以后。
+
+POSIXlt 是以列表的形式存储：年、月、日、时、分、秒；作用是打散时间，把时间分成年、月、日、时、分、秒，并进行存储。
+
+```{r}
+today <- Sys.time()  
+unclass(as.POSIXlt(today))  
+# $sec
+# [1] 49.00171
+# 
+# $min
+# [1] 15
+# 
+# $hour
+# [1] 0
+# 
+# $mday
+# [1] 4
+# 
+# $mon
+# [1] 6
+# 
+# $year
+# [1] 117
+# 
+# $wday
+# [1] 2
+# 
+# $yday
+# [1] 184
+# 
+# $isdst
+# [1] 0
+# 
+# $zone
+# [1] "CST"
+# 
+# $gmtoff
+# [1] 28800
+# 
+# attr(,"tzone")
+# [1] ""    "CST" "CDT"
+
+mydate = as.POSIXlt('2005-4-19 7:01:00')
+names(mydate)
+
+```
+
+
+默认情况下，日期之前是以/或者-进行分隔，而时间则以：进行分隔；
+
+输入的标准格式为：日期 时间（日期与时间中间有空隔隔开）
+
+时间的标准格式为：时:分 或者 时:分:秒；
+
+如果输入的格式不是标准格式，则同样需要使用strptime函数，利用format来进行指定；
+
+```{r}
+## 生成案例数据
+Dates <- c("2009-09-28","2010-01-15")
+Times <- c( "23:12:55", "10:34:02")
+charvec <- timeDate(paste(Dates, Times))
+timeDate(charvec)
+
+#取系统的时间
+Sys.timeDate()
+
+#一个月的第一天
+timeFirstDayInMonth()
+
+#一个月的最后一天
+timeLastDayInMonth()
+
+#一周当中第几天
+dayOfWeek()
+
+#一年当中的第几天
+dayOfYear()
+
+Sys.Date()
+# returns today's date. 
+
+date()
+# returns the current date and time.
+
+# print today's date
+today <-Sys.Date()
+format(today, format="%B %d %Y")
+# "June 20 2007"
+
+now_ct <- Sys.time()  
+now_ct  
+# [1] "2015-10-29 21:36:41 CST"  
+class(now_ct)  
+# [1] "POSIXct" "POSIXt"   
+
+date <- as.Date(now_ct)  
+date  
+# [1] "2015-10-29" 
+
+# convert date info in format 'mm/dd/yyyy'
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+
+# convert dates to character data
+strDates <- as.character(dates)
+
+as.Date('1915-6-16')
+# [1] "1915-06-16"
+
+as.Date('1990/02/17')
+# [1] "1990-02-17"
+
+as.Date('1/15/2001',format='%m/%d/%Y')
+# [1] "2001-01-15"
+
+as.Date('April 26, 2001',format='%B %d, %Y')
+# [1] "2001-04-26"
+
+as.Date('22JUN01',format='%d%b%y')   # %y is system-specific; use with caution
+# [1] "2001-06-22"
+
+bdays = c(tukey=as.Date('1915-06-16'),fisher=as.Date('1890-02-17'),
+           cramer=as.Date('1893-09-25'), kendall=as.Date('1907-09-06'))
+weekdays(bdays)
+      # tukey      fisher      cramer     kendall
+# "Wednesday"    "Monday"    "Monday"    "Friday"
+
+dtimes = c("2002-06-09 12:45:40","2003-01-29 09:30:40",
+          "2002-09-04 16:45:40","2002-11-13 20:00:40",
+          "2002-07-07 17:30:40")
+dtparts = t(as.data.frame(strsplit(dtimes,' ')))
+row.names(dtparts) = NULL
+thetimes = chron(dates=dtparts[,1],times=dtparts[,2],
+          format=c('y-m-d','h:m:s'))
+thetimes
+# [1] (02-06-09 12:45:40) (03-01-29 09:30:40) (02-09-04 16:45:40)
+# [4] (02-11-13 20:00:40) (02-07-07 17:30:40)
+
+
+dts = c("2005-10-21 18:47:22",
+        "2005-12-24 16:39:58",
+        "2005-10-28 07:30:05 PDT")
+as.POSIXlt(dts)
+# [1] "2005-10-21 18:47:22" "2005-12-24 16:39:58" 
+# [3] "2005-10-28 07:30:05"
+
+
+dts = c(1127056501,1104295502,1129233601,1113547501,
+        1119826801,1132519502,1125298801,1113289201)
+mydates = dts
+class(mydates) = c('POSIXt','POSIXct')
+mydates
+# [1] "2005-09-18 08:15:01 PDT" "2004-12-28 20:45:02 PST"
+# [3] "2005-10-13 13:00:01 PDT" "2005-04-14 23:45:01 PDT"
+# [5] "2005-06-26 16:00:01 PDT" "2005-11-20 12:45:02 PST"
+# [7] "2005-08-29 00:00:01 PDT" "2005-04-12 00:00:01 PDT"
+
+mydate = strptime('16/Oct/2005:07:51:00',format='%d/%b/%Y:%H:%M:%S')
+# [1] "2005-10-16 07:51:00"
+
+ISOdate(2005,10,21,18,47,22,tz="PDT")
+# [1] "2005-10-21 18:47:22 PDT"
+
+thedate = ISOdate(2005,10,21,18,47,22,tz="PDT")
+format(thedate,'%A, %B %d, %Y %H:%M:%S')
+# [1] "Friday, October 21, 2005 18:47:22"
+
+mydate = as.POSIXlt('2005-4-19 7:01:00')
+names(mydate)
+# [1] "sec"   "min"   "hour"  "mday"  "mon"   "year"  
+# [7] "wday"  "yday"  "isdst"
+
+mydate$mday
+# [1] 19
+
+```
+
+### POSIXct 格式
+主要特点：以秒进行存储。
+```{r}
+today<-Sys.time()  
+today  
+# [1] "2016-06-06 20:42:22 CST"  
+
+unclass(as.POSIXct(today))  
+# [1] 1465216942  
+# 解读：比如今天，unclass之后，
+# 代表今天2016-06-06距离1970-01-01为1465216942秒。
+#GMT代表时区，德意志时间，CST也代表时区
+```
+
+## 8.如何在循环、函数中，输出实时时间消耗
+```{r}
+t1 = Sys.time()  
+for (i in 1:5){  
+a=a+1  
+b=a*a  
+print(difftime(Sys.time(), t1, units = 'sec'))  
+}  
+```
+
+
+
+

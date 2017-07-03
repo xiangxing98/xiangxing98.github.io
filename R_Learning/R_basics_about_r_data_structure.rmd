@@ -323,6 +323,12 @@ gene
 R语言中，一个矩阵内的数据类型要求都要相同，这对生物类数据不大适用，因为我们的数据经常是既有数字又有字符类标记。R语言提供了另外一种更灵活的数据类型：数据框。可以将几个不同类型但长度相同的向量用`data.frame( )` 函数合并到一个数据框，它的模样就像二维数组。但要注意：合并的几个向量长度必需一致。
 
 ```{r data.frame}
+d <- data.frame(name = c("Ming_Li", "Chong_Zhang", "Jiang_Wang"),
+                age = c(30, 35, 28),
+                height = c(180, 162, 175))
+d
+names(d)
+
 name <- c("赵匡胤", "钱学森", "孙思邈")
 height <- c(172, 175, 168)
 info <- data.frame(name,height)
@@ -435,7 +441,107 @@ refdf = structure(list(Start = c(1L, 25L, 60L), End = c(10L, 50L, 75L
 )), .Names = c("Start", "End"), class = "data.frame", row.names = c(NA, 
 -3L))
 refdf
+```
+
+## 八、日期型数据
+
+在R中自带的日期形式为：`as.Date()`;以数值形式存储；
+对于规则的格式，则不需要用format指定格式；如果输入的格式不规则，可以通过format指定的格式读入；
+
+### 标准格式：
+
+年-月-日或者年/月/日；如果不是以上二种格式，则会提供错误；
+
+```{r}
+# R 语言的中文UTF8支持不在报Warning
+Sys.getlocale(category = "LC_ALL")
+Sys.setlocale(category = "LC_ALL", locale = "English_United States.1252")
+#Sys.setlocale(locale="C")
+#Sys.getlocale("LC_TIME")
+#Sys.setlocale("LC_TIME","")
+
+as.Date('23-2013-1')
+# Error in charToDate(x) : 字符串的格式不够标准明确
+as.Date('23-2013-1',format='%d-%Y-%m')
+# [1] "2013-01-23"
+```
+
+格式	意义
+%d  月份中当的天数
+%m  月份，以数字形式表示
+%b  月份，缩写
+%B  月份，完整的月份名，指英文
+%y  年份，以二位数字表示
+%Y  年份，以四位数字表示
+
+#### 其它日期相关函数
+
+`weekdays()`取日期对象所处的周几；
+`months()`取日期对象的月份；
+`quarters()`取日期对象的季度；
+ 
+### POSIX类
+
+The POSIXct class stores date/time values as the number of seconds since January 1, 1970, while the POSIXlt class stores them as a list with elements for second, minute, hour, day, month, and year, among others.
+
+POSIXct 是以1970年1月1号开始的以秒进行存储，如果是负数，则是1970年以前；正数则是1970年以后。
+
+POSIXlt 是以列表的形式存储：年、月、日、时、分、秒；
+```{r}
+mydate = as.POSIXlt('2005-4-19 7:01:00')
+names(mydate)
+```
+
+默认情况下，日期之前是以/或者-进行分隔，而时间则以：进行分隔；
+输入的标准格式为：日期 时间（日期与时间中间有空隔隔开）
+
+时间的标准格式为：时:分 或者 时:分:秒；
+
+如果输入的格式不是标准格式，则同样需要使用strptime函数，利用format来进行指定；
+
+```{r}
+#生成案例数据
+Dates <- c("2009-09-28","2010-01-15")
+Times <- c( "23:12:55", "10:34:02")
+charvec <- timeDate(paste(Dates, Times))
+timeDate(charvec)
+
+#取系统的时间
+Sys.timeDate()
+
+#一个月的第一天
+timeFirstDayInMonth()
+
+#一个月的最后一天
+timeLastDayInMonth()
+
+#一周当中第几天
+dayOfWeek()
+
+#一年当中的第几天
+dayOfYear()
 
 ```
+
+## 九、setlocale函数-针对无法读取中文路径下的文件的问题
+
+针对无法读取中文路径下的文件的问题，只要在解析模型配置文件时，加入一句：  `setlocale(LC_ALL,"chs");`即可。
+
+setlocale函数原形为：
+`char *setlocale( int category, const char *locale );`
+
+头文件：`<locale.h>`
+所支持的操作系统为:ANSI, Win 95, Win NT
+对于简体中文可以使用如下设置：`setlocale( LC_ALL, "chs" );`
+
+为什么一定要调用setlocale呢？
+
+因为在C/C++语言标准中定义了其运行时的字符集环境为"C"，也就是ASCII字符集的一个子集，那么mbstowcs在工作时会将cstr中所包含的字符串看作是ASCII编码的字符，而不认为是一个包含有chs编码的字符串，所以他会将每一个中文拆成2个ASCII编码进行转换，这样得到的结果就是会形成4个wchar_t的字符组成的串，那么如何才能够让mbstowcs正常工作呢？
+
+在调用mbstowcs进行转换之间必须明确的告诉mbstowcs目前cstr串中包含的是chs编码的字符串，通过`setlocale( LC_ALL, "chs" )` 函数调用来完成，需要注意的是这个函数会改变整个应用程序的字符集编码方式，必须要通过重新调用`setlocale( LC_ALL, "C" )` 函数来还原，这样就可以保证mbstowcs在转换时将cstr中的串看作是中文串，并且转换成为2个wchar_t字符，而不是4个。
+
+
+
+
 
 

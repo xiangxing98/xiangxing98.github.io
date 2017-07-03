@@ -11,6 +11,21 @@ if(!suppressWarnings(require(data.table)))
 }
 ```
 
+## 用搜索路径来查看所有已加载的包
+```{r}
+search()
+View(installed.packages())
+
+# R出厂的包 在CRAN包库中，要访问其他存储库
+setRepositories() 
+
+# 下载 github上的包
+install.packages("devtools")
+install.packages("devtools")
+install_github("knitr","yihui")  
+
+```
+
 ## 10 usefull packages in R
 
 The yhat blog lists 10 R packages they wish they'd known about earlier. 
