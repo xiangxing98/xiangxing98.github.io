@@ -1,0 +1,363 @@
+---
+title: "R Notebook-8 simple ways how to boost your coding skills (not just) in R"
+output: html_notebook
+---
+
+
+# 8 simple ways how to boost your coding skills (not just) in R 
+
+> [八招提升你的 R 语言编程能力](https://blog.alookanalytics.com/2017/03/08/8-simple-ways-how-to-boost-your-coding-skills-not-just-in-r/)
+
+
+## Introdction 引言
+
+Our world is generating more and more data, which people and businesses want to turn into something useful. This naturally attracts many data scientists – or sometimes called data analysts, data miners, and many other fancier names – who aim to help with this extraction of information from data.
+
+这个世界每天都在源源不断地生产数据，而人们尤其是商界往往希望从这些数据中获取到有价值的信息。而这一点也促使很多试图从数据中提取有用信息的数据科学家们（或被叫做数据分析师、数据挖掘者等等听起来不错的称谓）不断地进行探索。
+
+A lot of data scientists around me graduated in statistics, mathematics, physics or biology. During their studies they focused on individual modelling techniques or nice visualizations for the papers they wrote. Nobody had ever taken a proper computer science course that would help them tame the programming language completely and allow them to produce a nice and professional code that is easy to read, can be re-used, runs fast and with reasonable memory requirements, is easy to collaborate on and most importantly gives reliable results.
+
+很多作者身边的数据科学家毕业于统计学、数学、物理学或生物学专业。他们在研究过程中，往往只关注于独立的模型方法或者漂亮的可视化效果，却没人尝试通过学习计算机科学的相关课程提高自身掌握编程语言的能力，帮助他们敲出更优化和专业的代码——具有良好的易读性，可重复使用，运行高效，内存占用合理，容易移植，最重要的是可以产出可信的结果。
+
+I am no exception to this. During my studies we used R and Matlab to get a hands-on experience with various machine learning techniques. We obviously focused on choosing the best model, tuning its parameters, solving for violated model assumptions and other rather theoretical concepts. So when I started my professional career I had to learn how to deal with imperfect input data, how to create a script that can run daily, how to fit the best model and store a predictions in a database. Or even to use them directly in some online client facing point.
+
+作者也不外如是。他在研究期间，曾有过使用 R 语言和Matlab 用于大量机器学习算法的实践经历。实践中，我们总是在注意力放在选取最优的模型，调整参数，解决与违背模型假设相关的问题和其他理论概念等等方面上。因此，作者在工作之初不得不去学习如何处理有缺陷的输入数据，写出每天都能够正常运行的代码，拟合最优的模型，以数据集的方式存储预测结果，或是直接使用它们解决在线客户的问题。
+
+To do this I took the standard path. Reading books, papers, blogs, trying new stuff working on hobby projects, googling, stack-overflowing and asking colleagues. But again mainly focusing on overcoming small ad hoc problems.
+
+为了顺利完成工作，作者踏上码农标准的学习之路：阅读书籍、论文、博客，对感兴趣的项目尝试新方法去处理，谷歌搜索问题，在 stack-overflow 网站上提问，寻求的同事的帮助。但总是忙于解决一些微小且特定的问题。
+
+Luckily for me, I’ve met a few smart computer scientists on the way who showed me how to develop code that is more professional. Or at least less amateurish. What follows is a list of the most important points I had to learn since I left the university. These points allowed me to work on more complex problems both theoretically and technically. I must admit that making your coding skills better is a never ending story that restarts with every new project.
+
+幸运的是，作者曾与一些“机智”的计算科学家讨论过如何提高编程能力，写出专业化（至少别太业余）代码的问题。下文是作者自离校之后感悟到的一些关键点。这些关键点帮助作者在理论和实践中解决了更为复杂的问题。提高你的编程能力是一条学而无涯的路，你的每个新项目都是一次锻炼的过程。
+
+## 1. Parameters, constants and functions 参数、常量和函数
+
+You are able to easily re-use your code if you make it applicable to similar problems as well. A simple wisdom that is however quite tricky to apply in practice. Your building blocks here are **parameters**, **constants** and **functions**.
+
+如果你在写代码的时候就已经考虑过用它来解决相似的问题，那么写出来的代码是很容易被移植的。这个想法虽然简单，实践起来却并不容易。而**参数、常量和函数**便是你实现这点的基础。
+
+Parameters enable you to change important variables and settings in one place. You should never have anything hard-coded in the body of your code. Constants help you to define static variables that cannot be altered. Constants are useful for example when you need to compare strings.
+
+参数可用于改变重要变量的值和完成一些设置。写代码的时候，注意不要以常量的形式去设定参数。而常量则可以用来定义不会改变的静态量，举例来说，当你需要比较字符串时就可以用到常量。
+
+
+```{r parameters constants and functions}
+install.packages("futile.logger")
+library(caret)
+library(futile.logger)
+
+#' constants常量
+DATASET_IRIS <- 'iris'
+DATASET_MTCARS <- 'mtcars'
+IRIS_TARGET <- 'Sepal.Length'
+MTCARS_TARGET <- 'mpg'
+MODELLING_METHOD_RF <- 'random forest'
+MODELLING_METHOD_GBM <- 'gradient boosting machine'
+
+#' parameters 参数
+DATASET <- DATASET_IRIS
+MODELLING_METHOD <- MODELLING_METHOD_GBM
+
+#' load data 载入数据
+flog.info(paste0('Loading ', DATASET, ' dataset'))
+if (DATASET == DATASET_IRIS){
+  data(iris)
+  df <- iris
+  target_variable <- IRIS_TARGET
+} else if (DATASET == DATASET_MTCARS){
+  data(mtcars)
+  df <- mtcars
+  target_variable <- MTCARS_TARGET
+}
+
+#' create formula 构建表达式
+modelling_formula <- as.formula(paste0(target_variable, '~.'))
+
+#' train model
+flog.info(paste0('Fitting ', MODELLING_METHOD))
+if(MODELLING_METHOD == MODELLING_METHOD_RF){
+  set.seed(42)
+  my_model <- caret::train(form=modelling_formula,
+                           data=df,
+                           method='rf')
+} else if(MODELLING_METHOD == MODELLING_METHOD_GBM){
+  set.seed(42)
+  my_model <- caret::train(form=modelling_formula,
+                           data=df,
+                           method='gbm',
+                           verbose=FALSE)
+}
+my_model
+```
+
+Functions are key ingredients of programming. Always put the repetitive tasks in your code into functions. These functions should always aim to perform one task and be general enough to be used for similar cases. How general typically depends on what you want to achieve.
+
+函数是编程中的重要一环，我们往往以函数的方式处理重复性工作。通常情况下，函数应当能够解决某种特定的问题并足以应用于相似的情况，其被推广的程度取决于你想实现什么样的目标。
+
+Even helper functions **should** be well documented. The absolute minimum is to summarize what the function should do and what is the meaning of input parameters. I usually use roxygen comments so that the function can be later used in an R package without much extra work. For more details please see [here:http://r-pkgs.had.co.nz/man.html](http://r-pkgs.had.co.nz/man.html).
+
+函数需要附上解释说明部分，最起码要说明函数可以解决什么问题和各个输入参数的意义。作者一般使用 R 包构建时的注释方式，以便于函数可以直接用于 R 包中，而不需要额外的处理。更多注释的细节可在 ”如何编写 R 包的说明文档“ 网页中查看。
+
+```{r roxygen comments}
+#' Calculates Root Mean Squeared Error 计算均方根误差
+#'
+#' @param observed vector with observed values 参数表示观测值
+#' @param predicted vector with predicted values 参数表示预测值
+#' @return numeric 返回数值类型
+f_calculate_rmse <- function(observed, predicted){
+  error <- observed - predicted
+  return(round(sqrt(mean(error^2)), 2))
+}
+
+```
+
+You have to test the functions you are writing anyway so it is a good idea to automate this step in case you would like to update the functions in the future. This is important especially if you plan to [wrap you functions in a package: http://r-pkgs.had.co.nz/](http://r-pkgs.had.co.nz/). Nice way to do this is using [testthat:https://github.com/hadley/testthat](https://github.com/hadley/testthat) package. [Here:http://kbroman.org/pkg_primer/pages/tests.html](http://kbroman.org/pkg_primer/pages/tests.html) is a nice page how to run your tests automatically.
+
+你需要检验所编写的函数是否能够正常运行，因此，将检验的流程自动化处理会便于日后对函数的改动。当你需要 构建 R 包 时创建函数，这点尤其重要。testthat 包可以很方便的解决这个问题，你可以在 “如何检验 R 包中代码的有效性” 网页中看到如何自动检验你的代码。
+
+```{r testthat}
+library(testthat)
+library(Metrics)
+
+#' testing of f_calculate_rmse 检验 f_calculate_rmse 函数
+test_that('Root Mean Square Error', {
+  #' create some data
+  n <- 100
+  observed <- rnorm(n)
+  predicted <- rnorm(n)
+  my_rmse <- f_calculate_rmse(observed=observed, predicted=predicted)
+
+  #' same results as Metrics::rmse  检验与 Metrics 包中的 rmse 函数结果是否相同 
+  expect_equal(my_rmse, 
+               Metrics::rmse(actual=observed, predicted=predicted), 
+               tolerance=.05) 
+  #' output is numeric and non-negative 检验输出结果是数值类型且非负数
+  expect_that(my_rmse, is_a("numeric")) 
+  expect_that(my_rmse >= 0, is_true())
+})
+```
+
+Obviously one does not need to write all the functions needed. A great advantage of R is that there are so many functions available in thousands of available libraries. To make sure you will not run into namespace problems when two loaded libraries both contain a function with the same name, specify the package you want to use by `packagename::functionname()`. An example is the `summarise` function when both [plyr:https://cran.r-project.org/web/packages/plyr/index.html](https://cran.r-project.org/web/packages/plyr/index.html) and [dplyr: https://cran.r-project.org/web/packages/dplyr/index.html](https://cran.r-project.org/web/packages/dplyr/index.html) packages are loaded.
+
+好在我们不需要自己编写所有的函数， R 语言的好处就在于在它大量的包里已经有很多可用的函数了。为了避免出现载入的两个包中有相同名称函数的重名问题，你可以通过 `packagename::functionname()` 的方式指定想使用的包名。比如说，在载入的 `plyr` 和 `dplyr` 包中都含有`summarise`函数。
+
+```{r packages and functions}
+library(plyr)
+library(dplyr)
+
+#' load data 载入数据
+data(mtcars)
+
+#' see what happens 查看结果
+summarise(group_by(mtcars, cyl), n=n())
+plyr::summarise(group_by(mtcars, cyl), n=n())
+dplyr::summarise(group_by(mtcars, cyl), n=n())
+```
+
+## 2. Style 样式
+
+You will be reading your code again in the future so be nice to yourself (and anyone else who will have to read it) and have a consistent coding style. A lot of people use [Google’s R style: https://google.github.io/styleguide/Rguide.xml](https://google.github.io/styleguide/Rguide.xml) or [Hadley Wickham’s style: http://adv-r.had.co.nz/Style.html](http://adv-r.had.co.nz/Style.html).
+
+你以后还是需要重新阅读你自己的代码，因此，代码需要保持一个连贯的样式，便于自己和其他阅读的人能够理解。很多人使用 谷歌的 R 编程规范 或是 Hadley Wickham 的 R 语言编程样式。
+
+Here I also need to stress that it is important to comment your code. Especially when you consider your solution brilliant and obvious. Also please do not be afraid of long but self-explanatory function and variable names.
+
+给代码加上注释是非常重要的，特别是在你认为构建思路很好的时候方便日后查看。同时，也不要忘了加上看似有些冗长的但是能够自我解释性的函数和变量名。
+
+
+## 3. Version control 版本控制
+
+Always use version control for your projects. It will save you a lot of nerves. It has so many advantages. [Here: http://stackoverflow.com/questions/1408450/why-should-i-use-version-control](http://stackoverflow.com/questions/1408450/why-should-i-use-version-control)is a nice summary of them. The most important to me are:
+
+项目管理中，版本控制也很重要，它可以节省你大量的精力。版本控制具有很多好处，你可以在 “使用版本控制的原因” 网页中看到。对于作者而言，最重要的好处在于：
+
+- ability to revert back to previous versions of my code 能够回溯到之前版本的代码
+
+- clean project folder because I can delete anything without fear 管理项目文件，不用担心误操作
+
+- easy to invite colleagues to collaborate on the project 便于与同事协作
+
+Using git is [easy: http://rogerdudler.github.io/git-guide/](http://rogerdudler.github.io/git-guide/). Especially from [RStudio: https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN).
+
+你可以使用 git 进行版本控制，特别是在 RStudio 中。
+
+## 4. Development 优化开发代码
+
+Development doesn’t necessarily need to be a messy process.
+
+优化代码的过程不一定就是杂乱无章的。
+
+Your code is not working? Then you need to be able to quickly locate the problem and fix it. Luckily, RStudio has a lot of [built-in debugging tools: https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio) so that you can stop the code at the point where you suspect the problem is arising, and look at and/or walk through the code, step-by-step at that point.
+
+如果代码运行出故障，就需要快速定位到问题并解决它。好在 RStudio 拥有很多 内置调试工具 ，你可以在认为代码出现问题的地方创建一个断点，然后重新运行代码，重复这个过程来找出问题所在。
+
+```{r Development or optimize}
+#' create some data 创建数据
+set.seed(42)
+n <- 100
+observed <- rnorm(n)
+predicted <- rnorm(n)
+
+#' debug the function 调试函数
+debug(f_calculate_rmse)
+f_calculate_rmse(observed=observed, predicted=predicted)
+```
+
+Each programming language has its own strengths and weaknesses that you need to keep in mind. You don’t want your code to run too slow or use too much memory. A handy tool for this is profiling. Again, RStudio comes with a [solution: https://support.rstudio.com/hc/en-us/articles/218221837-Profiling-with-RStudio](https://support.rstudio.com/hc/en-us/articles/218221837-Profiling-with-RStudio) to this. Profiling enables you to detect where the execution of you code lasts the longest and where it uses the most memory. Do not rely on your intuition when optimizing your code!
+
+你需要知道，每种编程语言都有它的优点和不足。你也不希望代码运行得太慢或者占用太多内存。分析代码的结构可以帮助解决这个问题，而 RStudio 也提供了这方面的 解决方案 。分析代码结构能够监测到运行代码最耗时和最占用内存的地方。在优化代码的时候不要过度依赖自己的直觉。
+
+You should also check how the running time and memory requirements increase with the size of data. This will give you an idea for what data can be your code used and what could be the consequences for scaling.
+
+在数据集增大时，你需要检查其对于运行时间和内存占用需求的影响，这点有助于你理解应当选择什么样的数据集和在数据集规模改变时会引发什么样的后果。
+
+```{r profiling}
+library(profvis)
+
+#' profiling of f_calculate_rmse 分析 f_calculate_rmse 函数结构
+profvis({
+  set.seed(42)
+  n <- 1e5
+  observed <- rnorm(n)
+  predicted <- rnorm(n)
+  f_calculate_rmse(observed=observed, predicted=predicted)
+})
+```
+
+During the development you will encounter many problems. Each time this happens you should improve the error handling in your code and raise a self-explanatory warning or error. Especially mind the data types and missing parameters.
+
+代码优化过程中，你会面对很多问题。每次问题出现，尤其需要关注数据类型和遗漏的参数，你就应当能够从中提升解决代码错误的能力，并认识到这种警告或错误的成因。
+
+## 5. Deployment 部署
+
+Deployment means that your code will need to run automatically. Or at least without you executing it line by line. In this case it is very helpful to know what is going on and whether the execution went well without any problems. For this purpose I use [futile.logger: https://cran.r-project.org/web/packages/futile.logger/index.html](https://cran.r-project.org/web/packages/futile.logger/index.html) package. It is a light solution and enables me to log the execution of my codes both to screen or file. I just need to write understandable messages in the correct places in my code.
+
+部署意味着你的代码需要实现自动运行的功能，至少不需要你的干预，代码就可以一行行运行下去。明确了解代码输出的内容和运行是否顺利是非常重要的。futile.logger 包可以实现代码的部署，它是一个轻量级解决方案，并且能够通过屏幕输出或导出文件记录下代码的运行过程。你所要做的仅仅是在合适的位置写下便于理解的相关信息。
+
+```{r futile.logger}
+library(futile.logger)
+
+#' logging setup 建立记录器
+flog.threshold(DEBUG) # level of logging
+flog.appender(appender.file('foo.log')) # log to file
+
+#' logging 记录器的相关信息
+flog.info('Some info message')
+flog.debug('Some debug message')
+flog.warn('Some warning message')
+flog.error('Some error message')
+```
+
+Automated code execution is typically done by Cron scheduler using `Rscript foo.r`. This command runs the `foo.r` code. Very often you want to specify some parameters of the script so that you can analyse different data, specify which machine learning method to use, if you want to retrain the model and so on. For this I use the [argparse: https://cran.r-project.org/web/packages/argparse/index.html](https://cran.r-project.org/web/packages/argparse/index.html) package. Following code enables my to specify the csv with input data in command line: `Rscript my_code.r -if latest_data.csv`.
+
+代码的自动运行通常可以使用 Cron 计划任务程序运行 foo.r 的 R 语言脚本。这个命令将会运行 foo.r 代码。但往往你需要设定这个脚本里的一些参数来分析不同的数据，如果想重新训练模型的话还需要指定想使用的机器学习方法。因此，作者使用 argparse 包，下列代码可以输入命令Rscript my_code.r -if latest_data.csv实现通过输入文件名指定读入的 csv 文件：
+
+```{r auto run}
+library(argparse)
+
+#' default parameters 设定默认参数
+INPUT_FILE_DEFAULT <- 'input.csv'
+
+#' create parser object 创建解析器
+parser <- ArgumentParser(description='My code')
+
+#' define arguments 定义参数类目
+parser$add_argument('-if', '--input_file', 
+                    default=INPUT_FILE_DEFAULT, 
+                    type='character', 
+                    help='Location of csv file with input data')
+
+#' get command line options 传入命令行
+args <- parser$parse_args()
+
+#' load data 载入数据
+data <- read.csv(args$input_file)
+```
+
+## 6. Plotting 绘图
+
+Data visualization is the “shop window” of analytics. Therefore you will probably spend a lot of time fine-tuning each plot. Good best practice is the following.
+
+数据可视化可以称得上是数据分析中的“橱窗柜”了，因此你可能会花费大量时间调整每个输出图。最好的操作方案如下：
+
+1. define style, color palette and any other parameters in a separate script 在每个脚本中，定义样式，调色板和其他参数；
+
+2. write a function to create a plot object 编写输出图的函数；
+
+3. use another function to either show the plot or save it to a file 使用另一个函数展示输出图或保存成文件。
+
+Let’s see how it works in the following basic example.
+
+下面是一个基础的实例：
+
+```{r ggplot2 draw plot}
+library(ggplot2)
+data(iris)
+
+#' some basic style 设定基本样式
+my_collors <- list('red'='#B22222')
+
+#' function to create histogram 编写创建直方图的函数
+f_create_histogram <- function(df, column){
+  
+  p <- ggplot(df, aes_string(x=column)) +
+    geom_histogram(binwidth=.1, fill=my_collors$red) +
+    ggtitle(paste0('Histogram of ', column))
+  
+  return(p)
+}
+
+#' create plots  创建输出图对象
+sepal_length_hist <- f_create_histogram(iris, 'Sepal.Length')
+sepal_width_hist <- f_create_histogram(iris, 'Sepal.Width')
+
+#' show 展示
+sepal_length_hist
+#' save 保存
+ggsave('sepal_width_hist.png', plot=sepal_width_hist)
+```
+
+## 7. Reproducibility 复现性
+
+Make sure your code is reproducible. Because a lot of data science steps involve random sampling or optimization, we need to make sure that we can repeat the code with the same results. That is why it is critical to use `set.seed()` function.
+
+确保你的代码可以被复现。由于很多数据分析的步骤中包含随机的取样或优化，因此我们需要确保重新运行代码可以得到同样的结果。这也是为什么我们需要使用set.seed()函数。
+
+```{r set.seed}
+set.seed(42); sample(LETTERS, 5)
+# [1] "X" "Z" "G" "T" "O"
+set.seed(42); sample(LETTERS, 5)
+# [1] "X" "Z" "G" "T" "O"
+sample(LETTERS, 5)
+# [1] "N" "S" "D" "P" "W"
+```
+
+## 8. Combine tools 组合工具
+
+Once you become confident in R programming you tend to do everything in R. Please do not forget that there are many other tools available and thanks to connectors they can be used together with R. For example I very often combine R with Python or SQL databases.
+
+一旦你在 R 语言编程中小有所成，你会希望尽可能多地使用 R 中的工具。但请别忘了还有很多其他的可用工具，而且通过接口，它们可以与 R 实现共通。比方说，作者经常将 R 语言和 Python 或 SQL 数据库一起使用。
+
+## 9. Reference and Tutorials 
+
+### Reference
+
+* [8-simple-ways-how-to-boost-your-coding-skills-not-just-in-r](https://blog.alookanalytics.com/2017/03/08/8-simple-ways-how-to-boost-your-coding-skills-not-just-in-r/)
+
+* [八招提升你的 R 语言编程能力](http://www.afenxi.com/post/45811)
+
+### Tutorials 
+
+There are so many tutorials around that it’s hard to pick one. I personally find these books very useful:
+
+* [https://www.manning.com/books/practical-data-science-with-r](https://www.manning.com/books/practical-data-science-with-r)
+
+* [http://appliedpredictivemodeling.com/](http://appliedpredictivemodeling.com/)
+
+* [http://r4ds.had.co.nz/](http://r4ds.had.co.nz/)
+
+
+
+
+
