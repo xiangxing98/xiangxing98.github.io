@@ -1,4 +1,4 @@
-# R中媲美Python Dictionary的神器-hash
+# R_hash_table_learning Python Dictionary
 
 > http://blog.csdn.net/xmuecor/article/details/72626199
 
