@@ -1,0 +1,817 @@
+---
+title: "Using_apply_sapply_lapply_in_R"
+author: "Stone_Hou"
+date: "2016年9月3日"
+output:
+  html_notebook: 
+    toc: yes
+---
+
+# Using_apply_sapply_lapply_tapply_mapply_in_R
+
+## 0. Data
+
+We can simulate this data using rnorm, to create three sets of observations. The first has mean 0, second mean of 2, third of mean of 5, and with 30 rows.
+
+```{r matrix ex1, echo=TRUE}
+# create data
+set.seed(30)
+
+# matrix
+data <- cbind(rnorm(30, 0), 
+              rnorm(30, 2), 
+              rnorm(30, 5))
+# matrix row and column
+data <- matrix(data, nrow=30, ncol=3)
+
+# check data
+head(data, 5);tail(data, 5)
+#            [,1]      [,2]     [,3]
+# [1,] -1.2885182 0.2747975 5.974056
+# [2,] -0.3476894 2.6148607 5.399185
+# [3,] -0.5216288 2.7268751 5.348251
+# [4,]  1.2734732 1.9578098 4.709509
+# [5,]  1.8245206 2.2160018 6.576622
+#             [,1]     [,2]     [,3]
+# [26,] -1.0964020 1.084473 2.966420
+# [27,] -0.5342207 4.598402 3.934047
+# [28,] -1.4212030 1.488387 6.572125
+# [29,] -1.2427383 1.133646 4.269551
+# [30,]  0.2319362 2.387218 5.450516
+
+```
+
+## 1. apply
+
+### 1.1 apply使用方式
+
+`apply(X, MARGIN, FUN, ...)` Apply Functions Over Array Margins, 对**matrix 矩阵、数组、阵列**的行1或者列2使用函数,按行或者按列进行计算。其中X为一个数组；
+
+MARGIN为一个向量（表示要将函数FUN应用到X的行还是列），若为1表示取行，为2表示取列，为c(1,2)表示行、列都计算。
+
+### 1.2 apply函数示例代码：
+```{r apply ex1}
+data_array <- matrix(1:20, ncol = 4);data_array
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    6   11   16
+# [2,]    2    7   12   17
+# [3,]    3    8   13   18
+# [4,]    4    9   14   19
+# [5,]    5   10   15   20
+
+apply(data_array, 1, mean)
+# [1]  8.5  9.5 10.5 11.5 12.5
+
+apply(data_array, 2, mean)
+# [1]  3  8 13 18
+
+ma <- matrix(c(1:4, 1, 6:8), nrow = 2);ma
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    3    1    7
+# [2,]    2    4    6    8
+
+# c(1,2)表示行、列都计算
+apply(ma, c(1,2), sum)
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    3    1    7
+# [2,]    2    4    6    8
+
+# 2nd parameter 1表示row计算
+apply(ma, 1, sum)
+# [1] 12 20
+
+# 2nd parameter 2表示column计算
+apply(ma, 2, sum)
+# [1]  3  7  7 15
+
+
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5));x
+#      x1 x2
+# [1,]  3  4
+# [2,]  3  3
+# [3,]  3  2
+# [4,]  3  1
+# [5,]  3  2
+# [6,]  3  3
+# [7,]  3  4
+# [8,]  3  5
+dimnames(x)[[1]] <- letters[1:8];x
+#   x1 x2
+# a  3  4
+# b  3  3
+# c  3  2
+# d  3  1
+# e  3  2
+# f  3  3
+# g  3  4
+# h  3  5
+
+apply(x, 2, mean, trim = .2) #截尾取按列平均值
+#trim = .2是mean的参数
+# x1 x2 
+ # 3  3 
+
+# calculate column sums
+col.sums <- apply(x, 2, sum);col.sums
+# x1 x2 
+# 24 24 
+
+# calculate row sums
+row.sums <- apply(x, 1, sum);row.sums
+# a b c d e f g h 
+# 7 6 5 4 5 6 7 8 
+
+# cbind row sums
+cbind(x, Rtot = row.sums)
+#   x1 x2 Rtot
+# a  3  4    7
+# b  3  3    6
+# c  3  2    5
+# d  3  1    4
+# e  3  2    5
+# f  3  3    6
+# g  3  4    7
+# h  3  5    8
+
+# calculate column sums
+c(col.sums, sum(col.sums))
+# x1 x2    
+# 24 24 48 
+
+# row total sum and column total sum
+rbind(cbind(x, Row_Total = row.sums), Column_Total = c(col.sums, sum(col.sums)))
+#              x1 x2 Row_Total
+# a             3  4         7
+# b             3  3         6
+# c             3  2         5
+# d             3  1         4
+# e             3  2         5
+# f             3  3         6
+# g             3  4         7
+# h             3  5         8
+# Column_Total 24 24        48
+
+```
+
+apply 2nd example
+```{r apply ex2, echo=TRUE}
+# Random Number Generation, reproduction
+set.seed(10)
+
+# created that matrix correctly, three columns each with a mean 0, 2 and 5 respectively. 
+# We can use apply and the base mean function to check this.
+Y1 <- rnorm(30, mean = 0, sd = 1)
+Y2 <- rnorm(30, mean = 2, sd = 1)
+Y3 <- rnorm(30, mean = 5, sd = 1)
+
+# Create data frame
+mdata <- data.frame(Y1, Y2, Y3);mdata
+
+# as matrix and use apply to rows
+mdata <- as.matrix(mdata)
+
+# Passing a 1 in the second argument, we get 30 values back,
+# giving the mean of each row. 
+# Not the three numbers we were expecting, try again.
+apply(mdata, 1, mean)
+#  [1] 1.309137 2.093875 1.922304 2.308625 2.326993 2.390135 2.296567
+#  [8] 1.465343 1.870509 1.615213 3.189751 1.854270 1.628219 2.867805
+# [15] 1.761267 2.744413 1.599251 2.024418 2.065423 3.220264 2.198627
+# [22] 1.419165 2.801994 2.578436 2.226954 2.523837 2.023332 2.960419
+# [29] 1.689467 2.321084
+
+# Passing a 2 in the second argument, we get 3 values back, Done Great. 
+# We can see the mean of each column is roughly 0, 2, and 5 as we expected.
+apply(mdata, 2, mean)
+#         Y1         Y2         Y3 
+# -0.3446764  1.8871329  4.9872532 
+
+
+# create martix
+# mdat <- matrix(c(1,2,3, 11,12,13), 
+#                nrow = 2, 
+#                ncol = 3, 
+#                byrow = TRUE,
+#                dimnames = list(c("row1", "row2"),
+#                                c("C.1", "C.2", "C.3")))
+# mdat
+
+```
+
+### 1.3 apply self defined functions
+
+Let’s say I see that negative number and realise I wanted to only look at positive values. 
+
+Let’s see how many negative numbers each column has, using apply again:
+```{r apply ex3, echo=TRUE}
+# length and check negative number
+length(mdata)
+# [1] 90
+length(mdata[mdata<0])
+# [1] 20
+apply(mdata, 2, function(x) length(x[x<0]))
+# Y1 Y2 Y3 
+# 20  0  0
+```
+
+So 20 negative values in column one, none negative value in column two, and none in column three. 
+
+More or less what we would expect for three normal distributions with the given means and sd of 1.
+
+Here we have used a simple function we defined in the call to apply, rather than some built in function. 
+
+Note we did not specify a return value for our function. *R will magically return the last evaluated value*. 
+
+The actual function is using subsetting to extract all the elements in x that are less than 0, and then counting how many are left are using length.
+
+The function takes one argument, which I have arbitrarily called x. In this case x will be a single column of the matrix. Is it a 1 column matrix or a just a vector? Let’s have a look:
+
+```{r apply ex4, echo=TRUE}
+# show code and output
+apply(mdata, 2, function(x) is.matrix(x))
+#    Y1    Y2    Y3 
+# FALSE FALSE FALSE 
+```
+
+Not a matrix. Here the function definition is not required, we could instead just pass the `is.matrix` function, as it only takes one argument and has already been wrapped up in a function for us. Let’s check they are vectors as we might expect.
+
+```{r apply ex5, echo=TRUE}
+# show code and output
+apply(mdata, 2, is.vector)
+#   Y1   Y2   Y3 
+# TRUE TRUE TRUE 
+```
+
+Why then did we need to wrap up our length function? When we want to define our own handling function for apply, we must at a minimum give a name to the incoming data, so we can use it in our function.
+
+```{r apply ex6, echo=TRUE, message=FALSE, warning=FALSE}
+# show code and output
+# apply(mdata, 2, length(x[x<0]))
+# Error in match.fun(FUN) : object ‘x’ not found
+```
+
+We are referring to some value x in the function, but R does not know where that is and so gives us an error. There are other forces at play here, but for simplicity just remember to wrap any code up in a function. For example, let’s look at the mean value of only the positive values:
+
+```{r apply ex7, echo=TRUE}
+# show code and output
+apply(mdata, 2, function(x) mean(x[x>0]))
+#        Y1        Y2        Y3 
+# 0.5787328 1.8871329 4.9872532 
+```
+
+## 2. lapply
+
+### 2.1 lapply使用方式
+
+`lapply(X, FUN, ...)` Apply a Function over a List or Vector, it will return a list rather than a vector. 对列表应用函数，返回列表.
+
+对列表或者向量使用函数,通过对x的每一个元素运用函数，生成一个与元素个数相同的值列表。lapply的返回值是和一个和X有相同的长度的list对象。这个list对象中的每个元素是将函数FUN应用到X的每一个元素，X为List对象（该list的每个元素都是一个向量），表示一个向量或者表达式对象，其他类型的对象会被R通过函数`as.list()`强制转换为list类型。 
+
+函数lapply是sapply函数的一个特殊情形，对一些参数的值进行了一些限定，其使用格式为：`sapply(X, FUN,…, simplify = TRUE, USE.NAMES = TRUE) `
+
+`sapply(, simplify = FALSE, USE.NAMES = FALSE)` 和`lapply()`的返回值是相同的。如果参数`simplify=TRUE`，则函数`sapply`的返回值不是一个`list`，而是一个矩阵；若`simplify=FALSE`，则函数`sapply`的返回值仍然是一个`list`。
+
+### 2.2 lapply示例代码
+
+```{r lapply ex1, echo=TRUE}
+# create list
+data_list <- list(a = 1:10, 
+           beta = exp(-3:3), 
+           logic = c(TRUE,FALSE,FALSE,TRUE))
+data_list
+# $a
+#  [1]  1  2  3  4  5  6  7  8  9 10
+# 
+# $beta
+# [1]  0.04978707  0.13533528  0.36787944  1.00000000  2.71828183  7.38905610
+# [7] 20.08553692
+# 
+# $logic
+# [1]  TRUE FALSE FALSE  TRUE
+
+lapply(data_list, mean)
+# $a
+# [1] 5.5
+# 
+# $beta
+# [1] 4.535125
+# 
+# $logic
+# [1] 0.5
+
+lapply(data_list, quantile)
+# $a
+#    0%   25%   50%   75%  100% 
+#  1.00  3.25  5.50  7.75 10.00 
+# 
+# $beta
+#          0%         25%         50%         75%        100% 
+#  0.04978707  0.25160736  1.00000000  5.05366896 20.08553692 
+# 
+# $logic
+#   0%  25%  50%  75% 100% 
+#  0.0  0.0  0.5  1.0  1.0 
+  
+lapply(1:3, function(x) x^2)
+#[[1]]
+#[1] 1
+#
+#[[2]]
+#[1] 4
+#
+#[[3]]
+#[1] 9
+
+# And you can use unlist with lapply to get a vector.
+unlist(lapply(1:3, function(x) x^2))
+#[1] 1 4 9
+
+
+
+
+
+
+
+示例代码：
+
+x <- list(a = 1:10, 
+          beta = exp(-3:3), 
+          logic = c(TRUE,FALSE,FALSE,TRUE));x
+# $a
+#  [1]  1  2  3  4  5  6  7  8  9 10
+# 
+# $beta
+# [1]  0.04978707  0.13533528  0.36787944  1.00000000  2.71828183
+# [6]  7.38905610 20.08553692
+# 
+# $logic
+# [1]  TRUE FALSE FALSE  TRUE
+
+lapply(x, quantile)
+# $a
+#    0%   25%   50%   75%  100% 
+#  1.00  3.25  5.50  7.75 10.00 
+# 
+# $beta
+#          0%         25%         50%         75%        100% 
+#  0.04978707  0.25160736  1.00000000  5.05366896 20.08553692 
+# 
+# $logic
+#   0%  25%  50%  75% 100% 
+#  0.0  0.0  0.5  1.0  1.0 
+
+
+
+
+
+```
+
+
+## 3. sapply
+
+### 3.1 sapply使用方式
+
+`sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)` Apply a Function over a List or Vector, 对列表或者向量使用函数, 返回向量，等价于`unlist(lapply(…))`，用`lapply`计算，然后把结果变为向量。
+
+这是一个用户友好版本，是lapply函数的包装版。该函数返回值为向量、矩阵，如果`simplify="array"`，且合适的情况下，将会通过`simplify2array()`函数转换为矩阵。`sapply(x, f, simplify=FALSE, USE.NAMES=FALSE)`返回的值与`lapply(x,f)`是一致的。
+
+X表示一个向量或者表达式对象，其余对象将被通过`as.list`强制转换为`list`。
+`simplify` 逻辑值或者字符串，如果可以，结果应该被简化为向量、矩阵或者高维数组。必须是命名的，不能是简写。默认值是TRUE，若合适将会返回一个向量或者矩阵。如果`simplify="array"`，结果将返回一个矩阵 array/matrix。
+`USE.NAMES`逻辑值，如果为`TRUE`，且x没有被命名，则对x进行命名。
+
+### 3.2 sapply示例代码
+```{r sapply ex1, echo=TRUE}
+# show code and output
+sapply(1:3, function(x) x^2)
+#[1] 1 4 9
+
+```
+
+Passing `simplify=FALSE` to sapply will also give you a list:
+
+```{r sapply ex2, echo=TRUE}
+# show code and output
+sapply(1:3, function(x) x^2, simplify = F)
+#[[1]]
+#[1] 1
+#
+#[[2]]
+#[1] 4
+#
+#[[3]]
+#[1] 9
+```
+
+
+## 4. vapply
+Apply a Function over a List or Vector
+对列表或者向量使用函数
+vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
+### 使用方式
+### 示例代码
+
+## 5. tapply
+
+### 5.1 tapply 使用方式
+`tapply(X, INDEX, FUN = NULL, ..., simplify = TRUE)` Apply a Function Over a Ragged Array 对不规则阵列使用函数.
+
+其中`X`通常是一向量；
+`INDEX`是一个list对象，且该list中的每一个元素都是与X有同样长度的因子；
+`FUN`是需要计算的函数；
+`simplify`是逻辑变量，若取值为TRUE（默认值），且函数`FUN`的计算结果总是为一个标量值，那么函数`tapply`返回一个数组；若取值为`FALSE`，则函数`tapply`的返回值为一个list对象。
+
+需要注意的是，当第二个参数`INDEX`不是因子时，函数`tapply()`同样有效，因为必要时 R 会用`as.factor()`把参数强制转换成因子。**一般用于factor，利用`tapply`可以实现excel数据透视表的功能**.
+
+### 5.2 tapply 示例代码
+```{r tapply ex1, echo=TRUE}
+height <- c(174, 165, 180, 171, 160)
+sex<-c("F","F","M","F","M")
+
+tapply(height, sex, mean)
+#   F   M 
+# 170 170 
+```
+
+```{r tapply ex2, echo=TRUE}
+# tapply ex 2
+n <- 17; fac <- factor(rep(1:3, length = n), levels = 1:5);fac
+ # [1] 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2
+# Levels: 1 2 3 4 5
+table(fac)
+# fac
+# 1 2 3 4 5 
+# 6 6 5 0 0 
+
+tapply(1:n, fac, sum)
+ # 1  2  3  4  5 
+# 51 57 45 NA NA 
+
+tapply(1:n, fac, sum, simplify = FALSE)
+# $`1`
+# [1] 51
+# 
+# $`2`
+# [1] 57
+# 
+# $`3`
+# [1] 45
+# 
+# $`4`
+# NULL
+# 
+# $`5`
+# NULL
+
+tapply(1:n, fac, range)
+# $`1`
+# [1]  1 16
+# 
+# $`2`
+# [1]  2 17
+# 
+# $`3`
+# [1]  3 15
+# 
+# $`4`
+# NULL
+# 
+# $`5`
+# NULL
+
+tapply(1:n, fac, quantile)
+# $`1`
+#    0%   25%   50%   75%  100% 
+#  1.00  4.75  8.50 12.25 16.00 
+# 
+# $`2`
+#    0%   25%   50%   75%  100% 
+#  2.00  5.75  9.50 13.25 17.00 
+# 
+# $`3`
+#   0%  25%  50%  75% 100% 
+#    3    6    9   12   15 
+# 
+# $`4`
+# NULL
+# 
+# $`5`
+# NULL
+```
+
+
+## 6. eapply
+
+### 6.1 eapply使用方式
+`eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)`,Apply a Function Over Values in an Environment对环境中的值使用函数。
+
+eapply函数通过对environment中命名值进行FUN计算后返回一个列表值，用户可以请求所有使用过的命名对象。`env`将被使用的环境，`all.names`  逻辑值，指示是否对所有值使用该函数， `USE.NAMES`  逻辑值，指示返回的列表结果是否包含命名
+
+### 6.2 eapply示例代码
+
+```{r eapply ex1}
+require(stats)
+
+env <- new.env(hash = FALSE) # so the order is fixed
+env$a <- 1:10
+env$beta <- exp(-3:3)
+env$logic <- c(TRUE, FALSE, FALSE, TRUE)
+
+# what have we there?
+utils::ls.str(env)
+# a :  int [1:10] 1 2 3 4 5 6 7 8 9 10
+# beta :  num [1:7] 0.0498 0.1353 0.3679 1 2.7183 ...
+# logic :  logi [1:4] TRUE FALSE FALSE TRUE
+
+# compute the mean for each list element
+eapply(env, mean)
+# $logic
+# [1] 0.5
+# 
+# $beta
+# [1] 4.535125
+# 
+# $a
+# [1] 5.5
+
+unlist(eapply(env, mean, USE.NAMES = FALSE))
+# [1] 0.500000 4.535125 5.500000
+
+# median and quartiles for each element (making use of "..." passing):
+eapply(env, quantile, probs = 1:3/4)
+# $logic
+# 25% 50% 75% 
+# 0.0 0.5 1.0 
+# 
+# $beta
+#       25%       50%       75% 
+# 0.2516074 1.0000000 5.0536690 
+# 
+# $a
+#  25%  50%  75% 
+# 3.25 5.50 7.75 
+
+eapply(env, quantile)
+# $logic
+#   0%  25%  50%  75% 100% 
+#  0.0  0.0  0.5  1.0  1.0 
+# 
+# $beta
+#          0%         25%         50%         75%        100% 
+#  0.04978707  0.25160736  1.00000000  5.05366896 20.08553692 
+# 
+# $a
+#    0%   25%   50%   75%  100% 
+#  1.00  3.25  5.50  7.75 10.00 
+```
+
+
+## 7. mapply
+
+### 7.1 mapply使用方式
+
+`mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)`, Apply a Function to Multiple List or Vector Arguments.对多个列表或者向量参数使用函数
+
+mapply是sapply的多变量版本。将对...中的每个参数运行FUN函数，如有必要，参数将被循环。
+
+`MoreArgs` FUN函数的其他参数列表
+`SIMPLIFY` 逻辑或者字符串，可以减少结果成为一个向量、矩阵或者更高维阵列，详见sapply的simplify参数
+`USE.NAMES`逻辑值，如果第一个参数...已被命名，将使用这个字符向量作为名字
+
+### 7.2 示例代码
+```{r mapply ex1}
+mapply(rep, 1:4, 4:1)
+# [[1]]
+# [1] 1 1 1 1
+# 
+# [[2]]
+# [1] 2 2 2
+# 
+# [[3]]
+# [1] 3 3
+# 
+# [[4]]
+# [1] 4
+
+mapply(function(x, y) seq_len(x) + y,
+       c(a =  1, b = 2, c = 3),  # names from first
+       c(A = 10, B = 0, C = -10))
+# $a
+# [1] 11
+# 
+# $b
+# [1] 1 2
+# 
+# $c
+# [1] -9 -8 -7
+```
+
+
+
+
+## 8. rapply
+
+### 8.1 rapply使用方式
+`rapply(X, FUN, classes = "ANY", deflt = NULL, how = c("unlist", "replace", "list"), ...)` 运用函数递归产生列表,rapply是lapply的递归版本.Recursively Apply a Function to a List.
+X  一个列表
+classes  关于类名的字符向量，或者为any时则匹配任何类
+deflt  默认结果，如果使用了how=”replace”，则不能使用
+how  字符串匹配三种可能结果
+
+### 8.2 rapply示例代码
+
+
+
+However the behviour is not as clean when things have names, so best to use sapply or lapply as makes sense for your data and what you want to receive back. If you want a list returned, use lapply. If you want a vector, use sapply.
+Dirty Deeds
+
+Anyway, a cheap trick is to pass sapply a vector of indexes and write your function making some assumptions about the structure of the underlying data. Let’s look at our mean example again:
+
+```{r sapply3, echo=TRUE}
+# show code and output
+sapply(1:3, function(x) mean(m[,x]))
+#[1] -0.02664418  1.95812458  4.86857792
+```
+
+We pass the column indexes (1,2,3) to our function, which assumes some variable m has our data. Fine for quickies but not very nice, and will likely turn into a maintainability bomb down the line.
+We can neaten things up a bit by passing our data in an argument to our function, and using the … special argument which all the apply functions have for passing extra arguments:
+
+```{r sapply4, echo=TRUE}
+# show code and output
+sapply(1:3, function(x, y) mean(y[,x]), y=m)
+#[1] -0.02664418  1.95812458  4.86857792
+```
+
+This time, our function has 2 arguments, x and y. The x variable will be as it was before, whatever sapply is currently going through. The y variable we will pass using the optional arguments to sapply.
+
+In this case we have passed in m, explicitly naming the y argument in the sapply call. Not strictly necessary but it makes for easier to read & maintain code. The y value will be the same for each call sapply makes to our function.
+
+I don’t really recommend passing the index arguments like this, it is error prone and can be quite confusing to others reading your code.
+
+I hope you found these examples helpful. Please check out part 2 where we create a density plot of the values in our matrix.
+
+## tapply group summary--函数tapply进行分组统计
+
+`tapply(X, INDEX, FUN = NULL, ..., simplify = TRUE)`
+
+对各因子应用函数（也就是分组计算），这个也常用.
+
+其中X通常是一向量；INDEX是一个list对象，且该list中的每一个元素都是与X有同样长度的因子；FUN是需要计算的函数；
+
+simplify是逻辑变量，若取值为TRUE（默认值），且函数FUN的计算结果总是为一个标量值，那么函数tapply返回一个数组；
+
+若取值为FALSE，则函数tapply的返回值为一个list对象。
+
+需要注意的是，当第二个参数INDEX不是因子时，函数 tapply() 同样有效，因为必要时 R 会用 as.factor()把参数强制转换成因子。
+
+示例代码：
+
+```{r}
+fac <- factor(rep(1:5, length = 17), levels = 1:5);fac
+ # [1] 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2
+# Levels: 1 2 3 4 5
+
+tapply(1:17, fac, sum)
+#  1  2  3  4  5 
+# 34 38 24 27 30 
+
+tapply(1:17, fac, sum, simplify = FALSE)
+# $`1`
+# [1] 34
+# 
+# $`2`
+# [1] 38
+# 
+# $`3`
+# [1] 24
+# 
+# $`4`
+# [1] 27
+# 
+# $`5`
+# [1] 30
+
+tapply(1:17, fac, range)
+# $`1`
+# [1]  1 16
+# 
+# $`2`
+# [1]  2 17
+# 
+# $`3`
+# [1]  3 13
+# 
+# $`4`
+# [1]  4 14
+# 
+# $`5`
+# [1]  5 15
+```
+
+### 利用tapply实现类似于excel里的数据透视表的功能
+```{r tapply}
+year <- c(2007, 2007, 2007, 2007, 2008, 2008, 2008, 2009, 2009,2009)
+province <- c("A", "B", "C", "D", "A", "C", "D", "B", "C", "D")
+sale <- 1:10
+
+mydata <- data.frame(year, province, sale);mydata
+
+attach(mydata)
+
+tapply(sale, list(year, province))
+# [1]  1  4  7 10  2  8 11  6  9 12
+
+tapply(sale,list(year,province),mean)
+#       A  B C  D
+# 2007  1  2 3  4
+# 2008  5 NA 6  7
+# 2009 NA  8 9 10
+
+```
+
+## 函数table（求因子出现的频数）：
+
+使用格式为：`table(..., exclude = if (useNA == "no") c(NA, NaN), useNA = c("no","ifany", "always"), dnn = list.names(...), deparse.level = 1)` 其中参数exclude表示哪些因子不计算。
+
+示例代码：
+```{r}
+d <- factor(rep(c("A","B","C"), 10), 
+            levels=c("A","B","C","D","E")); d
+ # [1] A B C A B C A B C A B C A B C A B C A B C A B C A B C A B C
+# Levels: A B C D E
+
+table(d)
+# d
+ # A  B  C  D  E
+# 10 10 10  0  0
+
+table(d, exclude="B")
+# d
+ # A  C  D  E
+# 10 10  0  0
+```
+
+
+
+## sapply
+
+函数sapply是函数lapply的一个特殊情形，对一些参数的值进行了一些限定，其使用格式为：`sapply(X, FUN,..., simplify = TRUE, USE.NAMES = TRUE)`
+
+`sapply(*, simplify = FALSE, USE.NAMES = FALSE)` 和`lapply(*)`的返回值是相同的。如果参数simplify=TRUE，则函数sapply的返回值不是一个list，而是一个矩阵；若simplify=FALSE，则函数sapply的返回值仍然是一个list。sapply对列表应用函数，返回向量，这个比较常用，等价于unlist(lapply(…))，用lapply计算，然后把结果变为向量；
+```{r }
+sapply(x, quantile,simplify=FALSE,use.names=FALSE)
+# $a
+#    0%   25%   50%   75%  100% 
+#  1.00  3.25  5.50  7.75 10.00 
+# 
+# $beta
+#          0%         25%         50%         75%        100% 
+#  0.04978707  0.25160736  1.00000000  5.05366896 20.08553692 
+# 
+# $logic
+#   0%  25%  50%  75% 100% 
+#  0.0  0.0  0.5  1.0  1.0 
+
+#参数simplify=TRUE的情况,sapply(x, quantile, simplify = 1),
+# default: sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+sapply(x, quantile)
+#          a        beta logic
+# 0%    1.00  0.04978707   0.0
+# 25%   3.25  0.25160736   0.0
+# 50%   5.50  1.00000000   0.5
+# 75%   7.75  5.05366896   1.0
+# 100% 10.00 20.08553692   1.0
+
+?sapply
+```
+
+## 函数mapply
+
+函数mapply是函数sapply的变形版，mapply 将函数 FUN 依次应用每一个参数的第一个元素、第二个元素、第三个元素上。
+
+函数mapply的使用格式如下：`mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,USE.NAMES = TRUE)`其中参数MoreArgs表示函数FUN的参数列表。
+
+示例代码：
+```{r}
+## times argument is for rep()
+mapply(rep, times=1:4, x=4:1)
+# [[1]]
+# [1] 4
+# 
+# [[2]]
+# [1] 3 3
+# 
+# [[3]]
+# [1] 2 2 2
+# 
+# [[4]]
+# [1] 1 1 1 1
+
+#直接使用函数rep的结果：
+rep(1:4,1:4)
+# [1] 1 2 2 3 3 3 4 4 4 4
+```
+
+## aggreate
+
+aggreate：split-apply-combine,拆分成子集，分别计算合并结果输出；
+
