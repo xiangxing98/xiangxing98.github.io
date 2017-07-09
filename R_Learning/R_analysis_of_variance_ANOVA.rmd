@@ -3,6 +3,7 @@ title: "R Notebook about R_Analysis_of_Variance"
 output: 
   html_notebook: 
     toc: yes
+    toc_depth: 4
 ---
 
 # R Notebook about R_Analysis_of_Variance_ANOVA
@@ -68,4 +69,73 @@ model=aov(Y ~ B * W + Error(Subject/W))
 ```
 
 上述方法的前提是对应组内因子不同水平的数据是等方差的，当传统方法的假设得不到满足时，则应用lme4包中lmer函数，利用混合效应模型来解决问题。
+
+## 四、回归方程的显著性检验
+
+> http://blog.fens.me/r-linear-regression/
+
+从回归参数的公式二可知，在计算过程中并不一定要知道Y和X是否有线性相关的关系。如果不存相关关系，那么回归方程就没有任何意义了，如果Y和X是有相关关系的，即Y会随着X的变化而线性变化，这个时候一元线性回归方程才有意义。所以，我们需要用假设检验的方法，来验证相关性的有效性。
+
+通常会采用三种显著性检验的方法。
+
+T检验法：T检验是检验模型某个自变量Xi对于Y的显著性，通常用`P-value`判断显著性，小于0.01更小时说明这个自变量Xi与Y相关关系显著。
+
+F检验法：F检验用于对所有的自变量X在整体上看对于Y的线性显著性，也是用`P-value`判断显著性，小于0.01更小时说明整体上自变量与Y相关关系显著。
+
+`R^2` (R平方)相关系统检验法：用来判断回归方程的拟合程度，`R^2` 的取值在0，1之间，越接近1说明拟合程度越好。
+
+在R语言中，上面列出的三种检验的方法都已被实现，我们只需要把结果解读。上文中，我们已经通过`lm()`函数构建一元线性回归模型，然后可以`summary()`函数来提取模型的计算结果。
+
+```{r module}
+summary(lm.ab)      # 计算结果
+
+# Call:
+# lm(formula = y ~ 1 + x)
+# 
+# Residuals:
+#      Min       1Q   Median       3Q      Max 
+# -11.9385  -2.2317  -0.1797   3.3546  10.2766 
+# 
+# Coefficients:
+#               Estimate Std. Error t value Pr(>|t|)    
+# (Intercept) -3.495e+02  7.173e+01  -4.872 2.09e-06 ***
+# x            1.029e+00  5.111e-03 201.390  < 2e-16 ***
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# 
+# Residual standard error: 4.232 on 223 degrees of freedom
+# Multiple R-squared:  0.9945,	Adjusted R-squared:  0.9945 
+# F-statistic: 4.056e+04 on 1 and 223 DF,  p-value: < 2.2e-16
+
+```
+### 模型解读：
+
+`Call`，列出了回归模型的公式。
+
+`Residuals`，列出了残差的最小值点，1/4分位点，中位数点，3/4分位点，最大值点。
+
+`Coefficients`，表示参数估计的计算结果。
+
+`Estimate`，为参数估计列。Intercept行表示常数参数a的估计值 ，x行表示自变量x的参数b的估计值
+。
+
+`Std. Error`，为参数的标准差，`sd(a)`, `sd(b)`
+
+`t value`，为t值，为T检验的值
+
+`Pr(>|t|)` ，表示P-value值，用于T检验判定，匹配显著性标记
+显著性标记，***为非常显著，**为高度显著, **为显著，·为不太显著，没有记号为不显著。
+
+`Residual standard error`，表示残差的标准差，自由度为n-2。
+
+`Multiple R-squared`，为相关系数R^2的检验，越接近1则越显著。
+
+`Adjusted R-squared`，为相关系数的修正系数，解决多元回归自变量越多，判定系数R^2越大的问题。
+
+`F-statistic`，表示F统计量，自由度为(1,n-2)，p-value:用于F检验判定，匹配显著性标记。
+
+通过查看模型的结果数据，我们可以发现通过T检验的截距和自变量x都是非常显著，通过F检验判断出整个模型的自变量是非常显著，同时R^2的相关系数检验可以判断自变量和因变量是高度相关的。
+
+最后，我们通过的回归参数的检验与回归方程的检验，得到最后一元线性回归方程为：
+`Y = -349.493 + 1.029315 * X` 
 

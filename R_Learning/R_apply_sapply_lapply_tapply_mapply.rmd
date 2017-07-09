@@ -9,6 +9,36 @@ output:
 
 # Using_apply_sapply_lapply_tapply_mapply_in_R
 
+> Reference: [http://blog.fens.me/r-apply/](http://blog.fens.me/r-apply/)
+
+apply的家族函数
+
+apply函数族是R语言中数据处理的一组核心函数，通过使用apply函数，我们可以实现对数据的循环、分组、过滤、类型控制等操作。但是，由于在R语言中apply函数与其他语言循环体的处理思路是完全不一样的，所以apply函数族一直是使用者玩不转一类核心函数。
+
+很多R语言新手，写了很多的for循环代码，也不愿意多花点时间把apply函数的使用方法了解清楚，最后把R代码写的跟C似得，我严重鄙视只会写for的R程序员。
+
+apply函数本身就是解决数据循环处理的问题，为了面向不同的数据类型，不同的返回值，apply函数组成了一个函数族，包括了8个功能类似的函数。这其中有些函数很相似，有些也不是太一样的。
+
+Group 01-分组计算：
+tapply: input:vector, output:vector
+apply: input:list,data.frame,array, out:vector,martix
+
+Group 02-多参数计算：
+mapply:input:vector(multi), output:vector,martrix
+
+Group 03-循环迭代：
+lapply：input:list,data.frame，output:list
+Group 03.1-lapply的简化版
+sapply -> input:list,data.frame，output:vector, martrix
+sapply 可设置返回值 -> input:list,data.frame，output:vector, martrix
+Group 03.2-lapply的递归版 rapply ->
+input:list，output:list
+
+Group 04-环境空间遍历
+eapply:input:environment，output:list
+
+最常用的函数为apply和sapply
+
 ## 0. Data
 
 We can simulate this data using rnorm, to create three sets of observations. The first has mean 0, second mean of 2, third of mean of 5, and with 30 rows.
@@ -43,9 +73,11 @@ head(data, 5);tail(data, 5)
 
 ## 1. apply
 
+apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。
+
 ### 1.1 apply使用方式
 
-`apply(X, MARGIN, FUN, ...)` Apply Functions Over Array Margins, 对**matrix 矩阵、数组、阵列**的行1或者列2使用函数,按行或者按列进行计算。其中X为一个数组；
+`apply(X, MARGIN, FUN, ...)` Apply Functions Over Array Margins, 对**数组、矩阵、数据框**的行1或者列2使用函数,按行或者按列进行计算。其中X为一个数组；
 
 MARGIN为一个向量（表示要将函数FUN应用到X的行还是列），若为1表示取行，为2表示取列，为c(1,2)表示行、列都计算。
 
@@ -259,11 +291,94 @@ apply(mdata, 2, function(x) mean(x[x>0]))
 # 0.5787328 1.8871329 4.9872532 
 ```
 
+下面计算一个稍微复杂点的例子，按行循环，让数据框的x1列加1，并计算出x1,x2列的均值。
+
+```{r apply ex8, echo=TRUE}
+# 生成data.frame
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5)); x
+
+# 自定义函数myFUN，第一个参数x为数据
+# 第二、三个参数为自定义参数，可以通过apply的'...'进行传入。
+myFUN<- function(x, c1, c2) {
+   c(sum(x[c1],1), mean(x[c2])) 
+ }
+
+# 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数
+apply(x,1,myFUN,c1='x1',c2=c('x1','x2'))
+
+# method 2: for loop 
+#定义一个结果的数据框
+df<-data.frame()
+
+# 定义for循环
+for(i in 1:nrow(x)){
+   row<-x[i,]                                         # 每行的值
+   df<-rbind(df,rbind(c(sum(row[1],1), mean(row))))   # 计算，并赋值到结果数据框
+}
+
+# 打印结果数据框
+df
+
+# method 3: r vector calculation
+data.frame(x1=x[,1]+1,x2=rowMeans(x))
+
+# 比较一下3种操作上面性能上的消耗
+# 清空环境变量
+rm(list=ls())
+
+# 封装fun1
+fun1<-function(x){
+   myFUN<- function(x, c1, c2) {
+     c(sum(x[c1],1), mean(x[c2])) 
+   }
+   apply(x,1,myFUN,c1='x1',c2=c('x1','x2'))
+ }
+
+# 封装fun2
+fun2<-function(x){
+   df<-data.frame()
+   for(i in 1:nrow(x)){
+     row<-x[i,]
+     df<-rbind(df,rbind(c(sum(row[1],1), mean(row))))
+   }
+ }
+
+# 封装fun3
+fun3<-function(x){
+   data.frame(x1=x[,1]+1,x2=rowMeans(x))
+ }
+
+# 生成数据集
+x <- cbind(x1=3, x2 = c(400:1, 2:500))
+
+# 分别统计3种方法的CPU耗时。
+system.time(fun1(x))
+# 用户 系统 流逝 
+# 0.01 0.00 0.02 
+
+system.time(fun2(x))
+# 用户 系统 流逝 
+# 0.19 0.00 0.18 
+
+system.time(fun3(x))
+# 用户 系统 流逝 
+#    0    0    0 
+
+# 从CPU的耗时来看，用for循环实现的计算是耗时最长的，apply实现的循环耗时很短，而直接使用R语言内置的向量计算的操作几乎不耗时。
+# 通过上面的测试，对同一个计算来说，优先考虑R语言内置的向量计算，必须要用到循环时则使用apply函数，应该尽量避免显示的使用for,while等操作方法。
+```
+
+
+
+
+
 ## 2. lapply
+
+lapply函数是一个最基础循环操作函数之一，用来对list、data.frame数据集进行循环，并返回和X长度同样的list结构作为结果集，通过lapply的开头的第一个字母’l’就可以判断返回结果集的类型。
 
 ### 2.1 lapply使用方式
 
-`lapply(X, FUN, ...)` Apply a Function over a List or Vector, it will return a list rather than a vector. 对列表应用函数，返回列表.
+`lapply(X, FUN, ...)` Apply a Function over a List or Vector(data.frame), it will return a list rather than a vector. 对列表应用函数，返回列表.
 
 对列表或者向量使用函数,通过对x的每一个元素运用函数，生成一个与元素个数相同的值列表。lapply的返回值是和一个和X有相同的长度的list对象。这个list对象中的每个元素是将函数FUN应用到X的每一个元素，X为List对象（该list的每个元素都是一个向量），表示一个向量或者表达式对象，其他类型的对象会被R通过函数`as.list()`强制转换为list类型。 
 
@@ -327,13 +442,9 @@ unlist(lapply(1:3, function(x) x^2))
 #[1] 1 4 9
 
 
+#示例代码,计算list中的每个KEY对应该的数据的分位数。
 
-
-
-
-
-示例代码：
-
+# 构建一个list数据集x，分别包括a,b,c 三个KEY值。
 x <- list(a = 1:10, 
           beta = exp(-3:3), 
           logic = c(TRUE,FALSE,FALSE,TRUE));x
@@ -347,6 +458,7 @@ x <- list(a = 1:10,
 # $logic
 # [1]  TRUE FALSE FALSE  TRUE
 
+# 分别计算每个KEY对应该的数据的分位数。
 lapply(x, quantile)
 # $a
 #    0%   25%   50%   75%  100% 
@@ -360,24 +472,75 @@ lapply(x, quantile)
 #   0%  25%  50%  75% 100% 
 #  0.0  0.0  0.5  1.0  1.0 
 
-
-
-
-
 ```
+
+apply就可以很方便地把list数据集进行循环操作了，还可以用data.frame数据集按列进行循环，但如果传入的数据集是一个向量或矩阵对象，那么直接使用lapply就不能达到想要的效果了
+
+比如，对矩阵的列求和。
+```{r lapply ex2, echo=TRUE}
+# 生成一个矩阵
+x <- cbind(x1=3, x2=c(2:1,4:5))
+x; class(x)
+#      x1 x2
+# [1,]  3  2
+# [2,]  3  1
+# [3,]  3  4
+# [4,]  3  5
+# [1] "matrix"
+
+# 求和
+lapply(x, sum)
+# [[1]]
+# [1] 3
+# 
+# [[2]]
+# [1] 3
+# 
+# [[3]]
+# [1] 3
+# 
+# [[4]]
+# [1] 3
+# 
+# [[5]]
+# [1] 2
+# 
+# [[6]]
+# [1] 1
+# 
+# [[7]]
+# [1] 4
+# 
+# [[8]]
+# [1] 5
+
+# lapply会分别循环矩阵中的每个值，而不是按行或按列进行分组计算。
+
+# 如果对数据框的列求和。lapply会自动把数据框按列进行分组，再进行计算。
+lapply(data.frame(x), sum)
+# $x1
+# [1] 12
+# 
+# $x2
+# [1] 12
+```
+
+
 
 
 ## 3. sapply
 
+sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。
+
 ### 3.1 sapply使用方式
 
-`sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)` Apply a Function over a List or Vector, 对列表或者向量使用函数, 返回向量，等价于`unlist(lapply(…))`，用`lapply`计算，然后把结果变为向量。
+`sapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)` Apply a Function over a List or Vector, 对数组、矩阵、数据框使用函数, 返回向量，等价于`unlist(lapply(…))`，用`lapply`计算，然后把结果变为向量。
 
 这是一个用户友好版本，是lapply函数的包装版。该函数返回值为向量、矩阵，如果`simplify="array"`，且合适的情况下，将会通过`simplify2array()`函数转换为矩阵。`sapply(x, f, simplify=FALSE, USE.NAMES=FALSE)`返回的值与`lapply(x,f)`是一致的。
 
 X表示一个向量或者表达式对象，其余对象将被通过`as.list`强制转换为`list`。
-`simplify` 逻辑值或者字符串，如果可以，结果应该被简化为向量、矩阵或者高维数组。必须是命名的，不能是简写。默认值是TRUE，若合适将会返回一个向量或者矩阵。如果`simplify="array"`，结果将返回一个矩阵 array/matrix。
-`USE.NAMES`逻辑值，如果为`TRUE`，且x没有被命名，则对x进行命名。
+`simplify` 逻辑值或者字符串，如果可以，结果应该被简化为向量、矩阵或者高维数组。必须是命名的，不能是简写。默认值是TRUE，若合适将会返回一个向量或者矩阵。如果`simplify="array"`，结果将返回一个矩阵 array/matrix,输出结果按数组进行分组。
+`USE.NAMES`逻辑值，如果为`TRUE`，且x没有被命名，则对x进行命名。如果X为字符串，TRUE设置字符串为数据名，FALSE不设置
 
 ### 3.2 sapply示例代码
 ```{r sapply ex1, echo=TRUE}
@@ -501,6 +664,8 @@ tapply(1:n, fac, quantile)
 
 ## 6. eapply
 
+对一个环境空间中的所有变量进行遍历。如果我们有好的习惯，把自定义的变量都按一定的规则存储到自定义的环境空间中，那么这个函数将会让你的操作变得非常方便。当然，可能很多人都不熟悉空间的操作，那么请参考文章 [揭开R语言中环境空间的神秘面纱](http://blog.fens.me/r-environments/)，[解密R语言函数的环境空间](http://blog.fens.me/r-environments-function/)。
+
 ### 6.1 eapply使用方式
 `eapply(env, FUN, ..., all.names = FALSE, USE.NAMES = TRUE)`,Apply a Function Over Values in an Environment对环境中的值使用函数。
 
@@ -511,12 +676,20 @@ eapply函数通过对environment中命名值进行FUN计算后返回一个列表
 ```{r eapply ex1}
 require(stats)
 
+# 定义一个环境空间
 env <- new.env(hash = FALSE) # so the order is fixed
+
+# 向这个环境空间中存入3个变量
 env$a <- 1:10
 env$beta <- exp(-3:3)
 env$logic <- c(TRUE, FALSE, FALSE, TRUE)
 
-# what have we there?
+# what have we there?查看env空间中的变量
+ls(env)
+
+# 查看env空间中的变量字符串结构
+ls.str(env)
+
 utils::ls.str(env)
 # a :  int [1:10] 1 2 3 4 5 6 7 8 9 10
 # beta :  num [1:7] 0.0498 0.1353 0.3679 1 2.7183 ...
@@ -562,8 +735,17 @@ eapply(env, quantile)
 # $a
 #    0%   25%   50%   75%  100% 
 #  1.00  3.25  5.50  7.75 10.00 
+
+# 再计算中当前环境空间中的所有变量的占用内存大小。
+# 查看当前环境空间中的变量
+ls()
+
+# 查看所有变量的占用内存大小
+eapply(environment(), object.size)
+
 ```
 
+eapply函数平时很难被用到，但对于R包开发来说，环境空间的使用是必须要掌握的。特别是当R要做为工业化的工具时，对变量的精确控制和管理是非常必要的。
 
 ## 7. mapply
 
