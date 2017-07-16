@@ -1,0 +1,170 @@
+---
+title: "R_Configuration_Library"
+author: "Stone_Hou"
+date: "2017年7月17日"
+output:
+  html_notebook:
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# R_Configuration_Library-R语言配置与包的使用
+
+> [http://blog.fens.me/r-word-jiebar/](http://blog.fens.me/r-word-jiebar/)
+
+> [jiebaR中文分词快速入门](http://blog.csdn.net/songzhilian22/article/details/49250489)
+
+## 1. Set Local Repositories
+
+```{r}
+#windows Rconsole
+file.path(R.home('etc'), 'Rconsole')
+# [1] "D:/PROGRA~1/R/R-33~1.3/etc/Rconsole"
+
+#set repos
+options(repos = c(CRAN = "http://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+                  CRANextra = "http://mirrors.xmu.edu.cn/CRAN/"))
+# https://cloud.r-project.org/
+
+# on windows, for R-2.14.0.  In this file you will even find an example of setting the CRAN mirror.  
+# You can edit here is you have root or administrative privileges, but more likely you will copy it and place it in the personal .Rprofile file in your home directory.
+# Inside the command is simple, this is copied straight from the Rprofile.site file.
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "http://cran.cnr.berkeley.edu/"
+  options(repos = r)
+})
+```
+
+
+## 2. load package in a safe way
+
+```{r load package in a safe way}
+# Load data.table package
+if(!suppressWarnings(require(data.table)))
+{
+    install.packages('data.table')
+    require(data.table)
+}
+
+```
+
+
+
+
+```{r install jiebaR}
+# setRepositories
+setRepositories(addURLs =
+                c(CRANxtras = "https://cloud.r-project.org/"))
+
+#windows Rconsole
+file.path(R.home('etc'), 'Rconsole')
+# [1] "D:/PROGRA~1/R/R-33~1.3/etc/Rconsole"
+
+#set repos
+options(repos = c(CRAN = "http://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+                  CRANextra = "http://mirrors.xmu.edu.cn/CRAN/"))
+# https://cloud.r-project.org/
+
+# on windows, for R-2.14.0.  In this file you will even find an example of setting the CRAN mirror.  
+# You can edit here is you have root or administrative privileges, but more likely you will copy it and place it in the personal .Rprofile file in your home directory.
+# Inside the command is simple, this is copied straight from the Rprofile.site file.
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "http://cran.cnr.berkeley.edu/"
+  options(repos = r)
+})
+
+```
+
+## 3. 用搜索路径来查看所有已加载的包
+```{r}
+search()
+View(installed.packages())
+
+# R出厂的包 在CRAN包库中，要访问其他存储库
+setRepositories() 
+
+# 下载 github上的包
+install.packages("devtools")
+install.packages("devtools")
+install_github("knitr","yihui")  
+
+```
+
+
+
+## 4. Usefull packages in R
+
+The yhat blog lists 10 R packages they wish they'd known about earlier. 
+
+Drew Conway calls them "10 reasons to always start your analysis in R". 
+
+They're all very useful R packages that every data scientist should be aware of. 
+
+They are:
+
+1. sqldf (for selecting from data frames using SQL)
+
+2. forecast (for easy forecasting of time series) 
+
+3. plyr (data aggregation) or dplyr 
+
+4. stringr (string manipulation) 
+
+5. Database connection packages RPostgreSQL, RMYSQL, RMongo, RODBC, RSQLite 
+
+6. lubridate (time and date manipulation) 
+
+7. ggplot2 (data visulization) 
+
+8. qcc (statistical quality control and QC charts) 
+
+9. reshape2 (data restructuring) 
+
+10. randomForest (random forest predictive models)
+
+11. data.table
+
+12. tidyverse
+
+```{r tidyverse}
+library(tidyverse)
+# Load the core tidyverse packages: ggplot2, tibble, tidyr, readr, purrr, and dplyr.
+
+#haven? lubridate,%>%,readr,readxl,stringr,tibble,tidyr
+
+#> Loading tidyverse: ggplot2
+#> Loading tidyverse: tibble
+#> Loading tidyverse: tidyr
+#> Loading tidyverse: readr
+#> Loading tidyverse: purrr
+#> Loading tidyverse: dplyr
+#> Conflicts with tidy packages ----------------------------------------------
+#> filter(): dplyr, stats
+#> lag():    dplyr, stats
+```
+
+
+
+
+
+
+
+
+##参考资料：
+
+1. [R news and tutorials R bloggers](https://www.r-bloggers.com/)
+
+2. [CRAN cloud](https://cloud.r-project.org/)
+
+3. [Garrett & Hadley: R For Data Science](http://r4ds.had.co.nz/)
+
+4. [Write HTML, PDF, ePub, and Kindle books with R Markdown](https://bookdown.org/)
+
+5. [The tidyverse style guide](http://style.tidyverse.org/index.html)
+
+6. [http://tidyverse.org/](http://tidyverse.org/)
