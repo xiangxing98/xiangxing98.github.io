@@ -11,6 +11,29 @@ if(!suppressWarnings(require(data.table)))
 }
 ```
 
+## Set Local Repositories
+
+```{r}
+#windows Rconsole
+file.path(R.home('etc'), 'Rconsole')
+# [1] "D:/PROGRA~1/R/R-33~1.3/etc/Rconsole"
+
+#set repos
+options(repos = c(CRAN = "http://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+                  CRANextra = "http://mirrors.xmu.edu.cn/CRAN/"))
+# https://cloud.r-project.org/
+
+# on windows, for R-2.14.0.  In this file you will even find an example of setting the CRAN mirror.  
+# You can edit here is you have root or administrative privileges, but more likely you will copy it and place it in the personal .Rprofile file in your home directory.
+# Inside the command is simple, this is copied straight from the Rprofile.site file.
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "http://cran.cnr.berkeley.edu/"
+  options(repos = r)
+})
+```
+
 ## 用搜索路径来查看所有已加载的包
 ```{r}
 search()

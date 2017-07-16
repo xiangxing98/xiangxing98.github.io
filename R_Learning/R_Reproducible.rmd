@@ -1,0 +1,508 @@
+---
+title: "How to make a great R reproducible example?"
+author: "Stone_Hou"
+date: "2017年7月16日"
+output:
+  html_notebook:
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# How to make a great R reproducible example
+
+> [how-to-make-a-great-r-reproducible-example](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example)
+
+When discussing performance with colleagues, teaching, sending a bug report or searching for guidance on mailing lists and here on SO, a reproducible example is often asked and always helpful.
+
+What are your tips for creating an excellent example? How do you paste data structures from r in a text format? What other information should you include?
+
+Are there other tricks in addition to using `dput()`, `dump()` or `structure()`? When should you include `library()` or `require()` statements? Which reserved words should one avoid, in addition to  `c`, `df`, `data`, etc?
+
+How does one make a great r reproducible example?
+
+## Answer 1
+A minimal reproducible example consists of the following items:
+
+* a minimal dataset, necessary to reproduce the error
+
+* the minimal runnable code necessary to reproduce the error, which can be run on the given dataset.
+
+* the necessary information on the used packages, R version and system it is run on.
+
+* in the case of random processes, a seed (set by set.seed()) for reproducibility
+
+Looking at the examples in the help files of the used functions is often helpful. In general, all the code given there fulfills the requirements of a minimal reproducible example: data is provided, minimal code is provided, and everything is runnable.
+
+### Producing a minimal dataset
+
+For most cases, this can be easily done by just providing a vector / data frame with some values. Or you can use one of the built-in datasets, which are provided with most packages.
+A comprehensive list of built-in datasets can be seen with `library(help = "datasets")`. There is a short description to every dataset and more information can be obtained for example with ?mtcars where 'mtcars' is one of the datasets in the list. Other packages might contain additional datasets.
+
+Making a vector is easy. Sometimes it is necessary to add some randomness to it, and there are a whole number of functions to make that. `sample()` can randomize a vector, or give a random vector with only a few values. `letters` is a useful vector containing the alphabet. This can be used for making factors.
+
+A few examples :
+
+random values : `x <- rnorm(10)` for normal distribution, `x <- runif(10)` for uniform distribution, ...
+
+a permutation of some values : `x <- sample(1:10)` for vector 1:10 in random order.
+
+a random factor : `x <- sample(letters[1:4], 20, replace = TRUE)`
+
+For matrices, one can use `matrix()`, eg :
+
+`matrix(1:10, ncol = 2)`
+
+Making data frames can be done using `data.frame()`. One should pay attention to name the entries in the data frame, and to not make it overly complicated.
+
+An example :
+```{r data.frame ex1}
+Data <- data.frame(
+    X = sample(1:10),
+    Y = sample(c("yes", "no"), 10, replace = TRUE)
+)
+```
+
+For some questions, specific formats can be needed. For these, one can use any of the provided as.someType functions : `as.factor`, `as.Date`, `as.xts`, ... These in combination with the vector and/or data frame tricks.
+
+### Copy your data
+
+If you have some data that would be too difficult to construct using these tips, then you can always make a subset of your original data, using eg `head()`, `subset()` or the `indices`. Then use eg. `dput()` to give us something that can be put in R immediately :
+
+```{r dput ex1}
+dput(head(iris,4))
+# structure(list(Sepal.Length = c(5.1, 4.9, 4.7, 4.6), Sepal.Width = c(3.5, 
+# 3, 3.2, 3.1), Petal.Length = c(1.4, 1.4, 1.3, 1.5), Petal.Width = c(0.2, 
+# 0.2, 0.2, 0.2), Species = structure(c(1L, 1L, 1L, 1L), .Label = c("setosa", 
+# "versicolor", "virginica"), class = "factor")), .Names = c("Sepal.Length", 
+# "Sepal.Width", "Petal.Length", "Petal.Width", "Species"), row.names = c(NA, 
+# 4L), class = "data.frame")
+```
+
+when data set is large
+```{r dput ex2}
+tmp <- mydf[50:70,]
+dput(tmp)
+```
+
+
+If your data frame has a factor with many levels, the `dput` output can be unwieldy because it will still list all the possible factor levels even if they aren't present in the the subset of your data. To solve this issue, you can use the `droplevels()` function. Notice below how species is a factor with only one level:
+
+```{r droplevels}
+dput(droplevels(head(iris, 4)))
+dput(droplevels(head(mydata)))
+# structure(list(Sepal.Length = c(5.1, 4.9, 4.7, 4.6), Sepal.Width = c(3.5, 
+# 3, 3.2, 3.1), Petal.Length = c(1.4, 1.4, 1.3, 1.5), Petal.Width = c(0.2, 
+# 0.2, 0.2, 0.2), Species = structure(c(1L, 1L, 1L, 1L), .Label = "setosa",
+# class = "factor")), .Names = c("Sepal.Length", "Sepal.Width", 
+# "Petal.Length", "Petal.Width", "Species"), row.names = c(NA, 
+# 4L), class = "data.frame")
+```
+
+One other caveat for `dput` is that it will not work for keyed `data.table` objects or for grouped `tbl_df` (class grouped_df) from `dplyr`. In these cases you can convert back to a regular data frame before sharing, `dput(as.data.frame(my_data))`.
+
+Worst case scenario, you can give a text representation that can be read in using the text parameter of `read.table` :
+
+```{r read.table}
+zz <- "Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa"
+
+Data <- read.table(text=zz, header = TRUE)
+```
+
+### Producing minimal code
+
+
+This should be the easy part but often isn't. What you should not do, is:
+
+* add all kind of data conversions. Make sure the provided data is already in the correct format (unless that is the problem of course)
+
+* copy-paste a whole function / chunk of code that gives an error. First try to locate which lines exactly result in the error. More often than not you'll find out what the problem is yourself.
+
+What you should do, is:
+
+* add which packages should be used if you use any.
+
+* if you open connections or make files, add some code to close them or delete the files (using `unlink()`)
+
+* if you change options, make sure the code contains a statement to revert them back to the original ones. (eg `op <- par(mfrow=c(1,2))` ...some code... `par(op)` )
+
+* test run your code in a new, empty R session to make sure the code is runnable. People should be able to just copy-paste your data and your code in the console and get exactly the same as you have.
+
+### Give extra information
+
+In most cases, just the R version and the operating system will suffice. When conflicts arise with packages, giving the output of `sessionInfo()` can really help. When talking about connections to other applications (be it through `ODBC` or anything else), one should also provide version numbers for those, and if possible also the necessary information on the setup.
+
+If you are running R in R Studio using `rstudioapi::versionInfo()` can be helpful to report your RStudio version.
+
+If you have a problem with a specific package you may want to provide version of the package by giving the output of `packageVersion("name of the package")`.
+
+
+## Answer 2
+
+> [http://adv-r.had.co.nz/Reproducibility.html](http://adv-r.had.co.nz/Reproducibility.html)
+
+### How to write a reproducible example.
+
+You are most likely to get good help with your R problem if you provide a reproducible example. A reproducible example allows someone else to recreate your problem by just copying and pasting R code.
+
+There are four things you need to include to make your example reproducible: required packages, data, code, and a description of your R environment.
+
+1. *Packages* should be loaded at the top of the script, so it's easy to see which ones the example needs.
+
+2. The easiest way to include *data* in an email or Stack Overflow question is to use `dput()` to generate the R code to recreate it. For example, to recreate the mtcars dataset in R, I'd perform the following steps:
+
+* Run `dput(mtcars)` in R
+
+* Copy the output
+
+* In my reproducible script, type `mtcars <-` then paste.
+
+3. Spend a little bit of time ensuring that your code is easy for others to read:
+
+  + make sure you've used spaces and your variable names are concise, but informative
+
+  + use comments to indicate where your problem lies
+do your best to remove everything that is not related to the problem.
+
+  + The shorter your code is, the easier it is to understand.
+
+4. Include the output of `sessionInfo()` in a comment in your code. This summarises your R environment and makes it easy to check if you're using an out-of-date package.
+
+You can check you have actually made a reproducible example by starting up a fresh R session and pasting your script in.
+
+Before putting all of your code in an email, consider putting it on [http://gist.github.com/](http://gist.github.com/). It will give your code nice syntax highlighting, and you don't have to worry about anything getting mangled by the email system.
+
+
+## Get your data
+
+### Data Namming and Generated Data
+```{r data frame list}
+my.dt <- data.frame(
+    Z = sample(LETTERS,10),
+    X = sample(1:10),
+    Y = sample(c("yes", "no"), 10, replace = TRUE)
+)
+
+my.df <- data.frame(col1 = sample(c(1,2), 10, replace = TRUE),
+        col2 = as.factor(sample(10)), col3 = letters[1:10],
+        col4 = sample(c(TRUE, FALSE), 10, replace = TRUE))
+my.list <- list(list1 = my.df, list2 = my.df[3], list3 = letters)
+
+my.df2 <- data.frame(a = sample(10e6), b = sample(letters, 10e6, replace = TRUE))
+
+my.df3 <- read.table(header=T, text="
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+");my.df3
+
+```
+
+### From clipboard-Excel and txt data
+
+To quickly create a dput of your data you can just copy (a piece of) the data to your clipboard and run the following in R:
+
+for data in Excel:
+
+```{r clipboard Excel data}
+# copy to clipboard
+read.table("clipboard", header=TRUE)
+
+# Excel copy + clipboard
+dput(read.table("clipboard",sep="\t",header=TRUE))
+```
+
+for data in a txt file:
+```{r clipboard txt data}
+# txt copy + clipboard
+dput(read.table("clipboard",sep="",header=TRUE))
+```
+You can change the sep in the latter if necessary. This will only work if your data is in the clipboard of course.
+
+### input your data manually
+```{r input your data manually by fix function}
+# You can define your structure firstly.For example
+mydata <- data.frame(
+  a=character(0), 
+  b=numeric(0),  
+  c=numeric(0), 
+  d=numeric(0))
+
+# input your data manually
+fix(mydata)
+
+#then dput mydata
+dput(mydata)
+```
+
+### built-in data sets
+
+Type `data()` at the R prompt to see what data is available to you. Some classic examples: `iris`,`mtcars`,`ggplot2::diamonds` (external package, but almost everyone has it)
+
+### Self Generated Data
+
+If your problem is very specific to a type of data that is not represented in the existing data sets, then provide the R code that generates the smallest possible data set that your problem manifests itself on. 
+
+First, you can use R to generate your own random data, and post the code in your question.
+
+The following R code generates a small sample data.frame
+with variables for id, gender, and age. The set.seed function makes sure that the random values sampled will be identical, no matter who runs the code. For example
+
+```{r Self Generated Data}
+set.seed(3)
+
+sampleData <- data.frame(id = 1:10, 
+                         gender = sample(c("Male", "Female"), 10, replace = TRUE),
+                         age = rnorm(10, 40, 10))
+summary(sampleData)
+
+
+set.seed(1)  # important to make random data reproducible
+myData <- data.frame(a=sample(letters[1:5], 20, rep=T), b=runif(20))
+
+# set.seed(100)
+my.dm <- matrix(rnorm(20),nrow=20,ncol=5);my.dm
+class(my.dm)
+# this shows the type of the data you have 
+dim(my.dm)
+# this shows the dimension of your data
+
+#found based on the following 
+typeof(my.dm) #what it is.
+length(my.dm) #how many elements it contains.
+attributes(my.dm) #additional arbitrary metadata.
+
+#If you cannot share your original data, you can str it and give an idea about the structure of your data
+head(str(my.dm))
+```
+
+### Sample Large Dataset
+
+```{r Sample Large Dataset}
+## we will generate a data.frame for this example, but
+## this object represents your "real" data
+largeData <- data.frame(id = 1:1000, age = rnorm(1000, 40, 10))
+
+## posting the dput output of a data.frame with 1000 observations
+## is probably not necessary, so we will take a small subset 
+sampleData <- largeData[sample(nrow(largeData), 10), ]
+
+## use dput to write out a text representation of the R object
+dput(sampleData)
+```
+
+
+## Unit Test
+
+It's a good idea to use functions from the testthat package to show what you expect to occur. Thus, other people can alter your code until it runs without error. This eases the burden of those who would like to help you, because it means they don't have to decode your textual description. For example
+```{r testthat}
+# import package in a safe way
+if(!suppressWarnings(require('testthat'))) {
+  install.packages('testthat')
+  require('testthat')
+}
+
+y <- c(10.5)
+
+# code defining x and y
+if (y >= 10) {
+    expect_equal(x, 1.23)
+} else {
+    expect_equal(x, 3.21)
+}
+```
+
+It is clearer than "I think x would come out to be 1.23 for y equal to or exceeding 10, and 3.21 otherwise, but I got neither result". Even in this silly example, I think the code is clearer than the words. Using testthat lets your helper focus on the code, which saves time, and it provides a way for them to know they have solved your problem, before they post it
+
+## How do I replace NA values with zeros in an R dataframe?
+
+```{r}
+my.dm <- matrix(sample(c(NA, 1:10), 100, replace = TRUE), 10)
+my.df <- as.data.frame(my.dm);my.df
+#    V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+# 1   4  3 NA  3  7  6  6 10  6   5
+# 2   9  8  9  5 10 NA  2  1  7   2
+# 3   1  1  6  3  6 NA  1  4  1   6
+# 4  NA  4 NA  7 10  2 NA  4  1   8
+# 5   1  2  4 NA  2  6  2  6  7   4
+# 6  NA  3 NA NA 10  2  1 10  8   4
+# 7   4  4  9 10  9  8  9  4 10  NA
+# 8   5  8  3  2  1  4  5  9  4   7
+# 9   3  9 10  1  9  9 10  5  3   3
+# 10  4  2  2  5 NA  9  7  2  5   5
+
+my.df[is.na(my.df)] <- 0; my.df
+
+# For a single vector:
+x <- c(1,2,NA,4,5)
+x[is.na(x)] <- 0
+
+# dplyr way ifelse
+require(dplyr)
+my.df <- my.df %>%
+      mutate(colname = ifelse(is.na(colname),0,colname))
+
+#function way
+na_2_zero <- function (x) {
+    x[is.na(x)] <- 0
+    return(x)
+}
+#na_2_zero 
+na_2_zero(some.vector)
+
+#csv
+write.csv(data,"data.csv",na="0")
+
+# dplyr mutate_all()
+library(tidyverse)
+#The *microbenchmark* package provides an easy way to run a substantial number of trials
+# import package in a safe way
+if(!suppressWarnings(require('tidyverse', 'microbenchmark'))) {
+  install.packages('tidyverse', 'microbenchmark')
+  require('tidyverse', 'microbenchmark')
+}
+library(microbenchmark)
+
+# Numerics replaced with numerics
+set.seed(24)
+dfN <- as.data.frame(matrix(sample(as.numeric(c(NA, 1:5)), 1e6 * 12, replace=TRUE),
+                            dimnames = list(NULL, paste0("var", 1:12)), 
+                            ncol=12))
+
+opN<- microbenchmark(
+    baseR_replace    = local(dfN %>% replace(., is.na(.), 0)),
+    subsetReassign   = local(dfN[is.na(dfN)] <- 0),
+    mut_at_replace   = local(dfN %>% mutate_at(funs(replace(., is.na(.), 0)), .vars = c(1:12))),
+    mut_all_coalesce = local(dfN %>% mutate_all(funs(coalesce(., 0)))),
+    mut_all_replace  = local(dfN %>% mutate_all(funs(replace(., is.na(.), 0)))),
+    replace_na       = local(dfN %>% replace_na(list(var1 = 0, var2 = 0, var3 = 0, var4 = 0, var5 = 0, var6 = 0, var7 = 0, var8 = 0, var9 = 0, var10 = 0, var11 = 0, var12 = 0))),
+    times = 1000L
+)
+
+print(opN) #standard data frame of the output
+boxplot(opN)
+```
+
+This simple function extracted from Datacamp could help:
+
+```{r replace_missings}
+replace_missings <- function(x, replacement) {
+  is_miss <- is.na(x)
+  x[is_miss] <- replacement
+
+  message(sum(is_miss), " missings replaced by the value ", replacement)
+  x
+}
+
+my.dm <- matrix(sample(c(NA, 1:10), 100, replace = TRUE), 10)
+my.df <- as.data.frame(my.dm);my.df
+replace_missings(my.df, replacement = 0)
+
+```
+
+## How to sort a dataframe by column(s)?
+
+```{r sort a dataframe by column}
+dd <- data.frame(b = factor(c("Hi", "Med", "Hi", "Low"), 
+      levels = c("Low", "Med", "Hi"), ordered = TRUE),
+      x = c("A", "D", "A", "C"), y = c(8, 3, 9, 9),
+      z = c(1, 1, 1, 2));dd
+
+#     b x y z
+# 1  Hi A 8 1
+# 2 Med D 3 1
+# 3  Hi A 9 1
+# 4 Low C 9 2
+
+dd[with(dd, order(-z, b)), ]
+#     b x y z
+# 4 Low C 9 2
+# 2 Med D 3 1
+# 1  Hi A 8 1
+# 3  Hi A 9 1
+dd[ order(-dd[,4], dd[,1]), ]
+#     b x y z
+# 4 Low C 9 2
+# 2 Med D 3 1
+# 1  Hi A 8 1
+# 3  Hi A 9 1
+
+################
+## The data.frame way
+dd[with(dd, order(-z, b)), ]
+
+## The data.table way: (7 fewer characters, but that's not the important bit)
+dd[order(-z, b)]
+
+###################
+# dplyr way
+library(dplyr)
+# sort mtcars by mpg, ascending... use desc(mpg) for descending
+arrange(mtcars, mpg)
+# sort mtcars first by mpg, then by cyl, then by wt)
+arrange(mtcars , mpg, cyl, wt)
+
+
+###############
+require(plyr)
+require(doBy)
+require(data.table)
+require(dplyr)
+require(taRifx)
+
+set.seed(45L)
+dat = data.frame(b = as.factor(sample(c("Hi", "Med", "Low"), 1e8, TRUE)),
+                 x = sample(c("A", "D", "C"), 1e8, TRUE),
+                 y = sample(100, 1e8, TRUE),
+                 z = sample(5, 1e8, TRUE), 
+                 stringsAsFactors = FALSE)
+# Benchmarks:
+
+# The timings reported are from running system.time(...) on these functions shown below. The timings are tabulated below (in the order of slowest to fastest).
+
+orderBy( ~ -z + b, data = dat)     ## doBy
+plyr::arrange(dat, desc(z), b)     ## plyr
+arrange(dat, desc(z), b)           ## dplyr
+sort(dat, f = ~ -z + b)            ## taRifx
+dat[with(dat, order(-z, b)), ]     ## base R
+
+# convert to data.table, by reference
+setDT(dat)
+
+dat[order(-z, b)]                  ## data.table, base R like syntax
+setorder(dat, -z, b)               ## data.table, using setorder()
+                                   ## setorder() now also works with data.frames 
+
+# R-session memory usage (BEFORE) = ~2GB (size of 'dat')
+# ------------------------------------------------------------
+# Package      function    Time (s)  Peak memory   Memory used
+# ------------------------------------------------------------
+# doBy          orderBy      409.7        6.7 GB        4.7 GB
+# taRifx           sort      400.8        6.7 GB        4.7 GB
+# plyr          arrange      318.8        5.6 GB        3.6 GB 
+# base R          order      299.0        5.6 GB        3.6 GB
+# dplyr         arrange       62.7        4.2 GB        2.2 GB
+# ------------------------------------------------------------
+# data.table      order        6.2        4.2 GB        2.2 GB
+# data.table   setorder        4.5        2.4 GB        0.4 GB
+# ------------------------------------------------------------
+
+
+```
+
+`data.table`'s `DT[order(...)]` syntax was ~10x faster than the fastest of other methods (`dplyr`), while consuming the same amount of memory as dplyr.
+
+data.table's `setorder()` was ~14x faster than the fastest of other methods (`dplyr`), while taking just 0.4GB extra memory. dat is now in the order we require (as it is updated by reference).
+
+
+

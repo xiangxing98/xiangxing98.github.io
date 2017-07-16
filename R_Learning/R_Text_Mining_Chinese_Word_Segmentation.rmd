@@ -1,0 +1,585 @@
+---
+title: "R_Text_Mining_Chinese_Word_Segmentation"
+output: html_notebook
+---
+
+# 中文分词学习笔记 R_Text_Mining_Chinese_Word_Segmentation
+
+
+## 1. 简介与安装-JiebaR Introduction & Installation
+
+JiebaR is a package for Chinese text segmentation, keyword extraction and speech tagging.
+```{r install jiebaR}
+# Install the latest development version from GitHub:
+# 同时还可以通过Github安装[开发版]，
+# 建议使用 gcc >= 4.9 编译，Windows需要安装 Rtools ：
+library(devtools)
+install_github("qinwf/jiebaRD")
+install_github("qinwf/jiebaR")
+# devtools::install_github("qinwf/jiebaR")
+
+# Install from CRAN:
+install.packages("jiebaR")
+setRepositories(addURLs =
+                c(CRANxtras = "http://www.stats.ox.ac.uk/pub/RWin"))
+
+#windows Rconsole
+file.path(R.home('etc'), 'Rconsole')
+# [1] "D:/PROGRA~1/R/R-33~1.3/etc/Rconsole"
+
+#set repos
+options(repos = c(CRAN = "http://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+                  CRANextra = "http://mirrors.xmu.edu.cn/CRAN/"))
+# https://cloud.r-project.org/
+
+# on windows, for R-2.14.0.  In this file you will even find an example of setting the CRAN mirror.  
+# You can edit here is you have root or administrative privileges, but more likely you will copy it and place it in the personal .Rprofile file in your home directory.
+# Inside the command is simple, this is copied straight from the Rprofile.site file.
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "http://cran.cnr.berkeley.edu/"
+  options(repos = r)
+})
+```
+
+
+jiebaR提供了四种分词模式，可以通过函数worker()来初始化分词引擎，使用函数segment()进行分词。具体使用?worker查看帮助
+
+```{r load jiebaR package ex1}
+# import package in a safe way
+if(!suppressWarnings(require('jiebaR'))) {
+  install.packages('jiebaR')
+  require('jiebaR')
+}
+
+text <- '你要明白，这仅仅是一个测试文本'
+mixseg <- worker() #使用默认参数，混合模型（MixSegment）
+
+segment(text, mixseg)
+#等价于mixseg[text]
+#也等价于mixseg <= text
+# [1] "你"   "要"   "明白" "这"   "仅仅" "是"   "一个" "测试" "文本"
+
+# 直接输入mixseg命令，可以查看此worker的配置
+mixseg
+# Worker Type:  Jieba Segment
+# 
+# Default Method  :  mix
+# Detect Encoding :  TRUE
+# Default Encoding:  UTF-8
+# Keep Symbols    :  FALSE
+# Output Path     :  
+# Write File      :  TRUE
+# By Lines        :  FALSE
+# Max Word Length :  20
+# Max Read Lines  :  1e+05
+# 
+# Fixed Model Components:  
+# 
+# $dict
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/jieba.dict.utf8"
+# 
+# $user
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/user.dict.utf8"
+# 
+# $hmm
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/hmm_model.utf8"
+# 
+# $stop_word
+# NULL
+# 
+# $user_weight
+# [1] "max"
+# 
+# $timestamp
+# [1] 1500174243
+# 
+# $default $detect $encoding $symbol $output $write $lines $bylines can be reset.
+
+# another example 
+library(jiebaR)
+#  接受默认参数，建立分词引擎 
+mixseg = worker()
+# 相当于：
+# worker( type = "mix", dict = "inst/dict/jieba.dict.utf8",
+#         hmm  = "inst/dict/hmm_model.utf8",    # HMM模型数据
+#         user = "inst/dict/user.dict.utf8")    # 用户自定义词库
+# Initialize jiebaR worker 初始化worker
+
+# This function can initialize jiebaR workers. 
+# You can initialize different kinds of workers including mix, mp, hmm, query, tag, simhash, and keywords.
+
+mixseg <= "广东省深圳市联通"    # <= 分词运算符
+# 相当于segment函数，看起来还是用segment函数顺眼一些
+
+segment(code= "广东省深圳市联通" , jiebar = mixseg)
+# code A Chinese sentence or the path of a text file.
+# jiebar jiebaR Worker
+
+# 分词结果
+# [1] "广东省" "深圳市" "联通" 
+
+mixseg <= "你知道我不知道"
+# [1] "你"   "知道" "我"   "不"   "知道"
+
+mixseg <= "我昨天参加了同学婚礼"
+# [1] "我"   "昨天" "参加" "了"   "同学" "婚礼"
+
+mixseg <= "你知道吗我昨天参加了同学的婚礼"
+ # [1] "你"   "知道" "吗"   "我"   "昨天" "参加" "了"   "同学"
+ # [9] "的"   "婚礼"
+# 呵呵：分词结果还算不错
+
+```
+
+可以通过R语言常用的 `$` 符号重设一些worker的参数设置，如 WorkerName `$symbol = T`，在输出中保留标点符号。
+
+一些参数在初始化的时候已经确定，无法修改， 可以通过`WorkerName$PrivateVarible`来获得这些信息。
+
+```{r file segmentation ex1}
+#自动判断输入文件编码模式，默认文件输出在同目录下。
+segment('D:/test.txt', mixseg) 
+#等价于mixseg['D:/test.txt']
+#也等价于mixseg <= 'D:/test.txt'
+
+mixseg <= 'E:\\03-Download\\Github\\红楼梦.txt'
+#GB2312 CODING, NO OUTPUT
+
+mixseg <= 'E:/03-Download/Github/红楼梦-UTF-8.txt'
+#STILL NO OUTPUT
+
+segment('你今天要到哪里去？', mixseg) 
+
+segment('E:/03-Download/Github/红楼梦-UTF-8.txt', mixseg)
+# [1] "E:/03-Download/Github/红楼梦-UTF-8.segment.2017-07-16_11_42_23.txt"
+
+```
+
+## 2. 四种分词算法-four kinds of segmentation model
+
+### 2.1 最大概率法（MPSegment）： 
+
+负责根据Trie树构建有向无环图和进行动态规划算法，是分词算法的核心。
+
+Maximum probability segmentation model uses Trie tree to construct a directed acyclic graph and uses dynamic programming algorithm. It is the core segmentation algorithm. dict and user should be provided when initializing jiebaR worker.
+
+```{r Maximum probability segmentation model ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+mpseg <- worker('mp') #最大概率法（MPSegment）
+mpseg[text]
+# [1] "你"   "要"   "明白" "这"   "仅仅" "是"   "一个" "测试" "文本"
+```
+
+### 2.2 隐式马尔科夫模型（HMMSegment）： 
+
+是根据基于人民日报等语料库构建的HMM模型来进行分词，主要算法思路是根据(B,E,M,S)四个状态来代表每个字的隐藏状态。 HMM模型由dict/hmm_model.utf8提供。分词算法即viterbi算法。
+
+Hidden Markov Model uses HMM model to determine status set and observed set of words. The default HMM model is based on People's Daily language library. hmm should be provided when initializing jiebaR worker.
+
+```{r Hidden Markov segmentation Model ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+hmmseg <- worker('hmm') #隐式马尔科夫模型（HMMSegment）
+hmmseg[text]
+# [1] "你"   "要"   "明白" "这仅" "仅"   "是"   "一个" "测试" "文本"
+```
+
+### 2.3 混合模型（MixSegment）： 
+
+是四个分词引擎里面分词效果较好的类，结它合使用最大概率法和隐式马尔科夫模型。
+
+MixSegment model uses both Maximum probability segmentation model and Hidden Markov Model to construct segmentation. dict, hmm and user should be provided when initializing jiebaR worker.
+
+```{r MixSegment segmentation Model ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+mixseg <- worker('mix') #混合模型（MixSegment）
+mixseg[text]
+# [1] "你"   "要"   "明白" "这"   "仅仅" "是"   "一个" "测试" "文本"
+```
+
+### 2.4 索引模型（QuerySegment）： 
+
+先使用混合模型进行切词，再对于切出来的较长的词，枚举句子中所有可能成词的情况，找出词库里存在。
+
+QuerySegment model uses MixSegment to construct segmentation and then enumerates all the possible long words in the dictionary. dict, hmm and qmax should be provided when initializing jiebaR worker.
+
+There is a symbol <= for this function.
+
+```{r QuerySegment segmentation Model ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+queryseg <- worker('query') #索引模型（QuerySegment）
+queryseg[text]
+# [1] "你"   "要"   "明白" "这"   "仅仅" "是"   "一个" "测试" "文本"
+
+```
+
+##  3. 标注词性-Speech Tagging
+
+Speech Tagging worker uses MixSegment model to cut word and tag each word after segmentation using labels compatible with ictclas.
+
+dict, hmm and user should be provided when initializing jiebaR worker.
+
+可以使用`<=.tagger` 或者`tag` 来进行分词和词性标注，词性标注使用混合模型模型分词，标注采用和 `ictclas` 兼容的标记法。
+
+```{r Speech Tagging worker ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+tagseg <- worker('tag')
+
+tagseg[text]
+  #    r      v     nr      r      d      v      m     vn      n 
+  # "你"   "要" "明白"   "这" "仅仅"   "是" "一个" "测试" "文本" 
+
+# same results
+tagging(text, tagseg)
+  #    r      v     nr      r      d      v      m     vn      n 
+  # "你"   "要" "明白"   "这" "仅仅"   "是" "一个" "测试" "文本" 
+# another example
+cutter = worker(type = "tag")
+cutter_words <- cutter <= "我爱北京天安门"
+cutter_words
+#        r        v       ns       ns 
+#      "我"     "爱"     "北京"     "天安门" 
+# # "我"  反身代词； "爱" 动词； "北京" 名词
+
+
+```
+
+## 4. 提取关键词-Keyword Extraction
+
+Keyword Extraction worker uses MixSegment model to cut word and use TF-IDF algorithm to find the keywords. dict ,hmm, idf, stop_word and topn should be provided when initializing jiebaR worker.
+
+关键词提取所使用逆向文件频率（IDF）文本语料库可以切换成自定义语料库的路径，使用方法与分词类似。topn参数为关键词的个数。
+
+```{r keys ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+
+keys = worker('keywords', topn = 2) #参数topn表示提取排在最前的关键词个数
+keys <= text
+# 8.94485 7.14724 
+#  "文本"  "测试" 
+
+#同样的，也可以对文件进行关键词提取
+keys <= "一个文件路径.txt"
+keys <= "E:/03-Download/Github/红楼梦-UTF-8.txt" 
+# 26138.9 9266.45 
+#  "宝玉"  "贾母" 
+
+## another example
+cutter = worker(type = "keywords", topn = 2)
+cutter_words <- cutter <= "我爱北京天安门"
+cutter_words
+  # 8.9954   4.6674 
+  # "天安门"   "北京"
+# 根据IDF算法，"我" "爱" 的逆文本频率过低，topn=2，就被过滤掉了
+
+```
+
+## 5. simhash计算-分词-关键词提取-文本去重
+
+Simhash worker uses the keyword extraction worker to find the keywords and uses simhash algorithm to compute simhash. dict hmm, idf and stop_word should be provided when initializing jiebaR worker.
+
+对中文文档计算出对应的simhash值。simhash是谷歌用来进行文本去重的算法，现在广泛应用在文本处理中。Simhash引擎先进行分词和关键词提取，后计算Simhash值和海明距离。
+
+```{r simhasher ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+
+simhasher = worker("simhash", topn = 2)
+simhasher <= text
+# $simhash
+# [1] "10014870797707624170"
+# 
+# $keyword
+# 8.94485 7.14724 
+#  "文本"  "测试" 
+
+#看看红楼梦的关键词是什么
+# "宝玉"   "贾母"   "凤姐" "王夫人" "老太太"   "太太" 
+simhasher = worker("simhash", topn = 10)
+simhasher <= "E:/03-Download/Github/红楼梦-UTF-8.txt"
+# $simhash
+# [1] "14760579568630162737"
+# 
+# $keyword
+#  26138.9  9266.45  8269.94  7909.09  7020.27  5631.21 
+#   "宝玉"   "贾母"   "凤姐" "王夫人" "老太太"   "太太" 
+#   5603.1  5512.09  5451.25  5062.17 
+#   "姑娘"   "贾琏"   "奶奶"   "众人" 
+
+# another example
+cutter = worker(type = "simhash", topn = 2)
+cutter_words <- cutter <= "我爱北京天安门"
+cutter_words
+# $simhash
+# [1] "4352745221754575559"
+# 
+# $keyword
+#   8.9954   4.6674 
+# "天安门"   "北京" 
+
+```
+
+## 6. 快速模式-Not Recomended
+
+无需使用函数`worker()`，使用默认参数启动引擎，并立即进行分词。使用`qseg(quick segmentation)`，使用默认分词模式，自动建立分词引擎，类似于`ggplot2`包里面的`qplot`函数。
+
+```{r quick segmentation qseg ex1}
+text <- '你要明白，这仅仅是一个测试文本'
+qseg <= text
+# Quick mode is depreciated, and is scheduled to be remove in v0.11.0. If you want to keep this feature, please submit a issue on GitHub page to let me know.
+# [1] "你"   "要"   "明白" "这"   "仅仅" "是"   "一个" "测试" "文本"
+
+worker('mix') #查看worker('mix')参数配置
+qseg #查看qseg参数配置，与上面一样都得到以下结果
+# 实际上，第一次运行时，会启动默认引擎 quick_worker，相当于先运行了一遍代码：qseg = worker('mix')
+
+# Worker Type:  Jieba Segment
+# 
+# Default Method  :  mix
+# Detect Encoding :  TRUE
+# Default Encoding:  UTF-8
+# Keep Symbols    :  FALSE
+# Output Path     :  
+# Write File      :  TRUE
+# By Lines        :  FALSE
+# Max Word Length :  20
+# Max Read Lines  :  1e+05
+# 
+# Fixed Model Components:  
+# 
+# $dict
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/jieba.dict.utf8"
+# 
+# $user
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/user.dict.utf8"
+# 
+# $hmm
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/hmm_model.utf8"
+# 
+# $stop_word
+# NULL
+# 
+# $user_weight
+# [1] "max"
+# 
+# $timestamp
+# [1] 1500192552
+# 
+# $default $detect $encoding $symbol $output $write $lines $bylines can be reset.
+```
+
+
+可以通过qseg$重设模型参数，重设模型参数将会修改以后每次默认启动的默认参数；
+
+如果只是想临时修改模型参数，可以使用非快速模式的修改方式quick_worker$。
+
+```{r qseg ex2}
+# 重设模型参数的同时，重新启动引擎；下次重新启动包时，现有的设置不会改变。
+qseg$type = "mp" 
+
+# 临时修改，下次重新启动包时，会恢复原来的默认设置。
+quick_worker$detect = T 
+
+# 获得当前快速模式的默认参数
+get_qsegmodel()         
+```
+
+## 7. 加载词库
+
+常用的分词包有两种加载词库的方法，就是加载包时读取默认的词典和数据模型，或者在分词前加载词典和模型数据。在早期的版本中，jiebaR也使用过这两种方式进行加载。
+
+第一种方式，就像一个铁笼子，加载包时一次性加载了词库，封装在一起。
+
+第二种方式灵活，可以动态地加载词库和模型数据，适时进行修改，但是每次分词前，加载词库都十分耗费时间，对于小的任务不合适。
+
+有了Rcpp Modules，jiebaR可以把C++中的分词类映射到R语言中的RC类，把这样原本C++中静态的类的操作，带到了R里面，可以动态地运行。在jiebaR里，你可以动态地生成分词器，使用不同的分词器，对不同类型的文本进行操作，分词就像切菜时选不同的菜刀一样。
+
+`library(jiebaR)`加载包时，没有启动任何分词引擎，启动引擎很简单，就是一句赋值语句就可以了。`cutter <- worker()`
+
+软件默认设定非常重要，`jiebaR`默认参数为绝大多数任务调整到了最好的状态（哈哈，我的自我感觉）。初始化分词简单，分词就更简单了。为了让大家少一些待在电脑前的时间，多一些配家人和朋友的时间，少敲一些键盘，`jiebaR`重载了`<=`这个不太常用的符号，当然还有`==`,你在项目README里可以看到。分词就是一个类似赋值的过程，足够简单粗暴：
+```{r segmentation ex1}
+# start segmentation engine
+# import package in a safe way
+if(!suppressWarnings(require('jiebaR'))) {
+  install.packages('jiebaR')
+  require('jiebaR')
+}
+
+cutter <- worker()
+
+# cut what
+cutter <= "江州市长江大桥，参加了长江大桥的通车仪式。"
+# perfect results
+# [1] "江州"     "市长"     "江大桥"   "参加"     "了"      
+# [6] "长江大桥" "的"       "通车"     "仪式"   
+
+# 或者Pipe一个文件路径
+cutter <= "weibo.txt"
+
+```
+
+当然，如果你喜欢打字，也可以使用`segment()`函数。正如之前说的，可以同时初始化和使用多个分词器。可以添加一些参数来初始化，可用参数列表很长很长，但是一般你不会全用到它们，具体可以参考帮助文档`?worker()`:
+```{r user defined dictionary ex1}
+cutter2 <- worker( user = "e:/Path for User defined Dictionary") ### 初始化第二个引擎
+
+ShowDictPath() 
+ ### 可以显示默认词典路径
+```
+
+这时R的环境里同时有两个加载了不同词库的分词引擎。
+
+如果需要了解这两个不同的引擎的区别只需要print一下就可以了。
+
+每个worker都有一些参数设置，如`cutter`中的`$detect`参数决定了引擎是否自动判断输入文件的编码，在引擎加载时可以通过`worker(detect = F )`进行参数设置，也可以在加载后通过`cutter$detect = F`进行设置。其实 `worker()`函数返回的是一个环境`(environment)`，里面封装了真正的分词引擎，你可以通过`cutter$worker`来查看真正的“引擎”。`cutter$worker <pointer: 0x0805b990>`
+
+`cutter$worker`和`cutter`都是环境，在传递时是传址，而不是传值，效率是比较高的。jiebaR的分词速度是其他R语言分词包的5-20倍。
+
+分词结束后，对于不需要的引擎只需要用rm()进行删除，R有自动的垃圾回收机制，为你解决内存管理的后顾之忧。
+
+分词已经分好，统计分析才是最重要的任务。剃刀已经磨砺，接下来就可以用R来处理中文字符了。
+
+```{r}
+mixseg2 = worker(type  = "mix", 
+                 dict = "/home/rstudio/R/x86_64-pc-linux-gnu-library/3.1/jiebaRD/dict/jieba.dict.utf8", 
+                 hmm   = "/home/rstudio/R/x86_64-pc-linux-gnu-library/3.1/jiebaRD/dict/hmm_model.utf8", 
+                 user  = "/home/rstudio/R/x86_64-pc-linux-gnu-library/3.1/jiebaRD/dict/user.dict.utf8", 
+                 detect=T,  symbol = F, 
+                 lines = 1e+05, output = NULL
+                 )  
+# detect 自动检查文件编码，lines一次读取文件的行数
+
+# 输出worker的设置
+mixseg2
+#输出结果如下：略
+```
+
+### 可以自定义用户词库
+
+```{r user dictionary}
+install.packages("devtools")
+install.packages("stringi")
+install.packages("pbapply")
+install.packages("Rcpp")
+install.packages("RcppProgress")
+library(devtools)
+install_github("qinwf/cidian")
+
+
+# decode scel dictionary
+decode_scel(scel = "细胞词库路径", output = "输出文件路径", cpp =  TRUE)
+
+decode_scel(scel = "细胞词库路径",output = "输出文件路径",cpp =  FALSE, progress = TRUE)
+
+# 输出调试信息
+decode_scel(scel = "细胞词库路径", output = "输出文件路径", cpp = FALSE, progress = TRUE, rdebug = TRUE)
+
+# system dict with frequency
+decode_scel("细胞词库路径", output = "输出文件路径", sysdict_freq = 1)
+
+# load/add user dictionary
+## 读取用户词典
+
+load_user_dict(filePath = "用户词典路径", default_tag = "默认标记")
+
+## 读取系统词典
+load_sys_dict(filePath = "系统词典路径")
+
+## 增加用户词典词
+
+add_user_words(dict = "load_user_dict 读取的词典", words = "UTF-8 编码文本向量", tags = "标记")
+
+## 增加系统词典词
+
+add_sys_words(dict = "load_sys_dict 读取的词典", words = "UTF-8 编码文本向量", freq = "词频", tags = "标记")
+
+## 删除词典词
+
+remove_words(dict = "load_user_dict 或 load_sys_dict 读取的词典", words = "UTF-8 编码文本向量")
+
+## 写入
+
+write_dict(dict = "load_user_dict 或 load_sys_dict 读取的词典", output = "输出路径")
+
+(userd = load_user_dict(jiebaR::USERPATH))
+
+userd = add_user_words(userd, enc2utf8("测试"), "v")
+
+write_dict(userd, jiebaR::USERPATH)
+
+(userd = load_user_dict(jiebaR::USERPATH))
+userd = remove_words(userd, enc2utf8(c("测试","蓝翔")))
+
+write_dict(userd, jiebaR::USERPATH)
+
+(userd = load_user_dict(jiebaR::USERPATH))
+
+
+
+ShowDictPath()  # 显示词典路径
+EditDict()      # 编辑用户词典
+?EditDict()     # 打开帮助系统
+
+Usage # 使用方法
+edit_dict(name = "user") # 这个方法过时了
+EditDict(name = "user") 
+Arguments # 参数
+# name    
+# the name of dictionary including user, system, stop_word.
+```
+
+
+
+## 8. 词云图-word cloud
+
+```{r jiebaR & wordcloud}
+library(jiebaR)
+library(wordcloud)
+
+#读入数据分隔符是‘\n’，字符编码是‘UTF-8’，what=''表示以字符串类型读入
+f <- scan('D:/Data/News/shxw.txt',sep='\n',what='',encoding="UTF-8")
+
+# Data Manupulation
+seg <- qseg[f] #使用qseg类型分词，并把结果保存到对象seg中
+seg <- seg[nchar(seg)>1] #去除字符长度小于2的词语
+
+seg <- table(seg) #统计词频
+
+seg <- seg[!grepl('[0-9]+',names(seg))] #去除数字
+length(seg) #查看处理完后剩余的词数
+
+
+#降序排序，并提取出现次数最多的前100个词语
+seg <- sort(seg, decreasing = TRUE)[1:100] 
+seg #查看100个词频最高的
+
+# 做词云
+bmp("comment_cloud.bmp", width = 500, height = 500)
+par(bg = "black")
+wordcloud(names(seg), seg, colors = rainbow(100), random.order=F)
+dev.off()
+
+```
+
+
+
+
+
+##参考资料：
+
+[红楼梦搜狗词库](http://pinyin.sogou.com/dict/search/search_list/%BA%EC%C2%A5%C3%CE/normal/1)
+
+[jiebaR中文分词快速入门](http://blog.csdn.net/songzhilian22/article/details/49250489)
+
+
+[jiebaR](https://cran.r-project.org/web/packages/jiebaR/index.html)
+
+[jiebaR Tutouria-PDF](https://cran.r-project.org/web/packages/jiebaR/jiebaR.pdf)
+
+[R news and tutorials R bloggers](https://www.r-bloggers.com/)
+
+[CRAN cloud](https://cloud.r-project.org/)
+
+[Garrett & Hadley: R For Data Science](http://r4ds.had.co.nz/)
+
+[Write HTML, PDF, ePub, and Kindle books with R Markdown](https://bookdown.org/)
+
+
