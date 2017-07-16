@@ -631,6 +631,25 @@ wordcloud2(Top100, size =1, color = 'random-light', shape = 'cardioid')
 dev.off()
 
 ```
+### wordcloud2 example demo
+
+```{r wordcloud2 ex2}
+library("wordcloud2")
+wordcloud2(demoFreq, size = 1,shape = 'star')
+
+wordcloud2(demoFreq, size = 2, minRotation = -pi/2, maxRotation = -pi/2)
+
+wordcloud2(demoFreq, size = 2, minRotation = -pi/6, maxRotation = -pi/6,
+  rotateRatio = 1)
+
+wordcloud2(demoFreqC, size = 2, fontFamily = "微软雅黑",
+           color = "random-light", backgroundColor = "grey")
+
+## Sys.setlocale("LC_CTYPE","eng")
+wordcloud2(demoFreqC, size = 2, fontFamily = "微软雅黑",
+           color = "random-light", backgroundColor = "grey")
+```
+
 
 
 
