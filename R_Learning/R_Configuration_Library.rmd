@@ -149,6 +149,57 @@ library(tidyverse)
 ```
 
 
+## 5. Rprofile.site
+
+```{r Rprofile.site}
+# set a CRAN mirror
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://mirrors.tuna.tsinghua.edu.cn/CRAN/"
+       options(repos=r)})
+
+# Give a fortune cookie, but only to interactive sessions
+# (This would need the fortunes package to be installed.)
+#  if (interactive()) 
+#    fortunes::fortune()
+
+.First <- function(){
+	# remove all to clear environment
+	rm(list = ls())
+
+	# set locale to English
+	Sys.setlocale("LC_ALL", "English")
+
+	cat("Current R.version is:", as.character(getRversion()), "\n")
+	cat("Current R.repos is:", getOption("repos"), "\n")
+	cat("Current R.Library is:", .libPaths(), "\n")
+	setwd("E:/Github")
+	cat("Current R.Workdir is:", getwd(), "\n")
+	cat("\nSuccessfully loaded .Rprofile at:", date(), "\n")
+	
+	#if (file.exists(".RData")) load(file=".RData")
+
+	# 设置R启动时加载的包
+	# Load tidyverse, data.table, stats package
+	# if(!suppressWarnings(require('tidyverse','data.table', 'stats')))
+	# {
+	#    install.packages('tidyverse','data.table', 'stats')
+	 #   require('tidyverse','data.table', 'stats')
+	#}
+	require('tidyverse')
+	require('data.table')
+	#require( 'stats')
+
+	# 启动时交互，可自定义
+	cat("Default Load packages:\n tidyverse, data.table, stats package\nWelcome at",date(),"\n")
+	#sessionInfo()
+}
+
+# 退出时交互
+.Last <- function(){
+cat("\nGood Bye at",date(),"\n")
+}
+
+```
 
 
 

@@ -348,6 +348,69 @@ class(wk)  # 查看class是属性
 # [1] "jiebar"  "segment" "jieba" 
 ```
 
+### 2.6 apply_list
+
+```{r apply_list}
+
+cutter = worker()
+apply_list(list("this is test", "that is not test"), cutter)
+apply_list(list("this is test", list("that is not test","ab c")), cutter)
+
+```
+
+### 2.7 file_coding
+
+```{r file_coding}
+
+file_coding(file)
+filecoding(file)
+
+```
+
+
+
+
+### Dictionary Path
+
+```{r Dictionary path}
+
+DICTPATH;HMMPATH;USERPATH;IDFPATH;STOPPATH;DICTPATH
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/jieba.dict.utf8"
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/hmm_model.utf8"
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/user.dict.utf8"
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/idf.utf8"
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/stop_words.utf8"
+
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/jieba.dict.utf8"
+
+HMMPATH
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/hmm_model.utf8"
+
+USERPATH
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/user.dict.utf8"
+
+IDFPATH
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/idf.utf8"
+
+STOPPATH
+# [1] "D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/stop_words.utf8"
+
+```
+### 2.7 Hamming distance of words
+
+```{r hamming distance of words}
+
+distance(codel, coder, jiebar)
+vector_distance(codel, coder, jiebar)
+
+
+words = "hello world"
+simhasher = worker("simhash", topn = 1)
+simhasher <= words
+distance("hello world" , "hello world!" , simhasher)
+vector_distance(c("hello","world") , c("hello", "world","!") , simhasher)
+
+```
 
 
 
@@ -712,7 +775,7 @@ scan(file="D:/Program Files/R/R-3.3.3/library/jiebaRD/dict/user.dict.utf8",
 
 分词已经分好，统计分析才是最重要的任务。剃刀已经磨砺，接下来就可以用R来处理中文字符了。
 
-```{r}
+```{r userDict}
 mixseg2 = worker(type  = "mix", 
                  dict = "/home/rstudio/R/x86_64-pc-linux-gnu-library/3.1/jiebaRD/dict/jieba.dict.utf8", 
                  hmm   = "/home/rstudio/R/x86_64-pc-linux-gnu-library/3.1/jiebaRD/dict/hmm_model.utf8", 
@@ -798,15 +861,15 @@ write_dict(userd, jiebaR::USERPATH)
 (userd = load_user_dict(jiebaR::USERPATH))
 
 
-
 ShowDictPath()  # 显示词典路径
 EditDict()      # 编辑用户词典
 ?EditDict()     # 打开帮助系统
 
-Usage # 使用方法
+# Usage 使用方法
 edit_dict(name = "user") # 这个方法过时了
 EditDict(name = "user") 
-Arguments # 参数
+
+# Arguments 参数
 # name    
 # the name of dictionary including user, system, stop_word.
 ```
