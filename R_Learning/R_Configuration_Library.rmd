@@ -43,10 +43,10 @@ local({
 
 ```{r load package in a safe way}
 # Load data.table package
-if(!suppressWarnings(require(data.table)))
+if(!suppressWarnings(require('data.table')))
 {
     install.packages('data.table')
-    require(data.table)
+    require('data.table')
 }
 
 ```

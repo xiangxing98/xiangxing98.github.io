@@ -250,6 +250,31 @@ show_dictpath()
 ## End(Not run)
 ```
 
+### 1.4 file segmentation
+
+```{r file segmentation ex2}
+wk <- worker(encoding="UTF-8")
+wk[file.choose()]
+
+# 词频分析
+#这里选择分词之后的文件（不需要先分析，直接选择原文件即可）
+f <- scan(file.choose(),sep="\n",what="",encoding="UTF-8")
+# Read 1 item
+df <- freq(wk[f])
+df <- df[order(-df$freq),]
+
+install.packages("sqldf")
+
+library("sqldf")
+#用View(df)看一下里面字段名，不然怎么写SQL都不知道，提取前100项，不然做词云的时候很卡~
+df <- sqldf("select [char],[freq] from df where length([char])>1 limit 100")
+#这里的SQL语句可以随自己的实际需求填写，反正都一样，再用View(df)看一下数据，成功了！其实排序也是可以直接使用SQL进行排序的，只是，只是~在写这文章的时候忘记了。。。
+#update at 2017-3-9 数据框方法,蛋疼的SQL~
+df <- df[nchar(df$char)>1,]
+
+```
+
+
 
 
 ## 2. 四种分词算法-four kinds of segmentation model

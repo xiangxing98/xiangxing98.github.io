@@ -1,0 +1,1312 @@
+---
+title: "R data.table Basiscs Tutorial"
+author: "Stone_Hou"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    number_sections: no
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# R data.table Basiscs Tutorial
+
+R中的`data.table`包是一个`data.frame`的扩展工具集(一个`data.frame`的高级版本)，可以通过自定义`keys`来设置索引，实现高效的数据索引查询、快速分组、快速连接、快速赋值等数据操作, 让你的程序做数据整型的运算速度大大的增加。`data.table`主要通过二元检索法大大提高数据操作的效率，它也兼容适用于`data.frame`的向量检索法。同时，`data.table`对于大数据的快速聚合也有很好的效果，官方介绍说对于 100GB规模内存数据处理，运行效率还是很好的。那么，就让我们试验一下吧。
+
+`data.table`已经在金融，基因工程学等领域大放光彩。他尤其适合那些需要处理大型数据集（比如 1GB 到100GB）需要在内存中处理数据的人。不过这个包的一些符号并不是很容易掌握，因为这些操作方式在R中比较少见。这也是这篇文章的目的，为了给大家提供一个速查的手册。
+
+data.table的通用格式: DT[i, j, by]，对于数据集DT，选取子集行i,通过by分组计算j
+
+## 1.生成一个data.table对象
+
+生成一个data.table对象，记为DT.
+```{r load data.table package}
+# Load data.table package
+if(!suppressWarnings(require('data.table')))
+{
+    install.packages('data.table')
+    require('data.table')
+}
+# library(data.table)
+
+# data.frame
+set.seed(10L)
+df <- data.frame(a=c('A','B','C','A','A','B'),b=rnorm(6));df
+#   a           b
+# 1 A  0.01874617
+# 2 B -0.18425254
+# 3 C -1.37133055
+# 4 A -0.59916772
+# 5 A  0.29454513
+# 6 B  0.38979430
+
+# data.table
+dt = data.table(a=c('A','B','C','A','A','B'),b=rnorm(6));dt
+
+# data.frame
+df <- data.frame(a=c('A','B','C','A','A','B'),b=rnorm(6));df
+
+# 检查df, dt两个对象的类型，可以看到data.table是对data.frame的扩展类型。
+class(df)
+# [1] "data.frame"
+class(dt)
+# [1] "data.table" "data.frame"
+
+set.seed(45L)
+DT <- data.table(
+  V1=c(1L,2L),
+  V2 = LETTERS[1:3],
+  V3 = round(rnorm(4),4),
+  V4 = 1:12)
+DT
+#      V1 V2      V3 V4  
+#  1:  1  A  0.3408  1  
+#  2:  2  B -0.7033  2  
+#  3:  1  C -0.3795  3  
+#  4:  2  A -0.7460  4  
+#  5:  1  B  0.3408  5  
+#  6:  2  C -0.7033  6  
+#  7:  1  A -0.3795  7  
+#  8:  2  B -0.7460  8  
+#  9:  1  C  0.3408  9  
+# 10:  2  A -0.7033 10  
+# 11:  1  B -0.3795 11  
+# 12:  2  C -0.7460 12 
+```
+
+### data.table代码的结构定义
+
+如果data.table仅仅是对data.frame的做了S3的扩展类型，那么data.table是不可能做到对data.frame从效率有极大的改进的。为了验证，我们需要检查一下data.table代码的结构定义。
+
+```{r data.table function prototype}
+# 打印data.table函数定义
+data.table
+# function (..., keep.rownames = FALSE, check.names = FALSE, key = NULL) 
+# {
+#     x <- list(...)
+#     if (!.R.listCopiesNamed) 
+#         .Call(CcopyNamedInList, x)
+#     if (identical(x, list(NULL)) || identical(x, list(list())) || 
+#         identical(x, list(data.frame(NULL))) || identical(x, 
+#         list(data.table(NULL)))) 
+#         return(null.data.table())
+#     tt <- as.list(substitute(list(...)))[-1L]
+#     vnames = names(tt)
+#     if (is.null(vnames)) 
+#         vnames = rep.int("", length(x))
+#     vnames[is.na(vnames)] = ""
+#     novname = vnames == ""
+#     if (any(!novname)) {
+#         if (any(vnames[!novname] == ".SD")) 
+#             stop("A column may not be called .SD. That has special meaning.")
+#     }
+#     for (i in which(novname)) {
+#         if (is.null(ncol(x[[i]]))) {
+#             if ((tmp <- deparse(tt[[i]])[1]) == make.names(tmp)) 
+#                 vnames[i] <- tmp
+#         }
+#     }
+#     tt = vnames == ""
+#     if (any(tt)) 
+#         vnames[tt] = paste("V", which(tt), sep = "")
+#     n <- length(x)
+#     if (n < 1L) 
+#         return(null.data.table())
+#     if (length(vnames) != n) 
+#         stop("logical error in vnames")
+#     vnames <- as.list.default(vnames)
+#     nrows = integer(n)
+#     numcols = integer(n)
+#     for (i in seq_len(n)) {
+#         xi = x[[i]]
+#         if (is.null(xi)) 
+#             stop("column or argument ", i, " is NULL")
+#         if ("POSIXlt" %chin% class(xi)) {
+#             warning("POSIXlt column type detected and converted to POSIXct. We do not recommend use of POSIXlt at all because it uses 40 bytes to store one date.")
+#             x[[i]] = as.POSIXct(xi)
+#         }
+#         else if (is.matrix(xi) || is.data.frame(xi)) {
+#             xi = as.data.table(xi, keep.rownames = keep.rownames)
+#             x[[i]] = xi
+#             numcols[i] = length(xi)
+#         }
+#         else if (is.table(xi)) {
+#             x[[i]] = xi = as.data.table.table(xi, keep.rownames = keep.rownames)
+#             numcols[i] = length(xi)
+#         }
+#         nrows[i] <- NROW(xi)
+#         if (numcols[i] > 0L) {
+#             namesi <- names(xi)
+#             if (length(namesi) == 0L) 
+#                 namesi = rep.int("", ncol(xi))
+#             namesi[is.na(namesi)] = ""
+#             tt = namesi == ""
+#             if (any(tt)) 
+#                 namesi[tt] = paste("V", which(tt), sep = "")
+#             if (novname[i]) 
+#                 vnames[[i]] = namesi
+#             else vnames[[i]] = paste(vnames[[i]], namesi, sep = ".")
+#         }
+#     }
+#     nr <- max(nrows)
+#     ckey = NULL
+#     recycledkey = FALSE
+#     for (i in seq_len(n)) {
+#         xi = x[[i]]
+#         if (is.data.table(xi) && haskey(xi)) {
+#             if (nrows[i] < nr) 
+#                 recycledkey = TRUE
+#             else ckey = c(ckey, key(xi))
+#         }
+#     }
+#     for (i in which(nrows < nr)) {
+#         xi <- x[[i]]
+#         if (identical(xi, list())) {
+#             x[[i]] = vector("list", nr)
+#             next
+#         }
+#         if (nrows[i] == 0L) 
+#             stop("Item ", i, " has no length. Provide at least one item (such as NA, NA_integer_ etc) to be repeated to match the ", 
+#                 nr, " rows in the longest column. Or, all columns can be 0 length, for insert()ing rows into.")
+#         if (nr%%nrows[i] != 0L) 
+#             warning("Item ", i, " is of size ", nrows[i], " but maximum size is ", 
+#                 nr, " (recycled leaving remainder of ", nr%%nrows[i], 
+#                 " items)")
+#         if (is.data.frame(xi)) {
+#             ..i = rep(seq_len(nrow(xi)), length.out = nr)
+#             x[[i]] = xi[..i, , drop = FALSE]
+#             next
+#         }
+#         if (is.atomic(xi) || is.list(xi)) {
+#             x[[i]] = rep(xi, length.out = nr)
+#             next
+#         }
+#         stop("problem recycling column ", i, ", try a simpler type")
+#         stop("argument ", i, " (nrow ", nrows[i], ") cannot be recycled without remainder to match longest nrow (", 
+#             nr, ")")
+#     }
+#     if (any(numcols > 0L)) {
+#         value = vector("list", sum(pmax(numcols, 1L)))
+#         k = 1L
+#         for (i in seq_len(n)) {
+#             if (is.list(x[[i]]) && !is.ff(x[[i]])) {
+#                 for (j in seq_len(length(x[[i]]))) {
+#                   value[[k]] = x[[i]][[j]]
+#                   k = k + 1L
+#                 }
+#             }
+#             else {
+#                 value[[k]] = x[[i]]
+#                 k = k + 1L
+#             }
+#         }
+#     }
+#     else {
+#         value = x
+#     }
+#     vnames <- unlist(vnames)
+#     if (check.names) 
+#         vnames <- make.names(vnames, unique = TRUE)
+#     setattr(value, "names", vnames)
+#     setattr(value, "row.names", .set_row_names(nr))
+#     setattr(value, "class", c("data.table", "data.frame"))
+#     if (!is.null(key)) {
+#         if (!is.character(key)) 
+#             stop("key argument of data.table() must be character")
+#         if (length(key) == 1L) {
+#             key = strsplit(key, split = ",")[[1L]]
+#         }
+#         setkeyv(value, key)
+#     }
+#     else {
+#         if (length(ckey) && !recycledkey && !any(duplicated(ckey)) && 
+#             all(ckey %in% names(value)) && !any(duplicated(names(value)[names(value) %in% 
+#             ckey]))) 
+#             setattr(value, "sorted", ckey)
+#     }
+#     alloc.col(value)
+# }
+# <bytecode: 0x0000000017bfb990>
+# <environment: namespace:data.table>
+
+```
+
+从上面的整个大段代码来看，data.table的代码定义中并没有使用data.frame结构的依赖的代码，data.table都在自己函数定义中做的数据处理，所以我们可以确认data.table和data.frame的底层结果是不一样的。
+
+那么为什么从刚刚用class函数检查data.table对象时，会看到data.table和data.frame的扩展关系呢？这里就要了解R语言中对于S3面向对象系统的结构设计了，关于S3的面向对象设计，请参考文章R语言基于S3的面向对象编程。
+
+从上面代码中，倒数第17行找到 setattr(value, "class", c("data.table", "data.frame")) 这行，发现这个扩展的定义是作者主动设计的，那么其实就可以理解为，data.table包的作者希望data.table使用起来更像data.frame，所以通过一些包装让使用者无切换成本的。
+
+### data.table和data.frame相互转换
+
+如果想把data.frame对象和data.table对象进行转换，转换的代码是非常容易的，直接转换就可以了。
+
+从一个data.frame对象转型到data.table对象。
+
+```{r data.frame data.table}
+# 创建一个data.frame对象
+df<-data.frame(a=c('A','B','C','A','A','B'),b=rnorm(6))
+
+# 检查类型
+class(df)
+# [1] "data.frame"
+
+# 转型为data.table对象
+df2<-data.table(df)
+
+# 检查类型
+class(df2)
+# [1] "data.table" "data.frame"
+
+
+# 创建一个data.table对象
+dt <- data.table(a=c('A','B','C','A','A','B'),b=rnorm(6))
+
+# 检查类型
+class(dt)
+# [1] "data.table" "data.frame"
+
+# 转型为data.frame对象
+dt2<-data.frame(dt)
+
+# 检查类型
+class(dt2)
+# [1] "data.frame"
+```
+
+按照自定义的索引进行查询
+```{r}
+# 取a列中值为B的行
+dt["B",]
+#    a        b
+# 1: B 1.487069
+# 2: B 1.107642
+
+# 取a列中值为B的行，并保留第一行
+dt["B",mult="first"]
+#    a        b
+# 1: B 1.487069
+
+# 取a列中值为B的行，并保留最后一行
+dt["B",mult="last"]
+#    a        b
+# 1: B 1.107642
+
+# 取a列中值为b的行，没有数据则为NA
+dt["b"]
+#    a  b
+# 1: b NA
+```
+
+从上面的代码测试中我们可以看出，在定义了keys后，我们要查询的时候就不用再指定列了，默认会把方括号中的第一位置留给keys，作为索引匹配的查询条件。从代码的角度，又节省了一个变量定义的代码。同时，可以用mult参数，对数据集增加过滤条件，让代码本身也变得更高效。如果查询的值，不是索引列包括的值，则返回NA。
+
+
+
+## 2.通过i来筛选数据集的行
+
+由于data.table对用户使用上是希望和data.frame的操作尽量相似，所以适用于data.frame的查询方法基本都适用于data.table，同时data.table自己具有的一些特性，提供了自定义keys来进行高效的查询。
+
+下面先看一下，data.table基本的数据查义方法。
+
+### 通过数字来筛选数据集的行
+```{r query or select data}
+# 取第二行的数据
+dt[2,]
+#   a        b
+#1: B 1.487069
+
+# 不加,也可以
+dt[2]
+#   a        b
+#1: B 1.487069
+
+
+# 取a列的值
+dt$a
+# [1] "A" "B" "C" "A" "A" "B"
+
+# 取a列中值为B的行
+dt[a=="B",]
+#   a        b
+#1: B 1.487069
+#2: B 1.107642
+
+# 取a列中值为B的行的判断
+dt[,a=='B']
+#[1] FALSE  TRUE FALSE FALSE FALSE  TRUE
+
+# 取a列中值为B的行的索引
+which(dt[,a=='B'])
+#[1] 2 6
+
+#选取第三行到第五行
+DT[3:5,] #or DT[3:5]  
+#     V1 V2      V3 V4  
+# 1:  1  C -0.3795  3  
+# 2:  2  A -0.7460  4  
+# 3:  1  B  0.3408  5
+```
+
+上面的操作，不管是用索引值，== 和 $ 都是data.frame操作一样的。下面我们取data.table特殊设计的keys来查询。
+
+```{r setkey}
+# 设置a列为索引列
+setkey(dt,a)
+
+# 打印dt对象，发现数据已经按照a列字母对应ASCII码值进行了排序。
+dt
+#    a          b
+# 1: A -1.1304182
+# 2: A  1.6093587
+# 3: A  0.4015506
+# 4: B  0.2159889
+# 5: B -0.2729840
+# 6: C  1.2322373
+```
+
+
+
+### 基于使用快速自动索引条件，使用列名选择行i
+```{r}
+# 在V2这一列，选择所有值为A的行
+DT[ V2 == "A"]  
+#     V1 V2      V3 V4  
+# 1:  1  A  0.3408  1  
+# 2:  2  A -0.7460  4  
+# 3:  1  A -0.3795  7  
+# 4:  2  A -0.7033 10 
+```
+
+### 选择多个值
+
+```{r}
+# 选择在这一列中包含value1或value2的所有值
+DT[column %in% c("value1","value2")]
+
+# 选择V2这列中包含值A或C的所有行
+DT[ V2 %in% c("A","C")]
+    V1 V2      V3 V4
+1:  1  A  0.3408  1
+2:  1  C -0.3795  3
+3:  2  A -0.7460  4
+4:  2  C -0.7033  6
+5:  1  A -0.3795  7
+6:  1  C  0.3408  9
+7:  2  A -0.7033 10
+8:  2  C -0.7460 12
+```
+
+## 3.通过j来操作列
+
+### 通过j来选择一列
+```{r}
+# 通过j来选择一列
+DT[,V2]
+# [1] "A" "B" "C" "A" "B" "C" "A" "B" "C" "A" "B" "C"
+# 注意到V2这一列是以向量的形式返回的
+```
+
+### 通过j来选择多列
+```{r}
+# 通过j来选择多列
+DT[,.(V2,V3)]  
+#      V2      V3    
+#  1:  A  0.3408  
+#  2:  B -0.7033  
+#  3:  C -0.3795  
+#  4:  A -0.7460  
+#  5:  B  0.3408  
+#  6:  C -0.7033  
+#  7:  A -0.3795  
+#  8:  B -0.7460  
+#  9:  C  0.3408  
+# 10:  A -0.7033  
+# 11:  B -0.3795   
+# 12:  C -0.7460 
+```
+
+V2与V3这两列以data.table的形式返回
+.()为list()的一个别名。
+如果使用.(),返回的为一个data.table对象。
+如果不使用.()，结果为返回一个向量。
+
+### 在j上调用函数
+```{r}
+DT[,sum(V1)]
+# [1] 18
+```
+以向量的形式返回V1列中所有元素的总和
+
+### 在多列上进行计算
+以data.table的形式，返回V1这列的所有元素之和与V3这列的标准差
+```{r}
+DT[,.(sum(V1),sd(V3))]
+#    V1        V2
+# # 1: 18 0.4546055
+```
+
+### 指定计算列的列名
+类似上例，但有一个新的列名
+```{r}
+DT[,.(Aggregate = sum(V1), Sd.V3 = sd(V3))]
+#    Aggregate     Sd.V3
+# 1:        18 0.4546055
+```
+
+###若列的长度不一，则会循环对齐
+选择V1这一列，并计算V3这列的标准差，将会得到一个标准差的值并循环补齐
+```{r}
+DT[,.(V1, Sd.V3 = sd(V3))]
+#  V1     Sd.V3  
+#  1:  1 0.4546055  
+#  2:  2 0.4546055  
+#  3:  1 0.4546055  
+#  4:  2 0.4546055  
+#  5:  2 0.4546055  
+#  6:  1 0.4546055  
+#  7:  2 0.4546055  
+#  8:  1 0.4546055  
+#  9:  1 0.4546055  
+# 10:  2 0.4546055  
+# 11:  1 0.4546055  
+# 12:  2 0.4546055 
+```
+
+### 多个表达式可以包裹在花括号中
+```{r}
+# 输出V2这一列并绘制V3这一列
+DT[,{print(V2) 
+  plot(V3)  
+  NULL}]
+  
+# [1] "A" "B" "C" "A" "B" "C" "A" "B" "C" "A" "B" "C"  
+# #And a plot  
+# NULL
+```
+
+## 4.根据分组来操作j
+
+基于data.frame对象做分组计算时，要么使用apply函数自己处理，要么用plyr包的分组计算功能。对于data.table包本身就支持了分组计算，很像SQL的group by这样的功能，这是data.table包主打的优势。
+
+比如，按a列分组，并对b列按分组求和。
+
+### 根据分组来操作j
+```{r group by j}
+# 对V4列求和
+DT[, sum(V4)]
+
+# 按V1列分组，对V4列按分组求和
+DT[,.(V4.Sum = sum(V4)),by=V1]  
+#    V1 V4.Sum  
+# 1:  1     36  
+# 2:  2     42 
+```
+
+### 通过使用.()控制多个列来操作j
+```{r}
+# 与上例类似，但每一个分组包含V1和V2两列
+DT[,.(V4.Sum = sum(V4)),by=.(V1,V2)]  
+#    V1 V2 V4.Sum  
+# 1:  1  A      8  
+# 2:  2  B     10    
+# 3:  1  C     12  
+# 4:  2  A     14  
+# 5:  1  B     16  
+# 6:  2  C     18 
+```
+
+### 在by中调用函数
+```{r}
+#以sign(V1-1)为分组，计算各个分组中V4列的和:
+DT[,.(V4.Sum = sum(V4)),by=sign(V1-1)]  
+#    sign V4.Sum  
+# 1:    0     36  
+# 2:    1     42 
+```
+
+### 通过指定i行子集的分组进行操作
+```{r}
+# 在前5行数据集中，通过V1列的分组来计算V4列的总和:
+DT[1:5,.(V4.Sum = sum(V4)),by=V1]  
+#      V1 V4.Sum  
+# 1:  1      9  
+# 2:  2      6 
+```
+
+### 使用函数.N来得到每个类别的总观测数
+
+```{r}
+# 在V1列中计算每个分组的观测数
+DT[,.N,by = V1]  
+   V1 N  
+# 1:  1 6  
+# 2:  2 6 
+```
+
+## 5.使用":="引用来添加或更新一列
+
+### 在一行中使用":="引用来添加或更新列.
+> 注意: 额外的指定 (DT <- DT[...])是多余的
+
+```{r update and add columns}
+# 使用:=来更新V1列:
+
+DT[, V1 := round(exp(V1),2)]
+```
+这段代码没有显式的返回结果，而V1列从[1] 1 2 1 2 … 变成了 [1] 2.72 7.39 2.72 7.39 …
+
+### 使用:=引用来添加或更新多列
+```{r}
+# 增加2列，列名为c1,c2
+#dt[,`:=`(c1 = 1:6, c2 = 2:7)]
+
+# 使用:=更新V1列和V2列：
+DT[, c("V1","V2") := list(round(exp(V1),2), LETTERS[4:6])]
+
+```
+
+同样没有显式的返回结果，V1列的结果与上相同，
+V2列从[1] "A" "B" "C" "A" "B" "C" … 变成: [1] "D" "E" "F" "D" "E" "F" …
+
+### 修改data.table对象的值
+
+修改data.table对象的值，就是通过索引定位后进行值的替换，通过这样的格式 data.table[condition, colname := 0]。我们继续使用刚才创建的dt对象。
+```{r modify or update value}
+# 给b赋值为30
+dt[,b:=30];dt
+
+# 对a列值为B的行，c2列值值大于3的行，的b列赋值为100
+dt[a=='B' & c2>3, b:=100];dt
+
+# 还有另一种写法
+dt[,b:=ifelse(a=='B' & c2>3,50,b)];dt
+```
+
+
+
+### 使用函数:=
+
+上例的另一种写法,但会在书写时更易并齐。而且,当添加[]时，结果会返回在屏幕中
+```{r}
+DT[, ':=' (V1 =round(exp(V1),2),V2 = LETTERS[4:6])][]
+```
+与上例变化相同,但是由于在语句最后添加了[]，这一结果会返回至屏幕
+
+### 通过使用:=来移除一列
+
+给data.table对象删除一列时，就是给这列赋值为空，使用这样的格式 data.table[, colname := NULL]。我们继续使用刚才创建的dt对象。
+
+```{r}
+# 移除V1列
+DT[, V1 := NULL];DT
+# 无显式的返回结果，但V1列变为NULL
+```
+
+### 通过使用:=来移除多列
+
+```{r}
+# 移除V1列与V2列
+DT[, c("V1","V2") := NULL];DT
+# 无显式的返回结果，但V1列与V2列变为NULL
+```
+
+将一个包含列名的变量用小括号包裹起来，变量所传递的内容将会被删除
+
+注意：列名为Cols.chosen的列将会被删除，这里不是删除"V1","V2"列
+
+```{r}
+Cols.chosen = c("V1","V2")
+DT[, Cols.chosen := NULL]
+```
+无显式的返回结果，列名为Cols.chosen的列将会被删除
+
+删除指定变量Cols.chosen包含的V1列和V2列
+
+```{r}
+DT[, (Cols.chosen) := NULL]
+```
+
+无显式的返回结果，列名为V1和V2的列变为NULL
+
+## 6. 索引与键值
+
+### 使用setkey()函数设置键值
+(注意:由于上面进行了更新操作，此处需要重新运行文章最开始的代码，生成DT)
+```{r}
+library(data.table)
+set.seed(45L)
+DT <- data.table(V1=c(1L,2L),
+                 V2=LETTERS[1:3],
+                 V3=round(rnorm(4),4),
+                 V4=1:12)
+#     V1 V2      V3 V4
+#  1:  1  A  0.3408  1
+#  2:  2  B -0.7033  2
+#  3:  1  C -0.3795  3
+#  4:  2  A -0.7460  4
+#  5:  1  B  0.3408  5
+#  6:  2  C -0.7033  6
+#  7:  1  A -0.3795  7
+#  8:  2  B -0.7460  8
+#  9:  1  C  0.3408  9
+# 10:  2  A -0.7033 10
+# 11:  1  B -0.3795 11
+# 12:  2  C -0.7460 12
+```
+setkey()函数可以在数据集DT上设置键值。
+当我们设置好key后，data.table会将数据按照key来排序。
+
+```{r}
+# 在V2列上设置一个键值
+setkey(DT,V2)
+# 发现数据已经按照V2列字母对应ASCII码值进行了排序。
+DT
+#     V1 V2      V3 V4
+#  1:  1  A  0.3408  1
+#  2:  2  A -0.7460  4
+#  3:  1  A -0.3795  7
+#  4:  2  A -0.7033 10
+#  5:  2  B -0.7033  2
+#  6:  1  B  0.3408  5
+#  7:  2  B -0.7460  8
+#  8:  1  B -0.3795 11
+#  9:  1  C -0.3795  3
+# 10:  2  C -0.7033  6
+# 11:  1  C  0.3408  9
+# 12:  2  C -0.7460 12
+```
+
+
+### 使用键值来选择行
+使用键值可以更加有效地选择行，由于已将V2设置了键值，将会返回该列中所有包含变量值A的行
+```{r}
+DT["A"]  
+#    V1 V2      V3 V4  
+# 1:  1  A  0.3408  1  
+# 2:  2  A -0.7460  4  
+# 3:  1  A -0.3795  7  
+# 4:  2  A -0.7033 10 
+```
+
+返回键值所在列(V2列)包含变量值A或变量值C的所有行
+```{r}
+DT[c("A","C")]  
+#    V1 V2      V3 V4  
+# 1:  1  A  0.3408  1  
+# 2:  2  A -0.7460  4  
+# 3:  1  A -0.3795  7  
+# 4:  2  A -0.7033 10  
+# 5:  1  C -0.3795  3  
+# 6:  2  C -0.7033  6  
+# 7:  1  C  0.3408  9  
+# 8:  2  C -0.7460 12 
+```
+
+### mult参数
+mult参数是用来控制i匹配到的哪一行的返回结果默认情况下会返回该分组的所有元素
+
+返回匹配到键值所在列(V2列)所有行中的第一行
+```{r}
+DT["A", mult ="first"]  
+#     V1 V2    V3 V4  
+# 1:  1  A 0.3408  1 
+```
+
+返回匹配到键值所在列(V2列)所有行中的最后一行
+```{r}
+DT["A", mult = "last"]  
+#    V1 V2      V3 V4  
+# 1:  2  A -0.7033 10 
+```
+
+### nomatch参数
+nomatch参数用于控制，当在i中没有到匹配数据的返回结果，默认为NA，也能设定为0。0意味着对于没有匹配到的行将不会返回。
+
+返回匹配到键值所在列(V2列)所有包含变量值A或D的所有行：
+```{r}
+DT[c("A","D")]  
+#     V1 V2      V3 V4  
+# 1:  1  A  0.3408  1  
+# 2:  2  A -0.7460  4  
+# 3:  1  A -0.3795  7  
+# 4:  2  A -0.7033 10  
+# 5: NA  D      NA NA 
+```
+变量值A匹配到了，而变量值D没有，故返回NA。
+
+返回匹配到键值所在列(V2列)所有包含值A或D的所有行：
+```{r}
+DT[c("A","D"), nomatch = 0]  
+#    V1 V2      V3 V4  
+# 1:  1  A  0.3408  1  
+# 2:  2  A -0.7460  4  
+# 3:  1  A -0.3795  7  
+# 4:  2  A -0.7033 10 
+```
+因为nomatch参数，值D没有匹配到故不返回。
+
+### by=.EACHI参数
+by=.EACHI允许按每一个已知i的子集分组，在使用by=.EACHI时需要设置键值
+
+返回键值(V2列)中包含A或C的所有行中，V4列的总和。
+```{r}
+DT[c("A","C"),sum(V4)]
+# [1] 52
+```
+
+返回键值所在列(V2列)中包含A的行在V4列总和与包含C的行在V4列的总和。
+```{r}
+DT[c("A","C"),sum(V4), by=.EACHI]  
+#   V2 V1  
+# 1: A 22  
+# 2: C 30 
+```
+
+### 使用setkey()设置主键
+任意列都能使用setkey()来设置主键，这种方式行可以选择2个主键，这是一个等值连接
+
+V1列的每个组先根据V1排序，再根据V2排序。
+```{r}
+setkey(DT,V1,V2)
+```
+无显式返回结果
+
+选择键值1(V1列)为2且键值2(V2列)为C的行。
+```{r}
+DT[.(2,"C")]
+  # V1 V2      V3 V4
+# 1:  2  C -0.7033  6
+# 2:  2  C -0.7460 12
+```
+
+选择键值1(V1列)为2且键值2(V2列)为A或C的行
+```{r}
+DT[.(2,c("A","C"))]
+#     V1 V2      V3 V4
+# 1:  2  A -0.7460  4
+# 2:  2  A -0.7033 10
+# 3:  2  C -0.7033  6
+# 4:  2  C -0.7460 12
+```
+
+## 7.data.table高级操作
+
+### .N
+.N可以用来表示行的数量或者最后一行
+
+在i处使用: 返回每一列的倒数第二行
+```{r}
+DT[.N-1]
+#    V1 V2      V3 V4
+# 1:  2  C -0.7033  6
+```
+
+在j处使用：返回倒数第二行所在的行数。
+```{r}
+DT[,.N-1]
+# [1] 11
+```
+
+### .()
+.()是list()的一个别名，他们在data.table中是等价的。
+当只有一个元素的位置j或者by中，是不需要.()的。
+
+在j中使用：
+```{r}
+DT[,.(V2,V3)] #or DT[,list(V2,V3)]  
+#    V2      V3  
+#  1:  A  0.3408    
+#  2:  B -0.7033      
+#  3:  C -0.3795    
+#  4:  A -0.7460  
+#  5:  B  0.3408  
+#  6:  C -0.7033  
+#  7:  A -0.3795  
+#  8:  B -0.7460  
+#  9:  C  0.3408  
+# 10:  A -0.7033  
+# 11:  B -0.3795  
+# 12:  C -0.7460 
+```
+
+在by中使用：以V1，V2为分组，对V3求均值
+```{r}
+DT[, mean(V3),by=.(V1,V2)]  
+#    V1 V2       V1  
+# 1:  1  A -0.01935  
+# 2:  2  B -0.72465  
+# 3:  1  C -0.01935  
+# 4:  2  A -0.72465  
+# 5:  1  B -0.01935  
+# 6:  2  C -0.72465 
+```
+
+### .SD参数
+.SD是一个data.table，他包含了各个分组，除了by中的变量的所有元素。
+.SD只能在位置j中使用：
+```{r}
+DT[, print(.SD), by=V2]  
+   V1      V3 V4  
+1:  1  0.3408  1  
+2:  2 -0.7460  4  
+3:  1 -0.3795  7  
+4:  2 -0.7033 10  
+   V1      V3 V4  
+1:  2 -0.7033  2  
+2:  1  0.3408  5  
+3:  2 -0.7460  8  
+4:  1 -0.3795 11  
+   V1      V3 V4  
+1:  1 -0.3795  3  
+2:  2 -0.7033  6  
+3:  1  0.3408  9  
+4:  2 -0.7460 12  
+Empty data.table (0 rows) of 1 col: V2
+```
+
+以V2为分组，选择每组的第一和最后一列：
+```{r}
+DT[,.SD[c(1,.N)], by=V2]  
+#    V2 V1      V3 V4  
+# 1:  A  1  0.3408  1  
+# 2:  A  2 -0.7033 10  
+# 3:  B  2 -0.7033  2  
+# 4:  B  1 -0.3795 11  
+# 5:  C  1 -0.3795  3  
+# 6:  C  2 -0.7460 12 
+```
+以V2为分组，计算.SD中所有元素的和:
+```{r}
+DT[, lapply(.SD, sum), by=V2]  
+#   V2 V1     V3 V4  
+# 1:  A  6 -1.488 22  
+# 2:  B  6 -1.488 26  
+# 3:  C  6 -1.488 30 
+```
+
+### .SDcols
+
+.SDcols常于.SD用在一起，他可以指定.SD中所包含的列，也就是对.SD取子集：
+```{r}
+DT[, lapply(.SD,sum), by=V2,.SDcols = c("V3","V4")]  
+#    V2     V3 V4  
+# 1:  A -1.488 22  
+# 2:  B -1.488 26  
+# 3:  C -1.488 30 
+```
+
+.SDcols也可以是一个函数的返回值：
+```{r}
+DT[, lapply(.SD,sum), by=V2,.SDcols = paste0("V",3:4)]  
+   V2     V3 V4  
+1:  A -1.488 22  
+2:  B -1.488 26  
+3:  C -1.488 30
+```
+结果与上一个是相同的。
+
+## 8.串联操作可以把表达式聚合在一起并避免多余的中间变量
+
+### 把多个操作串联起来，这等价于SQL中的having
+```{r}
+DT<-DT[, .(V4.Sum = sum(V4)),by=V1] 
+DT[V4.Sum > 35] #no chaining
+# V1 V4.Sum
+# 1: 1 36
+# 2: 2 42
+```
+
+这个是不使用串联的方法，先以V1为分组，对V4求和，然后再把分组总和大于35的取出来。 使用串联的方法：
+
+```{r}
+DT[, .(V4.Sum = sum(V4)),by=V1][V4.Sum > 35 ]
+# V1 V4.Sum  
+# 1: 1 36  
+# 2: 2 42 
+```
+
+分组求和之后对V1进行排序：
+```{r}
+DT[, .(V4.Sum = sum(V4)),by=V1][order(-V1)]    
+# V1 V4.Sum  
+# 1: 2 42    
+# 2: 1 36 
+```
+
+## 9.使用set()家族
+
+### set()
+set()通常用来更新给定的行和列的值，要注意的是，他不能跟by结合使用。
+```{r}
+rows = list(3:4,5:6)
+cols = 1:2
+for (i in seq_along(rows))
+{ 
+  set(DT,
+  i=rows[[i]],
+  j = cols[i],
+  value = NA) 
+}
+DT
+ #    V1 V2      V3 V4  
+ # 1:  1  A -0.0559  1  
+ # 2:  2  B -0.4450  2  
+ # 3: NA  C  0.0697  3  
+ # 4: NA  A -0.1547  4  
+ # 5:  1 NA -0.0559  5    
+ # 6:  2 NA -0.4450  6  
+ # 7:  1  A  0.0697  7  
+ # 8:  2  B -0.1547  8 
+```
+以上程序把给定的一组行和列都设置为了NA
+
+### setname()
+与set()同理，setname()可以修改给定的列名和行名，以下程序是
+```{r}
+#把名字为"old"的列，设置为"new"
+setnames(DT,"old","new") 
+
+#把"V2","V3"列，设置为"V2.rating","V3.DataCamp"
+setnames(DT,c("V2","V3"),c("V2.rating","V3.DataCamp")) 
+```
+
+### setcolorder()
+setcolorder()可以用来修改列的顺序。
+```{r}
+setcolorder(DT,c("V2","V1","V4","V3")) 
+# 这段代码会使得列的顺序变成：
+# [1] "V2" "V1" "V4" "V3" 
+```
+
+## 10. 多个data.table的连接操作
+
+在操作数据的时候，经常会出现2个或多个数据集通过一个索引键进行关联，而我们的算法要把多种数据合并到一起再进行处理，那么这个时候就会用的数据的连接操作，类似关系型数据库的左连接(LEFT JOIN)。
+
+举个例子，学生考试的场景。按照ER设计方法，我们通常会按照实体进行数据划分。这里存在2个实体，一个是学生，一个是成绩。学生实体会包括，学生姓名等的基本资料，而成绩实体会包括，考试的科目，考试的成绩。
+
+假设有6个学生，分别参加A和B两门考试，每门考试得分是不一样的。
+```{r joint data table}
+# 6个学生
+student <- data.table(id=1:6,name=c('Dan','Mike','Ann','Yang','Li','Kate'));student
+#    id name
+# 1:  1  Dan
+# 2:  2 Mike
+# 3:  3  Ann
+# 4:  4 Yang
+# 5:  5   Li
+# 6:  6 Kate
+
+# 分别参加A和B两门考试
+score <- data.table(id=1:12,stuId=rep(1:6,2),score=runif(12,60,99),class=c(rep('A',6),rep('B',6)));score
+#     id stuId    score class
+#  1:  1     1 89.18497     A
+#  2:  2     2 61.76987     A
+#  3:  3     3 74.67598     A
+#  4:  4     4 64.08165     A
+#  5:  5     5 85.00035     A
+#  6:  6     6 95.25072     A
+#  7:  7     1 81.42813     B
+#  8:  8     2 82.16083     B
+#  9:  9     3 69.53405     B
+# 10: 10     4 89.01985     B
+# 11: 11     5 96.77196     B
+# 12: 12     6 97.02833     B
+
+```
+
+通过学生ID，把学生和考试成绩2个数据集进行连接。
+```{r join by student ID}
+# 设置score数据集，key为stuId
+setkey(score,"stuId")
+
+# 设置student数据集，key为id
+setkey(student,"id")
+
+# 合并两个数据集的数据
+student[score,nomatch=NA,mult="all"]
+#     id name i.id    score class
+#  1:  1  Dan    1 89.18497     A
+#  2:  1  Dan    7 81.42813     B
+#  3:  2 Mike    2 61.76987     A
+#  4:  2 Mike    8 82.16083     B
+#  5:  3  Ann    3 74.67598     A
+#  6:  3  Ann    9 69.53405     B
+#  7:  4 Yang    4 64.08165     A
+#  8:  4 Yang   10 89.01985     B
+#  9:  5   Li    5 85.00035     A
+# 10:  5   Li   11 96.77196     B
+# 11:  6 Kate    6 95.25072     A
+# 12:  6 Kate   12 97.02833     B
+```
+最后我们会看到，两个数据集的结果合并在了一个结果数据集中。这样就完成了，数据连接的操作。从代码的角度来看，1行代码要比用data.frame去拼接方便的多。
+
+## 11. data.table包性能对比
+
+现在很多时候我们需要处理的数据量是很大的，动辄上百万行甚至上千万行。如果我们要使用R对其进行分析或处理，在不增加硬件的条件下，就需要用一些高性能的数据包进行数据的操作。这里就会发现data.table是非常不错的一个选择。
+
+### data.table和data.frame索引查询性能对比
+
+我们先生成一个稍大数据集，包括2列x和y分别用英文字母进行赋值，100,000,004行，占内存大小1.6G。分别比较data.frame操作和data.table操作的索引查询性能耗时。
+
+使用data.frame创建数据集。
+```{r data.frame performance}
+# 清空环境变量
+rm(list=ls())
+
+# 设置大小
+size = ceiling(1e8/26^2)
+# [1] 147929
+
+# 计算data.frame对象生成的时间 
+t0=system.time(
+  df <- data.frame(x=rep(LETTERS,each=26*size),y=rep(letters,each=size))
+)
+
+# 打印时间
+t0
+# 用户 系统 流逝 
+# 3.63 0.18 3.80 
+
+# df对象的行数
+nrow(df)
+# [1] 100000004
+
+# 占用内存
+object.size(df)
+# 1600003336 bytes
+
+# 进行条件查询
+t1=system.time(
+  val1 <- dt[dt$x=="R" & dt$y=="h",]
+)
+
+# 查询时间
+t1
+# 用户 系统 流逝 
+# 8.53 0.84 9.42 
+```
+
+再使用data.table创建数据集。
+```{r data.table performance}
+# 清空环境变量
+rm(list=ls())
+
+# 设置大小
+size = ceiling(1e8/26^2)
+# [1] 147929
+
+# 计算data.table对象生成的时间 
+t3=system.time(
+  dt <- data.table(x=rep(LETTERS,each=26*size),y=rep(letters,each=size))
+)
+
+# 生成对象的时间
+t3
+# 用户 系统 流逝 
+# 3.22 0.39 3.63 
+
+# 对象行数
+nrow(dt)
+# [1] 100000004
+
+# 占用内存
+object.size(dt)
+# 2000004040 bytes
+
+# 进行条件查询
+t3=system.time(
+val2 <- dt[x=="R" & y=="h",]
+)
+
+# 查询时间
+t3
+# 用户 系统 流逝 
+# 6.52 0.26 6.80 
+```
+
+从上面的测试来看，创建对象时，data.table比data.frame显著的高效，而查询效果则并不明显。我们对data.table数据集设置索引，试试有索引查询的效果。
+
+```{r index setkey}
+# 设置key索引列为x,y
+setkey(dt,x,y)
+
+# 条件查询
+t4=system.time(
+  val3  <- dt[list("R","h")]
+)
+
+# 查看时间
+t4
+# 用户 系统 流逝 
+# 0.00 0.00 0.06 
+```
+设置索引列后，按索引进行查询，无CPU耗时。震惊了！！
+
+### data.table和data.frame的赋值性能对比
+
+对于赋值操作来说，通常会分为2个动作，先查询再值替换，对于data.frame和data.table都是会按照这个过程来实现的。从上一小节中，可以看到通过索引查询时data.table比data.frame明显的速度要快，对于赋值的操作测试，我们就要最好避免复杂的查询。
+
+对x列值为R的行，对应的y的值进行赋值。首先测试data.frame的计算时间。
+
+```{r assign value performance}
+size = 1000000
+
+df <- data.frame(x=rep(LETTERS,each=size),y=rnorm(26*size))
+
+system.time(
+  df$y[which(df$x=='R')]<-10
+)
+
+# 用户 系统 流逝 
+# 0.75 0.01 0.77 
+```
+
+计算data.table的赋值时间。
+```{r data.table assign value performance}
+dt <- data.table(x=rep(LETTERS,each=size),y=rnorm(26*size))
+
+system.time(
+  dt[x=='R', y:=10]
+)
+
+# 用户 系统 流逝 
+# 0.11 0.00 0.11 
+
+setkey(dt,x)
+system.time(
+  dt['R', y:=10]
+)
+
+# 用户 系统 流逝 
+# 0.01 0.00 0.02 
+```
+
+通过对比data.table和data.frame的赋值测试，有索引的data.table性能优势是非常明显的。我们增大数据量，再做一次赋值测试。
+
+```{r data.table assign value performance 2}
+
+size = 1000000*5
+
+df <- data.frame(x=rep(LETTERS,each=size),y=rnorm(26*size))
+
+system.time(
+  df$y[which(df$x=='R')]<-10
+)
+# 用户 系统 流逝 
+# 3.22 0.25 3.47 
+
+rm(list=ls())
+
+size = 1000000*5
+
+dt <- data.table(x=rep(LETTERS,each=size),y=rnorm(26*size))
+setkey(dt,x)
+
+system.time(
+  dt['R', y:=10]
+)
+# 用户 系统 流逝 
+# 0.08 0.01 0.08 
+```
+对于增加数据量后data.table，要比data.frame的赋值快更多倍。
+
+
+### data.table和tapply分组计算性能对比
+
+再对比一下data.table处理数据和tapply的分组计算的性能。测试同样地只做一个简单的计算设定，比如，对一个数据集按x列分组对y列求和。
+
+```{r data.table vs tapply}
+# 设置数据集大小
+size = 100000
+dt <- data.table(x=rep(LETTERS,each=size),y=rnorm(26*size))
+
+# 设置key为x列
+setkey(dt,x)
+
+# 计算按x列分组，对y列的求和时间
+system.time(
+  r1<-dt[,sum(y),by=x]
+)
+# 用户 系统 流逝 
+# 0.03 0.00 0.03 
+
+# 用tapply实现，计算求和时间
+system.time(
+  r2<-tapply(dt$y,dt$x,sum)
+)
+# 用户 系统 流逝 
+# 0.25 0.05 0.30 
+
+# 查看数据集大小, 40mb
+object.size(dt)
+# 41602688 bytes
+```
+
+对于40mb左右的数据来说，tapply比data.table要快，那么我增加数据集的大小，给size*10再测试一下。
+```{r data.table vs tapply 400M}
+size = 100000*10
+dt <- data.table(x=rep(LETTERS,each=size),y=rnorm(26*size))
+setkey(dt,x)
+val3<-dt[list("R")]
+ 
+system.time(
+  r1<-dt[,sum(y),by=x]
+)
+# 用户 系统 流逝 
+# 0.25 0.03 0.28 
+
+system.time(
+  r2<-tapply(dt$y,dt$x,sum)
+)
+# 用户 系统 流逝 
+# 2.56 0.36 2.92 
+
+# 400mb数据 
+object.size(dt)
+# 416002688 bytes
+```
+
+对于400mb的数据来说，data.table的计算性能已经明显优于tapply了，再把数据时增加让size*5。
+
+```{r data.table vs tapply 2GB}
+size = 100000*10*5
+dt <- data.table(x=rep(LETTERS,each=size),y=rnorm(26*size))
+setkey(dt,x)
+ 
+system.time(
+    r1<-dt[,sum(y),by=x]
+)
+# 用户 系统 流逝 
+# 1.50 0.11 1.61 
+
+system.time(
+    r2<-tapply(dt$y,dt$x,sum)
+)
+ # 用户  系统  流逝 
+# 13.30  3.58 16.90 
+ 
+# 2G数据
+object.size(dt)
+# 2080002688 bytes
+```
+
+对于2G左右的数据来说，tapply总耗时到了16秒，而data.table为1.6秒，从2个的测试来说，大于400mb数据时CPU耗时是线性的。
+
+把上几组测试数据放到一起，下图所示。
+
+通过上面的对比，我们发现data.table包比tapply快10倍，比data.frame赋值操作快30倍，比data.frame的索引查询快100倍，绝对是值得花精力去学习的一个包。
+
+
+## Reference Data
+
+* [data.table包基础学习教程（一）](http://www.xueqing.tv/cms/article/246)
+
+* [data-table-cheat-sheet](
+https://www.datacamp.com/community/tutorials/data-table-cheat-sheet)
+
+* [粉丝日志 r-data-table](http://blog.fens.me/r-data-table/)
+
+> 原文来自DataCamp课程的data.table官方速查表：The data.table R package cheat sheet。
+
+> 译文来自链接雪晴数据网 http://www.xueqing.tv/cms/article/246
