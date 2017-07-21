@@ -132,7 +132,7 @@ new_file_name <- paste("stop_words_unique-",DateTime,".utf8.txt", sep = "")
 stop_word_unique <- sort(stop_word_unique)
 
 # output to txt
-write.table(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"), row.names = F, quote = F)
+write.table(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"), row.names = F, quote = F, fileEncoding = "UTF-8")
 # save(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"))
 # ?save()
 ```
