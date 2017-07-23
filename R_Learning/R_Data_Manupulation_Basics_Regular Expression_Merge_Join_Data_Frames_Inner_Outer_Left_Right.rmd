@@ -1,0 +1,737 @@
+---
+title: "R_Data_Manupulation_Basics_Regular_Expression_Data_Merge_Join"
+author: "Stone_Hou"
+date: "2017年7月23日"
+output:
+  html_notebook:
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# Concepts in Computing with Data--正则表达式（Regular Expression、regexp） 
+
+[在R语言中使用正则表达式](https://www.r-bloggers.com/lang/chinese/983)
+假设我们有一个字符向量，包括了三个字符串。我们的目标是从中抽取电邮地址。
+
+R语言中很多字符函数都能识别正则表达式，而最重要的函数就是gregexpr()。
+```{r}{r}
+gregexpr
+function (pattern, text, ignore.case = FALSE, perl = FALSE, fixed = FALSE, 
+    useBytes = FALSE) 
+{
+    if (!is.character(text)) 
+        text <- as.character(text)
+    .Internal(gregexpr(as.character(pattern), text, ignore.case, 
+        perl, fixed, useBytes))
+}
+<bytecode: 0x09331de4>
+<environment: namespace:base>
+
+```
+该函数的第一个参数是正则表达式，前后需要用引号，对元字符进行转义时要用\\。
+第二个参数是等待处理的文本。
+那么用如下三行代码，我们从word字符向量中得到一个列表，
+其中第一项元素中的5表示电邮地址从第5个字符位置开始，24表示电邮地址长度为24。
+
+```{r}
+word <- c('abc noboby@stat.berkeley.edu','text with no email','first me@mything.com also you@yourspace.com')
+pattern <- '[-A-Za-z0-9_.%]+@[-A-Za-z0-9_.%]+\\.[A-Za-z]+'
+(gregout <- gregexpr(pattern,word))
+# output
+# [[1]]
+# [1] 5
+attr(,"match.length")
+# [1] 24
+attr(,"useBytes")
+# [1] TRUE
+
+# [[2]]
+# [1] -1
+attr(,"match.length")
+# [1] -1
+attr(,"useBytes")
+# [1] TRUE
+
+# [[3]]
+# [1]  7 27
+attr(,"match.length")
+# [1] 14 17
+attr(,"useBytes")
+# [1] TRUE
+```
+
+下一步我们需要将电邮地址抽取出来，此时配合substr函数，即可根据需要字符串的位置来提取子集。
+```{r}
+substr(word[1],gregout[[1]],gregout[[1]]+attr(gregout[[1]],'match.length')-1)
+
+# 函数getcontent，参数s表示待处理的文本，参数g表示的是通过gregexpr函数处理后的结果。
+# 这个函数我们在后面还会用到。
+getcontent <- function(s,g) {
+    substring(s,g,g+attr(g,'match.length')-1)
+}
+
+getcontent(word[1],gregout[[1]])
+```
+
+实际的数据抓取工作中，如何使用正则表达式。
+任务目标是要抓取豆瓣电影中250部最佳电影的资料。
+R代码如下：
+```{r}
+url <-'http://movie.douban.com/top250?format=text'
+
+# 获取网页原代码，以行的形式存放在web变量中
+web <- readLines(url,encoding="UTF-8")
+# 找到包含电影名称的行编号
+name <- web[grep('<td headers="m_name">',web)+1]
+# 用正则表达式来提取电影名
+gregout <- gregexpr('>\\w+',name)
+movie.names = 0
+for (i in 1:250) {
+    movie.names[i] <-getcontent(name[i],gregout[[i]])
+}
+movie.names <- sub('>','',movie.names)
+# 找到包含电影发行年份的行编号并进行提取
+year <- web[grep('<span class="year">',web)] 
+movie.year <- substr(year,36,39)
+# 找到包含电影评分的行编号并进行提取
+score <- web[grep('<td headers="m_rating_score">',web)+1]
+movie.score <- substr(score,21,23)
+# 找到包含电影评价数量的行编号并进行提取
+rating <- web[grep('<td headers="m_rating_num">',web)+1]
+movie.rating <- sub(' *','',rating)
+# 合成为数据框
+movie <- data.frame(names=movie.names,year=as.numeric(movie.year),
+                    score=as.numeric(movie.score),rate=as.numeric(movie.rating))
+# 绘散点图
+library(ggplot2)
+p <- ggplot(data=movie,aes(x=year,y=score))
+p+geom_point(aes(size=rate),colour='lightskyblue4',
+             position="jitter",alpha=0.8)+
+  geom_point(aes(x=1997,y=8.9),colour='red',size=4)
+
+
+```
+
+用散点图来观察数据，可以看到前250名电影中大部分是1980年之后发行的。
+
+1997年和2010年发行的电影有不少精品。
+
+而其中红色点所代表的是哪部电影你知道吗？那就是Titanic。
+
+
+## R主要的数据处理包
+
+* 一个是大神Hadley的一系列数据处理包，主要有reshape2 dplyr tidyr 包
+* (虽然Hadley最出名的不是这些，而是ggplot2绘图包，但是这些包在数据分析上也都是首屈一指的)。
+* 另一个是data.table包.
+
+```{r}
+# load R package
+library(dplyr)
+
+# Create Data.frame, also can use as.data.frame(matrix) and read.csv()
+name1 <- c("Bob","Mary","Jane","Kim")
+name2 <- c("Bob","Mary","Kim","Jane")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+birth <- c("1990-1","1980-2","1995-5","1996-4")
+accept <- c("no","ok","ok","no")
+
+df1 <- data.frame(name1,weight,height)
+rownames(df1) <- letters[1:4] # 赋予行名
+df2 <- data.frame(name2,birth,accept)
+```
+
+### extract Data--Position,rowname/columnname,logic value
+```{r}
+# 通过[]选择坐标,确定点1 position
+df1[2,3]
+# 使用向量确定多个点multi position
+df1[c(2,4),c(1,3)]
+
+# 通过[]选择行列名rowname/columnname
+df1["a","weight"]
+df1["a",2] # 混搭
+
+# 通过矩阵提取多个点，一列指定行，一列指定列
+df1[cbind(c(1,2,1),3:1)]
+df1[cbind(c("a","b"), c("weight","height"))]
+
+# 通过[]少选择一个维度，整行整列地选择（这是比选择行多的一种方法）
+df1[2,] # 取行
+df1[,3] # 取列
+df1[c(2,3),] # 取多行
+df1[,c(2,3)] # 取多列
+df1["a",]
+df1[,"weight"]
+
+df1[3] # 只接一个数字，选择列
+df1[c(2,3)] # 使用向量则选择多列
+
+df1$weight # 通过$选择列名名字来选择列
+# 列名放在[]中选取列
+df1["weight"]
+df1[c("weight","height")] # 使用向量选择多列
+
+select(df2,accept)  # dplyr包中函数，等价于 df2$accept
+
+```
+
+**在选择行和列上有必要进一步说明，关于取出来的仍是数据框还是向量的问题**
+
+这是提取数据是否同时进行降维的问题。
+即使是只有一列的数据框，它仍是二维的，只有变成向量才算是一维的。
+上面涉及到的多种提取行列的方法，默认得到的结果是数据框还是向量是不一样的.
+但是二者之间是有办法相互转化的。
+```{r}
+# 取行和取列默认不一样
+class(df1[,3]) # "numeric" numeric代表这样提取得到的是一个向量
+class(df1[2,]) # "data.frame"data.frame代表这样提取得到的仍是一个数据框
+# 另外三种
+class(df1[3]) # "data.frame"
+class(df1["weight"]) # "data.frame"
+class(df1$weight) # "numeric"
+```
+
+对于取两个坐标[]的方法来说，drop参数可以调整输出结果 
+```{r}
+# drop=T是降维的意思
+class(df1[,3,drop=F]) # "data.frame"
+class(df1[2,,drop=T]) # "list"
+# 取行用drop也不能转化为向量，那就用unlist
+class(unlist(df1[2,])) # "numeric"
+```
+
+对于只接受一个维度参数的方法来说[[]]相当于$，可以实现降维 
+```{r}
+class(df1[["weight"]]) # "numeric"
+class(df1[[2]]) # "numeric"
+
+# 注意：[[]]不能作用到选取多列的情况上，因为多列谈不上降维
+df1[[c("weight","height")]] # 报错
+df1[[1:3]] # 报错
+```
+
+### 其他方面
+1.关于[[]]和$等关于降维方面的使用，读者可以自行在list和matrix上试。
+使用下面一条命令查看帮助文档
+```{r}
+help(`[`) # R语言一切都是函数
+```
+
+2.模糊匹配
+```{r}
+df1$wei # 前面匹配就可以选出那一列
+# 但是必须是唯一匹配
+df1$weig <- 1:4 # 新增加一列weig
+df1$wei # 匹配出两个都满足（weigth和weig），则返回NULL
+
+# 是否支持模糊匹配也可以用参数exact调整
+df1[["hei"]] # 默认不支持模糊匹配
+df1[["hei",exact=F]] # 支持
+df1["hei"]; df1["hei",exact=F] # 单个[]加了也不支持
+
+# 模糊匹配在函数参数使用上也有体现
+
+seq(1,10,length.out=10)
+seq(1,10,len=10)
+```
+
+3.如果指定的数字不是整数，会自动向下取整
+```{r}
+(i <- 3.999999999) # 返回4，因为当前保留的位数不够
+# 如果想要改变保留位数，可以用options(digits = 10)修改
+# 不过内存中存储的还是3.999999999
+(1:5)[i]  # 3
+```
+
+### 通过逻辑值判断选取
+
+```{r}
+# 通过判断语句
+df2[df2$accept=="no"|name2=="Bob",]
+subset(df2,accept=="no") # R自带提取函数
+filter(df2,accept=="no"|name2=="Bob") # dplyr包提取函数
+```
+
+上面这种通过判断来选取的方式，有一个背后的原理.
+我们拿[]来说，这是通过逻辑值向量进行的选取
+```{r}
+df2$accept=="no"|name2=="Bob"
+# TRUE FALSE FALSE  TRUE
+# 先生成等长的逻辑向量，放在行的位置
+# 列不写代表所有列都要
+# 而只有对应TRUE的行才会被提取出来
+df2[df2$accept=="no"|name2=="Bob",]
+# 相当于
+df2[c(T,F,F,T),]
+```
+知道了这个原理之后，我们就可以更加灵活地提取数据.
+因为[]中放置的不一定必须是本数据框中的变量，
+只要是等长逻辑值向量就可以了（注意最后的逗号不要忘记写就好）
+```{r}
+df2[df1$weight>50,]
+```
+
+## 提取衍生物
+
+我们使用过程中可能涉及到的，修改数据框，按照行或列进行排序，删除某行某列，插入某行某列。
+这些如果都单独来学，会感觉命令非常多、非常乱.
+但如果看成是提取的衍生物，则不需要花多少精力就能掌握。
+因为这些其实都是使用了提取的方法，只是各自加入了自己的原理，就包装成了另外一种东西。
+我们一项一项来看：
+
+## 修改
+
+这里修改数据框其实只是把需要修改的地方用提取的方法提取出来，再赋个值.
+就实现了对原数据框的更改，基本上没有什么新东西。
+```{r}
+df1[2,3] <- 160;df1
+df2$accept[df2$accept=="ok"] <- "yes"
+df2 # 数据框发生了改变
+```
+
+我们会发现，这里每次使用数据框中的一列时，都要使用$，非常麻烦，可以使用within函数避免这样的麻烦
+```{r}
+df2 <- data.frame(name2,birth,accept,stringsAsFactors=F)
+within(df2,{accept[accept=="ok"] <- "yes"
+      name2[name2=="Bob"]<-"BOB"})
+```
+
+当其他时候使用数据框中的列进行计算时，如果不想用$，可以使用attach函数
+```{r}
+df2 <- data.frame(name2,birth,accept,stringsAsFactors=F)
+attach(df2)
+2*weight
+detach(df2)
+```
+用这种方法一定要注意最后detach，否则会搞乱命名空间，由于容易忘记，一般不推荐这种方法，我们还可以使用with函数
+```{r}
+with(df2,{a <- weight*2
+          a^3})
+```
+
+### 删除
+
+不想要哪行，就在哪行用负数，其实相当于提取了其他行，组成了一个新的数据框。
+根据这个原理，使用逻辑值向量也可以实现删除行列。
+```{r}
+df1[-c(2,3),]
+df1[,c(T,F,T)]
+```
+
+### 排序
+
+R语言使用基础函数处理向量、数据框等，都不能直接对其本身修改.
+无论是改变一个值，还是排序，删除某一列，得到的都不再是原来的数据框了。
+所以排序其实就是一个按顺序提取的过程。
+
+R中自带的方法是使用order函数，生成大小顺序的索引
+```{r}
+df1_order_row <- df1[order(df1$weight),]
+# 我们可以拆分来看
+order(df1$weight) # 3 4 1 2
+# 上面的结果意味着第三个是最小的，最先被提取出来，放在第一行，接下来是第4个第二小……
+
+# 先按体重，再按身高排序（当体重一样时）
+df1_order_row <- df1[order(df1$weight,df1$height),]
+
+# 按照列名对列排序也是一样
+df1_order_col <- df1[,order(colnames(df1))]
+
+# 使用dplyr包对行更方便、高效地处理
+arrange(df1,weight,height)
+```
+
+### 插入
+
+由于上面说到的特性，R语言没有办法在原有向量或数据框中插入内容.
+唯一的方法就是按照要插入的位置，将数据框分开，即提取出dfa和dfb，再用二者和要加入的内容拼接。
+这种方法非常繁琐，尤其是当要在很多地方插入的情况下.
+本人目前没有找到更好的方法，如果读者有好的方法可以在评论区留言。
+
+## 管道操作--基于 magrittr 包，里面有如下几个函数
+
+```{r}
+%>%
+%T>%
+%$%
+%<>%
+```
+
+最常用的是第一个 %>% ，如果你载入Hadley的包，就自动可以使用这个函数，不用另外加载magrittr包.
+如果想了解其他函数再载入这个包，查看文档来学习，或者看[r-magrittr](http://blog.fens.me/r-magrittr/)
+
+管道操作除了这个包，还有 pipeR 包，这是另外一个系统，有兴趣的可以去学一下.
+这里简要介绍一下 %>% 函数
+```{r}
+library(dplyr)
+name2 <- c("Bob","Mary","Kim","Jane")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+accept <- c("no","ok","ok","no")
+df <- data.frame(name2,weight,height,accept)
+
+# 下面两个操作等价
+select(df,weight:accept)
+df %>% select(weight:accept)
+# 所以 %>% 的作用在于把前面的内容放到后面函数中，作为第一个参数。
+# 使用这个符号的好处有
+# 1. 使代码更加易读
+# 2. 减少中间变量
+```
+
+对比操作
+```{r}
+# 01, 通过管道函数从前往后读
+# 拿到数据集df，先提取首字母是w的列select(starts_with("w"))，
+# 乘2`*`(2)，转化为向量unlist()，
+# 使用这个向量创建一个2行的矩阵matrix(nrow=2)，对矩阵每一列求均值colMeans()，
+# 最后矩阵列均值画图
+df %>% select(starts_with("w")) %>% `*`(2) %>% 
+  unlist() %>% matrix(nrow=2) %>% colMeans() %>% plot()
+
+# 02
+plot(colMeans(matrix(unlist(2*select(df,starts_with("w"))),
+       nrow=2)))
+
+# 03
+w <- select(df,starts_with("w"))
+v <- unlist(w*2)
+m <- matrix(v,nrow=2)
+plot(colMeans(m))
+```
+
+### 更多用法
+```{r}
+# 一次使用多个函数计算
+df$weight %>% {c(min(.), mean(.), max(.))} %>% floor 
+
+# 想作为函数第二个参数时，可以用.代替
+2 %>% head(df,.)
+
+# 将得到的结果赋值
+a <- df %>% .$name2 %>% grep("a",.)
+```
+
+
+[R数据处理|基础篇（二）](https://zhuanlan.zhihu.com/p/26123110)
+baidu:dplyr包5个主要函数,tidyr包中四个主要函数,reshape2包中的融合-重铸两个函数
+
+## 数据框合并
+```{r}
+# load package
+library(dplyr) # 高速处理数据，取代R自带的一些函数，代码简单易记
+library(tidyr) # 提供一些其他功能
+library(reshape2)
+```
+
+## 拼接合并
+列相同的两个数据框可以直接纵向接在一起，行相同的两个数据框也可以横向接在一起。
+```{r}
+name1 <- c("Bob","Mary","Jane","Kim")
+name2 <- c("Bob","Mary","Kim","Jane")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+birth <- c("1990-1","1980-2","1995-5","1996-4")
+accept <- c("no","ok","ok","no")
+
+df1 <- data.frame(name1,weight,height)
+df2 <- data.frame(name2,birth,accept)
+
+# 合并
+rbind(df1,df1[c(2,4),]) # 行合并，需要列数、列名相同
+cbind(df1,df2) # 列合并，需要行数相同
+data.frame(df1,df2) # 建立数据框，达到相同的效果
+
+# dplyr包中高效合并
+bind_rows(df1,df1[c(2,4),])  
+bind_cols(df1,df2)
+```
+
+## merge合并
+当两个数据框中有一列表示相同的含义，其他列不同时，可以按照这一列merge起来。
+
+比如拿到两张表，分别对应两个数据框，
+一个记录了公司每个员工的体重，一个记录了公司每个员工的身高，
+他们有相同的姓名一列，我们就可以把两个数据框融合成为一个带有姓名、身高、体重的数据框。
+
+有的人可能会问，为什么不直接横向拼在一起，再把相同的名字列去掉？
+是因为如果两个数据框的名字顺序不一样，或者名字不是完全相同，这样做就不行了。
+我们来看下面的例子,
+```{r}
+# 先创建数据框
+name1 <- c("Bob","Mary","Jane","Kim","Smith")
+weight <- c(60,65,45,55,60)
+name2 <- c("Bob","Mary","Kim","Jane","Eric")
+height <- c(170,165,140,135,170)
+
+df11 <- data.frame(name1,weight,stringsAsFactors=F) # 加这个参数是防止字符串自动转化为因子
+df33 <- data.frame(name1,height,stringsAsFactors=F)
+df22 <- data.frame(name2,height,stringsAsFactors=F) # 成员与前面不完全一样
+
+# 先使用基础的merge函数
+merge(df11,df33) # 自动根据相同的列名匹配
+merge(df11,df22,by.x="name1",by.y="name2") # 没有相同的列名则指定根据这两列融合
+# 上面默认保留了df11和df22共有的行
+merge(df11,df22,by.x="name1",by.y="name2",all=T) # 保留所有出现过的行,没有的显示NA
+merge(df11,df22,by.x="name1",by.y="name2",all.x=T) # 保留所有x的行
+merge(df11,df22,by.x="name1",by.y="name2",all.y=T) # 保留所有y的行
+
+# 下面使用dplyr包
+inner_join(df11,df33) # 自动根据相同的列名匹配 
+full_join(df11,df22,by=c("name1"="name2"))
+left_join(df11,df22,by=c("name1"="name2")) # 只保留前者的行
+right_join(df11,df22,by=c("name1"="name2")) # 只保留后者的行
+semi_join(df11,df22,by=c("name1"="name2")) # 保留共有的行，同时只返回前者的列
+anti_join(df11,df22,by=c("name1"="name2")) # 返回后者没有的前者的行，同时只返回前者的列
+```
+
+## 计算并增加行列
+```{r}
+# 创建数据框
+name1 <- c("Bob","Mary","Jane","Kim")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+df1 <- data.frame(name1,weight,height)
+
+# R基础函数
+df2 <- transform(df1,BMI=weight/height^2) # 第一种方法
+df2
+df1$BMI <- df1$weight/df1$height^2 # 第二种方法， 每一步都要$，很麻烦
+df1
+
+# 使用dplyr包中的函数
+mutate(df1,BMI=weight/height^2)
+```
+
+## 汇总计算
+```{r}
+apply(df1[,-1],2,mean) # R基础函数
+
+# dplyr包中的summarise系列函数
+
+summarise(df1,arv_weight=mean(weight),arv_height=mean(height))
+
+# 上面这种方式是一般人都会用的，但是如果没有看过dplyr包的文档，就不知道还有summarise_all等函数。
+# 当需要对每列都进行计算时，或者选择某一些列计算，只是summarise一个一个指定就会非常麻烦。
+# 下面我们介绍一些批量筛选计算的函数
+# 为了更好地说明问题，我们改一下数据框
+
+name1 <- c("Bob","Mary","Jane","Kim")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+weta <- 1:4
+df1 <- data.frame(name1,weight,height,weta)
+summarise_all 和 summarise_if
+
+# 对所有列进行计算或者根据列的数据类型选择计算
+
+summarise(df1,avg_weight=mean(weight),avg_height=mean(height)) # 很麻烦地每个都指定
+summarise_all(df1[-1],mean) # 对选出来的所有列都进行计算
+summarise_if(df1,is.numeric,mean) # 检验出所有是数值的列，全部求均值
+summarise_at配合vars的用法
+
+# 筛选出符合条件的列名对应的列
+
+summarise_at(df1,vars(weight,height,weta),mean) # 配合vars函数，一次选择多列
+summarise_at(df1,vars(weight:weta),mean) # 从哪到哪
+u <- c("weight","height")
+summarise_at(df1,vars(one_of(u)),mean) # 可以接字符串向量
+summarise_at(df1,u,mean) # 也可以直接接字符串向量
+summarise_at(df1,u,mean,trim=1) # mean的参数可以接在后面
+
+summarise_at(df1,vars(contains("eig")),mean) # 匹配含有的
+summarise_at(df1,vars(matches(".t.")),mean) # 使用正则表达式
+summarise_at(df1,vars(starts_with("w")),mean) # 匹配以此为开头的
+summarise_at(df1,vars(ends_with("ht")),mean) # 匹配以此为结尾的
+summarise_at(df1[,-1],vars(everything()),mean) # 选择所有列
+
+# funs的用法
+
+summarise_all(df1[,-1],funs(mean,sum))
+summarise_all(df1[,-1],funs(sum(.*2))) # 数据用.表示
+summarise_all(df1[,-1],funs(medi=median)) # 指定得到的列后缀名
+summarise_all(df1[,-1],funs("in"=median)) # 或者加引号
+mutate_all(df1[,-1],funs(.^2))
+
+# 结合使用
+
+summarise_if(df1,is.numeric,funs(mean,sum))
+summarise_at(df1,vars(ends_with("t")),funs(mean,sum))
+```
+
+## 分组计算
+```{r}
+# 首先创建我们需要的数据集
+name1 <- c("Bob","Mary","Jane","Kim")
+weight <- c(60,65,45,55)
+height <- c(170,165,140,135)
+accept <- c("no","ok","ok","no")
+df <- data.frame(name1,weight,height,accept)
+
+# R基础函数
+tapply(df$height,df$accept,mean)  # 使用tapply函数，按照accept分类
+
+with(df,{ # 使用aggregate函数
+  aggregate(height,by=list(accept),FUN=mean)
+})
+
+# 使用dplyr包中的函数
+group_df <- group_by(df,accept)
+summarise(group_df,arv_height=mean(height),count=n()) # 其中n()是查数的意思
+
+# 使用扩展函数
+summarise_all(group_df[,-1],mean)
+summarise_if(group_df,is.numeric,mean)
+summarise_at(group_df,vars(contains("eigh")),funs(sum,mean))
+
+# dplyr包中的主要功能我们就讲到这里，除了以上功能，这个包还改写了很多基础函数.
+# 使其使用更方便，运行速度更快，感兴趣的读者可以查看帮助文档自行学习。
+```
+
+## 融合重铸
+使用reshape2包和tidyr包分别完成融合重铸功能。
+```{r}
+names(airquality) <- tolower(names(airquality))
+View(airquality)
+aqm <- melt(airquality, id=c("month", "day"), na.rm=TRUE) # 除了month和day两列，其他列摞起来，为了等长，m和d列循环对齐
+
+dcast(aqm, day + variable ~ month) # 保持day和variable不变，month中的元素分类映射到列上去
+dcast(aqm, variable + day ~ month) # 换一下顺序，重复的variable连在一起，对应不一样的day，这样的方式排列
+dcast(aqm, day ~ variable + month) # 只保留day列
+
+# 加入计算
+dcast(aqm, day ~ month, mean) # 没出现的那个变量被平均掉了
+
+# dcast 和 acast区别
+dcast(aqm, variable + month ~ day) 
+acast(aqm, variable + month ~ day) 
+# acast和dcast的功能基本上相同，只是dcast会把分组信息作为一列或几列显示，
+# 而acast会将其作为行名
+
+acast(aqm, day ~ month, mean) # 保留的列作为合并在一起作为列名
+acast(aqm, variable ~ month ~ day) 
+# acast 多出来的功能，生成一个三维数组，
+# 按照day的值分成31个矩阵
+
+# tidyr包-有融合和重铸的函数，但是在重铸方面功能弱一些
+aqg <- gather(airquality,group,value,ozone:temp) # 融合，和reshape2的不同在于输入的是被转换的列
+spread(aqg,group,value) # 还原
+spread(aqg,month,value) # 输入要被转化到列名的列和值，好像一次只能转化一列作为列名
+```
+
+## 融合重铸的应用
+让我们把融合重铸计算实现的功能和分组计算做一下对比。
+假设我们拿到的数据是下面这个样子的。按照月日，分不同组别汇总在一起的两列变量值
+```{r}
+df <- mutate(aqm, newvalue = value+rnorm(2,0,50))
+colnames(df) <- c("month","day","group","value1","value2")
+View(df) # 我们可以看一看现在拿到的数据
+```
+
+我们首先实现如下功能:
+1. 根据group分组计算两个value的均值
+2. 根据month和group分组计算两个value的均值
+3. 根据month和group分组计算每组个数
+
+使用分组计算来实现
+```{r}
+# 根据group分组计算两个value的均值
+df_grp1 <- group_by(df,group)
+summarise_at(df_grp1,vars(value1,value2),mean)
+
+# 根据month和group分组计算两个value的均值
+df_grp2 <- group_by(df,month,group)
+summarise_at(df_grp2,vars(value1,value2),mean)
+
+# 根据month和group分组计算每组个数
+summarise(df_grp2,count=n())
+```
+
+使用融合重铸来实现
+```{r}
+df_melt <- melt(df,id=c("month","day","group"))
+# 根据group分组计算两个value的均值
+dcast(df_melt, group ~ variable, mean)
+# 根据month和group分组计算两个value的均值
+dcast(df_melt, month + group ~ variable, mean)
+# 根据month和group分组计算每组个数
+dcast(df_melt, month + group ~ variable, length)
+```
+
+从上面来看，实现分组计算的功能二者没有太大区别，毕竟这就是分组计算本身在做的事情，不过当需要按照多种分组来计算时，融合重铸不需要重新设置组别，显然会更方便。
+
+不过融合重铸也要注意一点，如果数据列数非常多，而且有的是字符串，或者有的列不是你需要计算的，要事先只提取出你需要的，再融合重铸。
+
+下面我们说一说融合重铸擅长的部分
+
+如果要不区分value1和value2，算整体按照month和group分组后的均值
+上面计算结果值是一个矩阵，想要把数值用一列表示
+按照月份拆分成多个矩阵，每一个矩阵表示group和日期的对应
+```{r}
+# 如果要不区分value1和value2，算整体按照month和group分组后的均值
+(mg <- dcast(df_melt, month ~ group , mean))# 上面计算结果值是一个矩阵，想要用一列表示
+melt(mg, id="month")
+# 按照月份拆分成多个矩阵，每一个矩阵表示group和日期的对应
+u <- acast(df_melt, group ~ day ~ month) # 使用acast返回一个三维数组
+```
+
+## 拆分合并列
+我们现在要把一列这种类型”1990-1”的数据拆分成两列”1990”和”1”这样的数据，
+使用tidyr包中的separate函数
+```{r}
+library(tidyr)
+name1 <- c("Bob","Mary","Jane","Kim")
+birth <- c("1990-1","1980-2","1995-5","1996-4")
+df <- data.frame(name1, birth)
+
+(df1 <- separate(df,birth,into=c("year","month"),sep="-"))
+separate_rows(df,birth,sep="-") # 拆分完放在一列里面显示
+# 其实separate_rows相当于使用separate之后进行了融合，再更换一下顺序
+separate(df,birth,into=c("year","month"),sep="-") %>% gather(group,birth,year:month)
+```
+
+tidyr包中很多函数都是成对出现的，unite 函数是和separate函数反向的函数，可以将它得到的结果还原
+```{r}
+unite(df1,birth,year,month,sep="-")
+```
+
+到这里，我们就把数据处理的整体框架讲述了一遍.
+主要针对数据的计算与变形，覆盖了dplyr tidyr reshape2包的使用方法。
+
+本专题下一篇，我们会使用data.table包来重新完成这整个框架
+
+## About Hadley 
+[他的主页](http://hadley.nz/)
+
+Hadley Wickham 是 Rstudio 首席数据科学家，他写了很多非常著名的R包，为R语言做出了非常大贡献。
+rstudio网站上列出了一些非常著名的R包，我们会发现有一大半都是Hadley写的。
+
+### 他的R包
+
+最著名的当然是 ggplot2 作图包了，有些人认为这是自己不想离开R转向python的唯一原因。
+用简单的代码做出精美的图，强大的功能，专门为统计分析作图提供便捷，确实让人爱不释手。
+不过这个包学起来却不是那么容易，本专栏之后也会开出专题专门讲这个包。
+
+数据分析包，也就是本专栏主要介绍的 reshape2 dplyr tidyr 包.
+这些包可以高效处理数据，代码简洁，功能强大。
+而且可以和 ggplot2 一起使用，形成了一整个处理数据并可视化的生态。
+
+时间处理包 lubridate 包、字符串处理 stringr包 读取数据 readr 包 readxl 包 haven 包.
+
+除此之外，为了帮助完善R语言的生态，帮助其他人更加便捷地开发R包，他还写了 devtools 等包
+
+### 他的书
+
+Advanced R 想要深入理解R语言可以读这本书，读过之后会发现之前遇到的很多无法解决的问题都豁然开朗。本书已经有了中文版，《r语言高级程序设计》
+
+R for Data Science 这是Hadley的新书.
+本书结合他的 数据分析和ggplot2包 ，讲述了数据分析的理念和流程，
+读完可以对统计分析有更深入的了解，也可以更灵活地使用他开发的R包
+
+R packages 本书我还没有读过，不做介绍。上面三本都有英文版免费放在网站上
+
+ggplot2: elegant graphics for data analysis 这本书主要讲述 ggplot2 包的涉及理念及用法.
+想要更熟练掌握 ggplot2 包的话建议阅读.

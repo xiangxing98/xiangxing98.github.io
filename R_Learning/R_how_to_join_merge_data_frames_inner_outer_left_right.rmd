@@ -1,0 +1,755 @@
+---
+title: "R Notebook R_how_to_join_merge_data_frames_inner_outer_left_right"
+author: "Stone_Hou"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# R Notebook R_how_to_join_merge_data_frames_inner_outer_left_right
+
+## 1. how-to-join-merge-data-frames-inner-outer-left-right
+
+> [how-to-join-merge-data-frames-inner-outer-left-right](https://stackoverflow.com/questions/1299871/how-to-join-merge-data-frames-inner-outer-left-right)
+
+## 2. load package in a safe way
+
+```{r load package in a safe way}
+# Load data.table package
+if(!suppressWarnings(require('data.table')))
+{
+    install.packages('data.table')
+    require('data.table')
+}
+
+```
+
+## 3. Input Data -> manupulation -> Output data
+
+数据处理的流程：数据输入-> 处理 -> 结果输出
+
+```{r duplicated ex1}
+# Record Current Date and time
+DateTime <- format(Sys.time(), "%Y-%m-%d %H-%M-%S")
+
+# load stop_word file, one line as one element, 
+# character vector
+stop_word_file_path <- file.choose()
+# stop_word_file_path
+# [1] "E:\\03-Download\\Github\\xiangxing98.github.io\\R_Learning\\stop_words_duplicated_no_unique.utf8.txt"
+
+stop_word_file_directory <- dirname(stop_word_file_path)
+# stop_word_file_directory
+# [1] "E:/03-Download/Github/xiangxing98.github.io/R_Learning"
+
+# scan and read stop_words_duplicated_no_unique.utf8.txt
+stop_word <- scan(stop_word_file_path, sep="\n", what="", encoding="UTF-8")
+
+# 删掉所有列上都重复的并赋值给新的变量
+# (stop_word_unique <- stop_word[!duplicated(stop_word)])
+stop_word_unique <- stop_word[!duplicated(stop_word)]
+
+# 保存去除重复后的向量到新的文件
+new_file_name <- paste("stop_words_unique-",DateTime,".utf8.txt", sep = "")
+
+# UTF8 Encoding
+writeLines(stop_word_unique, "E:/03-Download/Github/stop_word_unique.txt", useBytes=T)
+
+readLines("E:/03-Download/Github/stop_word_unique.txt", encoding="UTF-8")
+```
+
+## 4. data.frame
+
+How can I do database style, i.e., sql style, joins? That is, how do I get:
+
+An inner join of df1 and df2:
+Return only the rows in which the left table have matching keys in the right table.
+
+An outer join of df1 and df2:
+Returns all rows from both tables, join records from the left which have matching keys in the right table.
+
+A left outer join (or simply left join) of df1 and df2
+Return all rows from the left table, and any rows with matching keys from the right table.
+
+A right outer join of df1 and df2
+Return all rows from the right table, and any rows with matching keys from the left table.
+Extra credit:
+
+How can I do a SQL style select statement?
+```{r data.frame}
+df1 = data.frame(CustomerId = c(1:6), Product = c(rep("Toaster", 3), rep("Radio", 3)));df1
+#  CustomerId Product
+#           1 Toaster
+#           2 Toaster
+#           3 Toaster
+#           4   Radio
+#           5   Radio
+#           6   Radio
+df2 = data.frame(CustomerId = c(2, 4, 6), State = c(rep("Alabama", 2), rep("Ohio", 1)));df2
+#  CustomerId   State
+#           2 Alabama
+#           4 Alabama
+#           6    Ohio
+```
+
+### 4.1 merge function-Method
+
+There are some good examples of doing this over at the R Wiki. I'll steal a couple here:
+
+By using the merge function and its optional parameters:
+
+Inner join: `merge(df1, df2)` will work for these examples because R automatically joins the frames by common variable names, but you would most likely want to specify `merge(df1, df2, by = "CustomerId")` to make sure that you were matching on only the fields you desired. You can also use the `by.x` and `by.y` parameters if the matching variables have different names in the different data frames.
+
+Since your keys are named the same the short way to do an ** inner join ** is `merge()`:
+`merge(df1,df2)`
+
+** Outer join = a full inner join : **
+(all records from both tables) can be created with the "all" keyword:
+`merge(df1,df2, all=TRUE)`
+`merge(x = df1, y = df2, by = "CustomerId", all = TRUE)`
+
+** Left outer join of df1 and df2: **
+
+`merge(x = df1, y = df2, by = "CustomerId", all.x = TRUE)`
+
+** Right outer: **
+
+`merge(x = df1, y = df2, by = "CustomerId", all.y = TRUE)`
+
+** Cross join: **
+
+`merge(x = df1, y = df2, by = NULL)`
+
+** merge using more than one column **
+
+`merge(x=df1,y=df2, by.x=c("x_col1","x_col2"), by.y=c("y_col1","y_col2"))`
+
+### 4.2 sqldf join
+
+Using Merge function we can select the variable of left table or right table, same way like we all familiar with select statement in SQL (EX : `Select a.* ...or Select b.* from .....`)
+
+We have to add extra code which will subset from the newly joined table .
+`SQL :- select a.* from df1 a inner join df2 b on a.CustomerId=b.CustomerId`
+
+`R :- merge(df1, df2, by.x = "CustomerId", by.y = "CustomerId")[,names(df1)]`
+
+Same way
+
+`SQL :- select b.* from df1 a inner join df2 b on a.CustomerId=b.CustomerId`
+
+`R :- merge(df1, df2, by.x = "CustomerId", by.y = "CustomerId")[,names(df2)]`
+
+```{r sqldf}
+library(sqldf)
+
+## inner join
+df3 <- sqldf("SELECT CustomerId, Product, State 
+              FROM df1
+              JOIN df2 USING(CustomerID)")
+
+## left join (substitute 'right' for right join)
+df4 <- sqldf("SELECT CustomerId, Product, State 
+              FROM df1
+              LEFT JOIN df2 USING(CustomerID)")
+
+## right join 
+df4 <- sqldf("SELECT CustomerId, Product, State 
+              FROM df1
+              RIGHT JOIN df2 USING(CustomerID)")
+```
+
+### 4.3 data.table join
+
+```{r data.table join}
+library(data.table)
+
+dt1 <- data.table(df1, key = "CustomerId") 
+dt2 <- data.table(df2, key = "CustomerId")
+
+joined.dt1.dt.2 <- dt1[dt2]
+
+# merge also works on data.tables (as it is generic and calls merge.data.table)
+merge(dt1, dt2)
+```
+
+### 4.4 plyr join
+```{r}
+library(plyr)
+
+join(df1, df2,
+     type = "inner")
+
+#   CustomerId Product   State
+# 1          2 Toaster Alabama
+# 2          4   Radio Alabama
+# 3          6   Radio    Ohio
+
+# Options for type: inner, left, right, full.
+# From ?join: Unlike merge, 
+# [join] preserves the order of x no matter what join type is used.
+```
+
+
+```{r another example}
+df1 = data.frame(CustomerId = c(1:6), Product = c(rep("Toaster", 3), rep("Radio", 3)))
+df2 = data.frame(CustomerId = c(2L, 4L, 7L), State = c(rep("Alabama", 2), rep("Ohio", 1))) # one value changed to show full outer join
+
+library(data.table)
+
+dt1 = as.data.table(df1)
+dt2 = as.data.table(df2)
+setkey(dt1, CustomerId)
+setkey(dt2, CustomerId)
+# right outer join keyed data.tables
+dt1[dt2]
+
+setkey(dt1, NULL)
+setkey(dt2, NULL)
+# right outer join unkeyed data.tables - use `on` argument
+dt1[dt2, on = "CustomerId"]
+
+# left outer join - swap dt1 with dt2
+dt2[dt1, on = "CustomerId"]
+
+# inner join - use `nomatch` argument
+dt1[dt2, nomatch=0L, on = "CustomerId"]
+
+# anti join - use `!` operator
+dt1[!dt2, on = "CustomerId"]
+
+# inner join
+merge(dt1, dt2, by = "CustomerId")
+
+# full outer join
+merge(dt1, dt2, by = "CustomerId", all = TRUE)
+
+# see ?merge.data.table arguments for other cases
+```
+
+
+### 4.5 dplyr join
+
+```{r}
+library(dplyr)
+
+#make sure that CustomerId cols are both type numeric
+#they ARE not using the provided code in question and dplyr will complain
+df1$CustomerId <- as.numeric(df1$CustomerId)
+df2$CustomerId <- as.numeric(df2$CustomerId)
+
+# Mutating joins: add columns to df1 using matches in df2
+#inner
+inner_join(df1, df2)
+# inner_join(x, y, by = NULL, copy = FALSE, ...): return all rows from x where there are matching values in y, and all columns from x and y
+
+#left outer
+left_join(df1, df2)
+# left_join(x, y, by = NULL, copy = FALSE, ...): return all rows from x, and all columns from x and y
+
+#right outer
+right_join(df1, df2)
+
+#alternate right outer
+left_join(df2, df1)
+
+#full join
+full_join(df1, df2)
+
+# Filtering joins: filter out rows in df1, don't modify columns
+
+semi_join(df1, df2) #keep only observations in df1 that match in df2.
+anti_join(df1, df2) #drops all observations in df1 that match in df2.
+# semi_join(x, y, by = NULL, copy = FALSE, ...): return all rows from x where there are matching values in y, keeping just columns from x.
+
+# anti_join(x, y, by = NULL, copy = FALSE, ...): return all rows from x where there are not matching values in y, keeping just columns from x
+
+```
+
+## benchmark tests base R, sqldf, dplyr and data.table
+
+Below benchmark tests base R, sqldf, dplyr and data.table.
+Benchmark tests unkeyed/unindexed datasets. You can get even better performance if you are using keys on your data.tables or indexes with sqldf. Base R and dplyr does not have indexes or keys so I did not include that scenario in benchmark.
+Benchmark is performed on 5M-1 rows datasets, there are 5M-2 common values on join column so each scenario (left, right, full, inner) can be tested and join is still not trivial to perform.
+
+```{r benchmark test}
+library(microbenchmark)
+library(sqldf)
+library(dplyr)
+library(data.table)
+
+n = 5e6
+set.seed(123)
+df1 = data.frame(x=sample(n,n-1L), y1=rnorm(n-1L))
+df2 = data.frame(x=sample(n,n-1L), y2=rnorm(n-1L))
+dt1 = as.data.table(df1)
+dt2 = as.data.table(df2)
+
+# inner join
+microbenchmark(times = 10L,
+               base = merge(df1, df2, by = "x"),
+               sqldf = sqldf("SELECT * FROM df1 INNER JOIN df2 ON df1.x = df2.x"),
+               dplyr = inner_join(df1, df2, by = "x"),
+               data.table = dt1[dt2, nomatch = 0L, on = "x"])
+#Unit: milliseconds
+#       expr        min         lq      mean     median        uq       max neval
+#       base 15546.0097 16083.4915 16687.117 16539.0148 17388.290 18513.216    10
+#      sqldf 44392.6685 44709.7128 45096.401 45067.7461 45504.376 45563.472    10
+#      dplyr  4124.0068  4248.7758  4281.122  4272.3619  4342.829  4411.388    10
+# data.table   937.2461   946.0227  1053.411   973.0805  1214.300  1281.958    10
+
+# left outer join
+microbenchmark(times = 10L,
+               base = merge(df1, df2, by = "x", all.x = TRUE),
+               sqldf = sqldf("SELECT * FROM df1 LEFT OUTER JOIN df2 ON df1.x = df2.x"),
+               dplyr = left_join(df1, df2, by = c("x"="x")),
+               data.table = dt2[dt1, on = "x"])
+#Unit: milliseconds
+#       expr       min         lq       mean     median         uq       max neval
+#       base 16140.791 17107.7366 17441.9538 17414.6263 17821.9035 19453.034    10
+#      sqldf 43656.633 44141.9186 44777.1872 44498.7191 45288.7406 47108.900    10
+#      dplyr  4062.153  4352.8021  4780.3221  4409.1186  4450.9301  8385.050    10
+# data.table   823.218   823.5557   901.0383   837.9206   883.3292  1277.239    10
+
+# right outer join
+microbenchmark(times = 10L,
+               base = merge(df1, df2, by = "x", all.y = TRUE),
+               sqldf = sqldf("SELECT * FROM df2 LEFT OUTER JOIN df1 ON df2.x = df1.x"),
+               dplyr = right_join(df1, df2, by = "x"),
+               data.table = dt1[dt2, on = "x"])
+#Unit: milliseconds
+#       expr        min         lq       mean     median        uq       max neval
+#       base 15821.3351 15954.9927 16347.3093 16044.3500 16621.887 17604.794    10
+#      sqldf 43635.5308 43761.3532 43984.3682 43969.0081 44044.461 44499.891    10
+#      dplyr  3936.0329  4028.1239  4102.4167  4045.0854  4219.958  4307.350    10
+# data.table   820.8535   835.9101   918.5243   887.0207  1005.721  1068.919    10
+
+# full outer join
+microbenchmark(times = 10L,
+               base = merge(df1, df2, by = "x", all = TRUE),
+               #sqldf = sqldf("SELECT * FROM df1 FULL OUTER JOIN df2 ON df1.x = df2.x"), # not supported
+               dplyr = full_join(df1, df2, by = "x"),
+               data.table = merge(dt1, dt2, by = "x", all = TRUE))
+#Unit: seconds
+#       expr       min        lq      mean    median        uq       max neval
+#       base 16.176423 16.908908 17.485457 17.364857 18.271790 18.626762    10
+#      dplyr  7.610498  7.666426  7.745850  7.710638  7.832125  7.951426    10
+# data.table  2.052590  2.130317  2.352626  2.208913  2.470721  2.951948    10
+
+
+
+#benchmark test2
+library(microbenchmark);
+library(data.table);
+library(sqldf);
+library(plyr);
+library(dplyr);
+
+solSpecs <- list(
+    merge=list(testFuncs=list(
+        inner=function(df1,df2,key) merge(df1,df2,key),
+        left =function(df1,df2,key) merge(df1,df2,key,all.x=T),
+        right=function(df1,df2,key) merge(df1,df2,key,all.y=T),
+        full =function(df1,df2,key) merge(df1,df2,key,all=T)
+    )),
+    data.table.unkeyed=list(argSpec='data.table.unkeyed',testFuncs=list(
+        inner=function(dt1,dt2,key) dt1[dt2,on=key,nomatch=0L,allow.cartesian=T],
+        left =function(dt1,dt2,key) dt2[dt1,on=key,allow.cartesian=T],
+        right=function(dt1,dt2,key) dt1[dt2,on=key,allow.cartesian=T],
+        full =function(dt1,dt2,key) merge(dt1,dt2,key,all=T,allow.cartesian=T) ## calls merge.data.table()
+    )),
+    data.table.keyed=list(argSpec='data.table.keyed',testFuncs=list(
+        inner=function(dt1,dt2) dt1[dt2,nomatch=0L,allow.cartesian=T],
+        left =function(dt1,dt2) dt2[dt1,allow.cartesian=T],
+        right=function(dt1,dt2) dt1[dt2,allow.cartesian=T],
+        full =function(dt1,dt2) merge(dt1,dt2,all=T,allow.cartesian=T) ## calls merge.data.table()
+    )),
+    sqldf.unindexed=list(testFuncs=list( ## note: must pass connection=NULL to avoid running against the live DB connection, which would result in collisions with the residual tables from the last query upload
+        inner=function(df1,df2,key) sqldf(paste0('select * from df1 inner join df2 using(',paste(collapse=',',key),')'),connection=NULL),
+        left =function(df1,df2,key) sqldf(paste0('select * from df1 left join df2 using(',paste(collapse=',',key),')'),connection=NULL),
+        right=function(df1,df2,key) sqldf(paste0('select * from df2 left join df1 using(',paste(collapse=',',key),')'),connection=NULL) ## can't do right join proper, not yet supported; inverted left join is equivalent
+        ##full =function(df1,df2,key) sqldf(paste0('select * from df1 full join df2 using(',paste(collapse=',',key),')'),connection=NULL) ## can't do full join proper, not yet supported; possible to hack it with a union of left joins, but too unreasonable to include in testing
+    )),
+    sqldf.indexed=list(testFuncs=list( ## important: requires an active DB connection with preindexed main.df1 and main.df2 ready to go; arguments are actually ignored
+        inner=function(df1,df2,key) sqldf(paste0('select * from main.df1 inner join main.df2 using(',paste(collapse=',',key),')')),
+        left =function(df1,df2,key) sqldf(paste0('select * from main.df1 left join main.df2 using(',paste(collapse=',',key),')')),
+        right=function(df1,df2,key) sqldf(paste0('select * from main.df2 left join main.df1 using(',paste(collapse=',',key),')')) ## can't do right join proper, not yet supported; inverted left join is equivalent
+        ##full =function(df1,df2,key) sqldf(paste0('select * from main.df1 full join main.df2 using(',paste(collapse=',',key),')')) ## can't do full join proper, not yet supported; possible to hack it with a union of left joins, but too unreasonable to include in testing
+    )),
+    plyr=list(testFuncs=list(
+        inner=function(df1,df2,key) join(df1,df2,key,'inner'),
+        left =function(df1,df2,key) join(df1,df2,key,'left'),
+        right=function(df1,df2,key) join(df1,df2,key,'right'),
+        full =function(df1,df2,key) join(df1,df2,key,'full')
+    )),
+    dplyr=list(testFuncs=list(
+        inner=function(df1,df2,key) inner_join(df1,df2,key),
+        left =function(df1,df2,key) left_join(df1,df2,key),
+        right=function(df1,df2,key) right_join(df1,df2,key),
+        full =function(df1,df2,key) full_join(df1,df2,key)
+    )),
+    in.place=list(testFuncs=list(
+        left =function(df1,df2,key) { cns <- setdiff(names(df2),key); df1[cns] <- df2[match(df1[,key],df2[,key]),cns]; df1; },
+        right=function(df1,df2,key) { cns <- setdiff(names(df1),key); df2[cns] <- df1[match(df2[,key],df1[,key]),cns]; df2; }
+    ))
+);
+
+getSolTypes <- function() names(solSpecs);
+getJoinTypes <- function() unique(unlist(lapply(solSpecs,function(x) names(x$testFuncs))));
+getArgSpec <- function(argSpecs,key=NULL) if (is.null(key)) argSpecs$default else argSpecs[[key]];
+
+initSqldf <- function() {
+    sqldf(); ## creates sqlite connection on first run, cleans up and closes existing connection otherwise
+    if (exists('sqldfInitFlag',envir=globalenv(),inherits=F) && sqldfInitFlag) { ## false only on first run
+        sqldf(); ## creates a new connection
+    } else {
+        assign('sqldfInitFlag',T,envir=globalenv()); ## set to true for the one and only time
+    }; ## end if
+    invisible();
+}; ## end initSqldf()
+
+setUpBenchmarkCall <- function(argSpecs,joinType,solTypes=getSolTypes(),env=parent.frame()) {
+    ## builds and returns a list of expressions suitable for passing to the list argument of microbenchmark(), and assigns variables to resolve symbol references in those expressions
+    callExpressions <- list();
+    nms <- character();
+    for (solType in solTypes) {
+        testFunc <- solSpecs[[solType]]$testFuncs[[joinType]];
+        if (is.null(testFunc)) next; ## this join type is not defined for this solution type
+        testFuncName <- paste0('tf.',solType);
+        assign(testFuncName,testFunc,envir=env);
+        argSpecKey <- solSpecs[[solType]]$argSpec;
+        argSpec <- getArgSpec(argSpecs,argSpecKey);
+        argList <- setNames(nm=names(argSpec$args),vector('list',length(argSpec$args)));
+        for (i in seq_along(argSpec$args)) {
+            argName <- paste0('tfa.',argSpecKey,i);
+            assign(argName,argSpec$args[[i]],envir=env);
+            argList[[i]] <- if (i%in%argSpec$copySpec) call('copy',as.symbol(argName)) else as.symbol(argName);
+        }; ## end for
+        callExpressions[[length(callExpressions)+1L]] <- do.call(call,c(list(testFuncName),argList),quote=T);
+        nms[length(nms)+1L] <- solType;
+    }; ## end for
+    names(callExpressions) <- nms;
+    callExpressions;
+}; ## end setUpBenchmarkCall()
+
+harmonize <- function(res) {
+    res <- as.data.frame(res); ## coerce to data.frame
+    for (ci in which(sapply(res,is.factor))) res[[ci]] <- as.character(res[[ci]]); ## coerce factor columns to character
+    for (ci in which(sapply(res,is.logical))) res[[ci]] <- as.integer(res[[ci]]); ## coerce logical columns to integer (works around sqldf quirk of munging logicals to integers)
+    ##for (ci in which(sapply(res,inherits,'POSIXct'))) res[[ci]] <- as.double(res[[ci]]); ## coerce POSIXct columns to double (works around sqldf quirk of losing POSIXct class) ----- POSIXct doesn't work at all in sqldf.indexed
+    res <- res[order(names(res))]; ## order columns
+    res <- res[do.call(order,res),]; ## order rows
+    res;
+}; ## end harmonize()
+
+checkIdentical <- function(argSpecs,solTypes=getSolTypes()) {
+    for (joinType in getJoinTypes()) {
+        callExpressions <- setUpBenchmarkCall(argSpecs,joinType,solTypes);
+        if (length(callExpressions)<2L) next;
+        ex <- harmonize(eval(callExpressions[[1L]]));
+        for (i in seq(2L,len=length(callExpressions)-1L)) {
+            y <- harmonize(eval(callExpressions[[i]]));
+            if (!isTRUE(all.equal(ex,y,check.attributes=F))) {
+                ex <<- ex;
+                y <<- y;
+                solType <- names(callExpressions)[i];
+                stop(paste0('non-identical: ',solType,' ',joinType,'.'));
+            }; ## end if
+        }; ## end for
+    }; ## end for
+    invisible();
+}; ## end checkIdentical()
+
+testJoinType <- function(argSpecs,joinType,solTypes=getSolTypes(),metric=NULL,times=100L) {
+    callExpressions <- setUpBenchmarkCall(argSpecs,joinType,solTypes);
+    bm <- microbenchmark(list=callExpressions,times=times);
+    if (is.null(metric)) return(bm);
+    bm <- summary(bm);
+    res <- setNames(nm=names(callExpressions),bm[[metric]]);
+    attr(res,'unit') <- attr(bm,'unit');
+    res;
+}; ## end testJoinType()
+
+testAllJoinTypes <- function(argSpecs,solTypes=getSolTypes(),metric=NULL,times=100L) {
+    joinTypes <- getJoinTypes();
+    resList <- setNames(nm=joinTypes,lapply(joinTypes,function(joinType) testJoinType(argSpecs,joinType,solTypes,metric,times)));
+    if (is.null(metric)) return(resList);
+    units <- unname(unlist(lapply(resList,attr,'unit')));
+    res <- do.call(data.frame,c(list(join=joinTypes),setNames(nm=solTypes,rep(list(rep(NA_real_,length(joinTypes))),length(solTypes))),list(unit=units,stringsAsFactors=F)));
+    for (i in seq_along(resList)) res[i,match(names(resList[[i]]),names(res))] <- resList[[i]];
+    res;
+}; ## end testAllJoinTypes()
+
+testGrid <- function(makeArgSpecsFunc,sizes,overlaps,solTypes=getSolTypes(),joinTypes=getJoinTypes(),metric='median',times=100L) {
+
+    res <- expand.grid(size=sizes,overlap=overlaps,joinType=joinTypes,stringsAsFactors=F);
+    res[solTypes] <- NA_real_;
+    res$unit <- NA_character_;
+    for (ri in seq_len(nrow(res))) {
+
+        size <- res$size[ri];
+        overlap <- res$overlap[ri];
+        joinType <- res$joinType[ri];
+
+        argSpecs <- makeArgSpecsFunc(size,overlap);
+
+        checkIdentical(argSpecs,solTypes);
+
+        cur <- testJoinType(argSpecs,joinType,solTypes,metric,times);
+        res[ri,match(names(cur),names(res))] <- cur;
+        res$unit[ri] <- attr(cur,'unit');
+
+    }; ## end for
+
+    res;
+
+}; 
+## end testGrid()
+
+
+```
+
+Here's a benchmark of the example based on the OP that I demonstrated earlier:
+```{r benchmark ex2}
+## OP's example, supplemented with a non-matching row in df2
+argSpecs <- list(
+    default=list(copySpec=1:2,args=list(
+        df1 <- data.frame(CustomerId=1:6,Product=c(rep('Toaster',3L),rep('Radio',3L))),
+        df2 <- data.frame(CustomerId=c(2L,4L,6L,7L),State=c(rep('Alabama',2L),'Ohio','Texas')),
+        'CustomerId'
+    )),
+    data.table.unkeyed=list(copySpec=1:2,args=list(
+        as.data.table(df1),
+        as.data.table(df2),
+        'CustomerId'
+    )),
+    data.table.keyed=list(copySpec=1:2,args=list(
+        setkey(as.data.table(df1),CustomerId),
+        setkey(as.data.table(df2),CustomerId)
+    ))
+);
+## prepare sqldf
+initSqldf();
+sqldf('create index df1_key on df1(CustomerId);'); ## upload and create an sqlite index on df1
+sqldf('create index df2_key on df2(CustomerId);'); ## upload and create an sqlite index on df2
+
+checkIdentical(argSpecs);
+
+testAllJoinTypes(argSpecs,metric='median');
+##    join    merge data.table.unkeyed data.table.keyed sqldf.unindexed sqldf.indexed      plyr    dplyr in.place         unit
+## 1 inner  644.259           861.9345          923.516        9157.752      1580.390  959.2250 270.9190       NA microseconds
+## 2  left  713.539           888.0205          910.045        8820.334      1529.714  968.4195 270.9185 224.3045 microseconds
+## 3 right 1221.804           909.1900          923.944        8930.668      1533.135 1063.7860 269.8495 218.1035 microseconds
+## 4  full 1302.203          3107.5380         3184.729              NA            NA 1593.6475 270.7055       NA microseconds
+```
+
+Here I benchmark on random input data, trying different scales and different patterns of key overlap between the two input tables. This benchmark is still restricted to the case of a single-column integer key. As well, to ensure that the in-place solution would work for both left and right joins of the same tables, all random test data uses 0..1:0..1 cardinality. This is implemented by sampling without replacement the key column of the first data.frame when generating the key column of the second data.frame.
+
+```{r}
+makeArgSpecs.singleIntegerKey.optionalOneToOne <- function(size,overlap) {
+
+    com <- as.integer(size*overlap);
+
+    argSpecs <- list(
+        default=list(copySpec=1:2,args=list(
+            df1 <- data.frame(id=sample(size),y1=rnorm(size),y2=rnorm(size)),
+            df2 <- data.frame(id=sample(c(if (com>0L) sample(df1$id,com) else integer(),seq(size+1L,len=size-com))),y3=rnorm(size),y4=rnorm(size)),
+            'id'
+        )),
+        data.table.unkeyed=list(copySpec=1:2,args=list(
+            as.data.table(df1),
+            as.data.table(df2),
+            'id'
+        )),
+        data.table.keyed=list(copySpec=1:2,args=list(
+            setkey(as.data.table(df1),id),
+            setkey(as.data.table(df2),id)
+        ))
+    );
+    ## prepare sqldf
+    initSqldf();
+    sqldf('create index df1_key on df1(id);'); ## upload and create an sqlite index on df1
+    sqldf('create index df2_key on df2(id);'); ## upload and create an sqlite index on df2
+
+    argSpecs;
+
+}; ## end makeArgSpecs.singleIntegerKey.optionalOneToOne()
+
+## cross of various input sizes and key overlaps
+sizes <- c(1e1L,1e3L,1e6L);
+overlaps <- c(0.99,0.5,0.01);
+system.time({ res <- testGrid(makeArgSpecs.singleIntegerKey.optionalOneToOne,sizes,overlaps); });
+##     user   system  elapsed
+## 22024.65 12308.63 34493.19
+```
+
+I wrote some code to create log-log plots of the above results. I generated a separate plot for each overlap percentage. It's a little bit cluttered, but I like having all the solution types and join types represented in the same plot.
+
+I used spline interpolation to show a smooth curve for each solution/join type combination, drawn with individual pch symbols. The join type is captured by the pch symbol, using a dot for inner, left and right angle brackets for left and right, and a diamond for full. The solution type is captured by the color as shown in the legend.
+
+```{r}
+plotRes <- function(res,titleFunc,useFloor=F) {
+    solTypes <- setdiff(names(res),c('size','overlap','joinType','unit')); ## derive from res
+    normMult <- c(microseconds=1e-3,milliseconds=1); ## normalize to milliseconds
+    joinTypes <- getJoinTypes();
+    cols <- c(merge='purple',data.table.unkeyed='blue',data.table.keyed='#00DDDD',sqldf.unindexed='brown',sqldf.indexed='orange',plyr='red',dplyr='#00BB00',in.place='magenta');
+    pchs <- list(inner=20L,left='<',right='>',full=23L);
+    cexs <- c(inner=0.7,left=1,right=1,full=0.7);
+    NP <- 60L;
+    ord <- order(decreasing=T,colMeans(res[res$size==max(res$size),solTypes],na.rm=T));
+    ymajors <- data.frame(y=c(1,1e3),label=c('1ms','1s'),stringsAsFactors=F);
+    for (overlap in unique(res$overlap)) {
+        x1 <- res[res$overlap==overlap,];
+        x1[solTypes] <- x1[solTypes]*normMult[x1$unit]; x1$unit <- NULL;
+        xlim <- c(1e1,max(x1$size));
+        xticks <- 10^seq(log10(xlim[1L]),log10(xlim[2L]));
+        ylim <- c(1e-1,10^((if (useFloor) floor else ceiling)(log10(max(x1[solTypes],na.rm=T))))); ## use floor() to zoom in a little more, only sqldf.unindexed will break above, but xpd=NA will keep it visible
+        yticks <- 10^seq(log10(ylim[1L]),log10(ylim[2L]));
+        yticks.minor <- rep(yticks[-length(yticks)],each=9L)*1:9;
+        plot(NA,xlim=xlim,ylim=ylim,xaxs='i',yaxs='i',axes=F,xlab='size (rows)',ylab='time (ms)',log='xy');
+        abline(v=xticks,col='lightgrey');
+        abline(h=yticks.minor,col='lightgrey',lty=3L);
+        abline(h=yticks,col='lightgrey');
+        axis(1L,xticks,parse(text=sprintf('10^%d',as.integer(log10(xticks)))));
+        axis(2L,yticks,parse(text=sprintf('10^%d',as.integer(log10(yticks)))),las=1L);
+        axis(4L,ymajors$y,ymajors$label,las=1L,tick=F,cex.axis=0.7,hadj=0.5);
+        for (joinType in rev(joinTypes)) { ## reverse to draw full first, since it's larger and would be more obtrusive if drawn last
+            x2 <- x1[x1$joinType==joinType,];
+            for (solType in solTypes) {
+                if (any(!is.na(x2[[solType]]))) {
+                    xy <- spline(x2$size,x2[[solType]],xout=10^(seq(log10(x2$size[1L]),log10(x2$size[nrow(x2)]),len=NP)));
+                    points(xy$x,xy$y,pch=pchs[[joinType]],col=cols[solType],cex=cexs[joinType],xpd=NA);
+                }; ## end if
+            }; ## end for
+        }; ## end for
+        ## custom legend
+        ## due to logarithmic skew, must do all distance calcs in inches, and convert to user coords afterward
+        ## the bottom-left corner of the legend will be defined in normalized figure coords, although we can convert to inches immediately
+        leg.cex <- 0.7;
+        leg.x.in <- grconvertX(0.275,'nfc','in');
+        leg.y.in <- grconvertY(0.6,'nfc','in');
+        leg.x.user <- grconvertX(leg.x.in,'in');
+        leg.y.user <- grconvertY(leg.y.in,'in');
+        leg.outpad.w.in <- 0.1;
+        leg.outpad.h.in <- 0.1;
+        leg.midpad.w.in <- 0.1;
+        leg.midpad.h.in <- 0.1;
+        leg.sol.w.in <- max(strwidth(solTypes,'in',leg.cex));
+        leg.sol.h.in <- max(strheight(solTypes,'in',leg.cex))*1.5; ## multiplication factor for greater line height
+        leg.join.w.in <- max(strheight(joinTypes,'in',leg.cex))*1.5; ## ditto
+        leg.join.h.in <- max(strwidth(joinTypes,'in',leg.cex));
+        leg.main.w.in <- leg.join.w.in*length(joinTypes);
+        leg.main.h.in <- leg.sol.h.in*length(solTypes);
+        leg.x2.user <- grconvertX(leg.x.in+leg.outpad.w.in*2+leg.main.w.in+leg.midpad.w.in+leg.sol.w.in,'in');
+        leg.y2.user <- grconvertY(leg.y.in+leg.outpad.h.in*2+leg.main.h.in+leg.midpad.h.in+leg.join.h.in,'in');
+        leg.cols.x.user <- grconvertX(leg.x.in+leg.outpad.w.in+leg.join.w.in*(0.5+seq(0L,length(joinTypes)-1L)),'in');
+        leg.lines.y.user <- grconvertY(leg.y.in+leg.outpad.h.in+leg.main.h.in-leg.sol.h.in*(0.5+seq(0L,length(solTypes)-1L)),'in');
+        leg.sol.x.user <- grconvertX(leg.x.in+leg.outpad.w.in+leg.main.w.in+leg.midpad.w.in,'in');
+        leg.join.y.user <- grconvertY(leg.y.in+leg.outpad.h.in+leg.main.h.in+leg.midpad.h.in,'in');
+        rect(leg.x.user,leg.y.user,leg.x2.user,leg.y2.user,col='white');
+        text(leg.sol.x.user,leg.lines.y.user,solTypes[ord],cex=leg.cex,pos=4L,offset=0);
+        text(leg.cols.x.user,leg.join.y.user,joinTypes,cex=leg.cex,pos=4L,offset=0,srt=90); ## srt rotation applies *after* pos/offset positioning
+        for (i in seq_along(joinTypes)) {
+            joinType <- joinTypes[i];
+            points(rep(leg.cols.x.user[i],length(solTypes)),ifelse(colSums(!is.na(x1[x1$joinType==joinType,solTypes[ord]]))==0L,NA,leg.lines.y.user),pch=pchs[[joinType]],col=cols[solTypes[ord]]);
+        }; ## end for
+        title(titleFunc(overlap));
+        readline(sprintf('overlap %.02f',overlap));
+    }; ## end for
+}; ## end plotRes()
+
+titleFunc <- function(overlap) sprintf('R merge solutions: single-column integer key, 0..1:0..1 cardinality, %d%% overlap',as.integer(overlap*100));
+plotRes(res,titleFunc,T);
+```
+
+Here's a second large-scale benchmark that's more heavy-duty, with respect to the number and types of key columns, as well as cardinality. For this benchmark I use three key columns: one character, one integer, and one logical, with no restrictions on cardinality (that is, 0..*:0..*). (In general it's not advisable to define key columns with double or complex values due to floating-point comparison complications, and basically no one ever uses the raw type, much less for key columns, so I haven't included those types in the key columns. Also, for information's sake, I initially tried to use four key columns by including a POSIXct key column, but the POSIXct type didn't play well with the sqldf.indexed solution for some reason, possibly due to floating-point comparison anomalies, so I removed it.)
+```{r}
+makeArgSpecs.assortedKey.optionalManyToMany <- function(size,overlap,uniquePct=75) {
+
+    ## number of unique keys in df1
+    u1Size <- as.integer(size*uniquePct/100);
+
+    ## (roughly) divide u1Size into bases, so we can use expand.grid() to produce the required number of unique key values with repetitions within individual key columns
+    ## use ceiling() to ensure we cover u1Size; will truncate afterward
+    u1SizePerKeyColumn <- as.integer(ceiling(u1Size^(1/3)));
+
+    ## generate the unique key values for df1
+    keys1 <- expand.grid(stringsAsFactors=F,
+        idCharacter=replicate(u1SizePerKeyColumn,paste(collapse='',sample(letters,sample(4:12,1L),T))),
+        idInteger=sample(u1SizePerKeyColumn),
+        idLogical=sample(c(F,T),u1SizePerKeyColumn,T)
+        ##idPOSIXct=as.POSIXct('2016-01-01 00:00:00','UTC')+sample(u1SizePerKeyColumn)
+    )[seq_len(u1Size),];
+
+    ## rbind some repetitions of the unique keys; this will prepare one side of the many-to-many relationship
+    ## also scramble the order afterward
+    keys1 <- rbind(keys1,keys1[sample(nrow(keys1),size-u1Size,T),])[sample(size),];
+
+    ## common and unilateral key counts
+    com <- as.integer(size*overlap);
+    uni <- size-com;
+
+    ## generate some unilateral keys for df2 by synthesizing outside of the idInteger range of df1
+    keys2 <- data.frame(stringsAsFactors=F,
+        idCharacter=replicate(uni,paste(collapse='',sample(letters,sample(4:12,1L),T))),
+        idInteger=u1SizePerKeyColumn+sample(uni),
+        idLogical=sample(c(F,T),uni,T)
+        ##idPOSIXct=as.POSIXct('2016-01-01 00:00:00','UTC')+u1SizePerKeyColumn+sample(uni)
+    );
+
+    ## rbind random keys from df1; this will complete the many-to-many relationship
+    ## also scramble the order afterward
+    keys2 <- rbind(keys2,keys1[sample(nrow(keys1),com,T),])[sample(size),];
+
+    ##keyNames <- c('idCharacter','idInteger','idLogical','idPOSIXct');
+    keyNames <- c('idCharacter','idInteger','idLogical');
+    ## note: was going to use raw and complex type for two of the non-key columns, but data.table doesn't seem to fully support them
+    argSpecs <- list(
+        default=list(copySpec=1:2,args=list(
+            df1 <- cbind(stringsAsFactors=F,keys1,y1=sample(c(F,T),size,T),y2=sample(size),y3=rnorm(size),y4=replicate(size,paste(collapse='',sample(letters,sample(4:12,1L),T)))),
+            df2 <- cbind(stringsAsFactors=F,keys2,y5=sample(c(F,T),size,T),y6=sample(size),y7=rnorm(size),y8=replicate(size,paste(collapse='',sample(letters,sample(4:12,1L),T)))),
+            keyNames
+        )),
+        data.table.unkeyed=list(copySpec=1:2,args=list(
+            as.data.table(df1),
+            as.data.table(df2),
+            keyNames
+        )),
+        data.table.keyed=list(copySpec=1:2,args=list(
+            setkeyv(as.data.table(df1),keyNames),
+            setkeyv(as.data.table(df2),keyNames)
+        ))
+    );
+    ## prepare sqldf
+    initSqldf();
+    sqldf(paste0('create index df1_key on df1(',paste(collapse=',',keyNames),');')); ## upload and create an sqlite index on df1
+    sqldf(paste0('create index df2_key on df2(',paste(collapse=',',keyNames),');')); ## upload and create an sqlite index on df2
+
+    argSpecs;
+
+}; ## end makeArgSpecs.assortedKey.optionalManyToMany()
+
+sizes <- c(1e1L,1e3L,1e5L); ## 1e5L instead of 1e6L to respect more heavy-duty inputs
+overlaps <- c(0.99,0.5,0.01);
+solTypes <- setdiff(getSolTypes(),'in.place');
+system.time({ res <- testGrid(makeArgSpecs.assortedKey.optionalManyToMany,sizes,overlaps,solTypes); });
+##     user   system  elapsed
+## 38895.50   784.19 39745.53
+
+# The resulting plots, using the same plotting code given above:
+titleFunc <- function(overlap) sprintf('R merge solutions: character/integer/logical key, 0..*:0..* cardinality, %d%% overlap',as.integer(overlap*100));
+plotRes(res,titleFunc,F)
+```
+
+
+
+
+
+
+
+
+
+
