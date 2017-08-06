@@ -1,0 +1,1623 @@
+---
+title: "Try R-oreilly-codeschool"
+author: "Stone_Hou"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+# Try R
+
+Try R is Sponsored By: O'Reilly
+
+> [Try R-oreilly-codeschool](http://tryr.codeschool.com/levels/1)
+
+## Chapter 1 Using R
+
+Complete to UnlockChapter 1 Badge
+
+In this first chapter, we'll cover basic R expressions. We'll start simple, with numbers, strings, and true/false values. Then we'll show you how to store those values in variables, and how to pass them to functions. We'll show you how to get help on functions when you're stuck. Finally we'll load an R script in from a file.
+
+Let's get started!
+
+### Expressions 1.1
+
+Type anything at the prompt, and R will evaluate it and print the answer.
+
+Let's try some simple math. Type the below command.
+
+[Or, if you prefer, click on the command and it will be typed into the console for you!]
+
+```{r}
+1 + 1
+# [1] 2
+```
+
+There's your result, 2. It's printed on the console right after your entry.
+
+Type the string "Arr, matey!". (Don't forget the quotes!)
+
+```{r}
+"Arr, matey!"
+# [1] "Arr, matey!"
+```
+
+Now try multiplying 6 times 7 (* is the multiplication operator).
+
+```{r}
+6 * 7
+# [1] 42
+```
+
+### Logical Values 1.2
+
+Some expressions return a "logical value": TRUE or FALSE. (Many programming languages refer to these as "boolean" values.) Let's try typing an expression that gives us a logical value:
+
+```{r}
+3 < 4
+# [1] TRUE
+```
+
+And another logical value (note that you need a double-equals sign to check whether two values are equal - a single-equals sign won't work):
+
+```{r}
+2 + 2 == 5
+# [1] FALSE
+```
+
+T and F are shorthand for TRUE and FALSE. Try this:
+
+```{r}
+T == TRUE
+# [1] TRUE
+```
+
+### Variables 1.3
+
+As in other programming languages, you can store values into a variable to access it later. Type x <- 42 to store a value in x.
+
+```{r}
+x <- 42
+```
+
+x can now be used in expressions in place of the original result. Try dividing x by 2 (/ is the division operator).
+
+```{r}
+x / 2
+# [1] 21
+```
+
+You can re-assign any value to a variable at any time. Try assigning "Arr, matey!" to x.
+
+```{r}
+x <- "Arr, matey!"
+# [1] "Arr, matey!"
+```
+
+You can print the value of a variable at any time just by typing its name in the console. Try printing the current value of x.
+
+```{r}
+x
+# [1] "Arr, matey!"
+```
+
+Now try assigning the TRUE logical value to x.
+
+```{r}
+x <- TRUE
+# [1] TRUE
+```
+
+### Functions 1.4
+
+You call a function by typing its name, followed by one or more arguments to that function in parenthesis. Let's try using the sum function, to add up a few numbers. Enter:
+
+```{r}
+sum(1, 3, 5)
+# [1] 9
+```
+
+Some arguments have names. For example, to repeat a value 3 times, you would call the rep function and provide its times argument:
+
+```{r}
+rep("Yo ho!", times = 3)
+# [1] "Yo ho!" "Yo ho!" "Yo ho!"
+```
+
+Try calling the sqrt function to get the square root of 16.
+
+```{r}
+sqrt(16)
+# [1] 4
+```
+
+### Help 1.5
+
+help(functionname) brings up help for the given function. Try displaying help for the sum function:
+
+```{r}
+help(sum)
+# sum                    package:base                    R Documentation
+# 
+# Sum of Vector Elements
+# 
+# Description:
+# 
+#      'sum' returns the sum of all the values present in its arguments.
+# 
+# Usage:
+# 
+#      sum(..., na.rm = FALSE)
+# ...
+```
+
+(Don't worry about that optional na.rm argument, we'll cover that later.)
+
+example(functionname) brings up examples of usage for the given function. Try displaying examples for the min function:
+
+```{r}
+example(min)
+# 
+# min> require(stats); require(graphics)
+# 
+# min>  min(5:1, pi) #-> one number
+# [1] 1
+# 
+# min> pmin(5:1, pi) #->  5  numbers
+# [1] 3.141593 3.141593 3.000000 2.000000 1.000000
+# 
+# ...
+```
+
+Now try bringing up help for the rep function:
+
+```{r}
+help(rep)
+# rep                    package:base                    R Documentation
+# 
+# Replicate Elements of Vectors and Lists
+# 
+# Description:
+# 
+#      'rep' replicates the values in 'x'. It is a generic function, and
+#      the (internal) default method is described here.
+# ...
+```
+
+### Files 1.6
+
+Typing commands each time you need them only works for short scripts, of course. R commands can also be written in plain text files (with a ".R" extension, by convention) for executing later. You can run them directly from the command line, or from within a running R instance.
+
+We've stored a couple sample scripts for you. You can list the files in the current directory from within R, by calling the list.files function. Try it now:
+
+```{r}
+list.files()
+# [1] "bottle1.R" "bottle2.R"
+```
+
+To run a script, pass a string with its name to the source function. Try running the "bottle1.R" script:
+
+```{r}
+source("bottle1.R")
+# [1] "This be a message in a bottle1.R!"
+```
+
+Now try running "bottle2.R":
+
+```{r}
+source("bottle2.R")
+# [1] "Will ye be me pen pal?"
+```
+
+Chapter 1 Completed
+
+Chapter 1 Badge
+Share your plunder:
+Tweet
+You've reached the end of Chapter 1… where you discover a badge! If you'd like to add this to your Code School account, click here to log in over on Code School. (Totally optional.)
+
+Excellent work! Now you know the basics of R expressions. You've learned how to create and access variables, and how to call functions. You've learned how to run pre-made scripts. And you've learned how to access R's help functionality when you need it.
+
+Now it's time to learn about the features that make R really unique and useful - its data structures. Vectors are first; we'll talk about them in the next chapter!
+
+
+## Chapter 2 Vectors
+
+Try R is Sponsored By:O'Reilly
+Complete to UnlockChapter 2 Badge
+
+The name may sound intimidating, but a vector is simply a list of values. R relies on vectors for many of its operations. This includes basic plots - we'll have you drawing graphs by the end of this chapter (and it's a lot easier than you might think)!
+
+Course tip: if you haven't already, try clicking on the expand icon (Expand Sidebar) in the upper-left corner of the sidebar. The expanded sidebar offers a more in-depth look at chapter sections and progress.
+
+### Vectors 2.1
+
+A vector's values can be numbers, strings, logical values, or any other type, as long as they're all the same type. Try creating a vector of numbers, like this:
+
+```{r}
+c(4, 7, 9)
+# [1] 4 7 9
+```
+
+The c function (c is short for Combine) creates a new vector by combining a list of values.
+
+Now try creating a vector with strings:
+
+```{r}
+c('a', 'b', 'c')
+# [1] "a" "b" "c"
+```
+
+Vectors cannot hold values with different modes (types). Try mixing modes and see what happens:
+
+```{r}
+c(1, TRUE, "three")
+# [1] "1"     "TRUE"  "three"
+```
+
+All the values were converted to a single mode (characters) so that the vector can hold them all.
+
+### Sequence Vectors 2.2
+
+If you need a vector with a sequence of numbers you can create it with start:end notation. Let's make a vector with values from 5 through 9:
+
+```{r}
+5:9
+# [1]  5  6  7  8  9
+```
+
+A more versatile way to make sequences is to call the seq function. Let's do the same thing with seq:
+
+```{r}
+seq(5, 9)
+# [1] 5 6 7 8 9
+```
+
+seq also allows you to use increments other than 1. Try it with steps of 0.5:
+
+```{r}
+seq(5, 9, 0.5)
+# [1] 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0
+```
+
+Now try making a vector with integers from 9 down to 5:
+
+```{r}
+9:5
+# [1] 9 8 7 6 5
+```
+
+### Vector Access 2.3
+
+We're going to create a vector with some strings in it for you, and store it in the sentence variable.
+
+You can retrieve an individual value within a vector by providing its numeric index in square brackets. Try getting the third value:
+
+```{r}
+sentence <- c('walk', 'the', 'plank')
+sentence[3]
+# [1] "plank"
+
+```
+
+Many languages start array indices at 0, but R's vector indices start at 1. Get the first value by typing:
+
+```{r}
+sentence[1]
+# [1] "walk"
+```
+
+You can assign new values within an existing vector. Try changing the third word to "dog":
+
+```{r}
+sentence[3] <- "dog"
+```
+
+If you add new values onto the end, the vector will grow to accommodate them. Let's add a fourth word:
+
+```{r}
+sentence[4] <- 'to'
+```
+
+You can use a vector within the square brackets to access multiple values. Try getting the first and third words:
+
+```{r}
+sentence[c(1, 3)]
+# [1] "walk" "dog"
+```
+
+This means you can retrieve ranges of values. Get the second through fourth words:
+
+```{r}
+sentence[2:4]
+# [1] "the" "dog" "to"
+```
+
+You can also set ranges of values; just provide the values in a vector. Add words 5 through 7:
+
+```{r}
+sentence[5:7] <- c('the', 'poop', 'deck')
+```
+
+Now try accessing the sixth word of the sentence vector:
+
+```{r}
+sentence[6]
+# [1] "poop"
+```
+
+### Vector Names 2.4
+
+For this challenge, we'll make a 3-item vector for you, and store it in the ranks variable.
+
+You can assign names to a vector's elements by passing a second vector filled with names to the names assignment function, like this:
+
+```{r}
+ranks <- 1:3
+names(ranks) <- c("first", "second", "third")
+```
+
+Assigning names for a vector can act as useful labels for the data. Below, you can see what our vector looks like now.
+
+You can also use the names to access the vector's values. Try getting the value for the "first" rank:
+
+```{r}
+ranks
+ # first second  third
+ #     1      2      3
+ranks["first"]
+# first
+#     1
+```
+
+Now set the current value for the "third" rank to a different value using the name rather than the position.
+
+```{r}
+ranks["third"] <- 4
+```
+
+### Plotting One Vector 2.5
+
+The barplot function draws a bar chart with a vector's values. We'll make a new vector for you, and store it in the vesselsSunk variable.
+
+Now try passing the vector to the barplot function:
+
+```{r}
+vesselsSunk <- c(4, 5, 1)
+barplot(vesselsSunk)
+# 0
+# 1
+# 2
+# 3
+# 4
+# 5
+```
+
+If you assign names to the vector's values, R will use those names as labels on the bar plot. Let's use the names assignment function again:
+
+```{r}
+names(vesselsSunk) <- c("England", "France", "Norway")
+```
+
+Now, if you call barplot with the vector again, you'll see the labels:
+
+```{r}
+barplot(vesselsSunk)
+# England
+# France
+# Norway
+# 0
+# 1
+# 2
+# 3
+# 4
+# 5
+```
+
+Now, try calling barplot on a vector of integers ranging from 1 through 100:
+
+```{r}
+barplot(1:100)
+# 0
+# 20
+# 40
+# 60
+# 80
+# 100
+```
+
+### Vector Math 2.6
+
+Most arithmetic operations work just as well on vectors as they do on single values. We'll make another sample vector for you to work with, and store it in the a variable.
+
+If you add a scalar (a single value) to a vector, the scalar will be added to each value in the vector, returning a new vector with the results. Try adding 1 to each element in our vector:
+
+```{r}
+a <- c(1, 2, 3)
+a + 1
+# [1] 2 3 4
+```
+
+The same is true of division, multiplication, or any other basic arithmetic. Try dividing our vector by 2:
+
+```{r}
+a / 2
+# [1] 0.5 1.0 1.5
+```
+
+Now try multiplying our vector by 2:
+
+```{r}
+a * 2
+# [1] 2 4 6
+```
+
+If you add two vectors, R will take each value from each vector and add them. We'll make a second vector for you to experiment with, and store it in the b variable.
+
+Try adding it to the a vector:
+
+```{r}
+b <- c(4, 5, 6)
+a + b
+# [1] 5 7 9
+```
+
+Now try subtracting b from a:
+
+```{r}
+a - b
+# [1] -3 -3 -3
+```
+
+You can also take two vectors and compare each item. See which values in the a vector are equal to those in a second vector:
+
+```{r}
+a == c(1, 99, 3)
+# [1]  TRUE FALSE  TRUE
+```
+
+Notice that R didn't test whether the whole vectors were equal; it checked each value in the a vector against the value at the same index in our new vector.
+
+Check if each value in the a vector is less than the corresponding value in another vector:
+
+```{r}
+a < c(1, 99, 3)
+# [1] FALSE  TRUE FALSE
+```
+
+Functions that normally work with scalars can operate on each element of a vector, too. Try getting the sine of each value in our vector:
+
+```{r}
+sin(a)
+# [1] 0.8414710 0.9092974 0.1411200
+```
+
+Now try getting the square roots with sqrt:
+
+```{r}
+sqrt(a)
+# [1] 1.000000 1.414214 1.732051
+```
+
+### Scatter Plots 2.7
+
+The plot function takes two vectors, one for X values and one for Y values, and draws a graph of them.
+
+Let's draw a graph showing the relationship of numbers and their sines.
+
+First, we'll need some sample data. We'll create a vector for you with some fractional values between 0 and 20, and store it in the x variable.
+
+Now, try creating a second vector with the sines of those values:
+
+```{r}
+x <- seq(1, 20, 0.1)
+y <- sin(x)
+```
+
+Then simply call plot with your two vectors:
+
+```{r}
+plot(x, y)
+# 5
+# 10
+# 15
+# 20
+# -1.0
+# -0.5
+# 0.0
+# 0.5
+# 1.0
+# x
+# y
+```
+
+Great job! Notice on the graph that values from the first argument (x) are used for the horizontal axis, and values from the second (y) for the vertical.
+
+
+Your turn. We'll create a vector with some negative and positive values for you, and store it in the values variable.
+
+We'll also create a second vector with the absolute values of the first, and store it in the absolutes variable.
+
+Try plotting the vectors, with values on the horizontal axis, and absolutes on the vertical axis.
+
+```{r}
+values <- -10:10
+absolutes <- abs(values)
+plot(values, absolutes)
+# -10
+# -5
+# 0
+# 5
+# 10
+# 0
+# 2
+# 4
+# 6
+# 8
+# 10
+# values
+# absolutes
+```
+
+### NA Values 2.8
+
+Sometimes, when working with sample data, a given value isn't available. But it's not a good idea to just throw those values out. R has a value that explicitly indicates a sample was not available: NA. Many functions that work with vectors treat this value specially.
+
+We'll create a vector for you with a missing sample, and store it in the a variable.
+
+Try to get the sum of its values, and see what the result is:
+
+```{r}
+a <- c(1, 3, NA, 7, 9)
+sum(a)
+# [1] NA
+```
+
+The sum is considered "not available" by default because one of the vector's values was NA. This is the responsible thing to do; R won't just blithely add up the numbers without warning you about the incomplete data. We can explicitly tell sum (and many other functions) to remove NA values before they do their calculations, however.
+
+Remember that command to bring up help for a function? Bring up documentation for the sum function:
+
+```{r}
+help(sum)
+# sum                    package:base                    R Documentation
+# 
+# Sum of Vector Elements
+# 
+# Description:
+#     'sum' returns the sum of all the values present in its arguments.
+# 
+# Usage:
+#     sum(..., na.rm = FALSE)
+# ...
+```
+
+
+As you see in the documentation, sum can take an optional named argument, na.rm. It's set to FALSE by default, but if you set it to TRUE, all NA arguments will be removed from the vector before the calculation is performed.
+
+Try calling sum again, with na.rm set to TRUE:
+
+```{r}
+sum(a, na.rm = TRUE)
+# [1] 20
+```
+
+Chapter 2 Completed
+
+Chapter 2 Badge
+Share your plunder:
+Tweet
+You've traversed Chapter 2… and discovered another badge!
+
+In this chapter, we've shown you all the basics of manipulating vectors - creating and accessing them, doing math with them, and making sequences. We've shown you how to make bar plots and scatter plots with vectors. And we've shown you how R treats vectors where one or more values are not available.
+
+The vector is just the first of several data structures that R offers. See you in the next chapter, where we'll talk about… the matrix.
+
+More from O'Reilly
+
+Did you know that our sponsor O'Reilly has some great resources for big data practitioners? Check out the Strata Newsletter, the Strata Blog, and get access to five e-books on big data topics from leading thinkers in the space.
+
+
+## Chapter 3 Matrices
+
+Try R is Sponsored By: O'Reilly
+Complete to UnlockChapter 3 Badge
+
+So far we've only worked with vectors, which are simple lists of values. What if you need data in rows and columns? Matrices are here to help.
+
+A matrix is just a fancy term for a 2-dimensional array. In this chapter, we'll show you all the basics of working with matrices, from creating them, to accessing them, to plotting them.
+
+### Matrices 3.1
+
+Let's make a matrix 3 rows high by 4 columns wide, with all its fields set to 0.
+
+```{r}
+matrix(0, 3, 4)
+#      [,1] [,2] [,3] [,4]
+# [1,]    0    0    0    0
+# [2,]    0    0    0    0
+# [3,]    0    0    0    0
+```
+
+
+You can also use a vector to initialize a matrix's value. To fill a 3x4 matrix, you'll need a 12-item vector. We'll make that for you now:
+
+```{r}
+a <- 1:12
+```
+
+If we print the value of a, we'll see the vector's values, all in a single row:
+
+```{r}
+print(a)
+ # [1]  1  2  3  4  5  6  7  8  9 10 11 12
+ ```
+
+Now call matrix with the vector, the number of rows, and the number of columns:
+
+```{r}
+matrix(a, 3, 4)
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    4    7   10
+# [2,]    2    5    8   11
+# [3,]    3    6    9   12
+```
+
+
+The vector's values are copied into the new matrix, one by one. You can also re-shape the vector itself into a matrix. Create an 8-item vector:
+
+```{r}
+plank <- 1:8
+```
+
+The dim assignment function sets dimensions for a matrix. It accepts a vector with the number of rows and the number of columns to assign.
+
+Assign new dimensions to plank by passing a vector specifying 2 rows and 4 columns (c(2, 4)):
+
+```{r}
+dim(plank) <- c(2, 4)
+```
+
+If you print plank now, you'll see that the values have shifted to form 2 rows by 4 columns:
+
+```{r}
+print(plank)
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    3    5    7
+# [2,]    2    4    6    8
+```
+
+The vector is no longer one-dimensional. It has been converted, in-place, to a matrix.
+
+Now, use the matrix function to make a 5x5 matrix, with its fields initialized to any values you like.
+
+```{r}
+matrix(1, 5, 5)
+#      [,1] [,2] [,3] [,4] [,5]
+# [1,]    1    1    1    1    1
+# [2,]    1    1    1    1    1
+# [3,]    1    1    1    1    1
+# [4,]    1    1    1    1    1
+# [5,]    1    1    1    1    1
+```
+
+### Matrix Access 3.2
+
+Getting values from matrices isn't that different from vectors; you just have to provide two indices instead of one.
+
+Let's take another look at our plank matrix:
+
+```{r}
+print(plank)
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    3    5    7
+# [2,]    2    4    6    8
+```
+
+Try getting the value from the second row in the third column of plank:
+
+```{r}
+plank[2, 3]
+[1] 6
+```
+
+Now, try getting the value from first row of the fourth column:
+
+```{r}
+plank[1, 4]
+# [1] 7
+```
+
+As with vectors, to set a single value, just assign to it. Set the previous value to 0:
+
+```{r}
+plank[1, 4] <- 0
+```
+
+You can get an entire row of the matrix by omitting the column index (but keep the comma). Try retrieving the second row:
+
+```{r}
+plank[2,]
+# [1] 2 4 6 8
+```
+
+To get an entire column, omit the row index. Retrieve the fourth column:
+
+```{r}
+plank[, 4]
+# [1] 7 8
+```
+
+You can read multiple rows or columns by providing a vector or sequence with their indices. Try retrieving columns 2 through 4:
+
+```{r}
+plank[, 2:4]
+#      [,1] [,2] [,3]
+# [1,]    3    5    7
+# [2,]    4    6    8
+```
+
+### Matrix Plotting 3.3
+
+Text output is only useful when matrices are small. When working with more complex data, you'll need something better. Fortunately, R includes powerful visualizations for matrix data.
+
+We'll start simple, with an elevation map of a sandy beach.
+
+It's pretty flat - everything is 1 meter above sea level. We'll create a 10 by 10 matrix with all its values initialized to 1 for you:
+
+```{r}
+elevation <- matrix(1, 10, 10)
+```
+
+Oh, wait, we forgot the spot where we dug down to sea level to retrieve a treasure chest. At the fourth row, sixth column, set the elevation to 0:
+
+```{r}
+elevation[4, 6] <- 0
+```
+
+You can now do a contour map of the values simply by passing the matrix to the contour function:
+
+```{r}
+contour(elevation)
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+```
+
+Or you can create a 3D perspective plot with the persp function:
+
+```{r}
+persp(elevation)
+# elevation
+# Y
+# Z
+```
+
+The perspective plot looks a little odd, though. This is because persp automatically expands the view so that your highest value (the beach surface) is at the very top.
+
+We can fix that by specifying our own value for the expand parameter.
+
+```{r}
+persp(elevation, expand=0.2)
+# elevation
+# Y
+# Z
+```
+
+Okay, those examples are a little simplistic. Thankfully, R includes some sample data sets to play around with. One of these is volcano, a 3D map of a dormant New Zealand volcano.
+
+It's simply an 87x61 matrix with elevation values, but it shows the power of R's matrix visualizations.
+
+Try creating a contour map of the volcano matrix:
+
+```{r}
+contour(volcano)
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+```
+
+Try a perspective plot (limit the vertical expansion to one-fifth again):
+
+```{r}
+persp(volcano, expand=0.2)
+# volcano
+# Y
+# Z
+```
+
+The image function will create a heat map:
+
+```{r}
+image(volcano)
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+# 0.0
+# 0.2
+# 0.4
+# 0.6
+# 0.8
+# 1.0
+```
+
+Chapter 3 Completed
+
+Chapter 3 Badge
+
+Share your plunder: Tweet
+
+Here we stand on the beach, at the end of Chapter 3. What's this, buried in the sand? It's another badge!
+
+In this chapter, we learned how to create matrices from scratch, and how to re-shape a vector into a matrix. We learned how to access values within a matrix one-by-one, or in groups. And we saw just a few of the ways to visualize a matrix's data.
+
+None of the techniques we've used so far will help you describe your data, though. We'll rectify that in the next chapter, where we'll talk about summary statistics.
+
+## Chapter 4 Summary Statistics
+
+Simply throwing a bunch of numbers at your audience will only confuse them. Part of a statistician's job is to explain their data. In this chapter, we'll show you some of the tools R offers to let you do so, with minimum fuss.
+
+### Mean 4.1
+
+Determining the health of the crew is an important part of any inventory of the ship. Here's a vector containing the number of limbs each member has left, along with their names.
+
+```{r}
+limbs <- c(4, 3, 4, 3, 2, 4, 4, 4)
+names(limbs) <- c('One-Eye', 'Peg-Leg', 'Smitty', 'Hook', 'Scooter', 'Dan', 'Mikey', 'Blackbeard')
+```
+
+A quick way to assess our battle-readiness would be to get the average of the crew's appendage counts. Statisticians call this the "mean". Call the mean function with the limbs vector.
+
+```{r}
+mean(limbs)
+# [1] 3.5
+```
+
+An average closer to 4 would be nice, but this will have to do.
+
+Here's a barplot of that vector:
+
+```{r}
+barplot(limbs)
+# One-Eye
+# Peg-Leg
+# Smitty
+# Hook
+# Scooter
+# Dan
+# Mikey
+# Blackbeard
+# 0
+# 1
+# 2
+# 3
+# 4
+```
+
+If we draw a line on the plot representing the mean, we can easily compare the various values to the average. The abline function can take an h parameter with a value at which to draw a horizontal line, or a v parameter for a vertical line. When it's called, it updates the previous plot.
+
+Draw a horizontal line across the plot at the mean:
+
+```{r}
+abline(h = mean(limbs))
+# One-Eye
+# Peg-Leg
+# Smitty
+# Hook
+# Scooter
+# Dan
+# Mikey
+# Blackbeard
+# 0
+# 1
+# 2
+# 3
+# 4
+```
+
+### Median 4.2
+
+Let's say we gain a crew member that completely skews the mean.
+```{r}
+limbs <- c(4, 3, 4, 3, 2, 4, 4, 14)
+names(limbs) <- c('One-Eye', 'Peg-Leg', 'Smitty', 'Hook',
+                    'Scooter', 'Dan', 'Mikey', 'Davy Jones')
+mean(limbs)
+# [1] 4.75
+```
+
+Let's see how this new mean shows up on our same graph.
+
+```{r}
+barplot(limbs)
+abline(h = mean(limbs))
+# One-Eye
+# Peg-Leg
+# Smitty
+# Hook
+# Scooter
+# Dan
+# Mikey
+# Davy Jones
+# 0
+# 2
+# 4
+# 6
+# 8
+# 10
+# 12
+# 14
+```
+
+It may be factually accurate to say that our crew has an average of 4.75 limbs, but it's probably also misleading.
+
+
+For situations like this, it's probably more useful to talk about the "median" value. The median is calculated by sorting the values and choosing the middle one (for sets with an even number of values, the middle two values are averaged).
+
+Call the median function on the vector:
+
+```{r}
+median(limbs)
+# [1] 4
+```
+
+That's more like it. Let's show the median on the plot. Draw a horizontal line across the plot at the median.
+
+```{r}
+abline(h = median(limbs))
+# One-Eye
+# Peg-Leg
+# Smitty
+# Hook
+# Scooter
+# Dan
+# Mikey
+# Davy Jones
+# 0
+# 2
+# 4
+# 6
+# 8
+# 10
+# 12
+# 14
+```
+
+### Standard Deviation 4.3
+
+Some of the plunder from our recent raids has been worth less than what we're used to. Here's a vector with the values of our latest hauls:
+```{r}
+pounds <- c(45000, 50000, 35000, 40000, 35000, 45000, 10000, 15000)
+barplot(pounds)
+meanValue <- mean(pounds)
+```
+
+Let's see a plot showing the mean value:
+
+```{r}
+abline(h = meanValue)
+# 0
+# 10000
+# 20000
+# 30000
+# 40000
+# 50000
+```
+
+These results seem way below normal. The crew wants to make Smitty, who picked the last couple ships to waylay, walk the plank. But as he dangles over the water, wily Smitty raises a question: what, exactly, is a "normal" haul?
+
+Statisticians use the concept of "standard deviation" from the mean to describe the range of typical values for a data set. For a group of numbers, it shows how much they typically vary from the average value. To calculate the standard deviation, you calculate the mean of the values, then subtract the mean from each number and square the result, then average those squares, and take the square root of that average.
+
+If that sounds like a lot of work, don't worry. You're using R, and all you have to do is pass a vector to the sd function. Try calling sd on the pounds vector now, and assign the result to the deviation variable:
+
+```{r}
+deviation <- sd(pounds)
+```
+
+We'll add a line on the plot to show one standard deviation above the mean (the top of the normal range)...
+
+```{r}
+abline(h = meanValue + deviation)
+# 0
+# 10000
+# 20000
+# 30000
+# 40000
+# 50000
+```
+
+Hail to the sailor that brought us that 50,000-pound payday!
+
+Now try adding a line on the plot to show one standard devation below the mean (the bottom of the normal range):
+
+```{r}
+abline(h = meanValue - deviation)
+# 0
+# 10000
+# 20000
+# 30000
+# 40000
+# 50000
+```
+
+We're risking being hanged by the Spanish for this? Sorry, Smitty, you're shark bait.
+
+
+Chapter 4 Completed
+
+Chapter 4 Badge
+Share your plunder: Tweet
+
+Land ho! You've navigated Chapter 4. And what awaits us on the shore? It's another badge!
+
+Summary statistics let you show how your data points are distributed, without the need to look closely at each one. We've shown you the functions for mean, median, and standard deviation, as well as ways to display them on your graphs.
+
+
+## Chapter 5 Factors
+
+Often your data needs to be grouped by category: blood pressure by age range, accidents by auto manufacturer, and so forth. R has a special collection type called a factor to track these categorized values.
+
+### Creating Factors 5.1
+
+It's time to take inventory of the ship's hold. We'll make a vector for you with the type of booty in each chest.
+
+To categorize the values, simply pass the vector to the factor function:
+
+```{r}
+chests <- c('gold', 'silver', 'gems', 'gold', 'gems')
+types <- factor(chests)
+```
+
+There are a couple differences between the original vector and the new factor that are worth noting. Print the chests vector:
+
+```{r}
+print(chests)
+# [1] "gold"   "silver" "gems"   "gold"   "gems"
+```
+
+You see the raw list of strings, repeated values and all. Now print the types factor:
+
+```{r}
+print(types)
+# [1] gold   silver gems   gold   gems
+# Levels: gems gold silver
+```
+
+Printed at the bottom, you'll see the factor's "levels" - groups of unique values. Notice also that there are no quotes around the values. That's because they're not strings; they're actually integer references to one of the factor's levels.
+
+Let's take a look at the underlying integers. Pass the factor to the as.integer function:
+
+```{r}
+as.integer(types)
+# [1] 2 3 1 2 1
+```
+
+You can get only the factor levels with the levels function:
+
+```{r}
+levels(types)
+# [1] "gems"   "gold"   "silver"
+```
+
+
+### Plots With Factors 5.2
+
+You can use a factor to separate plots into categories. Let's graph our five chests by weight and value, and show their type as well. We'll create two vectors for you; weights will contain the weight of each chest, and prices will track how much the chests are worth.
+
+Now, try calling plot to graph the chests by weight and value.
+
+```{r}
+weights <- c(300, 200, 100, 250, 150)
+prices <- c(9000, 5000, 12000, 7500, 18000)
+plot(weights, prices)
+# 100
+# 150
+# 200
+# 250
+# 300
+# 6000
+# 8000
+# 10000
+# 12000
+# 14000
+# 16000
+# 18000
+# weights
+# prices
+```
+
+We can't tell which chest is which, though. Fortunately, we can use different plot characters for each type by converting the factor to integers, and passing it to the pch argument of plot.
+
+```{r}
+plot(weights, prices, pch=as.integer(types))
+# 100
+# 150
+# 200
+# 250
+# 300
+# 6000
+# 8000
+# 10000
+# 12000
+# 14000
+# 16000
+# 18000
+# weights
+# prices
+```
+
+"Circle", "Triangle", and "Plus Sign" still aren't great descriptions for treasure, though. Let's add a legend to show what the symbols mean.
+
+The legend function takes a location to draw in, a vector with label names, and a vector with numeric plot character IDs.
+
+```{r}
+legend("topright", c("gems", "gold", "silver"), pch=1:3)
+# 100
+# 150
+# 200
+# 250
+# 300
+# 6000
+# 8000
+# 10000
+# 12000
+# 14000
+# 16000
+# 18000
+# weights
+# prices
+# gems
+# gold
+# silver
+# gems
+# gold
+# silver
+```
+
+Next time the boat's taking on water, it would be wise to dump the silver and keep the gems!
+
+
+If you hard-code the labels and plot characters, you'll have to update them every time you change the plot factor. Instead, it's better to derive them by using the levels function on your factor:
+
+```{r}
+legend("topright", levels(types), pch=1:length(levels(types)))
+# 100
+# 150
+# 200
+# 250
+# 300
+# 6000
+# 8000
+# 10000
+# 12000
+# 14000
+# 16000
+# 18000
+# weights
+# prices
+# gems
+# gold
+# silver
+# gems
+# gold
+# silver
+```
+
+Chapter 5 Completed
+
+Chapter 5 Badge
+Share your plunder:
+Tweet
+A long inland march has brought us to the end of Chapter 5. We've stumbled across another badge!
+
+Factors help you divide your data into groups. In this chapter, we've shown you how to create them, and how to use them to make plots more readable.
+
+More from O'Reilly
+
+Did you know that our sponsor O'Reilly has some great resources for big data practitioners? Check out the Strata Newsletter, the Strata Blog, and get access to five e-books on big data topics from leading thinkers in the space.
+
+## Chapter 6 Data Frames
+
+The weights, prices, and types data structures are all deeply tied together, if you think about it. If you add a new weight sample, you need to remember to add a new price and type, or risk everything falling out of sync. To avoid trouble, it would be nice if we could tie all these variables together in a single data structure.
+
+Fortunately, R has a structure for just this purpose: the data frame. You can think of a data frame as something akin to a database table or an Excel spreadsheet. It has a specific number of columns, each of which is expected to contain values of a particular type. It also has an indeterminate number of rows - sets of related values for each column.
+
+### Data Frames 6.1
+
+Our vectors with treasure chest data are perfect candidates for conversion to a data frame. And it's easy to do. Call the data.frame function, and pass weights, prices, and types as the arguments. Assign the result to the treasure variable:
+
+```{r}
+treasure <- data.frame(weights, prices, types)
+```
+
+Now, try printing treasure to see its contents:
+
+```{r}
+print(treasure)
+#   weights prices  types
+# 1     300   9000   gold
+# 2     200   5000 silver
+# 3     100  12000   gems
+# 4     250   7500   gold
+# 5     150  18000   gems
+```
+
+There's your new data frame, neatly organized into rows, with column names (derived from the variable names) across the top.
+
+### Data Frame Access 6.2
+
+Just like matrices, it's easy to access individual portions of a data frame.
+
+You can get individual columns by providing their index number in double-brackets. Try getting the second column (prices) of treasure:
+
+```{r}
+treasure[[2]]
+# [1]  9000  5000 12000  7500 18000
+```
+
+You could instead provide a column name as a string in double-brackets. (This is often more readable.) Retrieve the "weights" column:
+
+```{r}
+treasure[["weights"]]
+# [1] 300 200 100 250 150
+```
+
+Typing all those brackets can get tedious, so there's also a shorthand notation: the data frame name, a dollar sign, and the column name (without quotes). Try using it to get the "prices" column:
+
+```{r}
+treasure$prices
+# [1]  9000  5000 12000  7500 18000
+```
+
+Now try getting the "types" column:
+
+```{r}
+treasure$types
+# [1] gold   silver gems   gold   gems
+# Levels: gems gold silver
+```
+
+### Loading Data Frames 6.3
+
+Typing in all your data by hand only works up to a point, obviously, which is why R was given the capability to easily load data in from external files.
+
+We've created a couple data files for you to experiment with:
+
+```{r}
+list.files()
+# [1] "targets.csv" "infantry.txt"
+```
+
+Our "targets.csv" file is in the CSV (Comma Separated Values) format exported by many popular spreadsheet programs. Here's what its content looks like:
+```{r}
+# "Port","Population","Worth"
+# "Cartagena",35000,10000
+# "Porto Bello",49000,15000
+# "Havana",140000,50000
+# "Panama City",105000,35000
+```
+
+You can load a CSV file's content into a data frame by passing the file name to the read.csv function. Try it with the "targets.csv" file:
+
+```{r}
+read.csv("targets.csv")
+#          Port Population Worth
+# 1   Cartagena      35000 10000
+# 2 Porto Bello      49000 15000
+# 3      Havana     140000 50000
+# 4 Panama City     105000 35000
+```
+
+The "infantry.txt" file has a similar format, but its fields are separated by tab characters rather than commas. Its content looks like this:
+```{r}
+# Port         Infantry
+# Porto Bello  700
+# Cartagena    500
+# Panama City  1500
+# Havana       2000
+```
+
+For files that use separator strings other than commas, you can use the read.table function. The sep argument defines the separator character, and you can specify a tab character with "\t".
+
+Call read.table on "infantry.txt", using tab separators:
+
+```{r}
+read.table("infantry.txt", sep="\t")
+#            V1       V2
+# 1        Port Infantry
+# 2 Porto Bello      700
+# 3   Cartagena      500
+# 4 Panama City     1500
+# 5      Havana     2000
+```
+
+Notice the "V1" and "V2" column headers? The first line is not automatically treated as column headers with read.table. This behavior is controlled by the header argument. Call read.table again, setting header to TRUE:
+
+```{r}
+read.table("infantry.txt", sep="\t", header=TRUE)
+#          Port Infantry
+# 1 Porto Bello      700
+# 2   Cartagena      500
+# 3 Panama City     1500
+# 4      Havana     2000
+```
+
+### Merging Data Frames 6.4
+
+We want to loot the city with the most treasure and the fewest guards. Right now, though, we have to look at both files and match up the rows. It would be nice if all the data for a port were in one place...
+
+R's merge function can accomplish precisely that. It joins two data frames together, using the contents of one or more columns. First, we're going to store those file contents in two data frames for you, targets and infantry.
+
+The merge function takes arguments with an x frame (targets) and a y frame (infantry). By default, it joins the frames on columns with the same name (the two Port columns). See if you can merge the two frames:
+
+```{r}
+targets <- read.csv("targets.csv")
+infantry <- read.table("infantry.txt", sep="\t", header=TRUE)
+merge(x = targets, y = infantry)
+#          Port Population Worth Infantry
+# 1   Cartagena      35000 10000      500
+# 2      Havana     140000 50000     2000
+# 3 Panama City     105000 35000     1500
+# 4 Porto Bello      49000 15000      700
+```
+
+Chapter 6 Completed
+
+Chapter 6 Badge
+Share your plunder:
+Tweet
+Thirty paces south from the gate of the fort, and dig… we've unearthed another badge!
+
+When your data grows beyond a certain size, you need powerful tools to organize it. With data frames, R gives you exactly that. We've shown you how to create and access data frames. We've also shown you how to load frames in from files, and how to cobble multiple frames together into a new data set.
+
+Time to take what you've learned so far, and apply it. In the next chapter, we'll be working with some real-world data!
+
+
+## Chapter 7 Real-Word Data
+
+So far, we've been working purely in the abstract. It's time to take a look at some real data, and see if we can make any observations about it.
+
+### Some Real World Data 7.1
+
+Modern pirates plunder software, not silver. We have a file with the software piracy rate, sorted by country. Here's a sample of its format:
+```{r}
+# Country,Piracy
+# Australia,23
+# Bangladesh,90
+# Brunei,67
+# China,77
+# ...
+```
+
+We'll load that into the piracy data frame for you:
+```{r}
+piracy <- read.csv("piracy.csv")
+```
+
+We also have another file with GDP per capita for each country (wealth produced, divided by population):
+```{r}
+# Rank    Country        GDP
+# 1       Liechtenstein  141100
+# 2       Qatar          104300
+# 3       Luxembourg     81100
+# 4       Bermuda        69900
+# ...
+```
+
+That will go into the gdp frame:
+```{r}
+gdp <- read.table("gdp.txt", sep="  ", header=TRUE)
+```
+
+We'll merge the frames on the country names:
+```{r}
+countries <- merge(x = gdp, y = piracy)
+```
+
+Let's do a plot of GDP versus piracy. Call the plot function, using the "GDP" column of countries for the horizontal axis, and the "Piracy" column for the vertical axis:
+
+```{r}
+plot(countries$GDP, countries$Piracy)
+# 0
+# 20000
+# 40000
+# 60000
+# 80000
+# 20
+# 40
+# 60
+# 80
+# countries$GDP
+# countries$Piracy
+```
+
+It looks like there's a negative correlation between wealth and piracy - generally, the higher a nation's GDP, the lower the percentage of software installed that's pirated. But do we have enough data to support this connection? Is there really a connection at all?
+
+R can test for correlation between two vectors with the cor.test function. Try calling it on the GDP and Piracy columns of the countries data frame:
+
+```{r}
+cor.test(countries$GDP, countries$Piracy)
+# 
+# 	Pearson's product-moment correlation
+# 
+# data:  countries$GDP and countries$Piracy
+# t = -14.8371, df = 107, p-value < 2.2e-16
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  -0.8736179 -0.7475690
+# sample estimates:
+#        cor
+# -0.8203183
+```
+
+The key result we're interested in is the "p-value". Conventionally, any correlation with a p-value less than 0.05 is considered statistically significant, and this sample data's p-value is definitely below that threshold. In other words, yes, these data do show a statistically significant negative correlation between GDP and software piracy.
+
+We have more countries represented in our GDP data than we do our piracy rate data. If we know a country's GDP, can we use that to estimate its piracy rate?
+
+We can, if we calculate the linear model that best represents all our data points (with a certain degree of error). The lm function takes a model formula, which is represented by a response variable (piracy rate), a tilde character (~), and a predictor variable (GDP). (Note that the response variable comes first.)
+
+Try calculating the linear model for piracy rate by GDP, and assign it to the line variable:
+
+```{r}
+line <- lm(countries$Piracy ~ countries$GDP)
+```
+
+You can draw the line on the plot by passing it to the abline function. Try it now:
+
+```{r}
+abline(line)
+# 0
+# 20000
+# 40000
+# 60000
+# 80000
+# 20
+# 40
+# 60
+# 80
+# countries$GDP
+# countries$Piracy
+```
+
+Now, if we know a country's GDP, we should be able to make a reasonable prediction of how common piracy is there!
+
+### ggplot2 7.2
+
+The functionality we've shown you so far is all included with R by default. (And it's pretty powerful, isn't it?) But in case the default installation doesn't include that function you need, there are still more libraries available on the servers of the Comprehensive R Archive Network, or CRAN. They can add anything from new statistical functions to better graphics capabilities. Better yet, installing any of them is just a command away.
+
+Let's install the popular ggplot2 graphics package. Call the install.packages function with the package name in a string:
+
+```{r}
+install.packages("ggplot2")
+```
+
+You can get help for a package by calling the help function and passing the package name in the package argument. Try displaying help for the "ggplot2" package:
+
+```{r}
+help(package = "ggplot2")
+#                 Information on package 'ggplot2'
+# 
+# Description:
+# 
+# Package:            ggplot2
+# Type:               Package
+# Title:              An implementation of the Grammar of Graphics
+# Version:            0.9.1
+# 
+# ...
+```
+
+Here's a quick demo of the power you've just added to R. To use it, let's revisit some data from a previous chapter.
+```{r}
+weights <- c(300, 200, 100, 250, 150)
+prices <- c(9000, 5000, 12000, 7500, 18000)
+chests <- c('gold', 'silver', 'gems', 'gold', 'gems')
+types <- factor(chests)
+```
+
+The qplot function is a commonly-used part of ggplot2. We'll pass the weights and values of our cargo to it, using the chest types vector for the color argument:
+
+```{r}
+qplot(weights, prices, color = types)
+# 8000
+# 12000
+# 16000
+# 100
+# 150
+# 200
+# 250
+# 300
+# ..1
+# ..2
+# ..3
+# gems
+# gold
+# silver
+```
+
+Not bad! An attractive grid background and colorful legend, without any of the configuration hassle from before!
+
+ggplot2 is just the first of many powerful packages awaiting discovery on CRAN. And of course, there's much, much more functionality in the standard R libraries. This course has only scratched the surface!
+
+
+Chapter 7 Completed
+
+Chapter 7 Badge
+Share your plunder:
+Tweet
+Captain's Log: The end of chapter 7. Supplies are running low. Luckily, we've spotted another badge!
+
+We've covered how to take some real-world data sets, and test whether they're correlated with `cor.test`. Then we learned how to show that correlation on plots, with a linear model.
+
+## Chapter 8 What's Next
+
+Congratulations on completing the course! You've earned the course completion badge.
+
+We hope you've enjoyed this brief tour of the R language. This has only been a small taste of the power and flexibility that R provides for managing and visualizing your data, though. If you're wanting to take the next step with R, check out the official R Programming site and download and install R on your local computer. It'll work just the same as it did in this course!
+
+
+
+## Input Data -> manupulation -> Output data
+
+数据处理的流程：数据输入-> 处理 -> 结果输出
+
+```{r duplicated ex1}
+# Record Current Date and time
+DateTime <- format(Sys.time(), "%Y-%m-%d %H-%M-%S")
+
+# load stop_word file, one line as one element,
+# character vector
+stop_word_file_path <- file.choose()
+# stop_word_file_path
+# [1] "E:\\03-Download\\Github\\xiangxing98.github.io\\R_Learning\\stop_words_duplicated_no_unique.utf8.txt"
+
+stop_word_file_directory <- dirname(stop_word_file_path)
+# stop_word_file_directory
+# [1] "E:/03-Download/Github/xiangxing98.github.io/R_Learning"
+
+# scan and read stop_words_duplicated_no_unique.utf8.txt
+stop_word <- scan(stop_word_file_path, sep="\n", what="", encoding="UTF-8")
+
+# 删掉所有列上都重复的并赋值给新的变量
+# (stop_word_unique <- stop_word[!duplicated(stop_word)])
+stop_word_unique <- stop_word[!duplicated(stop_word)]
+
+# 保存去除重复后的向量到新的文件
+new_file_name <- paste("stop_words_unique-",DateTime,".utf8.txt", sep = "")
+
+save(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"))
+# ?save()
+```
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+```{r plot cars}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
