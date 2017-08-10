@@ -1,30 +1,44 @@
 ---
 title: "R Notebook About R Data Structure"
-output: 
-  html_notebook: 
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
     toc: yes
     toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'  
 ---
 
 # R Notebook About R Data Structure
 
 除了元素类型外，对象本身也有不同的“类型”，表示不同的数据结构（struct)。R中的对象类型主要包括：
 
-向量(vector): 由一系列有序元素构成。
-因子(factor）：对同长的其他向量元素进行分类（分组）的向量对象。R 同时提供有序（ordered）和无序（unordered）因子。
-数组(array)：带有多个下标的类型相同的元素的集合
-矩阵(matrix)：矩阵仅仅是一个双下标的数组。R提供了一下函数专门处理二维数组（矩阵）。
-数据框(data frame)：和矩阵类似的一种结构。在数据框中，列可以是不同的对象。
-时间序列(time series)：包含一些额外的属性,如频率和时间.
-列表（list）:是一种泛化（general form）的向量。它没有要求所有元素是同一类型，许多时候就是向量和列表类型。列表为统计计算的结果返回提供了一种便利的方法。
+- 向量(vector): 由一系列有序元素构成。
 
-常量，R中还定义了一些常量，比如：
+- 因子(factor）：对同长的其他向量元素进行分类（分组）的向量对象。R 同时提供有序（ordered）和无序（unordered）因子。
 
-NA：表示不可用
+- 数组(array)：带有多个下标的类型相同的元素的集合
+
+- 矩阵(matrix)：矩阵仅仅是一个双下标的数组。R提供了一下函数专门处理二维数组（矩阵）。
+
+- 数据框(data frame)：和矩阵类似的一种结构。在数据框中，列可以是不同的对象。
+
+- 时间序列(time series)：包含一些额外的属性,如频率和时间.
+
+- 列表（list）:是一种泛化（general form）的向量。它没有要求所有元素是同一类型，许多时候就是向量和列表类型。列表为统计计算的结果返回提供了一种便利的方法。
+
+- 常量，R中还定义了一些常量，比如：
+
+NA：表示不可用,缺失值
 Inf: 无穷
 -Inf: 负无穷
 TRUE：真
 FALSE：假
+NULL:空对象
 
 了解数据的分类和数据结构对于生物专业的学生来说是很枯燥的。但数据又是最基本的东西，没有数据，只能玩干瞪眼。怕枯燥的，这部分先粗略的看一遍，以后需要了再回来查询。
 
@@ -40,7 +54,8 @@ R语言是面向对象的。面向对象的理论一两句话说不清楚（我�
  
 ## 一、向量（vector）
 
-我们通常接触的数据主要是数字、字符和逻辑（真和假，是或不是）类型的。数据有一个个的，也有一串串一批批的。在R里面，最基本的数据类是向量，即一串有序数据；但vector是虚拟类，没有父类型，它包含了在其他语言里面常说的基本数据类型如整型、字符型和逻辑型等:
+我们通常接触的数据主要是数字numeric、字符character和逻辑logical（真和假，是或不是）类型的。数据有一个个的，也有一串串一批批的。在R里面，最基本的数据类是向量vector，即一串有序数据；但vector是虚拟类，没有父类型，它包含了在其他语言里面常说的基本数据类型如整型numeric、字符型character和逻辑型logical等:
+
 ```{r getClass}
 getClass("vector")
 
@@ -100,10 +115,10 @@ x
 y <- c("赵匡胤", "钱学森", "孙思邈")
 y
 # [1] "赵匡胤" "钱学森" "孙思邈"
-
+help(c)
 ```
 
-c( )是R的一个函数，表示将括号里面的内容连接起来成为一个向量。
+c(): Combine是R的一个函数，表示将括号里面的内容连接起来成为一个向量。Combine Values into a Vector or List
 
 R提供了一些产生特殊向量的函数，如seq( )和rep( )，具体用法直接在R里面先输入问号（?）和函数名去查询。
 
@@ -143,6 +158,8 @@ sample<- factor(sample)
 sample
  # [1] CK CK CK CK CK TR TR TR TR TR
 # Levels: CK TR
+code(sample)
+#因子的编码 # codes
 ```
 
 因子的种类称为水平（level）。上面的样品sample因子有两个水平：CK和TR。因子类数据很特殊：
@@ -183,7 +200,14 @@ sample <- gl(2, 5, labels = c("CK", "TR"))
 sample
  # [1] CK CK CK CK CK TR TR TR TR TR
 # Levels: CK TR
+
+#把数值型对象分区间转换为因子cut
+
+#交叉频数表table
+
+#按因子分组split
 ```
+
 
 
 ## 三、矩阵（matrix）
@@ -284,6 +308,39 @@ info[3]
 # [1] "钱学森"
 ```
 
+数组与矩阵的常用词汇以及函数
+```{r}
+#建立数组 array
+#生成矩阵 matrix
+#把数据框转换为数值型矩阵 data.matrix
+#矩阵的下三角部分 lower.tri
+#生成矩阵或向量 mat.or.vec
+#矩阵转置 t
+#把列合并为矩阵 cbind
+#把行合并为矩阵 rbind
+#矩阵对角元素向量或生成对角矩阵 diag
+#数组转置 aperm
+#计算数组的行数和列数 nrow, ncol
+#对象的维向量 dim
+#对象的维名 dimnames
+#行名或列名 row/colnames 
+#矩阵乘法 %*%
+#矩阵交叉乘积（内积） crossprod
+#数组外积 outer
+#数组的Kronecker积 kronecker
+#对数组的某些维应用函数 apply
+#对“不规则”数组应用函数 tapply
+#计算数组的概括统计量 sweep
+#计算数据子集的概括统计量 aggregate
+#矩阵标准化 scale
+#对矩阵各列绘图 matplot
+#相关阵或协差阵 cor
+#对照矩阵 Contrast
+#矩阵的行下标集 row
+#求列下标集 col
+```
+
+
 ## 四、列表（list）
 
 列表由向量直接派生而来，nameList是它的子类，listOfMethods是它家孙子：
@@ -318,7 +375,9 @@ gene
 
 列表可以组合不同的数据类型，甚至可以是其他列表，各组成数据的类、长度、维数都可以不一样。
 
-## 五、数据框（data frame）
+展平列表使用函数`unlist`
+
+## 五、数据框（data.frame）
 
 R语言中，一个矩阵内的数据类型要求都要相同，这对生物类数据不大适用，因为我们的数据经常是既有数字又有字符类标记。R语言提供了另外一种更灵活的数据类型：数据框。可以将几个不同类型但长度相同的向量用`data.frame( )` 函数合并到一个数据框，它的模样就像二维数组。但要注意：合并的几个向量长度必需一致。
 
@@ -387,8 +446,9 @@ class(info$height)
 ```
 
 
-## 六、特殊值数据
+## 六、特殊值数据与逻辑运算
 
+### 特殊值数据
 为确保所有数据都能被正确识别、计算或统计等，R定义了一些特殊值数据：
 
 `NULL`：空数据
@@ -409,28 +469,47 @@ class(info$height)
 
 `is.infinite(x)`
 
+### 逻辑运算
+```{r logic operation}
+#比较运算符 ，=，==，!=
+#逻辑运算符 !，&，&&，|，||，xor()
+#生成逻辑向量 logical
+#逻辑向量都为真或存在真 all，any
+#二者择一  ifelse()
+#查找 match，%in%
+#找到真值下标集合 which
+#找到重复元素 duplicated
+#找出互不相同的元素 unique
+```
+
+
 ## 七、获取数据类型信息的一些有用函数
 
 R语言的对象“类”很多，虽然我们不可能一一去详细学习，但接触到一类新数据时我们需要了解一些基本信息才能进行进一步的操作。R提供了一些非常有用的方法（函数）。
 
-`getClass( )`函数我们前面已经见过了，它的参数是表示类的字符串。
+`getClass()`函数我们前面已经见过了，它的参数是表示类的字符串。
 
-`class( )`可获取一个数据对象所属的类，它的参数是对象名称。
+`class()`可获取一个数据对象所属的类，它的参数是对象名称。
 
-`str( )`可获取数据对象的结构组成，这很有用。
+`str()`可获取数据对象的结构组成，这很有用。
 
-`mode( )`和`storage.mode( )`可获取对象的存储模式。
+`mode()`和`storage.mode()`可获取对象的存储模式。
 
-`typeof( )`获取数据的类型或存储模式。
+`typeof()`获取数据的类型或存储模式。
 
-`attributes( )`
+`attributes()`
 
 `structure()`
+
+`names()`
 
 要了解这些函数能干什么可以在R里面查询，方法是用问号加上面的函数名就可以，如：`?str`
 
 R语言中能保存数据结构函数是哪个?
 ```{r}
+?dput
+# Write an Object to a File or Recreate it
+
 ddf = structure(list(POS = c(23L, 48L, 5L), Freq1 = c(0.5, 0.7, 0.8
 ), Freq2 = c(0.45, 0.55, 0.65)), .Names = c("POS", "Freq1", "Freq2"
 ), class = "data.frame", row.names = c(NA, -3L))
@@ -442,6 +521,34 @@ refdf = structure(list(Start = c(1L, 25L, 60L), End = c(10L, 50L, 75L
 -3L))
 refdf
 ```
+
+```{r dput Examples}
+## Write an ASCII version of function mean to the file "foo"
+dput(mean, "foo")
+## And read it back into 'bar'
+bar <- dget("foo")
+## Create a function with comments
+baz <- function(x) {
+  # Subtract from one
+  1-x
+}
+## and display it
+dput(baz)
+## and now display the saved source
+dput(baz, control = "useSource")
+
+## Numeric values:
+xx <- pi^(1:3)
+dput(xx)
+dput(xx, control = "digits17")
+dput(xx, control = "hexNumeric")
+dput(xx, "foo"); dget("foo") - xx # slight rounding on all platforms
+dput(xx, "foo", control = "digits17")
+dget("foo") - xx # slight rounding on some platforms
+dput(xx, "foo", control = "hexNumeric"); dget("foo") - xx
+unlink("foo")
+```
+
 
 ## 八、日期型数据
 

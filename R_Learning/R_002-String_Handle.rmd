@@ -1,0 +1,325 @@
+---
+title: "R_002-String_Handle"
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
+    toc: yes
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+# R_002-String_Handle R语言字符串处理
+
+> [R函数-字符串操作
+ 字符串操作](http://www.cnblogs.com/cloudtj/articles/5159060.html)
+ 
+ R语言处理文本的能力虽然不强，但适当用用还是可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但它处理字符串的绝大多数函数都使用正则表达式。
+
+## 正则表达式简
+
+正则表达式不是R的专属内容，这里也只简单介绍，更详细的内容请查阅其他文章。
+
+正则表达式是用于描述/匹配一个文本集合的表达式。
+
+1.  所有英文字母、数字和很多可显示的字符本身就是正则表达式，用于匹配它们自己。比如 'a' 就是匹配字母 'a' 的正则表达式
+
+2.  一些特殊的字符在正则表达式中不在用来描述它自身，它们在正则表达式中已经被“转义”，这些字符称为“元字符”。perl类型的正则表达式中被转义的字符有：. \ | ( ) [ ] { } ^ $ * + ?。被转义的字符已经有特殊的意义，如点号 . 表示任意字符；方括号表示选择方括号中的任意一个（如[a-z] 表示任意一个小写字符）；^ 放在表达式开始出表示匹配文本开始位置，放在方括号内开始处表示非方括号内的任一字符；大括号表示前面的字符或表达式的重复次数；| 表示可选项，即 | 前后的表达式任选一个。
+
+3.  如果要在正则表达式中表示元字符本身，比如我就要在文本中查找问号‘?’， 那么就要使用引用符号（或称换码符号），一般是反斜杠 '\'。需要注意的是，在R语言中得用两个反斜杠即 ‘\\’，如要匹配括号就要写成 ’\\(\\)‘
+
+4.  不同语言或应用程序（事实上很多规则都通用）定义了一些特殊的元字符用于表示某类字符，如 \d 表示数字0-9， \D 表示非数字，\s 表示空白字符（包括空格、制表符、换行符等），\S 表示非空白字符，\w 表示字（字母和数字），\W 表示非字，\< 和 \> 分别表示以空白字符开始和结束的文本。
+
+5.  正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作（即：* + {} ），接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算（|）。所以 'foot|bar' 可以匹配’foot‘或者’bar‘，但是 'foot|ba{2}r'匹配的是’foot‘或者’baar‘。
+
+
+字符型向量 character
+字符数 nchar
+取子串substr
+把对象用格式转换为字符串format，formatC
+连接或拆分paste，strsplit
+字符串匹配charmatch，pmatch
+模式匹配与替换grep，sub，gsub
+
+
+## 用于字符串分割-拆分的函数
+
+strsplit函数使用正则表达式，使用格式为：strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
+
+参数x为字串向量，每个元素都将单独进行拆分。
+
+参数split为拆分位置的字串向量，默认为正则表达式匹配（fixed=FALSE）。如果你没接触过正则表达式，设置fixed=TRUE，表示使用普通文本匹配或正则表达式的精确匹配。普通文本的运算速度快。
+
+perl=TRUE/FALSE的设置和perl语言版本有关，如果正则表达式很长，正确设置表达式并且使用perl=TRUE可以提高运算速度。
+
+参数useBytes设置是否逐个字节进行匹配，默认为FALSE，即按字符而不是字节进行匹配。
+下面的例子把一句话按空格拆分为单词：
+
+```{r strsplit}
+text <- "Hello Adam!\nHello Ava!"
+strsplit(text, ' ')
+
+# R语言的字符串事实上也是正则表达式，上面文本中的\n在图形输出中是被解释为换行符的。   
+strsplit(text, '\\s')
+
+# strsplit得到的结果是列表，后面要怎么处理就得看情况而定了：
+class(strsplit(text, '\\s'))
+
+# 有一种情况很特殊：如果split参数的字符长度为0，得到的结果就是一个个的字符：
+strsplit(text, '')
+# 从这里也可以看到R把 \n 是当成一个字符来处理的。
+
+
+strsplit('123abcdefgabcdef','ab')
+# [[1]]
+# [1] "123"   "cdefg" "cdef" 
+
+#字符串分割的函数：
+#strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
+strsplit()   
+#strsplit()函数用于字符串分割，其中split是分割参数。所得结果以默认list形式展示。
+myresult <- strsplit('123abcdefgabcdef','ab')
+#myresult <- strsplit('123abcdefgabcdef',split='ab')
+myresult
+#[[1]]
+#[1] "123"   "cdefg" "cdef"
+class(myresult) 
+
+```
+
+## 字符串连接
+
+paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。它相当于其他语言的strjoin，但是功能更强大。它把向量连成字串向量，其他类型的数据会转成向量，但不一定是你要的结果：
+
+```{r paste}
+#字符串连接的函数：
+#paste(..., sep = " ", collapse = NULL)
+#paste()函数用于字符串连接，其中sep负责两组字符串间的连接；collapse负责一组字符串内部的连接。
+paste()
+
+paste("CK", 1:6, sep="") 
+ x <- list(a="aaa", b="bbb", c="ccc") 
+ y <- list(d=1, e=2) 
+ paste(x, y, sep="-")     #较短的向量被循环使用 
+ z <- list(x,y) 
+ paste("T", z, sep=":")   #这样的结果不知合不合用 
+
+```
+
+短向量重复使用，列表数据只有一级列表能有好的表现，能不能用看自己需要。会得到什么样的结果是可以预知的，用as.character函数看吧，这又是一个字符串处理函数：
+
+```{r as.character}
+as.character(x) 
+as.character(z)  
+# paste函数还有一个用法，设置collapse参数，连成一个字符串：
+paste(x, y, sep="-", collapse='; ') 
+paste(x, collapse='; ')  
+
+```
+
+## 计算字符串的字符数
+
+nchar这个函数简单，统计向量中每个元素的字符个数，注意这个函数和length函数的差别：nchar是向量元素的字符个数，而length是向量长度（向量元素的个数）。
+
+```{r nchar}
+
+#计算字符串的字符数：
+nchar()
+#nchar()返回字符串的长度。
+nchar("abc")
+nchar(NA)                 #缺失值长度NA
+nchar(Inf)                #无限长度值3
+nchar(NULL)               #NULL情况的结果integer(0)
+nchar("")                 # "" 这种情况结果[1] 0
+length(nchar(""))         # "" 长度是有值的，就是0 [1] 1
+length(nchar(NULL))       # NULL长度是没有值的
+
+```
+
+## 字符串截取与替换
+虽然sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。
+
+```{r sub}
+text 
+sub(pattern="Adam", replacement="world", text) 
+text 
+```
+
+可以看到：虽然说是“替换”，但原字符串并没有改变，要改变原变量我们只能通过再赋值的方式。
+
+sub和gsub的区别是前者只做一次替换（不管有几次匹配），而gsub把满足条件的匹配都做替换：
+```{r sub vs gsub}
+text
+# [1] "Hello Adam!\nHello Ava!"
+sub(pattern="Adam|Ava", replacement="world", text) 
+# [1] "Hello world!\nHello Ava!"
+gsub(pattern="Adam|Ava", replacement="world", text) 
+# [1] "Hello world!\nHello world!"
+
+# sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：
+sub(pattern=".*(Adam).*", replacement="\\1", text)
+```
+
+字符串提取
+
+substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同：
+
+```{r substr substring ex1}
+substr(x, start, stop) 
+substring(text, first, last = 1000000L) 
+```
+
+第 1个参数均为要拆分的字串向量，第2个参数为截取的起始位置向量，第3个参数为截取字串的终止位置向量。但它们的返回值的长度（个数）有差别：
+substr返回的字串个数等于第一个参数的长度；
+而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。先看第1参数（要 拆分的字符向量）长度为1例子：
+
+```{r substr substring ex2}
+x <- "123456789" 
+substr(x, c(2,4), c(4,5,8)) 
+substring(x, c(2,4), c(4,5,8)) 
+```
+
+因为x的向量长度为1，所以substr获得的结果只有1个字串，即第2和第3个参数向量只用了第一个组合：起始位置2，终止位置4。
+
+而substring的语句三个参数中最长的向量为c(4,5,8)，执行时按短向量循环使用的规则第一个参数事实上就是c(x,x,x)，第二个参数就成了c(2,4,2)，最终截取的字串起始位置组合为：2-4, 4-5和2-8。
+
+请按照这样的处理规则解释下面语句运行的结果：
+```{r substr substring ex3}
+x <- c("123456789", "abcdefghijklmnopq") 
+substr(x, c(2,4), c(4,5,8)) 
+substring(x, c(2,4), c(4,5,8)) 
+```
+
+用substring函数可以很方便地把DNA/RNA序列进行三联拆分（用于蛋白质翻译）：
+```{r substr substring ex4}
+bases <- c('A','T','G','C') 
+DNA <- paste(sample(bases, 12, replace=T), collapse='') 
+DNA 
+substring(DNA, seq(1,10,by=3), seq(3,12,by=3)) 
+```
+
+用regexpr、gregexpr或regexec函数获得位置信息后再进行字符串提取的操作可以自己试试看。
+
+```{r substr substring}
+## 字符串截取：
+
+#字符串截取：
+substr(x, start, stop)
+substring(text, first, last = 1000000)
+#substr()函数和substring()函数是截取字符串最常用的函数，两个函数功能方面是一样的，只是其中参数设置不同。
+#substr()函数：必须设置参数start和stop，如果缺少将出错。
+#substring()函数：可以只设置first参数，last参数若不设置，则默认为1000000L，通常是指字符串的最大长度。
+substr(x, start, stop) <- value
+#通过value值替换x中的部分
+substring(text, first, last = 1000000) <- value #通过value值替换x中的部分
+
+###########例子说明
+substr("abcdef",2,4)
+substring("abcdef",1:6,1:6)   # strsplit is more efficient ...
+substr(rep("abcdef",4),1:4,4:5)
+x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
+substr(x, 2, 5)
+substring(x, 2, 4:6)
+substring(x, 2) <- c("..", "+++")
+x
+
+#字符串替换函数
+chartr(old, new, x)
+
+```
+
+## 大小写转换函数
+```{r case handle}
+
+#大小写转换函数
+tolower(x)
+toupper(x)
+casefold(x, upper = FALSE)
+
+```
+
+## 字符查询-完全匹配与替换
+
+1、grep和grepl函数：
+
+这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。
+```{r grep grepl}
+grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE, 
+     fixed = FALSE, useBytes = FALSE, invert = FALSE) 
+grepl(pattern, x, ignore.case = FALSE, perl = FALSE, 
+      fixed = FALSE, useBytes = FALSE) 
+# 虽然参数看起差不多，但是返回的结果不一样。下来例子列出C:\windows目录下的所有文件，然后用grep和grepl查找exe文件：
+
+files <- list.files("c:/windows") 
+grep("\\.exe$", files) 
+grepl("\\.exe$", files) 
+
+# grep仅返回匹配项的下标，而grepl返回所有的查询结果，并用逻辑向量表示有没有找到匹配。两者的结果用于提取数据子集的结果都一样：
+
+files[grep("\\.exe$", files)] 
+#  [1] "bfsvc.exe"      "explorer.exe"   "fveupdate.exe"  "HelpPane.exe"  
+#  [5] "hh.exe"         "notepad.exe"    "regedit.exe"    "twunk_16.exe"  
+#  [9] "twunk_32.exe"   "uninst.exe"     "winhelp.exe"    "winhlp32.exe"  
+# [13] "write.exe"      "xinstaller.exe" 
+files[grepl("\\.exe$", files)] 
+#  [1] "bfsvc.exe"      "explorer.exe"   "fveupdate.exe"  "HelpPane.exe"   
+#  [5] "hh.exe"         "notepad.exe"    "regedit.exe"    "twunk_16.exe"   
+#  [9] "twunk_32.exe"   "uninst.exe"     "winhelp.exe"    "winhlp32.exe"   
+# [13] "write.exe"      "xinstaller.exe" 
+```
+
+2、regexpr、gregexpr和regexec
+
+这三个函数返回的结果包含了匹配的具体位置和字符串长度信息，可以用于字符串的提取操作。
+
+```{r regexpr}
+text <- c("Hellow, Adam!", "Hi, Adam!", "How are you, Adam.") 
+regexpr("Adam", text) 
+gregexpr("Adam", text) 
+regexec("Adam", text) 
+```
+
+
+```{r grep agrep sub gsub}
+#字符完全匹配
+grep()
+#字符不完全匹配
+agrep()
+#字符替换
+gsub()
+#以上这些函数均可以通过perl=TRUE来使用正则表达式。
+grep(pattern, x, ignore.case = FALSE, extended = TRUE,
+     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE)
+
+sub(pattern, replacement, x,
+    ignore.case = FALSE, extended = TRUE, perl = FALSE,
+    fixed = FALSE, useBytes = FALSE)
+
+gsub(pattern, replacement, x,
+    ignore.case = FALSE, extended = TRUE, perl = FALSE,
+    fixed = FALSE, useBytes = FALSE)
+
+regexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
+    perl = FALSE, fixed = FALSE, useBytes = FALSE)
+
+gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
+    perl = FALSE, fixed = FALSE, useBytes = FALSE)
+
+#See Also:
+#     regular expression (aka 'regexp') for the details of the pattern specification.
+#     'glob2rx' to turn wildcard matches into regular expressions.
+#     'agrep' for approximate matching.
+#     'tolower', 'toupper' and 'chartr' for character translations.
+#     'charmatch', 'pmatch', 'match'. 'apropos' uses regexps and has nice examples.
+
+```
+
+## 其它字符串处理函数
+
+比如strtrim、strwrap、charmatch、match和pmatch等，甚至是 %in% 运算符都是可以使用的。R的在线帮助很全，自己看吧，就当学习E文
+
+

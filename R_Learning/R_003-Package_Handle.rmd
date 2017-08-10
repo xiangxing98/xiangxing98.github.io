@@ -1,0 +1,648 @@
+---
+title: "R_003-Package_Handle"
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
+    toc: yes
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+# R_003-Package_Handle
+
+## Load data.table package
+
+```{r Load package}
+# ?rm()
+rm(list=ls())
+# Load data.table package
+if(!suppressWarnings(require(data.table)))
+{
+    install.packages('data.table')
+    require(data.table)
+}
+```
+
+## Set Local Repositories
+
+```{r Local Repositories}
+#windows Rconsole
+file.path(R.home('etc'), 'Rconsole')
+# [1] "D:/PROGRA~1/R/R-33~1.3/etc/Rconsole"
+
+#set repos
+options(repos = c(CRAN = "http://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+                  CRANextra = "http://mirrors.xmu.edu.cn/CRAN/"))
+# https://cloud.r-project.org/
+
+# on windows, for R-2.14.0.  In this file you will even find an example of setting the CRAN mirror.  
+# You can edit here is you have root or administrative privileges, but more likely you will copy it and place it in the personal .Rprofile file in your home directory.
+# Inside the command is simple, this is copied straight from the Rprofile.site file.
+
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "http://cran.cnr.berkeley.edu/"
+  options(repos = r)
+})
+```
+
+## 用搜索路径来查看所有已加载的包
+```{r search}
+search()
+View(installed.packages())
+
+# R出厂的包 在CRAN包库中，要访问其他存储库
+setRepositories() 
+
+# 下载 github上的包
+install.packages("devtools")
+install.packages("devtools")
+install_github("knitr","yihui")  
+
+```
+
+## 包的安装路径相关
+
+https://www.r-project.org/
+https://cran.r-project.org/
+https://r-forge.r-project.org/R/?group_id=156
+https://cran.rstudio.com/src/contrib/packages
+https://cran.r-project.org/web/packages/packages/index.html
+https://cran.r-project.org/web/packages/sp/index.html
+https://cran.rstudio.com/src/contrib/RCurl_1.95-4.8.tar.gz
+
+```{r}
+# 查询用户HOME地址
+Sys.getenv("HOME")
+
+# 查询R HOME安装地址
+Sys.getenv("R_HOME")
+
+# 查看包的安装目录\设置包的安装目录
+.libPaths()
+.libPaths('path')
+
+# 查看已经安装的包目录
+library()
+
+# 载入mypackage包\删除载入的包
+library(mypackage)
+require(dplyr)
+detach(dplyr)
+```
+
+包的载入`library()`或`require()`，安装完包后，需要加载才能使用其中的函数，此时括号中不使用引号。两者的不同之处在于`library()`载入之后不返回任何信息，而`require()`载入后则会返回TRUE，因此`require()`适合用于程序的书写。例如：
+```{r require}
+library(ggplto2)
+require(foreign)
+# Loading required package: foreign
+is.logical(require(foreign))
+# [1] TRUE
+```
+
+卸载包detach()，这是library()的反向操作，此操作主要是为了避免某些包中的函数名称相同，造成冲突，注意与library()的参数不同，detach()参数为detach(package:包的名称),library(包的名称)。例如：
+
+```{r}
+library(ggplot2)         # 加载包
+(.packages())            # 列出当前已经加载的包
+# [1] "ggplot2" "stats" "graphics" "grDevices" "utils" "datasets" "methods" "base"
+detach(package:ggplot2)  # 卸载ggplot2包
+(.packages())            # 列出当前已经加载的包
+# [1] "stats" "graphics" "grDevices" "utils" "datasets" "methods" "base"
+```
+
+```{r}
+# 查看启动R时自动载入的包
+getOption("defaultPackages")
+
+# 查看当前载入的包
+search()
+
+# 查看R中载入的包
+sessionInfo()
+
+# 查看已安装包信息
+installed.packages()
+
+# 查看当前已经加载过的R包：
+(.packages())
+
+# 查看全部安装的R包：
+.packages(all.available=TRUE)
+.packages(all.available=T)
+
+# 查看某个R包是否已经安装：
+library("XML")
+
+# 查看某个安装的R包：
+help(package="XML")
+
+# 卸载package | 如何卸载已安装的packages
+remove.packages("mypackage")
+remove.packages(c("pkg1","pkg2"),lib = file.path("path","to","library"))
+
+# 查看R及其package的version
+# R version: version
+    R.version
+# R package version: 
+    library(help='XML')
+    packageVersion('XML')
+# 升级R，不重装packages
+
+# 拷贝原library目录下文件到新library目录下
+# 更新包 | 可以定期执行以下
+update.packages()  
+
+# 查看"mypackage"的帮助
+help(package = 'mypackage')
+
+# 查看已经安装包的详细HTML文档
+help.start()
+# 查看function（先载入包）
+
+# 查看函数的参数
+    args(function)
+# 自动运行该函数帮助文档中的例子
+    example(function)
+# 查询包内信息（先载入包）
+
+# 查看某个“函数”或者“方法”的详细内容
+    ?function/method    
+# 查看"mypackage"中的所有对象
+    ls("package:mypackage")
+# 查看某个S3泛型函数中所有的方法或者一个类中所有的方法（S3：S version 3）
+
+methods()
+# 查看S4类的方法
+
+showMethods(class = "myClass")
+# WIN环境下设置环境变量R_LIBS将R包安装到自定义路径
+```
+
+### R package install
+
+R 常用软件包安装
+
+1.在R的控制台,输入
+```{r}
+
+    install.packages("servr")  # 安装 servr
+    install.packages("servr", contriburl="http://www.your.url",  dependencies = TRUE) # 安装 servr
+```
+
+2.若要指定安装目录 (e.g. “mydir”)，则输入
+```{r}
+install.packages("stepNorm", contriburl="http://www.biostat.ucsf.edu/jean/software", lib="mydir")
+install.packages('servr')  # stable version; use a CRAN mirror, or
+install.packages('servr', repos='http://yihui.name/xran')  # devel version
+```
+
+3.在Github上直接安装R包步骤
+
+一、安装devtools包
+```{r}
+install.packages("devtools")
+library(devtools)
+
+# 二、安装github上的R包
+devtools::install_github('lchiffon/REmap')
+library(REmap)
+
+#
+install.packages("sciplot")
+install.packages("lattice")
+install.packages("plotrix")
+install.packages("IDPmisc")
+install.packages("RODBC")
+install.packages("lubridate")
+install.packages("robustbase")
+install.packages("robust")
+install.packages("R.matlab")
+install.packages("qualityTools")
+install.packages("xlsx")
+install.packages("rgl")
+install.packages("evd")
+install.packages("pheatmap")
+install.packages("rvest")     ##抓取网页数据
+install.packages("stringr")   ##处理文本
+install.packages("zoo")
+install.packages("ggplot2")
+install.packages("quantmod")
+install.packages("plyr")
+install.packages("reshape2")
+install.packages("nnet")
+install.packages("sound")
+install.packages("fmsb")
+install.packages("XML")
+install.packages("e1071")
+install.packages("fields")
+install.packages("spam")
+install.packages("sqldf")
+install.packages("dplyr")
+install.packages("scatterplot3d")
+install.packages("chron")
+install.packages("downloader")
+install.packages("RCurl")
+install.packages("googleVis")
+install.packages("pracma")
+install.packages("Cairo")
+install.packages("Rcpp")
+install.packages("magrittr")
+install.packages("data.table")
+install.packages("AlgDesign")
+install.packages("R6")
+install.packages("igraph")
+install.packages("car")     ## where data Prestige is
+install.packages("gtable")
+install.packages("bmp")
+install.packages("pixmap")
+install.packages("showtext")
+install.packages("ape")
+install.packages("RUnit")
+install.packages("jpeg")
+install.packages("png")
+install.packages("gWidgets2")
+install.packages("gWidgetsRGtk2")
+install.packages("gWidgets")
+install.packages("tcltk2")
+install.packages("emdbook")
+install.packages("bc")
+install.packages("rClr")
+install.packages("sos")
+install.packages("Rmpfr")
+install.packages("mosaic")
+install.packages("wordcloud")
+install.packages("stringi")
+install.packages("gsubfn")
+install.packages("microbenchmark")
+install.packages("magic")
+install.packages("gridExtra")
+install.packages("kohonen")
+install.packages("venneuler")
+install.packages("rjava")
+install.packages("mvnormtest")
+install.packages("vars")
+install.packages("optparse")
+install.packages("getopt")
+install.packages("expm")
+install.packages('shiny')
+install.packages('shinyapp') 
+install.packages('DBI')
+install.packages('RPostgreSQL')  #Linux下需要加载yum源插件---yum -y install postgresql-devel  
+install.packages("MASS")
+```
+
+## R常用包汇总整理 usefull packages in R
+
+The yhat blog lists 10 R packages they wish they'd known about earlier. 
+
+Drew Conway calls them "10 reasons to always start your analysis in R". 
+
+They're all very useful R packages that every data scientist should be aware of. 
+
+They are:
+
+1. sqldf (for selecting from data frames using SQL) 
+2. forecast (for easy forecasting of time series) 
+3. plyr (data aggregation) or dplyr 
+4. stringr (string manipulation) 
+5. Database connection packages RPostgreSQL, RMYSQL, RMongo, RODBC, RSQLite 
+6. lubridate (time and date manipulation) 
+7. ggplot2 (data visulization) 
+8. qcc (statistical quality control and QC charts) 
+9. reshape2 (data restructuring) 
+10. randomForest (random forest predictive models) 
+
+## R常用语句汇总整理
+
+### 1)R支持自动补全（Tab|键|命令）
+```{r}
+Tab
+```
+
+### 2)清除单个变量使用rm()函数
+```{r}
+rm()
+```
+
+### 3)清除内存中所用的变量
+```{r}
+rm(list = ls(all = TRUE)) 
+```
+
+### 4)更改小数点后显示数字位数
+```{r}
+# options(digits= ),digits后面的参数为1至22的数字，默认为7。
+# options函数还可以改变很多全局选项，如更改提示符(prompt)，
+# 是否显示错误信息(show.error.messages)等。
+options(digits = 5)
+options(warn = 1)
+```
+
+### 5)R工作目录的设置
+```{r}
+# 使用getwd()命令获得R的工作目录(Working Directory)
+getwd() 
+# 使用setwd()设置工作目录位置
+setwd()
+# 可视化设置目录
+choose.dir()
+# 获取当前执行R文件所在目录
+dirname(file.path("","p1","p2","p3","filename"))
+# 删除所有的路径，包括最后一个路径分隔符
+basename(file.path("","p1","p2","p3", c("file1", "file2")))
+```
+
+### 6)当R启动后，R在内存中会自动加载若干Package|R初始状态载入包列表
+```{r}
+# stats     | 常用统计函数
+# graphics  | 基础绘图函数
+# grDevices | 基础或grid图形设备
+# utils     | R工具函数
+# datasets  | 基础数据集
+# methods   | 用于R对象和编程工具的方法和类的定义
+# base      | 基础函数
+```
+
+### 7)保存自己的工作
+```{r}
+# 它将在R的起始目录保存记忆区（working space）至.RData文件
+save.image()   
+# 保存需要保存的R对象
+save(…,file = ) 
+```
+
+### 8)查看函数的代码
+```{r}
+# 如何得到函数的代码，通常情况你只需要在R平台下写出你需要查看的函数名，回车即可
+# 输入（函数名），查看（该函数）代码，如：输入dist，查看dist函数代码
+# 如果函数式类函数(Generic Function),先使用methods()函数查看类函数列表，找到具体需要的函数，然后按照单个函数的情况处理  
+methods(summary)  
+```
+
+### 9)查看前（后）几行数据
+```{r}
+# 查看一个矩阵|向量|数据框|表格|函数的前（后）几行
+# 随机看看对象中的一些内容，还可以使用car包中的some函数
+head() 
+tail() 
+head(CO2,8)  
+tail(CO2,8)
+```
+
+### 10)定义数据类型
+```{r}
+inverses <- vector(mode = "list", 100)
+inverses <- vector(mode = "integer", 100)
+```
+
+### 11)with() 函数的用法
+```{r}
+# 生成4组完整的数据库并赋给imp 
+imp=mice(nhanes2,m=4) 
+# 生成线性回归模型  
+fit=with(imp,lm(chl~age+hyp+bmi)) 
+# 对建立的4个模型进行汇总  
+pooled=pool(fit)   
+# 展示pooled的内容 
+summary(pooled) 
+```
+
+### 12)向量去重
+```{r}
+# 有时可能希望删除向量内重复的元素，这时可以使用unique<向量对象>来实现。例如：
+a <- c(1,2,1,4,2,5,1,1)
+unique(a)
+[1] 1 2 4 5
+# 在本例中，对包含重复元素的向量a进行了去重操作。此功能同样也可以使用table函数来实现，不过比较麻烦。例如：
+as.numeric(names(table(a)))
+```
+
+### 13)函数的编辑
+```{r}
+# R提供了一个edit函数，让使用者可在一个特定的窗口中更改自设函数，使用者便不用在每次更改函数时重打一次。fix函数会使用窗口中的预设编辑器(记事本)。
+fix(stdev)
+# 输入上述指令后，便会出现一个记事本的窗口，让使用者更改stdev的定义。当更改完毕后关闭窗口，新的定义便会自动储存。R还有内置函数edit ,可以用来编辑R原始码的档案:
+edit(file="myfile.r")
+# 忠告:在编写函数及R原始码档案时，读者应尽量使用批注及缩排(indent)。这样可使函数及原始码更容易阅读及修改。绝大部分的程序编写员都会遵从这些习惯。
+```
+
+### 14)R语言屏幕输出
+```{r}
+cat("the total number is:",3+5,"\n")
+print(x, ...)
+```
+
+### 15)输入输出
+```{r}
+# cat，print：显示对象
+# sink：输出转向到指定文件
+# dump，save，dput，write：输出对象
+# scan，read.table，load，dget：读入
+```
+
+### 16)网络浏览
+```{r}
+# browseURL：浏览某个指定的网页
+# download.file：下载网络文件到本地
+```
+
+### 17)数据框按照某一列排序
+```{r}
+# 例如存放学生信息的数据框 rt(name,sex,age,score)，按照分数 score 递减排序：
+rt[order(rt[,4],decreasing=T),]   ## 特别注意后面的逗号别忘了！
+```
+
+### 18)小数取整
+```{r}
+x <- 3.555555
+ceiling(x)
+ # 4
+floor(x)
+ # 3
+trunc(x)
+ # 3
+round(x, digits = 0)
+ # 4
+signif(x, digits = 6)
+ # 3.55556
+```
+
+### 19)查看某个元素是否在向量里面，用 %in% ：
+```{r}
+34 %in% c(1,2,3,4,34,44)
+# [1] TRUE
+```
+
+### 20)求某个日期的前一天
+```{r}
+as.Date("2015-07-27") - 1
+# [1] "2015-07-26"
+```
+
+### 21)输出字符串时要换行，print 中 \n 是无效的，要用 cat
+```{r}
+print("ABC\nDEF")
+# "ABC\nDEF"
+cat("ABC\nDEF")
+# ABC
+# DEF
+```
+
+### 22)数据框行数、列数（标签）操作
+```{r}
+# 求数据框的行数：nrow(dt)
+# 求数据框的列数：ncol(dt)
+# 求数据框的行标签：rownames(dt)
+# 求数据框的列标签：colnames(dt)
+```
+
+### 23)把数据框按照某一列的不同值切分成几个数据框，用 split()
+```{r}
+dt <- data.frame(AA=c(1,2,3), BB=c('a','b','a'))
+dt
+#   AA BB
+# 1  1  a
+# 2  2  b
+# 3  3  a
+group = split(dt, dt$B)
+group
+# $a
+#   AA BB
+# 1  1  a
+# 3  3  a
+# $b
+#   AA BB
+# 2  2  b
+```
+
+### 24)计算程序运行的时间
+```{r}
+ptm <- proc.time()
+a = 1 + 1   ## 此处放你的程序
+print(proc.time() - ptm)
+# 用户 系统 流逝 
+# 0.00 0.00 1.47 
+```
+
+### 25)用cut()函数将一般的数据转换成因子或有序因子
+```{r}
+exam <- c(98, 97, 52, 88, 85, 75, 97, 92, 77, 74, 70, 63, 97, 71, 98, 65, 79, 74, 58, 59, 60, 63, 87, 82, 95, 75, 79, 96, 50, 88)
+#切分成3组
+exam1 <- cut(exam, breaks = 3) 
+#切分成自己设置的组
+exam2 <- cut(exam, breaks = c(0, 59, 69, 79, 89, 100)) 
+attr(exam1, 'levels'); attr(exam2, 'levels'); attr(exam2, 'class')
+#一个有序因子
+ordered(exam2, labels = c('bad', 'ok', 'average', 'good', 'excellent')) 
+```
+
+### 26)NULL是空，NULL是气，NULL在R中就是空气
+```{r}
+# 如果表达式（expression）或者函数（function）的值没有定义，那么将返回NULL。在R中，NULL与很多对象合并在一起时，都被忽略掉。比如以下例子：
+# NULL is neglected in vector
+c(1, NA, NULL, FALSE)
+# [1]  1 NA  0
+# also in matrix
+matrix(c(1, NA, NULL, 2), c(2, 2))
+#      [,1] [,2]
+# [1,]    1    2
+# [2,]   NA    1
+# 警告信息：
+# In matrix(c(1, NA, NULL, 2), c(2, 2)) : 数据长度[3]不是矩阵行数[2]的整倍
+# also in list
+tmp <- list(1, 2)
+tmp[1] <- NULL
+tmp
+# [[1]]
+# [1] 2
+tmp[[1]] <- NULL
+tmp
+list()
+# 如果一定要将列表中的某个个元素赋值为NULL，可以使用list(NULL)，比如：
+tmp <- list()
+tmp[1] <- list(NULL)
+tmp
+# [[1]]
+# NULL
+is.null(tmp[[1]])
+# [1] TRUE
+```
+
+### 27)list不是万能的，但没有list是万万不能的
+
+列表（list）在R中是个全能选手、无所不“包”；list还是金箍棒，别看它丫的开始长度（length()）短，之后想变长就变长，多长都行。
+这暗示list可以这样用：在循环开始时，我们不知道会产生多少个元素，可以事先规定输出结果为`a <- list()`，之后赋值；甚至可以按照名字赋值，比如`a$add <- exprs`。
+创建
+如果要创建一个长度为n的、每个元素都为NULL的list，可以使用`vector("list", n)`。
+插入
+如果要在list中插入元素，可以使用`append(x, values, after = length(x))`函数。append()函数原本是对vector设计的，但是list也能使用。
+
+
+### 28)创建“空”值很淡定，要么空来要么0
+```{r}
+# 如果要创建一个空的对象（对象的长度是0）很容易，比如：
+# 创建一个长度为0的数值向量
+    # numeric()或者numeric(0)
+    # character()或者character(0)
+    # integer()或者integer(0)可以起到同样的效果
+    # factor()创建一个长度为0的因子
+    # 注意：factor(0)的长度是1
+# 创建一个长度为0的矩阵
+    matrix(0, 0, 0)
+    # 注意：array()创建的对象长度为1。
+# 创建一个长度为0的列表
+    list()
+# 创建一个长度为0的data.frame
+    data.frame()
+```
+
+### 29)对象转换要小心，data.frame是陷阱
+
+```{r}
+# R中一些对象转换要格外小心，特别是牵扯到data.frame类型。以下是几个常见的陷阱：
+# 5.1 “字符型因子”转换为“数值型向量”
+    # 需要先转成字符串向量过渡一下：
+    as.numeric(as.character(MyFactor))
+# 5.2 字符和数值因子混搭data.frame
+    # 每一列是按照字符型因子保存。留意表面上是数值的一列，它非常危险，特别是排序。一个例子：
+a1 <- as.factor(as.character(a1))
+# a1
+#      [1] 5  6  7  8  9  10 11 12 13 14 15
+#     Levels: 10 11 12 13 14 15 5 6 7 8 9
+sort(a1)
+    #  [1] 10 11 12 13 14 15 5  6  7  8  9
+    # Levels: 10 11 12 13 14 15 5 6 7 8 9
+```
+
+### 30)多个else/if别担心，switch()函数来帮助
+
+如果需要在不同情况下，对变量进行不同的处理，自然会联想到使用多个多个else/if。如果else/if是用来处理的简单的赋值，可以使用switch(EXPR, ...)函数。其中，EXPR是一个表达式，生成一个数字或者字符串；接下来，使用生成的数字和字符串匹配...中的内容。
+所以，我们很容易想到，如果EXPR生成的数字，则对应匹配...的第几个元素，此时...中的变量可以没有名字；如果是字符串，就会严格地匹配...中相同名字的变量；如果EXPR生成是字符串，...中没有相匹配的变量名，则返回NULL；如果...中有一个“无名”变量（即没有对变量赋值），上一种情况下返回该无名变量，相当于最后一个else。比如：
+```{r}
+switch(1, a = 3, b = 2)
+    # [1] 3
+switch(2, aa = 'red', bb = 'blue', cc = 'yellow', 'No value')
+    # [1] "blue"
+switch('aa', aa = 'red', bb = 'blue', cc = 'yellow', 'No value')
+    # [1] "red"
+switch('dd', aa = 'red', bb = 'blue', cc = 'yellow', 'No value')
+    # [1] "No value"
+switch('bb', aa = 'red', bb = , cc = 'yellow')
+    # [1] "yellow"
+switch(2, aa = 'red', bb = , cc = 'yellow')
+    # Error: empty alternative in numeric switch
+switch('dd', aa = 'red', bb = , cc = 'yellow', 'no', 'value')
+    # Error: duplicate switch defaults: '"no"' and '"value"'
+```
+注意：
+如果EXPR是数字，范围不能超过...的长度。同时，虽然此时...变量可以名字，但是有名字的变量必须有数值，不能学习以上例子中倒数第二种情况，否则会报错。
+如果EXPR是字符串，那么会进行自动继承，即前者继承后者。
+虽然EXPR是字符串情况可以自动继承，甚至继承一个无名变量，但是无名变量只能有一个。
+最后将EXPR明确写出，为了R的版本兼容。
+总结： swich()函数是一个好玩却又危险的函数，一个没有歧义的使用方法是：EXPR明确写出，且返回字符串，...中每一个变量都有确切的值，无名变量只有一个，比如：`switch(EXPR='dd', aa = 'red', bb = 'blue', cc = 'yellow', 'no value')`。

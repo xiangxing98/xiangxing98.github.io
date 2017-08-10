@@ -1,0 +1,225 @@
+---
+title: "R_Schedule_Task_Auo_Run_R_Script"
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: no
+    theme: readable
+    toc: yes
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+
+# R_Schedule_Task_Auo_Run_R_Script
+
+> 在处理数据的过程中，可以制作一个自动批处理文件，让它具有智能的效果，自动化完成复杂的数据处理过程，提高工作效率，解放生产力，从而可以投入更多的精力到数据分析和数据挖掘中，发现数据中的"金子"，体现数据的真正价值！[R语言-自动批处理文件](http://www.cnblogs.com/cloudtj/articles/5461546.html)
+
+## 1.方法1
+
+如果需要将输出结果发送到标准输出设备中，或者希望将命令行参数传递到脚本中，可以考虑应用Rscript命令：
+`Rscript scriptfile arg1 arg2 arg3`
+
+R语言中`C:\Program Files\R\R-3.2.0\bin\x64 中有个 Rscript.exe`，这是脚本运行的程序。
+
+(1)将你的R语言程序写入一个叫`mywork.r`的文件中，文件名字自己随便起就行。
+
+(2)建立个Rcmd.txt文件，里面写入代码 ：
+```{bat}
+cd C:\Program Files\R\R-3.2.0\bin
+Rscript F:\cs\windowsCode.R
+```
+
+然后，将Rcmd.txt修改扩展名为Rcmd.bat然后双击就ok了，自动运行。
+
+## 2.方法2
+
+如果你想编写一个命令脚本，如UNIX或OS X系统的shell脚本，或Windows系统中的批处理脚本，并且你希望在这些脚本中执行R代码。使用带有CMD BATCH子命令的方式运行R程序，并给出脚本文件名和输出文件名：`CMD BATCH scriptfile outputfile`, CMD BATCH子命令把R转到批处理模式，它读取脚本文件scriptfile并且把输出写入输出文件outputfile。这个运行过程中不与用户交互。
+
+你可能会根据具体情况使用命令行选项，调整R的批处理过程。例如，使用--quiet选项来避免启动信息，否则将使输出信息混乱：在R窗口中`CMD BATCH --quiet myScript.R results.out`
+
+下面是一些其他批处理模式下的实用命令：
+
+`--slave`
+类似于--quiet,它禁止回送输入的信息，使R软件输出的信息更为简洁。
+`--no-restore`
+在R启动时不还原工作空间。对于希望以空白工作空间启动R的脚本而言，这个选项很有必要。
+`--no-save`在退出R时，不保存工作空间；否则，R会保存当前工作空间并覆盖原有工作目录中的.RData文件。
+`--no-init-file`
+不读取.Rprofile文件或者~/. Rprofile文件。
+
+在脚本运行结束后，CMD BATCH子命令一般会使用proc.time函数显示其执行的时间。如果你不需要显示该时间，可以在代码最后一行调用参数为`runLast=FALSE`的q函数，它将防止调用proc.time函数。
+
+CMD BATCH子命令有两个限制条件：输出必须总是传送到一个文件中，并且无法简单地将命令行参数传送到脚本中。如果这两个限制成为问题，可以考虑使用R软件自带的Rscript程序。Rscript命令的第一个命令行参数是脚本文件的名称，其余的参数将传递给脚本代码：`Rscript myScript.R arg1 arg2 arg3`
+
+在脚本中，命令行参数可以通过调用commandArgs函数来获取，该函数会把参数作为一个字符串向量返回：`argv <- commandArgs(TRUE)`
+
+Rscript程序和CMD BATCH命令使用上面所提到的相同的命令行选项。
+
+将输出结果输出到标准输出设备中，该设备是R从调用它的shell脚本中继承来的。当然，可以通过一般的重定向方法将输出重定向到一个文件中：`Rscript --slave myScript.R arg1 arg2 arg3 >results.out`
+
+
+在 windows 命令行CMD中敲入"调用命令"：
+
+调用命令:
+
+```{bat}
+r CMD BATCH F:\cs\windowsCode.R
+
+r CMD BATCH --quiet --slave --no-restore --no-save --no-init-file F:\dataHQ\weather_data\windowsCode.R
+```
+（注意 CMD BATCH 都要大写）
+
+
+下面是一个名为arith.R的简易R脚本文件，它对两个命令行参数进行四个算术运算：
+```{r}
+argv <- commandArgs(TRUE)
+x <- as.numeric(argv[1])
+y <- as.numeric(argv[2])
+cat("x =", x, "\n")
+cat("y =", y, "\n")
+cat("x + y = ", x + y, "\n")
+cat("x - y = ", x - y, "\n")
+cat("x * y = ", x * y, "\n")
+cat("x / y = ", x / y, "\n")
+```
+
+脚本以下面的形式调用：
+`$ Rscript arith.R 2 3.1415`
+
+产生如下结果：
+
+```{r}
+# x = 2
+# y = 3.1415
+# x + y = 5.1415
+# x - y = -1.1415
+# x * y = 6.283
+# x / y = 0.6366385
+```
+
+在Linux或UNIX系统中，你可以在脚本的开头添加#!后跟随Rscript程序的路径，这样脚本就是完全自我包含的了（即代码变得完全独立于外部）。假定Rscript程序安装在`/usr/bin/Rscript`目录中，你可以在arith.R脚本文件中添加下面一行，使其成为自我包含代码：
+```{r}
+#!/usr/bin/Rscript --slave
+argv <- commandArgs(TRUE)
+x <- as.numeric(argv[1])
+
+# (etc.)
+
+```
+在提示符处，我们把脚本文件标记为可执行文件：
+`$ chmod +x arith.R`
+
+此时我们可以不用Rscript前缀而直接调用脚本代码：
+
+`$ arith.R 2 3.1415`
+
+> 参考图书： R语言经典实例
+
+## 3. load package in a safe way
+
+```{r load package in a safe way}
+# Load data.table package
+if(!suppressWarnings(require('data.table')))
+{
+    install.packages('data.table')
+    require('data.table')
+}
+
+```
+
+```{bat}
+echo R CMD BATCH 和 Rscript 使用前都要先添加环境变量
+echo 把 C:\Program Files\R\R-3.3.0\bin; 加到"系统变量"的Path 值的最开始
+
+echo 1. 可以用 R CMD BATCH *.r, 第一种命令适用于Windows和Mac
+echo 2. 也可以用 Rscript *.r args0 args1 这个可以跟一定的参数, 第二种命令适用于Linux
+echo 3. 当然也可以进入R交互环境 > source("*.r"), 第三种命令都适用，不过不能跟命令行参数
+
+echo 如果R脚本里有函数， 函数中有参数，可以用args(function) 查看这个函数的参数
+echo paramValue <- 15
+echo source("myRfile.R")
+echo myRfile.R 中有个参数教 paramValue， 那么可以先给paramValue 赋值，然后source R脚本
+echo Rscript -e 可以直接执行R语言中 的表达式，如下
+echo Rscript -e "l+4"
+
+
+echo E:\03-Download\Github\xiangxing98.github.io\R_Learning
+echo 1. R脚本与bat文件不在同一个文件夹
+"D:\Program Files\R\R-3.3.2\bin\R.exe" CMD BATCH "C:\Users\Stone\Desktop\Test.r" test.txt
+echo R脚本执行完毕，暂停
+pause
+
+echo 2. R脚本与bat文件在同一个文件夹
+"D:\Program Files\R\R-3.3.2\bin\R.exe" CMD BATCH Test.r test.txt
+echo R脚本执行完毕，暂停
+pause
+
+echo D:\Program Files\R\R-3.3.2\bin\R.exe
+echo test.txt可以写也可以不写，如果不写的话，默认会生成一个“程序名.Rout"的文件，里面保存的是程序代码，不过最后会调用"proc.time()函数"
+
+echo 1 Windows：
+echo 键入 cd C:\Program Files\R\R-3.2.0\bin   工作目录切换到R的核心程序目录
+echo 键入 R BATCH F:\Test.R 或 Rscript F:\Test.R 运行脚本
+echo 前者R控制台内容记录到Test.Rout文件中，后者则将数据输出到windows控制台。二者涉及文件创建都需要权限。
+echo 后者也是linux下运行R脚本的命令。
+
+echo 2 Linux：
+echo R  --no-save  <  step1.R  >temp001
+
+echo Use  Rscript
+"D:\Program Files\R\R-3.3.2\bin\x32\Rscript.exe" "C:\Users\Stone\Desktop\Test.r"
+pause
+
+echo 2. R脚本与bat文件在同一个文件夹
+echo Use  Rscript
+"D:\Program Files\R\R-3.3.2\bin\x32\Rscript.exe" Test.r
+pause
+
+```
+
+
+## 4. Input Data -> manupulation -> Output data
+
+数据处理的流程：数据输入-> 处理 -> 结果输出
+
+```{r duplicated ex1}
+# Record Current Date and time
+DateTime <- format(Sys.time(), "%Y-%m-%d %H-%M-%S")
+
+# load stop_word file, one line as one element, 
+# character vector
+stop_word_file_path <- file.choose()
+# stop_word_file_path
+# [1] "E:\\03-Download\\Github\\xiangxing98.github.io\\R_Learning\\stop_words_duplicated_no_unique.utf8.txt"
+
+stop_word_file_directory <- dirname(stop_word_file_path)
+# stop_word_file_directory
+# [1] "E:/03-Download/Github/xiangxing98.github.io/R_Learning"
+
+# scan and read stop_words_duplicated_no_unique.utf8.txt
+stop_word <- scan(stop_word_file_path, sep="\n", what="", encoding="UTF-8")
+
+# 删掉所有列上都重复的并赋值给新的变量
+# (stop_word_unique <- stop_word[!duplicated(stop_word)])
+stop_word_unique <- stop_word[!duplicated(stop_word)]
+
+# 保存去除重复后的向量到新的文件
+new_file_name <- paste("stop_words_unique-",DateTime,".utf8.txt", sep = "")
+
+save(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"))
+# ?save()
+```
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r plot cars}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
