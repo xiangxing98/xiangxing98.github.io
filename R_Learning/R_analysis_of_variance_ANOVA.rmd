@@ -1,5 +1,7 @@
 ---
 title: "R Notebook about R_Analysis_of_Variance"
+author: "Stone_Hou"
+date: "December 16, 2017"
 output: 
   html_notebook: 
     toc: yes
