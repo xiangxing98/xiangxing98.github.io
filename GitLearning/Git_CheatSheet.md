@@ -1,9 +1,9 @@
 <!--
 /**
  * @ Title:		Git_CheatSheet.md
- * @ Authors:	siqin.hou (xiangxing985529@163.com)
- * @ Date:		2017-05-23 07:17:33
- * @ Version:	0.0.1
+	* @ Authors:	siqin.hou (xiangxing985529@163.com)
+		 @ Date:		2017-05-23 07:17:33
+		 @ Version:	0.0.1
  */
 -->
 
@@ -18,15 +18,25 @@
 
 ## 几个专用名词：
 
-Workspace：工作区,就是你在电脑里能看到的目录，比如我的Git文件夹就是一个工作区.
+Workspace：工作区,就是你在电脑里能看到的目录，比如我的Git文件夹就是一个工作区. (.git隐藏目录版本库除外) ，或者以后需要再新建的目录文件等等都属于工作区范畴。 
 
 Repository：仓库区（或本地仓库）/版本库,工作区有一个隐藏目录.git，
-这个不算工作区，而是Git的版本库。
+这个不算工作区，而是Git的版本库。其中版本库里面存了很多东西，其中最重要的就是stage(暂存区)，还有Git为我们自动创建了第一个分支master,以及指向master的一个指针HEAD。 
 
 Index / Stage：暂存区,Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，
 还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。
 
-Remote：远程仓库
+Remote：远程仓库, 远程库的默认名称是origin 
+
+
+
+我们前面说过使用Git提交文件到版本库有两步：
+
+第一步：是使用 git add 把文件添加进去，实际上就是把文件添加到暂存区stage。
+
+第二步：使用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支上。
+
+
 
 ## 实用小贴士
 内建的图形化 git：`gitk`
@@ -338,7 +348,7 @@ $ git show --name-only [commit]
 # 显示某次提交时，某个文件的内容
 $ git show [commit]:[filename]
 
-# 显示当前分支的最近几次提交,记录了每一次命令
+# 显示当前分支的最近几次提交,记录了每一次命令，获取到版本号
 $ git reflog
 ```
 
@@ -424,6 +434,12 @@ $ git push [remote] --all
 # 场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，
 # 用命令git checkout -- file。
 
+$ git checkout --readme.txt
+# 意思就是，把readme.txt文件在工作区做的修改全部撤销，这里有2种情况，如下：
+# a. readme.txt自动修改后，还没有放到暂存区，使用 撤销修改就回到和版本库一模一样的状态。
+# b. 另外一种是readme.txt已经放入暂存区了，接着又作了修改，撤销修改就回到添加暂存区后的状态。
+# 注意：命令git checkout -- readme.txt 中的 -- 很重要，如果没有 -- 的话，那么命令变成创建分支了。
+
 # 场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，
 # 第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
 
@@ -454,6 +470,11 @@ $ git reset [file]
 # 重置暂存区与工作区，与上一次commit保持一致
 $ git reset --hard
 
+# 重置暂存区与工作区，与上某一个版本号的commit保持一致
+# 使用git reflog查版本号
+$ git reflog
+$ git reset --hard 6fcfc89
+
 # 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
 $ git reset [commit]
 
@@ -462,6 +483,9 @@ $ git reset --hard HEAD^
 
 # 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
 $ git reset --hard [commit]
+
+# 回退到前100个版本
+$git reset --hard HEAD~100
 
 # 重置当前HEAD为指定commit，但保持暂存区和工作区不变
 $ git reset --keep [commit]
@@ -674,6 +698,8 @@ git:x:503:503::/home/git:/sbin/nologin
 
 ### 查看、添加、提交、删除、找回，重置修改文件
 ```
+mkdir： XX (创建一个空目录 XX指目录名)
+pwd： 显示当前目录的路径。
 git help <command> # 显示command的help
 git show # 显示某次提交的内容 git show $id
 git co -- <file> # 抛弃工作区修改
