@@ -16,11 +16,49 @@ Git的使用简介（简单明了不废话）
 
 2. git config --global user.email "dufeizj@163.com"
 
+git config --list
+
 1.2、进入你想把项目存到本地的位置，比如我想存到本地D盘的GitTest文件夹中，那就使用Git.bash进入到这个文件夹（没有就创建一个），然后执行"git init"初始化这个文件夹（也就是在这个文件夹下创建一个.git文件夹，将一些配置信息放进来）
 
 1. cd d:/gittest
 
 2. git init
+
+mkdir testgit
+
+cd testgit
+
+pwd
+
+git add .
+
+git add readme.txt
+
+git commit -m "add readme.txt"
+
+git status
+
+git diff readme.txt
+
+git add .
+
+git commit -m "modify readme.txt"
+
+git log
+
+git log –pretty=oneline
+
+那如果要回退到前100个版本的话，使用上面的方法肯定不方便，我们可以使用下面的简便命令操作：
+git reset --hard HEAD~100
+
+如果想回退到上一个版本的命令如下操作：
+git reset --hard HEAD^
+
+cat readme.txt
+
+git reset --hard 版本号 ，但是现在的问题假如我已经关掉过一次命令行或者333内容的版本号我并不知道呢？要如何知道增加3333内容的版本号呢？可以通过如下命令即可获取到版本号：git reflog 演示如下
+
+git reset --hard 6fcfc89来恢复了。演示如下：
 
 如下图所示
 
@@ -30,7 +68,6 @@ Git的使用简介（简单明了不废话）
 
 Git的使用简介（简单明了不废话）
 
-Git的使用简介（简单明了不废话）
 
 接下来等一会这个项目就会克隆到本地了。查看一下本地就能看到这个项目了。接下来就可以基于这个项目进行开发了。
 
