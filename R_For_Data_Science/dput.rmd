@@ -1,0 +1,44 @@
+---
+title: "dput function"
+author: "Stone_Hou"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '4'
+  html_notebook:
+    number_sections: no
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+> [R For Data Science: dput](http://r4ds.had.co.nz/introduction.html)  
+
+# dput function
+
+## reproducible
+
+There are three things you need to include to make your example reproducible: required packages, data, and code.
+
+Packages should be loaded at the top of the script, so it’s easy to see which ones the example needs. This is a good time to check that you’re using the latest version of each package; it’s possible you’ve discovered a bug that’s been fixed since you installed the package. For packages in the tidyverse, the easiest way to check is to run tidyverse_update().
+
+The easiest way to include data in a question is to use dput() to generate the R code to recreate it. For example, to recreate the mtcars dataset in R, I’d perform the following steps:
+
+1. Run dput(mtcars) in R  
+2. Copy the output  
+3. In my reproducible script, type mtcars <- then paste.
+
+Try and find the smallest subset of your data that still reveals the problem.
+
+Spend a little bit of time ensuring that your code is easy for others to read:
+
+Make sure you’ve used spaces and your variable names are concise, yet informative.
+
+Use comments to indicate where your problem lies.
+
+Do your best to remove everything that is not related to the problem.
+The shorter your code is, the easier it is to understand, and the easier it is to fix.
+
+Finish by checking that you have actually made a reproducible example by starting a fresh R session and copying and pasting your script in.

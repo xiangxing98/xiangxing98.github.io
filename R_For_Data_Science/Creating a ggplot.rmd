@@ -1,0 +1,131 @@
+---
+title: "Creating a ggplot"
+author: "Stone_Hou"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    theme: readable
+    toc: yes
+    toc_depth: 4
+---
+
+> [R For Data Science: data-visualisation](http://r4ds.had.co.nz/data-visualisation.html)  
+
+# data-visualisation
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+
+# data
+# mpg
+ggplot2::mpg
+
+
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+# displ, a car’s engine size, in litres.
+# hwy, a car’s fuel efficiency on the highway, in miles per gallon (mpg). 
+# A car with a low fuel efficiency consumes more fuel than a car with a high fuel efficiency when they travel the same distance.
+
+```
+
+
+```{r}
+
+ggplot(data = ggplot2::mpg) + geom_line(mapping = aes(x = displ, y = hwy))
+
+# A graphing template
+# ggplot(data = <DATA>) + 
+  # <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+
+## 3.2.4 Exercises
+
+Run ggplot(data = mpg). What do you see?
+
+```{r}
+ggplot(data = mpg)
+# blank
+```
+
+How many rows are in mpg? How many columns?
+```{r}
+ggplot2::mpg
+# A tibble: 234 x 11
+dim(ggplot2::mpg)
+# [1] 234  11
+
+```
+
+
+What does the drv variable describe? Read the help for ?mpg to find out.
+```{r}
+?ggplot2::mpg
+# Fuel economy data from 1999 and 2008 for 38 popular models of car
+
+```
+
+### ggplot2::mpg Format
+
+A data frame with 234 rows and 11 variables
+
+manufacturer
+model
+model name
+
+displ
+engine displacement, in litres
+
+year
+year of manufacture
+
+cyl
+number of cylinders
+
+trans
+type of transmission
+
+drv
+f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+
+cty
+city miles per gallon
+
+hwy
+highway miles per gallon
+
+fl
+fuel type
+
+class
+"type" of car
+
+Make a scatterplot of hwy vs cyl.
+
+```{r}
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = hwy, y = cyl, color = class))
+
+
+ggplot(data = ggplot2::mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+
+What happens if you make a scatterplot of class vs drv? Why is the plot not useful?
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
