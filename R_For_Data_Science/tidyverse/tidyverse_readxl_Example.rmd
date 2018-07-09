@@ -1,0 +1,263 @@
+---
+title: "tidyverse_readxl_example"
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
+    toc: yes
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+# tidyverse_readxl
+
+## Load library(readxl) package
+
+```{r Load package}
+# ?rm()
+rm(list=ls())
+# Load data.table package
+if(!suppressWarnings(require(readxl)))
+{
+    install.packages('readxl')
+    require('readxl')
+}
+
+?readxl
+```
+
+## Load Data--明确文件内表单
+
+```{r}
+excel_sheets('mydata.xlsx')
+# [1] "Sheet1"     "Sheet2"     "TestSheet3"
+```
+
+## read_excel()表单数据读取
+
+col_names表示是否以第一行作为变量名，可以给出一个向量自定义列名。
+
+sheet如果不声明的话，就默认读取第一张表单。
+
+read_excel自行截取最小的能够囊括所有观测值的矩阵范围进行读取，所以不用太担心各行变量列数不同而没有读取完整数据。
+
+`readxl::read_excel()` will guess column types, by default, or you can provide them explicitly via the `col_types` argument. The `col_types` argument is more flexible than you might think; you can mix actual types in with `"skip"` and `"guess"` and a single type will be recycled to the necessary length.
+
+Here are different ways this might look:
+
+```{r}
+read_excel("yo.xlsx")
+read_excel("yo.xlsx", col_types = "numeric")
+read_excel("yo.xlsx", col_types = c("date", "skip", "guess", "numeric"))
+
+read_excel("yo.xlsx", skip = 5)
+read_excel("yo.xlsx", n_max = 100)
+read_excel("yo.xlsx", skip = 5, n_max = 100)
+read_excel("yo.xlsx", range = "C1:E7")
+read_excel("yo.xlsx", range = cell_rows(6:23))
+read_excel("yo.xlsx", range = cell_cols("B:D"))
+read_excel("yo.xlsx", range = anchored("C4", dim = c(3, 2)))
+
+
+
+f <- read_excel('mydata.xlsx', sheet = "Sheet2", col_names = F)
+View(f)
+
+# 如果想要读取选定的范围的数据，则可以在range里声明。
+# 比如只读取第一张表单中的前三行前四列的数据：
+
+(f <- read_excel(
+  'mydata.xlsx',
+  sheet = "Sheet2",
+  col_names = F,
+  range = 'B2:F8'
+  ))
+View(f)
+
+read_excel(readxl_example("deaths.xlsx"), range = cell_rows(5:15))
+
+read_excel(
+  readxl_example("deaths.xlsx"),
+  range = cell_rows(5:15),
+  col_types = c("guess", "skip", "guess", "skip", "skip", "skip")
+)
+
+(clippy <- 
+   read_excel(readxl_example("clippy.xlsx"), col_types = c("text", "list")))
+
+```
+
+## Example
+
+数据源：朝阳医院2016年销售数据
+
+分析指标：
+
+1、月均消费次数；
+
+2、月均消费金额；
+
+3、客单价；
+
+4、消费趋势
+
+```{r}
+#导入数据源
+
+# library(openxlsx)
+
+# ?rm()
+rm(list=ls())
+# Load data.table package
+if(!suppressWarnings(require(readxl)))
+{
+    install.packages('readxl')
+    require('readxl')
+}
+
+readFilePath <- "F:/Data_Analysis/朝阳医院2016年销售数据.xlsx"
+
+excel_sheets(readFilePath)
+# [1] "Sheet1"
+
+excelData <- read_excel(readFilePath, sheet = "Sheet1", col_names = T)
+
+View(excelData)
+
+# excelData <- read.xlsx(readFilePath, "Sheet1")
+
+# 数据进行预处理
+# a、操纵日期和缺失值； 
+# b、数据类型的转换； 
+# c、变量的创建和重编码； 
+# d、数据集的排序、合并与取子集； 
+# e、选入和丢弃变量
+
+#重命名变量
+names(excelData)<-c("time","cardno","drugId","drugName","saleNumber","virtualmoney","actualmoney","DrugType","TypeCode","DrugFullName","DrugUnit")
+
+fix(excelData)
+names(excelData) [2] <- "cardno1"
+
+
+#rename()函数修改变量名
+install.packages("plyr")
+library(plyr)
+excelData <- rename(excelData, c(time = "Time", drugid = "drugId"))
+
+#判断是否是缺失值
+is.na(excelData[,1:7])
+#删除缺失值
+excelData <- excelData[!is.na(excelData$time),]
+
+
+#stringr处理字符串
+install.packages("stringr")
+library(stringr)
+timeSplit <- str_split_fixed(excelData$time," ",n=2)
+excelData$time <- timeSplit[,1]
+excelData$time
+
+#查看数据类型 class()函数
+
+class(excelData$time)
+excelData$time <- as.Date(excelData$time, "%Y-%m-%d")
+
+
+#转换数据类型
+attach(excelData)
+saleNumber <- as.numeric(saleNumber)
+virtualmoney <- as.numeric(virtualmoney)
+actualmoney <- as.numeric(actualmoney)
+detach(excelData)
+
+
+#数据框按时间降序排序
+excelData <- excelData[order(excelData$time,decreasing = TRUE),]
+
+# 分析具体的业务指标
+
+#月均消费次数=总消费次数/月份数
+
+# 用duplicated()函数是从数据框中选出重复的数据。
+# 我们的需求是将重复的数据删除，因此我们用了逻辑运算符！来去掉多余的数据。
+kpi1 <- excelData[!duplicated(excelData[,c("time", "cardno")]),]
+
+#总消费次数
+
+consumeNumber <- nrow(kpi1)
+
+#最大时间值
+
+startTime <- kpi1$time[1]
+
+#最小时间值
+
+endTime <- kpi1$time[nrow(kpi1)]
+
+#天数
+
+day <- startTime - endTime
+
+#月份数
+
+month <- as.numeric(day) %/% 30
+
+#月均消费次数
+
+monthConsume <- consumeNumber/month
+
+#月均消费金额
+# 月均消费金额=总消费金额/月份数，月均消费金额为实收金额（actualmoney）na.rm表示移除缺失值 ，na代表缺失值，rm代表remove，在计算的时候，只计算有值的数据。
+
+totalMoney <- sum(excelData$actualmoney, na.rm = TRUE)
+
+monthMoney <- totalMoney/month
+
+#客单价
+# 客单价=总消费金额/总消费次数，客单价是指门店每一个顾客平均购买商品的金额，也就是平均交易金额。
+pct <- totalMoney/consumeNumber
+
+#按销售时间分组，将销售时间按周分组
+
+week <- tapply(excelData$actualmoney, format(excelData$time,"%Y-%U"),sum)
+
+#将数据转换为数据框结构。
+
+week<-as.data.frame.table(week)
+
+#对列名重命名
+
+names(week)<-c("time","actualmoney")
+
+week$time<-as.character(week$time)
+
+week$timeNumber<-c(1:nrow(week))
+
+# 绘制图表，确立横坐标为周数，纵坐标为销售金额。
+#绘制图形
+
+plot(
+  week$timeNumber,
+  week$actualmoney,
+  xlab = "时间（年份-第几周）",
+  ylab = "消费金额",
+  xaxt = "n",
+  main = "2016年朝阳医院消费曲线",
+  col = "blue",
+  type = "b"
+  )
+
+axis(
+  1,
+  at = week$timeNumber,
+  labels = week$time,
+  cex.axis = 1.5
+  )
+```
+
+
