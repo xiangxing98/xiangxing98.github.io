@@ -27,36 +27,75 @@ if(!suppressWarnings(require('data.table')))
     require('data.table')
 }
 
+```
 
+### 画散点图
+```{r}
 #加载R内置数据集airquality
 data(airquality)
 head(airquality)#显示前几项
 summary(airquality)#显示统计项
-#画散点图
+### 画散点图
 plot(airquality$Ozone)
 plot(airquality$Ozone,airquality$Wind)
+```
 
-#箱线图
+### 箱线图
+```{r}
+### 箱线图
 boxplot(airquality$Temp)#竖直放置
 boxplot(airquality$Temp,horizontal=T)#水平放置
+```
 
-#直方图
+### 直方图
+```{r}
+### 直方图
 hist(airquality$Temp)
 hist(airquality$Temp,breaks=10)#手动定义区间段
 hist(airquality$Temp,prob=T)#众轴变成比例
 
-#密度图
+```
+
+### 密度图
+```{r}
+### 密度图
 plot(density(airquality$Temp))
 hist(airquality$Temp,prob=T)
 lines(density(airquality$Temp),col=3,lwd=4)
+```
 
-#柱状图
+### 柱状图
+```{r}
+### 柱状图1
+age <- c(25, 23, 34, 45)
+row_names <- c("Key", "Monkey", "John", "Stone")
+col_names <- c("age")
+a <- matrix(age,
+            nrow = 4, ncol = 1,
+            byrow = TRUE,
+            dimnames = list(row_names, col_names))
+a
+barplot(a[, "age"],
+        main = "Patient Age Distribution",
+        ylab = "name",
+        col = c("lightblue"),
+        border = NA,
+        cex.lab = 1.5,
+        las = 2)
+
+### 柱状图2
 barplot(table(airquality$Month),col=rainbow(dim(table(airquality$Month))))
 barplot(table(airquality$Month),col=rainbow(dim(table(airquality$Month))),horiz=T)
+```
 
-#饼图
+### 饼图
+```{r}
+### 饼图
 pie(table(airquality$Month))
+```
 
+### 图集
+```{r}
 #图集
 plot(airquality[,1:4])#方法1
 pairs(airquality[,1:4])#方法2
