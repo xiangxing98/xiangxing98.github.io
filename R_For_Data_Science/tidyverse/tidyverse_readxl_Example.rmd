@@ -1,5 +1,5 @@
 ---
-title: "tidyverse_readxl_example"
+title: "朝阳医院2016年销售数据案例分析"
 author: "Stone_Hou"
 date: '`r Sys.Date()`'
 output:
@@ -13,7 +13,7 @@ output:
     toc_depth: '4'
 ---
 
-# tidyverse_readxl
+# 朝阳医院2016年销售数据案例分析
 
 ## Load library(readxl) package
 
@@ -91,7 +91,9 @@ read_excel(
 
 ```
 
-## Example
+## 朝阳医院2016年销售数据-案例分析
+
+> 数据分析的步骤：提出问题→理解数据→数据清洗→构建模型→数据可视化
 
 数据源：朝阳医院2016年销售数据
 
@@ -105,8 +107,10 @@ read_excel(
 
 4、消费趋势
 
+
+### 导入数据源
+
 ```{r}
-#导入数据源
 
 # library(openxlsx)
 
@@ -129,44 +133,73 @@ excelData <- read_excel(readFilePath, sheet = "Sheet1", col_names = T)
 View(excelData)
 
 # excelData <- read.xlsx(readFilePath, "Sheet1")
+```
 
-# 数据进行预处理
-# a、操纵日期和缺失值； 
-# b、数据类型的转换； 
-# c、变量的创建和重编码； 
-# d、数据集的排序、合并与取子集； 
-# e、选入和丢弃变量
+### 数据进行预处理
 
-#重命名变量
+a、选择子集，列名重命名，操纵日期和删除缺失值； 
+
+b、数据类型的转换； 
+
+c、变量的创建和重编码； 
+
+d、数据集的排序、合并与取子集； 
+
+e、选入和丢弃变量，异常值处理
+
+
+#### step1.列名重命令；
+
+```{r}
+# 重命名变量1
 names(excelData)<-c("time","cardno","drugId","drugName","saleNumber","virtualmoney","actualmoney","DrugType","TypeCode","DrugFullName","DrugUnit")
 
+# 重命名变量2
 fix(excelData)
 names(excelData) [2] <- "cardno1"
 
-
-#rename()函数修改变量名
+# 重命名变量3
+# rename()函数修改变量名
 install.packages("plyr")
 library(plyr)
 excelData <- rename(excelData, c(time = "Time", drugid = "drugId"))
+```
 
-#判断是否是缺失值
+#### step2.删除缺失数据；
+```{r}
+# 缺失数据（Not.Available）处理
+# 此表格时间列中有部分缺失，可采用函数no.omit（） 删除所有含有缺失数据的行，
+# 也可通过逻辑运算！is.na()进行判断：
+# 判断是否是缺失值
 is.na(excelData[,1:7])
 #删除缺失值
 excelData <- excelData[!is.na(excelData$time),]
+```
 
+#### step3.处理日期；
+```{r}
+# 日期处理，将YYYY-MM-DD 与星期几分开，时间列拆分为 “2016-01-01”，引号里面有空格千万别忘了，我操作第一遍的时候报错，Google研究了一下才发现是自己没有打空格：
 
-#stringr处理字符串
+# stringr处理字符串
 install.packages("stringr")
 library(stringr)
+# 顺便推荐一下网上这篇文，“stringr”包的几个常用函数介绍的很具体
+# Introduction to stringr，如果浏览不了试试翻墙哈，这是国外网站上的。
+
+# 按照空格拆分成两个
 timeSplit <- str_split_fixed(excelData$time," ",n=2)
 excelData$time <- timeSplit[,1]
 excelData$time
+```
 
+#### step4.数据类型转换；
+```{r}
+# 数据类型转换，查验相关数据类型，并进行转换，便于后面进行数据分析：
 #查看数据类型 class()函数
 
 class(excelData$time)
 excelData$time <- as.Date(excelData$time, "%Y-%m-%d")
-
+# [1] "Date"
 
 #转换数据类型
 attach(excelData)
@@ -174,80 +207,105 @@ saleNumber <- as.numeric(saleNumber)
 virtualmoney <- as.numeric(virtualmoney)
 actualmoney <- as.numeric(actualmoney)
 detach(excelData)
+```
 
+#### step5.数据排序
 
-#数据框按时间降序排序
-excelData <- excelData[order(excelData$time,decreasing = TRUE),]
+```{r}
+# 数据排序，按销售时间对数据进行降序排列：
+# 数据框按时间降序排序
+excelData <- excelData[order(excelData$time, decreasing = TRUE), ]
 
-# 分析具体的业务指标
+#按照销售时间对数据进行降序排列，看看一天内卖了哪些药物
+# excelData<-excelData[order(excelData$time,decreasing = FALSE),]
+```
 
-#月均消费次数=总消费次数/月份数
+### 分析具体的业务指标
+
+（1）月均消费次数=总消费次数/月份数
+
+（2）月均消费金额=总金额消费/月份数，此处的na.rm为移除缺失值
+
+（3）客单价=总消费金额/总消费次数
+
+（4）消费趋势
+
+```{r}
+
+# （1）月均消费次数=总消费次数/月份数
+# 指标按照月份去计算，所以需要计算数据经历了多少个月份，
 
 # 用duplicated()函数是从数据框中选出重复的数据。
 # 我们的需求是将重复的数据删除，因此我们用了逻辑运算符！来去掉多余的数据。
+# 因为总消费次数指的是同一卡号，同一天算作一次消费，所以这里需要去掉每天相同卡号的重复项
 kpi1 <- excelData[!duplicated(excelData[,c("time", "cardno")]),]
 
-#总消费次数
-
+# 总消费次数,用nrow获取多少条数据
 consumeNumber <- nrow(kpi1)
 
-#最大时间值
 
+# 我们还需要求一个月份数，我们来获取时间范围：
+# 最大时间值
 startTime <- kpi1$time[1]
-
-#最小时间值
-
+# 最小时间值
 endTime <- kpi1$time[nrow(kpi1)]
-
-#天数
-
+# 天数
 day <- startTime - endTime
-
-#月份数
-
+# 月份数
 month <- as.numeric(day) %/% 30
+# %/% 整数除法 ：如果有余数，我们就将余数去掉，保留整数部分。
 
-#月均消费次数
+# 补充：
+# 7个算术运算符
+# + 加 
+# - 减 
+# * 乘 
+# /除 
+# ^或** 求幂
+# %/% 求余（x mod y） 
+# x%/%y 整数除法 如：5%/%2=2
 
-monthConsume <- consumeNumber/month
+# 每张卡月均消费次数
+monthConsume <- floor(consumeNumber/month)
 
-#月均消费金额
+# （2）月均消费金额
 # 月均消费金额=总消费金额/月份数，月均消费金额为实收金额（actualmoney）na.rm表示移除缺失值 ，na代表缺失值，rm代表remove，在计算的时候，只计算有值的数据。
 
 totalMoney <- sum(excelData$actualmoney, na.rm = TRUE)
 
-monthMoney <- totalMoney/month
+monthMoney <- round(totalMoney/month, 3)
 
-#客单价
-# 客单价=总消费金额/总消费次数，客单价是指门店每一个顾客平均购买商品的金额，也就是平均交易金额。
+# （3）客单价
+# 客单价 = 总消费金额/总消费次数，客单价是指门店每一个顾客平均购买商品的金额，也就是平均交易金额。
 pct <- totalMoney/consumeNumber
 
-#按销售时间分组，将销售时间按周分组
+# （4）消费趋势
+# 按销售时间分组，将销售时间按周分组
+# 用到tapply()函数, 以每个星期为单位计算ActualMoney的总和。
+week <-
+  tapply(excelData$actualmoney, 
+         format(excelData$time, "%Y-%U"), sum)
 
-week <- tapply(excelData$actualmoney, format(excelData$time,"%Y-%U"),sum)
-
-#将数据转换为数据框结构。
-
+# 将数据转换为数据框结构。把week转为data.table(data.frame的其中一种类型)
 week<-as.data.frame.table(week)
 
-#对列名重命名
+# 对列名重命名
+names(week) <- c("time", "actualmoney")
+# 把week转为data.table(data.frame的其中一种类型)
+week$time <- as.character(week$time)
+# 在week增加一变量，供画图使用
+week$timeNumber <- c(1:nrow(week))
 
-names(week)<-c("time","actualmoney")
-
-week$time<-as.character(week$time)
-
-week$timeNumber<-c(1:nrow(week))
-
-# 绘制图表，确立横坐标为周数，纵坐标为销售金额。
-#绘制图形
+# 绘制图表，确立横坐标为周数，纵坐标为销售金额。以折线图表示
 
 plot(
   week$timeNumber,
   week$actualmoney,
+  main = "2016年朝阳医院消费曲线",  
   xlab = "时间（年份-第几周）",
   ylab = "消费金额",
   xaxt = "n",
-  main = "2016年朝阳医院消费曲线",
+  yaxt = "n",  
   col = "blue",
   type = "b"
   )
@@ -258,6 +316,47 @@ axis(
   labels = week$time,
   cex.axis = 1.5
   )
+
+axis(
+  2,
+  at = seq(0, signif(max(week$actualMoney), 1), 1000),
+  labels = week$acTualMoney,
+  cex.axis = 1
+  )
+
 ```
 
+### 自定x-axis标签
+
+```{r}
+plot(week$timeNumber,week$actualMoney,main = "2016年朝阳医院消费曲线",
+       ylab = "消费金额",
+       xlab='',
+       xaxt = "n",
+       yaxt="n",
+       col = "red",
+       type = "b" )
+   
+# ---las=2垂直于x-axis
+axis(
+  1,
+  at = week$timeNumber,
+  labels = week$time,
+  cex.axis = 1,
+  las = 2
+  )
+
+mtext("时间（年份-第几周）", side=1,line=4)
+
+axis(
+  2,
+  at = seq(0, signif(max(week$actualMoney), 1), 1000),
+  labels = week$acTualMoney,
+  cex.axis = 1
+  )
+```
+
+<!-- <p> Test HTML</p> -->
+
+<!-- <h3> head 3</h3> -->
 
