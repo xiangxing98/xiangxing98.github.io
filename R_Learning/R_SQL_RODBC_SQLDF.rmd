@@ -280,4 +280,95 @@ writeLines(stop_word_unique, "E:/03-Download/Github/stop_word_unique.txt", useBy
 readLines("E:/03-Download/Github/stop_word_unique.txt", encoding="UTF-8")
 ```
 
+## 用R语言分析聊天记录
+
+> [https://zhuanlan.zhihu.com/p/31201177](https://zhuanlan.zhihu.com/p/31201177)
+
+### 数据处理
+```{r}
+library(RSQLite)
+library(plyr)
+# //连接SQLitle数据库
+
+conn <- dbConnect(dbDriver("SQLite"), dbname="MM.sqlite")
+# //设置连接函数
+
+doCountQuery <- function(conn,table){
+    query <- paste("SELECT COUNT(name) FROM ",table,sep ="")
+    t <- dbGetQuery(conn,query)    return(t)
+}
+
+table_name <- dbGetQuery(conn, "SELECT name FROM sqlite_master where type='table' and name like 'Chat_%' order by name")
+# //取出所有表名，由于不会遍历，只能按照最笨的办法，计算哪个表的数据量最多，即是和男盆友的聊天记录表，如果不是和男盆友的聊天表，此方法是找不出来
+
+counts <- numeric(0)for (i in 1:length(table_name) ){
+    count <- doCountQuery(conn,table_name[i])
+    counts[i] <-count[[1]]    
+}
+# //计算表长
+table_count <- data.frame(counts)
+
+# //排序，表长最大的表，即是和男朋友的聊天记录表
+table_count1 <- table_count[order(table_count$counts,decreasing=TRUE),]
+
+# //提取到聊天内容
+message <- dbGetQuery(conn, "SELECT * FROM Chat_XXXXXXXXXX ")
+```
+
+### 文本分析
+
+```{r}
+library(jiebaRD)
+library(jiebaR)
+
+library(data.table)
+library(stringr)
+
+cutter=worker()
+wechat_content =message
+wechat_content <- as.character(wechat_word$V1)
+# ///由于数据量过大，不知道为什么只用cuter无法把所有数据都遍历到，无奈只能写简单的函数每一条遍历切割
+
+cut_y <- function (y){
+    y=gsub("\\.","",y)
+    cutter[as.character(y)]
+}
+# //遍历切割每一条聊天内容
+y.out <- sapply(wechat_content,cut_y,USE.NAMES = F)
+
+# //去除数字
+y.out<-gsub("[0-9]+?","",y.out)
+
+# // 去除停止词
+s <- read.csv('stopwords.csv')
+stopwords <- c(NULL)for (i in 1:length(s))
+{
+    stopwords[i] <- s[i]
+}
+y.out <- filter_segment(y.out,stopwords)
+
+# //遍历计数后再组合到一起
+wechat_content_whole <- as.array(0)
+for (i in 1:length(y.out)){
+    table_content <- count(y.out[[i]])
+    wechat_content_whole <- rbind(wechat_content_whole,table_content)
+}
+
+# //最后计数
+wechat_content_whole <- count(wechat_content_whole,"x")
+
+# //从大到小排列
+wechat_content_whole<- wechat_content_whole[order(wechat_content_whole$freq,decreasing=TRUE),]
+
+# //提取前1000条做词云
+wechat_words_final <- table_content_whole_final[1:1000,]
+
+# //颜色从粉到白函数
+clufunc <- colorRampPalette(c("pink","white"))
+
+# //形成词云 
+wordcloud2(wechat_words_final, fontFamily = "HYTangTangCuTiJ", figPath = "love.jpg", size=1, color=clufunc(1000))
+```
+
+
 
