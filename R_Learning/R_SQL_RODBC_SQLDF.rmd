@@ -31,7 +31,7 @@ CRAN 里面的包 RODBC 提供了 ODBC的访问接口：
 #安装RODBC包  
 install.packages("RODBC")   
 library(RODBC)  
-mycon<-odbcConnect("mydsn",uid="user",pwd="rply")  
+mycon<-odbcConnect("mydsn",uid="root",pwd="082408SQ")  
 #通过一个数据源名称（mydsn）和用户名（user）以及密码（rply，如果没有设置，可以直接忽略）打开了一个ODBC数据库连接  
   
 data(USArrests)  
@@ -370,5 +370,17 @@ clufunc <- colorRampPalette(c("pink","white"))
 wordcloud2(wechat_words_final, fontFamily = "HYTangTangCuTiJ", figPath = "love.jpg", size=1, color=clufunc(1000))
 ```
 
+
+### dbConnect
+```{r}
+con <- DBI::dbConnect(odbc::odbc(),
+                        Driver    = "SQL Server", 
+                        Server    = [My Server],
+                        Database  = [My Database],
+                        UID       = [My User ID],
+                        PWD       = [My Password],
+                        Port      = 1433)
+
+```
 
 
