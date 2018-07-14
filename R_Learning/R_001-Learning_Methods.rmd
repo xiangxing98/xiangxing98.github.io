@@ -77,8 +77,9 @@ Shiny可以满足你骚，浪，爱得瑟的工具
 
 ### 一、初学入门：
 
-《R in Action》
+《R in Action》[r-in-action](https://livebook.manning.com/#!/book/r-in-action/)
 从统计角度入手，分高中低三部分由浅入深的讲解了如何用R来实现统计分析。
+
 
 《The Art of_R Programming》
 从程序编写的角度入手，对R的本身特点进行了清晰的介绍。
