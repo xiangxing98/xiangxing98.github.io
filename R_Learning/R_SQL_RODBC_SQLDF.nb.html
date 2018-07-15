@@ -11,7 +11,7 @@
 
 <meta name="author" content="Stone_Hou" />
 
-<meta name="date" content="2018-07-13" />
+<meta name="date" content="2018-07-15" />
 
 <title>R Notebook R_SQL_RODBC_SQLDF</title>
 
@@ -174,7 +174,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">R Notebook R_SQL_RODBC_SQLDF</h1>
 <h4 class="author"><em>Stone_Hou</em></h4>
-<h4 class="date"><em>2018-07-13</em></h4>
+<h4 class="date"><em>2018-07-15</em></h4>
 
 </div>
 
@@ -182,29 +182,37 @@ $(document).ready(function () {
 <ul>
 <li><a href="#r-notebook-r_sql_rodbc_sqldf"><span class="toc-section-number">1</span> R Notebook R_SQL_RODBC_SQLDF</a><ul>
 <li><a href="#rodbc"><span class="toc-section-number">1.1</span> 1. RODBC</a><ul>
-<li><a href="#sqlsave"><span class="toc-section-number">1.1.1</span> sqlSave函数</a></li>
-<li><a href="#sqlupdate"><span class="toc-section-number">1.1.2</span> sqlUpdate函数</a></li>
+<li><a href="#rrodbc"><span class="toc-section-number">1.1.1</span> 1.R中安装RODBC包</a></li>
+<li><a href="#windowsmysqlodbc"><span class="toc-section-number">1.1.2</span> 2.在Windows系统下安装MySQL的ODBC驱动</a></li>
+<li><a href="#odbc"><span class="toc-section-number">1.1.3</span> 3.ODBC的系统配置</a></li>
+<li><a href="#r"><span class="toc-section-number">1.1.4</span> 4. 打开R环境测试</a></li>
+<li><a href="#rodbcmysql"><span class="toc-section-number">1.1.5</span> 5. RODBC操作MySQL数据库的其他函数</a></li>
+<li><a href="#rodbc-example"><span class="toc-section-number">1.1.6</span> 6. RODBC Example</a></li>
+<li><a href="#sqlsave"><span class="toc-section-number">1.1.7</span> sqlSave函数</a></li>
+<li><a href="#sqlupdate"><span class="toc-section-number">1.1.8</span> sqlUpdate函数</a></li>
 </ul></li>
-<li><a href="#sqldf"><span class="toc-section-number">1.2</span> 2. sqldf包</a><ul>
-<li><a href="#sql"><span class="toc-section-number">1.2.1</span> 1、SQL基本特点</a></li>
-<li><a><span class="toc-section-number">1.2.2</span> 2、数据筛选与排序</a></li>
-<li><a><span class="toc-section-number">1.2.3</span> 3、数据合并——纵向连接</a><ul>
-<li><a href="#union"><span class="toc-section-number">1.2.3.1</span> （1）并——union</a></li>
-<li><a href="#exceptintersect"><span class="toc-section-number">1.2.3.2</span> （2）差(except)、交（Intersect）</a></li>
+<li><a href="#r-connect-with-mysql"><span class="toc-section-number">1.2</span> R Connect with MYSQL</a></li>
+<li><a href="#sqldf"><span class="toc-section-number">1.3</span> 2. sqldf包</a><ul>
+<li><a href="#sql"><span class="toc-section-number">1.3.1</span> 1、SQL基本特点</a></li>
+<li><a><span class="toc-section-number">1.3.2</span> 2、数据筛选与排序</a></li>
+<li><a><span class="toc-section-number">1.3.3</span> 3、数据合并——纵向连接</a><ul>
+<li><a href="#union"><span class="toc-section-number">1.3.3.1</span> （1）并——union</a></li>
+<li><a href="#exceptintersect"><span class="toc-section-number">1.3.3.2</span> （2）差(except)、交（Intersect）</a></li>
 </ul></li>
-<li><a><span class="toc-section-number">1.2.4</span> 4、数据合并——横向连接</a><ul>
-<li><a><span class="toc-section-number">1.2.4.1</span> （1）内连接——匹配到完全一致的</a></li>
-<li><a href="#1"><span class="toc-section-number">1.2.4.2</span> （2）左连接——最有效，以数据集1为准，匹配到的+为匹配到的</a></li>
+<li><a><span class="toc-section-number">1.3.4</span> 4、数据合并——横向连接</a><ul>
+<li><a><span class="toc-section-number">1.3.4.1</span> （1）内连接——匹配到完全一致的</a></li>
+<li><a href="#1"><span class="toc-section-number">1.3.4.2</span> （2）左连接——最有效，以数据集1为准，匹配到的+为匹配到的</a></li>
 </ul></li>
-<li><a><span class="toc-section-number">1.2.5</span> 5、数据去重</a></li>
-<li><a href="#.txt"><span class="toc-section-number">1.2.6</span> 6. 批量读入文件夹中的文本文件（*.txt），并生成名称、文档数据框</a></li>
+<li><a><span class="toc-section-number">1.3.5</span> 5、数据去重</a></li>
+<li><a href="#.txt"><span class="toc-section-number">1.3.6</span> 6. 批量读入文件夹中的文本文件（*.txt），并生成名称、文档数据框</a></li>
 </ul></li>
-<li><a href="#load-package-in-a-safe-way"><span class="toc-section-number">1.3</span> 3. load package in a safe way</a></li>
-<li><a href="#input-data---manupulation---output-data"><span class="toc-section-number">1.4</span> 4. Input Data -&gt; manupulation -&gt; Output data</a></li>
-<li><a href="#r"><span class="toc-section-number">1.5</span> 用R语言分析聊天记录</a><ul>
-<li><a><span class="toc-section-number">1.5.1</span> 数据处理</a></li>
-<li><a><span class="toc-section-number">1.5.2</span> 文本分析</a></li>
-<li><a href="#dbconnect"><span class="toc-section-number">1.5.3</span> dbConnect</a></li>
+<li><a href="#load-package-in-a-safe-way"><span class="toc-section-number">1.4</span> 3. load package in a safe way</a></li>
+<li><a href="#input-data---manupulation---output-data"><span class="toc-section-number">1.5</span> 4. Input Data -&gt; manupulation -&gt; Output data</a></li>
+<li><a href="#r"><span class="toc-section-number">1.6</span> 用R语言分析聊天记录</a><ul>
+<li><a><span class="toc-section-number">1.6.1</span> 数据处理</a></li>
+<li><a><span class="toc-section-number">1.6.2</span> 文本分析</a></li>
+<li><a href="#dbconnect"><span class="toc-section-number">1.6.3</span> dbConnect</a></li>
+<li><a><span class="toc-section-number">1.6.4</span> 参考文章：</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -223,9 +231,65 @@ $(document).ready(function () {
 <li><p>通过sqlQuery进行查询，返回的结果是 R 的数据框。（sqlCopy把一个 查询传给数据库，返回结果在数据库中以表的方式保存。） 一种比较好的控制方式是首先调用 odbcQuery， 然后 用 sqlGetResults 取得结果。后者可用于一个循环中 每次获得有限行，就如函数 sqlFetchMore 的功能。</p></li>
 <li><p>连接可以通过调用函数 close 或 odbcClose 来关闭。 没有 R 对象对应或不在 R 会话后面的连接也可以调用这两个函数来关闭， 但会有警告信息。</p></li>
 </ul>
+<div id="rrodbc" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> 1.R中安装RODBC包</h3>
+<p>install.packages(“RODBC”)</p>
+</div>
+<div id="windowsmysqlodbc" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> 2.在Windows系统下安装MySQL的ODBC驱动</h3>
+<p>注意区分32位和64位版本；</p>
+<p><a href="http://dev.mysql.com/downloads/connector/odbc" class="uri">http://dev.mysql.com/downloads/connector/odbc</a></p>
+</div>
+<div id="odbc" class="section level3">
+<h3><span class="header-section-number">1.1.3</span> 3.ODBC的系统配置</h3>
+<p>在Windows操作系统下：控制面板-&gt;管理工具-&gt;数据源（ODBC）-&gt;双击-&gt;添加-&gt;选中mysql ODBC driver一项</p>
+<p>填写：data source name 一项填入你要使用的名字，自己随便命名，例如：mysql_data;</p>
+<p>description一项随意填写，例如mydata</p>
+<p>TCP/IP Server 填写MySQL数据库的IP地址，如：127.0.0.1</p>
+<p>user 填写你的mysql用户名</p>
+<p>password 填写你的mysql密码</p>
+<p>然后数据库里会出现你的mysql里的所有数据库，选择一个数据库。</p>
+</div>
+<div id="r" class="section level3">
+<h3><span class="header-section-number">1.1.4</span> 4. 打开R环境测试</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBodHRwOi8vYmxvZy5jc2RuLm5ldC9zaW5hdF8yNjkxNzM4My9hcnRpY2xlL2RldGFpbHMvNTExMDA3MzZcbiPlronoo4VST0RCQ+WMhSAgXG5pbnN0YWxsLnBhY2thZ2VzKFwiUk9EQkNcIikgICBcbmxpYnJhcnkoUk9EQkMpICBcbm15Y29uPC1vZGJjQ29ubmVjdChcIm15ZHNuXCIsdWlkPVwicm9vdFwiLHB3ZD1cIjA4MjQwOFNRXCIpICBcbiPpgJrov4fkuIDkuKrmlbDmja7mupDlkI3np7DvvIhteWRzbu+8ieWSjOeUqOaIt+WQje+8iHVzZXLvvInku6Xlj4rlr4bnoIHvvIhycGx577yM5aaC5p6c5rKh5pyJ6K6+572u77yM5Y+v5Lul55u05o6l5b+955Wl77yJ5omT5byA5LqG5LiA5LiqT0RCQ+aVsOaNruW6k+i/nuaOpSAgXG4gIFxuZGF0YShVU0FycmVzdHMpICBcbiPlsIZS6Ieq5bim55qE4oCcVVNBcnJlc3Rz4oCd6KGo5YaZ6L+b5pWw5o2u5bqT6YeMICBcbnNxbFNhdmUobXljb24sVVNBcnJlc3RzLHJvd25hbWVzPVwic3RhdGVcIixhZGRQSz1UUlVFKSAgXG4j5bCG5pWw5o2u5rWB5L+d5a2Y77yM6L+Z5pe25omT5byAU1FMIFNlcnZlcuWwseWPr+S7peeci+WIsOaWsOW7uueahFVTQXJyZXN0c+ihqOS6hiAgXG5ybShVU0FycmVzdHMpICBcbiPmuIXpmaRVU0FycmVzdHPlj5jph48gIFxuICBcbnNxbEZldGNoKG15Y29uLCBcIlVTQXJyZXN0c1wiICxyb3duYW1lcz1cInN0YXRlXCIpICBcbiPovpPlh7pVU0FycmVzdHPooajkuK3nmoTlhoXlrrkgIFxuc3FsUXVlcnkobXljb24sXCJzZWxlY3QgKiBmcm9tIFVTQXJyZXN0c1wiKSAgXG4j5a+5VVNBcnJlc3Rz6KGo5omn6KGM5LqGU1FM6K+t5Y+lc2VsZWN077yM5bm25bCG57uT5p6c6L6T5Ye6ICBcbiAgXG5zcWxEcm9wKGNoYW5uZWwsXCJVU0FycmVzdHNcIikgIFxuI+WIoOmZpFVTQXJyZXN0c+ihqCAgXG5jbG9zZShteWNvbikgIFxuI+WFs+mXrei/nuaOpSAgXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1Lku6PnoIEg5p+l6K+i56S65L6LXG5saWJyYXJ5KFJPREJDKVxuY2hhbm5lbDwtb2RiY0Nvbm5lY3QoXCJteXNxbF9kYXRhXCIsIHVpZD1cImJhaWR1X2luZGV4XCIsIHB3ZD1cIioqKioqKlwiKSAgIyA2NCDkvY1PREJD77yMKioqKuabv+aNouS4uui+k+WFpeWvhueggVxuc3FsS2V5d29yZCA9IFwiU0VMRUNUICogRlJPTSBCQUlEVV9JTkRFWCBXSEVSRSBjb2xfa2V5d29yZCA9ICfmnY7mmJPls7AnIEFORCBjb2xfZGF0ZT49JzIwMTUtMDEtMDEnXCJcbmRhdGFLZXl3b3JkPXNxbFF1ZXJ5KGNoYW5uZWwsc3FsS2V5d29yZClcbmtleXdvcmRMaXN0PC1kYXRhS2V5d29yZFtbXCJjb2xfa2V5d29yZFwiXV1cbmtleXdvcmRMaXN0PC1hcy5jaGFyYWN0ZXIoa2V5d29yZExpc3QpXG5gYGAifQ== -->
+<pre class="r"><code>#R代码 查询示例
+library(RODBC)
+channel&lt;-odbcConnect(&quot;mysql_data&quot;, uid=&quot;baidu_index&quot;, pwd=&quot;******&quot;)  # 64 位ODBC，****替换为输入密码
+sqlKeyword = &quot;SELECT * FROM BAIDU_INDEX WHERE col_keyword = '李易峰' AND col_date&gt;='2015-01-01'&quot;
+dataKeyword=sqlQuery(channel,sqlKeyword)
+keywordList&lt;-dataKeyword[[&quot;col_keyword&quot;]]
+keywordList&lt;-as.character(keywordList)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="rodbcmysql" class="section level3">
+<h3><span class="header-section-number">1.1.5</span> 5. RODBC操作MySQL数据库的其他函数</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyDlh73mlbDlkI3np7AgIyDlh73mlbDmj4/ov7Bcbm9kYmNDb25uZWN0KGRzbiwgdWlkPVwiXCIsIHB3ZD1cIlwiKSAgICMg5bu656uL5bm25omT5byA6L+e5o6lIFxuc3FsRmV0Y2goY2hhbm5lbCwgc3FsdGFibGUpICAjIOS7juaVsOaNruW6k+ivu+WPluaVsOaNruihqO+8jOW5tui/lOWbnuS4gOS4quaVsOaNruahhuWvueixoVxuc3FsUXVlcnkoY2hhbm5lbCwgcXVlcnkpICAgIyDlkJHmlbDmja7lupPmj5DkuqTkuIDkuKrmn6Xor6LvvIzlubbov5Tlm57nu5PmnpxcbnNxbFNhdmUoY2hhbm5lbCwgbXlkZiwgdGFibGVuYW1lID0gc3F0YWJsZSwgYXBwZW5kID0gRkFMU0UpICAjIOWwhuS4gOS4quaVsOaNruahhuWGmeWFpeaIluabtOaWsChhcHBlbmQ9VHJ1ZSnliLDmlbDmja7lupNcbnNxbERyb3AoY2hhbm5lbCwgc3F0YWJsZSkgICMg5LuO5pWw5o2u5bqT5Yig6Zmk5LiA5Liq6KGoXG5zcWxDbGVhcihjaGFubmVsLCBzcXRhYmxlKSAgICMg5Yig6Zmk6KGo5Lit55qE5YaF5a65XG5zcWxUYWJsZXMoY2hhbm5lbCkgICMg6L+U5Zue5pWw5o2u5bqT5Lit6KGo55qE5L+h5oGvXG5zcWxDb2x1bW5zKGNoYW5uZWwsIHNxdGFibGUpICAjIOi/lOWbnuaVsOaNruW6k+ihqHNxdGFibGXliJfnmoTkv6Hmga9cbmNsb3NlKGNoYW5uZWwpICAjIOWFs+mXrei/nuaOpVxuYGBgIn0= -->
+<pre class="r"><code># 函数名称 # 函数描述
+odbcConnect(dsn, uid=&quot;&quot;, pwd=&quot;&quot;)   # 建立并打开连接 
+sqlFetch(channel, sqltable)  # 从数据库读取数据表，并返回一个数据框对象
+sqlQuery(channel, query)   # 向数据库提交一个查询，并返回结果
+sqlSave(channel, mydf, tablename = sqtable, append = FALSE)  # 将一个数据框写入或更新(append=True)到数据库
+sqlDrop(channel, sqtable)  # 从数据库删除一个表
+sqlClear(channel, sqtable)   # 删除表中的内容
+sqlTables(channel)  # 返回数据库中表的信息
+sqlColumns(channel, sqtable)  # 返回数据库表sqtable列的信息
+close(channel)  # 关闭连接</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="rodbc-example" class="section level3">
+<h3><span class="header-section-number">1.1.6</span> 6. RODBC Example</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBodHRwOi8vYmxvZy5jc2RuLm5ldC9zaW5hdF8yNjkxNzM4My9hcnRpY2xlL2RldGFpbHMvNTExMDA3MzZcbiPlronoo4VST0RCQ+WMhSAgXG5pbnN0YWxsLnBhY2thZ2VzKFwiUk9EQkNcIikgICBcbmxpYnJhcnkoUk9EQkMpICBcbm15Y29uPC1vZGJjQ29ubmVjdChcIm15ZHNuXCIsdWlkPVwicm9vdFwiLHB3ZD1cIjA4MjQwOFNRXCIpICBcbiPpgJrov4fkuIDkuKrmlbDmja7mupDlkI3np7DvvIhteWRzbu+8ieWSjOeUqOaIt+WQje+8iHVzZXLvvInku6Xlj4rlr4bnoIHvvIhycGx577yM5aaC5p6c5rKh5pyJ6K6+572u77yM5Y+v5Lul55u05o6l5b+955Wl77yJ5omT5byA5LqG5LiA5LiqT0RCQ+aVsOaNruW6k+i/nuaOpSAgXG4gIFxuZGF0YShVU0FycmVzdHMpICBcbiPlsIZS6Ieq5bim55qEXCJVU0FycmVzdHNcIuihqOWGmei/m+aVsOaNruW6k+mHjCAgXG5zcWxTYXZlKG15Y29uLFVTQXJyZXN0cyxyb3duYW1lcz1cInN0YXRlXCIsYWRkUEs9VFJVRSkgIFxuI+WwhuaVsOaNrua1geS/neWtmO+8jOi/meaXtuaJk+W8gFNRTCBTZXJ2ZXLlsLHlj6/ku6XnnIvliLDmlrDlu7rnmoRVU0FycmVzdHPooajkuoYgIFxucm0oVVNBcnJlc3RzKSAgXG4j5riF6ZmkVVNBcnJlc3Rz5Y+Y6YePICBcblxuXG5zcWxUYWJsZXMobXljb24pOyPmn6XnnIvmlbDmja7kuK3nmoTooaggXG5kYXRhPC1zcWxGZXRjaChteWNvbixcIlVTQXJyZXN0c1wiKSMg5p+l55yL6KGo55qE5YaF5a6577yM5a2Y5Yiw5pWw5o2u5qGG6YeMIFxuICBcbnNxbEZldGNoKG15Y29uLCBcIlVTQXJyZXN0c1wiICxyb3duYW1lcz1cInN0YXRlXCIpICBcbiPovpPlh7pVU0FycmVzdHPooajkuK3nmoTlhoXlrrkgIFxuc3FsUXVlcnkobXljb24sXCJzZWxlY3QgKiBmcm9tIFVTQXJyZXN0c1wiKSAgXG4j5a+5VVNBcnJlc3Rz6KGo5omn6KGM5LqGU1FM6K+t5Y+lc2VsZWN077yM5bm25bCG57uT5p6c6L6T5Ye6ICBcbiAgXG5zcWxEcm9wKGNoYW5uZWwsXCJVU0FycmVzdHNcIikgIFxuI+WIoOmZpFVTQXJyZXN0c+ihqCAgXG5jbG9zZShteWNvbikgIFxuI+WFs+mXrei/nuaOpSAgXG5gYGAifQ== -->
 <pre class="r"><code># http://blog.csdn.net/sinat_26917383/article/details/51100736
 #安装RODBC包  
 install.packages(&quot;RODBC&quot;)   
@@ -234,11 +298,15 @@ mycon&lt;-odbcConnect(&quot;mydsn&quot;,uid=&quot;root&quot;,pwd=&quot;082408SQ&
 #通过一个数据源名称（mydsn）和用户名（user）以及密码（rply，如果没有设置，可以直接忽略）打开了一个ODBC数据库连接  
   
 data(USArrests)  
-#将R自带的“USArrests”表写进数据库里  
+#将R自带的&quot;USArrests&quot;表写进数据库里  
 sqlSave(mycon,USArrests,rownames=&quot;state&quot;,addPK=TRUE)  
 #将数据流保存，这时打开SQL Server就可以看到新建的USArrests表了  
 rm(USArrests)  
 #清除USArrests变量  
+
+
+sqlTables(mycon);#查看数据中的表 
+data&lt;-sqlFetch(mycon,&quot;USArrests&quot;)# 查看表的内容，存到数据框里 
   
 sqlFetch(mycon, &quot;USArrests&quot; ,rownames=&quot;state&quot;)  
 #输出USArrests表中的内容  
@@ -252,8 +320,9 @@ close(mycon)
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 <div id="sqlsave" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> sqlSave函数</h3>
+<h3><span class="header-section-number">1.1.7</span> sqlSave函数</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FsU2F2ZShjaGFubmVsLCBkYXQsIHRhYmxlbmFtZSA9IE5VTEwsIGFwcGVuZCA9IEZBTFNFLCAgXG4gICAgICAgIHJvd25hbWVzID0gVFJVRSwgY29sbmFtZXMgPSBGQUxTRSwgdmVyYm9zZSA9IEZBTFNFLCAgXG4gICAgICAgIHNhZmVyID0gVFJVRSwgYWRkUEsgPSBGQUxTRSwgdHlwZUluZm8sIHZhclR5cGVzLCAgXG4gICAgICAgIGZhc3QgPSBUUlVFLCB0ZXN0ID0gRkFMU0UsIG5hc3RyaW5nID0gTlVMTCkgIFxuYGBgIn0= -->
@@ -272,7 +341,7 @@ close(mycon)
 <p>addPK,是否将rownames指定为主键。</p>
 </div>
 <div id="sqlupdate" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> sqlUpdate函数</h3>
+<h3><span class="header-section-number">1.1.8</span> sqlUpdate函数</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FsVXBkYXRlKGNoYW5uZWwsIGRhdCwgdGFibGVuYW1lID0gTlVMTCwgaW5kZXggPSBOVUxMLCAgXG4gICAgICAgICAgdmVyYm9zZSA9IEZBTFNFLCB0ZXN0ID0gRkFMU0UsIG5hc3RyaW5nID0gTlVMTCwgIFxuICAgICAgICAgIGZhc3QgPSBUUlVFKSAgXG5gYGAifQ== -->
@@ -284,20 +353,135 @@ close(mycon)
 <!-- rnb-text-begin -->
 </div>
 </div>
+<div id="r-connect-with-mysql" class="section level2">
+<h2><span class="header-section-number">1.2</span> R Connect with MYSQL</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb2FkIHBhY2thZ2VzXG5cbmxpYnJhcnkoXCJSTXlTUUxcIilcbmxpYnJhcnkoXCJtYWdyaXR0clwiKVxuXG4jIGNvbm5lY3RcbmNvbm4gPC0gZGJDb25uZWN0KFxuICBNeVNRTCgpLCPmlbDmja7lupPlubPlj7DnsbvlnotcbiAgZGJuYW1lID0gXCJ0ZXN0MlwiLCPmlbDmja7lupPlkI3np7BcbiAgdXNlcm5hbWUgPSBcInJvb3RcIiwj55m75b2V6LSm5Y+377yITXlTUUzliJ3lp4vlronoo4Xml7borr7nva7nmoTotKblj7fvvIlcbiAgcGFzc3dvcmQgPSBcIjA4MjQwOFNR4oCcLCPnmbvlvZXlr4bnoIHvvIhNeVNRTOWIneWni+WuieijheaXtuiuvue9rueahOWvhueggVxuICBob3N0PVwiMTI3LjAuMC4xXCIsI+WcsOWdgFxuICBwb3J0PTMzMDYgICAj56uv5Y+j5Y+3XG4pXG5cbmNvbm4gPC0gZGJDb25uZWN0KE15U1FMKCksIGRibmFtZSA9IFwidGVzdDJcIiwgdXNlcm5hbWU9XCJyb290XCIsIHBhc3N3b3JkPVwiMDgyNDA4U1FcIiwgaG9zdD1cIjEyNy4wLjAuMVwiLCBwb3J0PTMzMDYpXG5cbnN1bW1hcnkoY29ubikgICAgICAj5p+l55yL6L+e5o6l5L+h5oGv77yaXG4jIDxNeVNRTENvbm5lY3Rpb246MCwwPlxuIyAgIFVzZXI6ICAgcm9vdCBcbiMgICBIb3N0OiAgIDEyNy4wLjAuMSBcbiMgICBEYm5hbWU6IHRlc3QyIFxuIyAgIENvbm5lY3Rpb24gdHlwZTogMTI3LjAuMC4xIHZpYSBUQ1AvSVAgXG4jIFxuIyBSZXN1bHRzOlxuXG5cbiPmn6XnnIvov57mjqXor6bnu4bkv6Hmga/vvIjliJfooajlvaLlvI/vvIlcbmRiR2V0SW5mbyhjb25uKSAgICBcbiMgJGhvc3RcbiMgWzFdIFwiMTI3LjAuMC4xXCJcbiMgXG4jICR1c2VyXG4jIFsxXSBcInJvb3RcIlxuIyBcbiMgJGRibmFtZVxuIyBbMV0gXCJ0ZXN0MlwiXG4jIFxuIyAkY29uVHlwZVxuIyBbMV0gXCIxMjcuMC4wLjEgdmlhIFRDUC9JUFwiXG4jIFxuIyAkc2VydmVyVmVyc2lvblxuIyBbMV0gXCIxMC4zLjgtTWFyaWFEQlwiXG4jIFxuIyAkcHJvdG9jb2xWZXJzaW9uXG4jIFsxXSAxMFxuIyBcbiMgJHRocmVhZElkXG4jIFsxXSA4XG4jIFxuIyAkcnNJZFxuIyBsaXN0KClcblxuXG5kYkxpc3RUYWJsZXMoY29ubikgI+afpeeci+ivpeaVsOaNruW6k+i/nuaOpeWGheeahOihqOS/oeaBr1xuIyBbMV0gXCJ1c2FycmVzdHNcIlxuXG5kYkRpc2Nvbm5lY3QoY29ubikgI+WFs+mXrei/nuaOpSjmlbDmja7pgJrorq/lrozmiJDkuYvlkI7lho3ov5DooYwpXG4jIFxuIyBS6K+t6KiA5LiOTXlTUUzmlbDmja7lupPor7vlhpnvvJpcbihteWRhdGEgPC0gaXJpcylcbmRiV3JpdGVUYWJsZShcbiAgICAgICAgICBjb25uID0gY29ubiwgICAgICAj6L+e5o6l5ZCN56ewXG4gICAgICAgICAgbmFtZSA9IFwibXlkYXRhXCIsICAj5oyH5a6a5a+85YWl5ZCO55qE6KGo5ZCNXG4gICAgICAgICAgdmFsdWUgPSBpcmlzLCAgICAgI+aMh+WumuimgeWvvOWFpeeahFLlhoXlrZjnqbrpl7TmlbDmja7lr7nosaFcbiAgICAgICAgICByb3cubmFtZXMgPSBGQUxTRSAj5b+955Wl6KGM5ZCNXG4gICAgICAgICAgKSAgICAgIFxuI+WGmeihqFxuZGJMaXN0VGFibGVzKGNvbm4pXG4jICdiaXJ0aGRheXMnICdjb21wYW55JyAnZGF0YWFuYWx5c3QnICdmb29kcmFua2luZycgJ2Zvb2R0eXBlcycgJ215ZGF0YScgJ29yZGVyaW5mbycgJ3N0cl9kYXRlJyAndXNlcmluZm8nXG5cbm15ZGF0YTEgPC0gZGJSZWFkVGFibGUoIFxuICAgICAgICAgY29ubiA9IGNvbm4sICAgICAgICPov57mjqXlkI3np7BcbiAgICAgICAgIG5hbWUgPSBcIm15ZGF0YVwiICAgICPmlbDmja7lupPkuK3nmoTooajlkI1cbiAgICAgICAgICApICAgICAgICAgICAgICAgICAj6K+76KGoICBcbmhlYWQobXlkYXRhMSwxMCkgXG5cblxuZGJXcml0ZVRhYmxlKGNvbm4sIFwidGFibGVuYW1lXCIsIGRhdGEpICPlhpnooahcbmRiUmVhZFRhYmxlKGNvbm4sIFwidGFibGVuYW1lXCIpICAj6K+76KGoXG5kYkRpc2Nvbm5lY3QoY29ubikgI+WFs+mXrei/nuaOpVxuXG5cbiMg5Lul5LiK6K+75YaZ6YO95piv5LiA5qyh5oCn5pON5L2c77yM5LiN6IO95Zyo6K+75YaZ55qE5ZCM5pe25omn6KGM5p2h5Lu2562b6YCJ562J5q2l6aqk77yM6YCa5bi45oiR5Lus6ZyA6KaB5L2/55So5p+l6K+i5pa55byP5p2l6I635Y+W5oyH5a6a5p2h5Lu255qE5pWw5o2u5bm26L+U5Zue5pWw5o2u5qGG44CCXG5yZXN1bHQxIDwtIGRiU2VuZFF1ZXJ5KGNvbm4gPSBjb25uLCAgXG4gICAgICAgICAgICAgICAgICAgICAgIHN0YXRlbWVudCA9IFwiU0VMRUNUICogZnJvbSBteWRhdGEgd2hlcmUgYFNlcGFsLkxlbmd0aGAgYmV0d2VlbiA0IGFuZCA1IFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhbmQgU3BlY2llcyA9ICdzZXRvc2EnIFwiXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICPmn6Xor6LmnaHku7ZcbiAgICAgICAgICAgICAgICAgICAgICApICU+JSBkYkZldGNoKClcbiAgICAgICAgICAgICAgICAgICAgICAj5bCG5p+l6K+i57uT5p6c6L+U5Zue5pWw5o2u5qGGXG5oZWFkKHJlc3VsdDEsMTApXG5kYkNsZWFyUmVzdWx0KHJlc3VsdDEpICAgI+a4hemZpOafpeivoijph4rmlL7lhoXlrZgpXG5cbiMg6L+Z5LiA5Y+l5riF6Zmk55qE5piv5p+l6K+i77yM5Y2z5LiK5LiA5Y+l5Lit55qEZGJTZW5kUXVlcnnpg6jliIbvvIjluIPljIXlkKvlkI7pnaLnmoRkYkZldGNo77yM5oiR5Y+q5piv5Li65LqG5pa55L6/5LiA5qyh5oCn6L6T5Ye65LqG77yJ44CCXG5cbmRiUmVtb3ZlVGFibGUoY29ubixcIm15ZGF0YVwiKSAgICPliKDpmaTooaggICAgXG4gZGJMaXN0VGFibGVzKGNvbm4pICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbidiaXJ0aGRheXMnICdjb21wYW55JyAnZGF0YWFuYWx5c3QnICdmb29kcmFua2luZycgJ2Zvb2R0eXBlcycgJ29yZGVyaW5mbycgJ3N0cl9kYXRlJyAndXNlcmluZm8nXG5kYkRpc2Nvbm5lY3QoY29ubikgICAgICAgICAgICAgI+aWreW8gOi/nuaOpVxuYGBgIn0= -->
+<pre class="r"><code># load packages
+
+library(&quot;RMySQL&quot;)
+library(&quot;magrittr&quot;)
+
+# connect
+conn &lt;- dbConnect(
+  MySQL(),#数据库平台类型
+  dbname = &quot;test2&quot;,#数据库名称
+  username = &quot;root&quot;,#登录账号（MySQL初始安装时设置的账号）
+  password = &quot;082408SQ“,#登录密码（MySQL初始安装时设置的密码
+  host=&quot;127.0.0.1&quot;,#地址
+  port=3306   #端口号
+)
+
+conn &lt;- dbConnect(MySQL(), dbname = &quot;test2&quot;, username=&quot;root&quot;, password=&quot;082408SQ&quot;, host=&quot;127.0.0.1&quot;, port=3306)
+
+summary(conn)      #查看连接信息：
+# &lt;MySQLConnection:0,0&gt;
+#   User:   root 
+#   Host:   127.0.0.1 
+#   Dbname: test2 
+#   Connection type: 127.0.0.1 via TCP/IP 
+# 
+# Results:
+
+
+#查看连接详细信息（列表形式）
+dbGetInfo(conn)    
+# $host
+# [1] &quot;127.0.0.1&quot;
+# 
+# $user
+# [1] &quot;root&quot;
+# 
+# $dbname
+# [1] &quot;test2&quot;
+# 
+# $conType
+# [1] &quot;127.0.0.1 via TCP/IP&quot;
+# 
+# $serverVersion
+# [1] &quot;10.3.8-MariaDB&quot;
+# 
+# $protocolVersion
+# [1] 10
+# 
+# $threadId
+# [1] 8
+# 
+# $rsId
+# list()
+
+
+dbListTables(conn) #查看该数据库连接内的表信息
+# [1] &quot;usarrests&quot;
+
+dbDisconnect(conn) #关闭连接(数据通讯完成之后再运行)
+# 
+# R语言与MySQL数据库读写：
+(mydata &lt;- iris)
+dbWriteTable(
+          conn = conn,      #连接名称
+          name = &quot;mydata&quot;,  #指定导入后的表名
+          value = iris,     #指定要导入的R内存空间数据对象
+          row.names = FALSE #忽略行名
+          )      
+#写表
+dbListTables(conn)
+# 'birthdays' 'company' 'dataanalyst' 'foodranking' 'foodtypes' 'mydata' 'orderinfo' 'str_date' 'userinfo'
+
+mydata1 &lt;- dbReadTable( 
+         conn = conn,       #连接名称
+         name = &quot;mydata&quot;    #数据库中的表名
+          )                 #读表  
+head(mydata1,10) 
+
+
+dbWriteTable(conn, &quot;tablename&quot;, data) #写表
+dbReadTable(conn, &quot;tablename&quot;)  #读表
+dbDisconnect(conn) #关闭连接
+
+
+# 以上读写都是一次性操作，不能在读写的同时执行条件筛选等步骤，通常我们需要使用查询方式来获取指定条件的数据并返回数据框。
+result1 &lt;- dbSendQuery(conn = conn,  
+                       statement = &quot;SELECT * from mydata where `Sepal.Length` between 4 and 5 
+                                   and Species = 'setosa' &quot;
+                                   #查询条件
+                      ) %&gt;% dbFetch()
+                      #将查询结果返回数据框
+head(result1,10)
+dbClearResult(result1)   #清除查询(释放内存)
+
+# 这一句清除的是查询，即上一句中的dbSendQuery部分（布包含后面的dbFetch，我只是为了方便一次性输出了）。
+
+dbRemoveTable(conn,&quot;mydata&quot;)   #删除表    
+ dbListTables(conn)                             
+'birthdays' 'company' 'dataanalyst' 'foodranking' 'foodtypes' 'orderinfo' 'str_date' 'userinfo'
+dbDisconnect(conn)             #断开连接</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
 <div id="sqldf" class="section level2">
-<h2><span class="header-section-number">1.2</span> 2. sqldf包</h2>
+<h2><span class="header-section-number">1.3</span> 2. sqldf包</h2>
 <div id="sql" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> 1、SQL基本特点</h3>
+<h3><span class="header-section-number">1.3.1</span> 1、SQL基本特点</h3>
 <p>SQL语句语句特点：先全局选择，再局部选择 Select * from sale where year=2010 and …</p>
 <p>where后面可以接很多，有比较运算符，算数运算符，逻辑运算符。 比较运算符号：=(等于，不是双引号)；!=（不等于）；&gt;，&lt;，&gt;=，&lt;= 算数运算符：*，/，+，- 逻辑运算符：&amp;&amp;(and,与)， ||（or，或） ，!（,not非）</p>
 </div>
 <div class="section level3">
-<h3><span class="header-section-number">1.2.2</span> 2、数据筛选与排序</h3>
+<h3><span class="header-section-number">1.3.2</span> 2、数据筛选与排序</h3>
 <p>数据筛选可以有subset函数，排序有order/sort函数</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI+mAieaLqeihqOS4reaMh+WumuWIlyovICBcbnNxbGRmKFwic2VsZWN0IHllYXIsbWFya2V0LHNhbGUscHJvZml0IGZyb20gc2FsZVwiKSAgXG4gIFxuI+mAieaLqea7oei2s+adoeS7tueahOihjCovICBcbnNxbGRmKFwic2VsZWN0ICogZnJvbSBzYWxlIHdoZXJlIHllYXI9MjAxMiBhbmQgbWFya2V0PSfkuJwnXCIpICBcbiAgICPor63lj6XnibnngrnvvIzlhYjmir3lj5blhajlsYDmlbDmja7vvIznhLblkI7lho3miafooYzlsYDpg6jpgInmi6kgIFxuICAgI+Wtl+espuWNleW8leWPt++8jOWIh+iusCAgXG4gIFxuI+WvueihjOi/m+ihjOaOkuW6jyovICBcbnNxbGRmKFwic2VsZWN0IHllYXIsbWFya2V0LHNhbGUscHJvZml0ICBcbiAgICAgIGZyb20gc2FsZSAgXG4gICAgICBvcmRlciBieSB5ZWFyXCIpICBcbmBgYCJ9 -->
-<pre class="r"><code>#选择表中指定列*/  
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzcWxkZilcblxuc3FsZGYoXCJzZWxlY3QgKiBmcm9tIHRfZGF0YVwiLGRibmFtZT1cInRlc3RcIixkcnY9XCJNeVNRTFwiLHVzZXI9XCJyb290XCIscGFzc3dvcmQ9XCJcIixob3N0PVwiMTI3LjAuMC4xXCIscG9ydD0zMzA2KVxuXG4jIOi/nuaOpeWQju+8jFNRTOafpeivouivreWPpeWQjumdoueahOWPguaVsOWdh+WPr+ecgeeVpe+8jOS+i+Wmgu+8mlxuc3FsZGYoXCJzZWxlY3QgKiBmcm9tIHRfZGF0YSBsaW1pdCAwLDEwXCIpXG5cbiPpgInmi6nooajkuK3mjIflrprliJcqLyAgXG5zcWxkZihcInNlbGVjdCB5ZWFyLG1hcmtldCxzYWxlLHByb2ZpdCBmcm9tIHNhbGVcIikgIFxuICBcbiPpgInmi6nmu6HotrPmnaHku7bnmoTooYwqLyAgXG5zcWxkZihcInNlbGVjdCAqIGZyb20gc2FsZSB3aGVyZSB5ZWFyPTIwMTIgYW5kIG1hcmtldD0n5LicJ1wiKSAgXG4gICAj6K+t5Y+l54m554K577yM5YWI5oq95Y+W5YWo5bGA5pWw5o2u77yM54S25ZCO5YaN5omn6KGM5bGA6YOo6YCJ5oupICBcbiAgICPlrZfnrKbljZXlvJXlj7fvvIzliIforrAgIFxuICBcbiPlr7nooYzov5vooYzmjpLluo8qLyAgXG5zcWxkZihcInNlbGVjdCB5ZWFyLG1hcmtldCxzYWxlLHByb2ZpdCAgXG4gICAgICBmcm9tIHNhbGUgIFxuICAgICAgb3JkZXIgYnkgeWVhclwiKSAgXG5gYGAifQ== -->
+<pre class="r"><code>library(sqldf)
+
+sqldf(&quot;select * from t_data&quot;,dbname=&quot;test&quot;,drv=&quot;MySQL&quot;,user=&quot;root&quot;,password=&quot;&quot;,host=&quot;127.0.0.1&quot;,port=3306)
+
+# 连接后，SQL查询语句后面的参数均可省略，例如：
+sqldf(&quot;select * from t_data limit 0,10&quot;)
+
+#选择表中指定列*/  
 sqldf(&quot;select year,market,sale,profit from sale&quot;)  
   
 #选择满足条件的行*/  
@@ -316,10 +500,10 @@ sqldf(&quot;select year,market,sale,profit
 <p>排序order：按照某变量排序，语法结构： select 指标名称（或全部）from 数据集 order by 指标名称</p>
 </div>
 <div class="section level3">
-<h3><span class="header-section-number">1.2.3</span> 3、数据合并——纵向连接</h3>
+<h3><span class="header-section-number">1.3.3</span> 3、数据合并——纵向连接</h3>
 <p>数据合并的方法很多，基本函数包中有merge、cbind/rbind，以及一些专业的包plyr、dplyr、data.table等 rbind/cbind对数据合并的要求比较严格：合并的变量名必须一致；数据等长；指标顺序必须一致。 sqldf就不会这么苛刻，并参照了一些集合查询的方法</p>
 <div id="union" class="section level4">
-<h4><span class="header-section-number">1.2.3.1</span> （1）并——union</h4>
+<h4><span class="header-section-number">1.3.3.1</span> （1）并——union</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVU5JT04zPC1zcWxkZihcInNlbGVjdCAqIGZyb20gb25lIHVuaW9uIHNlbGVjdCAqIGZyb20gdHdvXCIpICBcbiAgICPlkIjlubblkI7ljrvph40scmJpbmTmmK/lkIjlubblkI7kuI3ljrvph40gIFxuVU5JT05fYWxsPC1zcWxkZihcInNlbGVjdCAqIGZyb20gb25lIHVuaW9uIGFsbCBzZWxlY3QgKiBmcm9tIHR3b1wiKSAgXG4gICAjYWxs5Y+v5Lul5pSv5oyB77yM5ZCI5bm25ZCO5LiN5Y676YeNICBcbmBgYCJ9 -->
@@ -333,7 +517,7 @@ UNION_all&lt;-sqldf(&quot;select * from one union all select * from two&quot;)
 <p>rbind/cbind是将数据一股脑子全部帖在一起，只合并不去重；sqldf则可以自行选择，语法结构： select * from 数据集1 union (all) select * from 数据集2 其中的all代表不去重，一起加进来。</p>
 </div>
 <div id="exceptintersect" class="section level4">
-<h4><span class="header-section-number">1.2.3.2</span> （2）差(except)、交（Intersect）</h4>
+<h4><span class="header-section-number">1.3.3.2</span> （2）差(except)、交（Intersect）</h4>
 <p>差集就是找两个数据集的不同的数据，而且是数据集1中，去掉重复的数值；并集则是两个数据集的重合（去重可以用）之处。</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -350,10 +534,10 @@ INTERSECT&lt;-sqldf(&quot;select * from one INTERSECT select * from two&quot;)  
 </div>
 </div>
 <div class="section level3">
-<h3><span class="header-section-number">1.2.4</span> 4、数据合并——横向连接</h3>
+<h3><span class="header-section-number">1.3.4</span> 4、数据合并——横向连接</h3>
 <p>横向连接有三种类型：交叉连接（笛卡尔乘积，大乱炖所有数据重新排列组合合并起来，一般在实验设计涉及全排列的时候可以很好地使用）、内连接（筛选匹配到的数据）、外连接。</p>
 <div class="section level4">
-<h4><span class="header-section-number">1.2.4.1</span> （1）内连接——匹配到完全一致的</h4>
+<h4><span class="header-section-number">1.3.4.1</span> （1）内连接——匹配到完全一致的</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5uZXIxPC0gbWVyZ2UodGFibGUxLCB0YWJsZTIsIGJ5ID0gXCJpZFwiLCBhbGwgPSBGKTtpbm5lcjEgICPnrZvpgInnm7jlkIxpZO+8jEbkuLrlj6rov57mjqXljLnphY3liLDnmoTvvIxU5Li65rKh5pyJ5Yy56YWN5Yiw55qE6LWL5YC8TkEgIFxuIyAgIGlkIGEgYiAgXG4jIDEgIDMgYyBlICBcbmlubmVyMjwtaW5uZXJfam9pbih0YWJsZTEsIHRhYmxlMiwgYnkgPSBcImlkXCIpO2lubmVyMiAgICPkuI5tZXJnZeWujOWFqOS4gOiHtCAgXG4jICAgaWQgYSBiICBcbiMgMSAgMyBjIGUgIFxuaW5uZXIzPC1zcWxkZihcInNlbGVjdCAqIGZyb20gdGFibGUxIGFzIGEgaW5uZXIgam9pbiB0YWJsZTIgYXMgYiBvbiBhLmlkPWIuaWRcIik7aW5uZXIzICPlhoXov57mjqUgIFxuIyAgIGlkIGEgaWQgYiAgXG4jIDEgIDMgYyAgMyBlICBcbmlubmVyNDwtc3FsZGYoXCJzZWxlY3QgKiBmcm9tIHRhYmxlMSBhcyBhLHRhYmxlMiBhcyBiIHdoZXJlIGEuaWQ9Yi5pZFwiKTtpbm5lcjQgICPnrJvljaHlsJTnp68gIFxuIyAgIGlkIGEgaWQgYiAgXG4jIDEgIDMgYyAgMyBlICBcbmBgYCJ9 -->
@@ -375,7 +559,7 @@ inner4&lt;-sqldf(&quot;select * from table1 as a,table2 as b where a.id=b.id&quo
 <p>匹配到完全一致、相同的，基础包merge=dplyr的inner_join=sqldf包中的inner join。当然输出结果中，sqldf中会蹦出来两个id，可以进行删除。 其中sql包中的Inner join语法结构为： select * from 数据集1 as a inner join 数据集2 as b on a.指标名称=b.指标名称</p>
 </div>
 <div id="1" class="section level4">
-<h4><span class="header-section-number">1.2.4.2</span> （2）左连接——最有效，以数据集1为准，匹配到的+为匹配到的</h4>
+<h4><span class="header-section-number">1.3.4.2</span> （2）左连接——最有效，以数据集1为准，匹配到的+为匹配到的</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGVmdDE8LSBtZXJnZSh0YWJsZTEsIHRhYmxlMiwgYnkgPSBcImlkXCIsIGFsbC54ID0gVFJVRSk7bGVmdDEgICPmjInnhadpZOi/nuaOpeaJgOacieS/oeaBr+WMheaLrOi/m+WOuyAgXG4jICAgaWQgYSAgICBiICBcbiMgMSAgMSBhIDxOQT4gIFxuIyAyICAyIGIgPE5BPiAgXG4jIDMgIDMgYyAgICBlIFxuXG5sZWZ0MjwtbGVmdF9qb2luKHRhYmxlMSwgdGFibGUyLCBieSA9IFwiaWRcIik7bGVmdDIgIFxuIyAgIGlkIGEgICAgYiAgXG4jIDEgIDEgYSA8TkE+ICBcbiMgMiAgMiBiIDxOQT4gIFxuIyAzICAzIGMgICAgZSAgXG5cbmxlZnQzPC1zcWxkZihcInNlbGVjdCAqIGZyb20gdGFibGUxIGFzIGEgbGVmdCBqb2luIHRhYmxlMiBhcyBiIG9uIGEuaWQ9Yi5pZFwiKTtsZWZ0MyAgXG4jICAgaWQgYSBpZCAgICBiICBcbiMgMSAgMSBhIE5BIDxOQT4gIFxuIyAyICAyIGIgTkEgPE5BPiAgXG4jIDMgIDMgYyAgMyAgICBlIFxuYGBgIn0= -->
@@ -403,7 +587,7 @@ left3&lt;-sqldf(&quot;select * from table1 as a left join table2 as b on a.id=b.
 </div>
 </div>
 <div class="section level3">
-<h3><span class="header-section-number">1.2.5</span> 5、数据去重</h3>
+<h3><span class="header-section-number">1.3.5</span> 5、数据去重</h3>
 <p>解读：distinct跟unique去重功能差不多，语法特点： select DISTINCT 指标名称 from 数据集</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -415,7 +599,7 @@ sqldf(&quot;select DISTINCT  year from sale&quot;)  </code></pre>
 <!-- rnb-text-begin -->
 </div>
 <div id=".txt" class="section level3">
-<h3><span class="header-section-number">1.2.6</span> 6. 批量读入文件夹中的文本文件（*.txt），并生成名称、文档数据框</h3>
+<h3><span class="header-section-number">1.3.6</span> 6. 批量读入文件夹中的文本文件（*.txt），并生成名称、文档数据框</h3>
 <p>代码思路：先遍历文件夹中所有txt（list.files）、构造文本读入函数（read.txt）、找文本名字（list.files）、然后生成数据框（as.data.frame）</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -443,7 +627,7 @@ reviewdf &lt;- as.data.frame(cbind(docname, unlist(review)),
 </div>
 </div>
 <div id="load-package-in-a-safe-way" class="section level2">
-<h2><span class="header-section-number">1.3</span> 3. load package in a safe way</h2>
+<h2><span class="header-section-number">1.4</span> 3. load package in a safe way</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIGRhdGEudGFibGUgcGFja2FnZVxuaWYoIXN1cHByZXNzV2FybmluZ3MocmVxdWlyZSgnZGF0YS50YWJsZScpKSlcbntcbiAgICBpbnN0YWxsLnBhY2thZ2VzKCdkYXRhLnRhYmxlJylcbiAgICByZXF1aXJlKCdkYXRhLnRhYmxlJylcbn1cblxuYGBgIn0= -->
@@ -459,7 +643,7 @@ if(!suppressWarnings(require('data.table')))
 <!-- rnb-text-begin -->
 </div>
 <div id="input-data---manupulation---output-data" class="section level2">
-<h2><span class="header-section-number">1.4</span> 4. Input Data -&gt; manupulation -&gt; Output data</h2>
+<h2><span class="header-section-number">1.5</span> 4. Input Data -&gt; manupulation -&gt; Output data</h2>
 <p>数据处理的流程：数据输入-&gt; 处理 -&gt; 结果输出</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -496,12 +680,12 @@ readLines(&quot;E:/03-Download/Github/stop_word_unique.txt&quot;, encoding=&quot
 <!-- rnb-text-begin -->
 </div>
 <div id="r" class="section level2">
-<h2><span class="header-section-number">1.5</span> 用R语言分析聊天记录</h2>
+<h2><span class="header-section-number">1.6</span> 用R语言分析聊天记录</h2>
 <blockquote>
 <p><a href="https://zhuanlan.zhihu.com/p/31201177" class="uri">https://zhuanlan.zhihu.com/p/31201177</a></p>
 </blockquote>
 <div class="section level3">
-<h3><span class="header-section-number">1.5.1</span> 数据处理</h3>
+<h3><span class="header-section-number">1.6.1</span> 数据处理</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShSU1FMaXRlKVxubGlicmFyeShwbHlyKVxuIyAvL+i/nuaOpVNRTGl0bGXmlbDmja7lupNcblxuY29ubiA8LSBkYkNvbm5lY3QoZGJEcml2ZXIoXCJTUUxpdGVcIiksIGRibmFtZT1cIk1NLnNxbGl0ZVwiKVxuIyAvL+iuvue9rui/nuaOpeWHveaVsFxuXG5kb0NvdW50UXVlcnkgPC0gZnVuY3Rpb24oY29ubix0YWJsZSl7XG4gICAgcXVlcnkgPC0gcGFzdGUoXCJTRUxFQ1QgQ09VTlQobmFtZSkgRlJPTSBcIix0YWJsZSxzZXAgPVwiXCIpXG4gICAgdCA8LSBkYkdldFF1ZXJ5KGNvbm4scXVlcnkpICAgIHJldHVybih0KVxufVxuXG50YWJsZV9uYW1lIDwtIGRiR2V0UXVlcnkoY29ubiwgXCJTRUxFQ1QgbmFtZSBGUk9NIHNxbGl0ZV9tYXN0ZXIgd2hlcmUgdHlwZT0ndGFibGUnIGFuZCBuYW1lIGxpa2UgJ0NoYXRfJScgb3JkZXIgYnkgbmFtZVwiKVxuIyAvL+WPluWHuuaJgOacieihqOWQje+8jOeUseS6juS4jeS8mumBjeWOhu+8jOWPquiDveaMieeFp+acgOesqOeahOWKnuazle+8jOiuoeeul+WTquS4quihqOeahOaVsOaNrumHj+acgOWkmu+8jOWNs+aYr+WSjOeUt+ebhuWPi+eahOiBiuWkqeiusOW9leihqO+8jOWmguaenOS4jeaYr+WSjOeUt+ebhuWPi+eahOiBiuWkqeihqO+8jOatpOaWueazleaYr+aJvuS4jeWHuuadpVxuXG5jb3VudHMgPC0gbnVtZXJpYygwKWZvciAoaSBpbiAxOmxlbmd0aCh0YWJsZV9uYW1lKSApe1xuICAgIGNvdW50IDwtIGRvQ291bnRRdWVyeShjb25uLHRhYmxlX25hbWVbaV0pXG4gICAgY291bnRzW2ldIDwtY291bnRbWzFdXSAgICBcbn1cbiMgLy/orqHnrpfooajplb9cbnRhYmxlX2NvdW50IDwtIGRhdGEuZnJhbWUoY291bnRzKVxuXG4jIC8v5o6S5bqP77yM6KGo6ZW/5pyA5aSn55qE6KGo77yM5Y2z5piv5ZKM55S35pyL5Y+L55qE6IGK5aSp6K6w5b2V6KGoXG50YWJsZV9jb3VudDEgPC0gdGFibGVfY291bnRbb3JkZXIodGFibGVfY291bnQkY291bnRzLGRlY3JlYXNpbmc9VFJVRSksXVxuXG4jIC8v5o+Q5Y+W5Yiw6IGK5aSp5YaF5a65XG5tZXNzYWdlIDwtIGRiR2V0UXVlcnkoY29ubiwgXCJTRUxFQ1QgKiBGUk9NIENoYXRfWFhYWFhYWFhYWCBcIilcbmBgYCJ9 -->
@@ -537,7 +721,7 @@ message &lt;- dbGetQuery(conn, &quot;SELECT * FROM Chat_XXXXXXXXXX &quot;)</code
 <!-- rnb-text-begin -->
 </div>
 <div class="section level3">
-<h3><span class="header-section-number">1.5.2</span> 文本分析</h3>
+<h3><span class="header-section-number">1.6.2</span> 文本分析</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShqaWViYVJEKVxubGlicmFyeShqaWViYVIpXG5cbmxpYnJhcnkoZGF0YS50YWJsZSlcbmxpYnJhcnkoc3RyaW5ncilcblxuY3V0dGVyPXdvcmtlcigpXG53ZWNoYXRfY29udGVudCA9bWVzc2FnZVxud2VjaGF0X2NvbnRlbnQgPC0gYXMuY2hhcmFjdGVyKHdlY2hhdF93b3JkJFYxKVxuIyAvLy/nlLHkuo7mlbDmja7ph4/ov4flpKfvvIzkuI3nn6XpgZPkuLrku4DkuYjlj6rnlKhjdXRlcuaXoOazleaKiuaJgOacieaVsOaNrumDvemBjeWOhuWIsO+8jOaXoOWliOWPquiDveWGmeeugOWNleeahOWHveaVsOavj+S4gOadoemBjeWOhuWIh+WJslxuXG5jdXRfeSA8LSBmdW5jdGlvbiAoeSl7XG4gICAgeT1nc3ViKFwiXFxcXC5cIixcIlwiLHkpXG4gICAgY3V0dGVyW2FzLmNoYXJhY3Rlcih5KV1cbn1cbiMgLy/pgY3ljobliIflibLmr4/kuIDmnaHogYrlpKnlhoXlrrlcbnkub3V0IDwtIHNhcHBseSh3ZWNoYXRfY29udGVudCxjdXRfeSxVU0UuTkFNRVMgPSBGKVxuXG4jIC8v5Y676Zmk5pWw5a2XXG55Lm91dDwtZ3N1YihcIlswLTldKz9cIixcIlwiLHkub3V0KVxuXG4jIC8vIOWOu+mZpOWBnOatouivjVxucyA8LSByZWFkLmNzdignc3RvcHdvcmRzLmNzdicpXG5zdG9wd29yZHMgPC0gYyhOVUxMKWZvciAoaSBpbiAxOmxlbmd0aChzKSlcbntcbiAgICBzdG9wd29yZHNbaV0gPC0gc1tpXVxufVxueS5vdXQgPC0gZmlsdGVyX3NlZ21lbnQoeS5vdXQsc3RvcHdvcmRzKVxuXG4jIC8v6YGN5Y6G6K6h5pWw5ZCO5YaN57uE5ZCI5Yiw5LiA6LW3XG53ZWNoYXRfY29udGVudF93aG9sZSA8LSBhcy5hcnJheSgwKVxuZm9yIChpIGluIDE6bGVuZ3RoKHkub3V0KSl7XG4gICAgdGFibGVfY29udGVudCA8LSBjb3VudCh5Lm91dFtbaV1dKVxuICAgIHdlY2hhdF9jb250ZW50X3dob2xlIDwtIHJiaW5kKHdlY2hhdF9jb250ZW50X3dob2xlLHRhYmxlX2NvbnRlbnQpXG59XG5cbiMgLy/mnIDlkI7orqHmlbBcbndlY2hhdF9jb250ZW50X3dob2xlIDwtIGNvdW50KHdlY2hhdF9jb250ZW50X3dob2xlLFwieFwiKVxuXG4jIC8v5LuO5aSn5Yiw5bCP5o6S5YiXXG53ZWNoYXRfY29udGVudF93aG9sZTwtIHdlY2hhdF9jb250ZW50X3dob2xlW29yZGVyKHdlY2hhdF9jb250ZW50X3dob2xlJGZyZXEsZGVjcmVhc2luZz1UUlVFKSxdXG5cbiMgLy/mj5Dlj5bliY0xMDAw5p2h5YGa6K+N5LqRXG53ZWNoYXRfd29yZHNfZmluYWwgPC0gdGFibGVfY29udGVudF93aG9sZV9maW5hbFsxOjEwMDAsXVxuXG4jIC8v6aKc6Imy5LuO57KJ5Yiw55m95Ye95pWwXG5jbHVmdW5jIDwtIGNvbG9yUmFtcFBhbGV0dGUoYyhcInBpbmtcIixcIndoaXRlXCIpKVxuXG4jIC8v5b2i5oiQ6K+N5LqRIFxud29yZGNsb3VkMih3ZWNoYXRfd29yZHNfZmluYWwsIGZvbnRGYW1pbHkgPSBcIkhZVGFuZ1RhbmdDdVRpSlwiLCBmaWdQYXRoID0gXCJsb3ZlLmpwZ1wiLCBzaXplPTEsIGNvbG9yPWNsdWZ1bmMoMTAwMCkpXG5gYGAifQ== -->
@@ -596,7 +780,7 @@ wordcloud2(wechat_words_final, fontFamily = &quot;HYTangTangCuTiJ&quot;, figPath
 <!-- rnb-text-begin -->
 </div>
 <div id="dbconnect" class="section level3">
-<h3><span class="header-section-number">1.5.3</span> dbConnect</h3>
+<h3><span class="header-section-number">1.6.3</span> dbConnect</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uIDwtIERCSTo6ZGJDb25uZWN0KG9kYmM6Om9kYmMoKSxcbiAgICAgICAgICAgICAgICAgICAgICAgIERyaXZlciAgICA9IFwiU1FMIFNlcnZlclwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgIFNlcnZlciAgICA9IFtNeSBTZXJ2ZXJdLFxuICAgICAgICAgICAgICAgICAgICAgICAgRGF0YWJhc2UgID0gW015IERhdGFiYXNlXSxcbiAgICAgICAgICAgICAgICAgICAgICAgIFVJRCAgICAgICA9IFtNeSBVc2VyIElEXSxcbiAgICAgICAgICAgICAgICAgICAgICAgIFBXRCAgICAgICA9IFtNeSBQYXNzd29yZF0sXG4gICAgICAgICAgICAgICAgICAgICAgICBQb3J0ICAgICAgPSAxNDMzKVxuXG5gYGAifQ== -->
@@ -611,12 +795,18 @@ wordcloud2(wechat_words_final, fontFamily = &quot;HYTangTangCuTiJ&quot;, figPath
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div class="section level3">
+<h3><span class="header-section-number">1.6.4</span> 参考文章：</h3>
+<p>1、R语言连接Mysql数据库的步骤及简单使用mysql数据库中的数据（学习笔记）.<a href="http://www.dataguru.cn/thread-289411-1-1.html" class="uri">http://www.dataguru.cn/thread-289411-1-1.html</a></p>
+<p>2、R语言连接mySQL数据库步骤. <a href="http://blog.sina.com.cn/s/blog_ab3fbf1b0101komj.html" class="uri">http://blog.sina.com.cn/s/blog_ab3fbf1b0101komj.html</a></p>
+<p>3、R连接MySQL数据库方法备忘. <a href="http://www.r-bloggers.com/lang/chinese/1247" class="uri">http://www.r-bloggers.com/lang/chinese/1247</a></p>
 <!-- rnb-text-end -->
 </div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2sgUl9TUUxfUk9EQkNfU1FMREYiDQphdXRob3I6ICJTdG9uZV9Ib3UiDQpkYXRlOiAiYHIgU3lzLkRhdGUoKWAiDQpvdXRwdXQ6DQogIGh0bWxfbm90ZWJvb2s6DQogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMNCiAgICB0aGVtZTogcmVhZGFibGUNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogNA0KLS0tDQoNCiMgUiBOb3RlYm9vayBSX1NRTF9ST0RCQ19TUUxERg0KDQojIyAxLiBST0RCQw0KDQpDUkFOIOmHjOmdoueahOWMhSBST0RCQyDmj5DkvpvkuoYgT0RCQ+eahOiuv+mXruaOpeWPo++8mg0KDQoqIG9kYmNDb25uZWN0IOaIliBvZGJjRHJpdmVyQ29ubmVjdO+8iOWcqFdpbmRvd3Plm77lvaLljJbnlYzpnaLkuIvvvIzlj6/ku6XpgJrov4flr7nor53moYbpgInmi6nmlbDmja7lupPvvIkg5Y+v5Lul5omT5byA5LiA5Liq6L+e5o6l77yM6L+U5Zue5LiA5Liq55So5LqO6ZqP5ZCO5pWw5o2u5bqT6K6/6Zeu55qE5o6n5Yi277yIaGFuZGxl77yJ44CCIOaJk+WNsOS4gOS4qui/nuaOpeS8mue7meWHuk9EQkPov57mjqXnmoTkuIDkupvnu4boioLvvIzogIzosIPnlKggb2RiY0dldEluZm8g5Lya57uZ5Ye65a6i5oi356uv5ZKM5pyN5Yqh5Zmo55qE5LiA5Lqb57uG6IqC5L+h5oGv44CCDQoNCiog5Zyo5LiA5Liq6L+e5o6l5Lit55qE6KGo55qE57uG6IqC5L+h5oGv5Y+v5Lul6YCa6L+H5Ye95pWwIHNxbFRhYmxlcyDojrflvpfjgIINCg0KKiDlh73mlbAgc3FsU2F2ZSDkvJrmioogUiDmlbDmja7moYblpI3liLbliLDkuIDkuKrmlbDmja7lupPnmoTooajkuK3vvIwg6ICM5Ye95pWwIHNxbEZldGNoIOS8muaKiuS4gOS4quaVsOaNruW6k+S4reeahOihqOaLt+i0neWIsCDkuIDkuKogUiDnmoTmlbDmja7moYbkuK3jgIINCg0KKiDpgJrov4dzcWxRdWVyeei/m+ihjOafpeivou+8jOi/lOWbnueahOe7k+aenOaYryBSIOeahOaVsOaNruahhuOAgu+8iHNxbENvcHnmiorkuIDkuKog5p+l6K+i5Lyg57uZ5pWw5o2u5bqT77yM6L+U5Zue57uT5p6c5Zyo5pWw5o2u5bqT5Lit5Lul6KGo55qE5pa55byP5L+d5a2Y44CC77yJIOS4gOenjeavlOi+g+WlveeahOaOp+WItuaWueW8j+aYr+mmluWFiOiwg+eUqCBvZGJjUXVlcnnvvIwg54S25ZCOIOeUqCBzcWxHZXRSZXN1bHRzIOWPluW+l+e7k+aenOOAguWQjuiAheWPr+eUqOS6juS4gOS4quW+queOr+S4rSDmr4/mrKHojrflvpfmnInpmZDooYzvvIzlsLHlpoLlh73mlbAgc3FsRmV0Y2hNb3JlIOeahOWKn+iDveOAgg0KDQoqIOi/nuaOpeWPr+S7pemAmui/h+iwg+eUqOWHveaVsCBjbG9zZSDmiJYgb2RiY0Nsb3NlIOadpeWFs+mXreOAgiDmsqHmnIkgUiDlr7nosaHlr7nlupTmiJbkuI3lnKggUiDkvJror53lkI7pnaLnmoTov57mjqXkuZ/lj6/ku6XosIPnlKjov5nkuKTkuKrlh73mlbDmnaXlhbPpl63vvIwg5L2G5Lya5pyJ6K2m5ZGK5L+h5oGv44CCDQoNCmBgYHtyIFJPREJDfQ0KIyBodHRwOi8vYmxvZy5jc2RuLm5ldC9zaW5hdF8yNjkxNzM4My9hcnRpY2xlL2RldGFpbHMvNTExMDA3MzYNCiPlronoo4VST0RCQ+WMhSAgDQppbnN0YWxsLnBhY2thZ2VzKCJST0RCQyIpICAgDQpsaWJyYXJ5KFJPREJDKSAgDQpteWNvbjwtb2RiY0Nvbm5lY3QoIm15ZHNuIix1aWQ9InJvb3QiLHB3ZD0iMDgyNDA4U1EiKSAgDQoj6YCa6L+H5LiA5Liq5pWw5o2u5rqQ5ZCN56ew77yIbXlkc27vvInlkoznlKjmiLflkI3vvIh1c2Vy77yJ5Lul5Y+K5a+G56CB77yIcnBsee+8jOWmguaenOayoeacieiuvue9ru+8jOWPr+S7peebtOaOpeW/veeVpe+8ieaJk+W8gOS6huS4gOS4qk9EQkPmlbDmja7lupPov57mjqUgIA0KICANCmRhdGEoVVNBcnJlc3RzKSAgDQoj5bCGUuiHquW4pueahOKAnFVTQXJyZXN0c+KAneihqOWGmei/m+aVsOaNruW6k+mHjCAgDQpzcWxTYXZlKG15Y29uLFVTQXJyZXN0cyxyb3duYW1lcz0ic3RhdGUiLGFkZFBLPVRSVUUpICANCiPlsIbmlbDmja7mtYHkv53lrZjvvIzov5nml7bmiZPlvIBTUUwgU2VydmVy5bCx5Y+v5Lul55yL5Yiw5paw5bu655qEVVNBcnJlc3Rz6KGo5LqGICANCnJtKFVTQXJyZXN0cykgIA0KI+a4hemZpFVTQXJyZXN0c+WPmOmHjyAgDQogIA0Kc3FsRmV0Y2gobXljb24sICJVU0FycmVzdHMiICxyb3duYW1lcz0ic3RhdGUiKSAgDQoj6L6T5Ye6VVNBcnJlc3Rz6KGo5Lit55qE5YaF5a65ICANCnNxbFF1ZXJ5KG15Y29uLCJzZWxlY3QgKiBmcm9tIFVTQXJyZXN0cyIpICANCiPlr7lVU0FycmVzdHPooajmiafooYzkuoZTUUzor63lj6VzZWxlY3TvvIzlubblsIbnu5PmnpzovpPlh7ogIA0KICANCnNxbERyb3AoY2hhbm5lbCwiVVNBcnJlc3RzIikgIA0KI+WIoOmZpFVTQXJyZXN0c+ihqCAgDQpjbG9zZShteWNvbikgIA0KI+WFs+mXrei/nuaOpSAgDQpgYGANCg0KIyMjIHNxbFNhdmXlh73mlbANCg0KYGBge3Igc3FsU2F2ZX0NCnNxbFNhdmUoY2hhbm5lbCwgZGF0LCB0YWJsZW5hbWUgPSBOVUxMLCBhcHBlbmQgPSBGQUxTRSwgIA0KICAgICAgICByb3duYW1lcyA9IFRSVUUsIGNvbG5hbWVzID0gRkFMU0UsIHZlcmJvc2UgPSBGQUxTRSwgIA0KICAgICAgICBzYWZlciA9IFRSVUUsIGFkZFBLID0gRkFMU0UsIHR5cGVJbmZvLCB2YXJUeXBlcywgIA0KICAgICAgICBmYXN0ID0gVFJVRSwgdGVzdCA9IEZBTFNFLCBuYXN0cmluZyA9IE5VTEwpICANCmBgYA0KDQrlhbbkuK3ov5nkuKrlh73mlbDnmoTkvb/nlKjov5jmmK/lvojorrLnqbbnmoTvvIzlj4LmlbDnmoTorqTor4blvojph43opoHjgIINCg0KYXBwZW5k5Luj6KGo5piv5ZCm6L+95Yqg77yM6buY6K6k5LiN6L+95Yqg77yM5aaC5p6c5LiA5byg5bey57uP5pyJ5pWw5o2u55qE6KGo77yM5bCx5Y+v5Lul55SoYXBwZW5k6L+95Yqg5paw55qE5pWw5o2u77yM6ZyA6KaB5ZCM5qC355qEY29sdW1u77yM5LiA6Iis5byA5Liq6L+Z5Liq5bCx6KGM44CCDQoNCnJvd25hbWVz77yM5Y+v5Lul5piv6YC76L6R5YC877yM5Lmf5Y+v5Lul5piv5a2X56ym5Z6L44CCDQoNCmNvbG5hbWVz77yM5YiX5ZCN77ybDQoNCnZlcmJvc2XvvIzpu5jorqTkuLpGQUxTRe+8jOaYr+WQpuWPkemAgeivreWPpeWIsFLnlYzpnaLvvIzlpoLmnpxUUlVF77yM6YKj5LmI5q+P5p2h5LiK5Lyg5pWw5o2u5bCx5Lya5Ye6546w5Zyo5ZG95Luk5qCP55uu6Ie05LmL5Lit44CCDQoNCmFkZFBLLOaYr+WQpuWwhnJvd25hbWVz5oyH5a6a5Li65Li76ZSu44CCDQoNCiMjIyBzcWxVcGRhdGXlh73mlbANCmBgYHtyIHNxbFVwZGF0ZX0NCnNxbFVwZGF0ZShjaGFubmVsLCBkYXQsIHRhYmxlbmFtZSA9IE5VTEwsIGluZGV4ID0gTlVMTCwgIA0KICAgICAgICAgIHZlcmJvc2UgPSBGQUxTRSwgdGVzdCA9IEZBTFNFLCBuYXN0cmluZyA9IE5VTEwsICANCiAgICAgICAgICBmYXN0ID0gVFJVRSkgIA0KYGBgDQoNCg0KIyMgMi4gc3FsZGbljIUNCg0KIyMjIDHjgIFTUUzln7rmnKznibnngrkNCg0KU1FM6K+t5Y+l6K+t5Y+l54m554K577ya5YWI5YWo5bGA6YCJ5oup77yM5YaN5bGA6YOo6YCJ5oupDQpTZWxlY3QgKiBmcm9tIHNhbGUgd2hlcmUgeWVhcj0yMDEwIGFuZCAuLi4NCg0Kd2hlcmXlkI7pnaLlj6/ku6XmjqXlvojlpJrvvIzmnInmr5TovoPov5DnrpfnrKbvvIznrpfmlbDov5DnrpfnrKbvvIzpgLvovpHov5DnrpfnrKbjgIINCuavlOi+g+i/kOeul+espuWPt++8mj0o562J5LqO77yM5LiN5piv5Y+M5byV5Y+3Ke+8myE977yI5LiN562J5LqO77yJ77ybPu+8jDzvvIw+Pe+8jDw9DQrnrpfmlbDov5DnrpfnrKbvvJoq77yML++8jCvvvIwtDQrpgLvovpHov5DnrpfnrKbvvJomJihhbmQs5LiOKe+8jCB8fO+8iG9y77yM5oiW77yJIO+8jCHvvIgsbm906Z2e77yJDQoNCiMjIyAy44CB5pWw5o2u562b6YCJ5LiO5o6S5bqPDQoNCuaVsOaNruetm+mAieWPr+S7peaciXN1YnNldOWHveaVsO+8jOaOkuW6j+aciW9yZGVyL3NvcnTlh73mlbANCg0KYGBge3Igc3FsZGZ9DQoj6YCJ5oup6KGo5Lit5oyH5a6a5YiXKi8gIA0Kc3FsZGYoInNlbGVjdCB5ZWFyLG1hcmtldCxzYWxlLHByb2ZpdCBmcm9tIHNhbGUiKSAgDQogIA0KI+mAieaLqea7oei2s+adoeS7tueahOihjCovICANCnNxbGRmKCJzZWxlY3QgKiBmcm9tIHNhbGUgd2hlcmUgeWVhcj0yMDEyIGFuZCBtYXJrZXQ9J+S4nCciKSAgDQogICAj6K+t5Y+l54m554K577yM5YWI5oq95Y+W5YWo5bGA5pWw5o2u77yM54S25ZCO5YaN5omn6KGM5bGA6YOo6YCJ5oupICANCiAgICPlrZfnrKbljZXlvJXlj7fvvIzliIforrAgIA0KICANCiPlr7nooYzov5vooYzmjpLluo8qLyAgDQpzcWxkZigic2VsZWN0IHllYXIsbWFya2V0LHNhbGUscHJvZml0ICANCiAgICAgIGZyb20gc2FsZSAgDQogICAgICBvcmRlciBieSB5ZWFyIikgIA0KYGBgDQrmlbDmja7nrZvpgInvvJpzcWxkZuWPr+S7peaJp+ihjOmAieaLqeihqOS4reaMh+WumuaMh+agh+OAgea7oei2s+adoeS7tueahOihjO+8iOazqOaEj++8muaKveWPlua7oei2s+adoeS7tueahOihjOeahOWtl+espuaXtu+8jOWtl+espuWei+mcgOimgeeUqOWNleW8leWPt++8ie+8jOivreazlee7k+aehOaYr++8mg0Kc2VsZWN0ICDmjIfmoIflkI3np7AgZnJvbSDmlbDmja7pm4Ygd2hlcmUg5p+Q5oyH5qCHPeadoeS7tiAgDQoNCuaOkuW6j29yZGVy77ya5oyJ54Wn5p+Q5Y+Y6YeP5o6S5bqP77yM6K+t5rOV57uT5p6E77yaDQpzZWxlY3Qg5oyH5qCH5ZCN56ew77yI5oiW5YWo6YOo77yJZnJvbSDmlbDmja7pm4Ygb3JkZXIgYnkg5oyH5qCH5ZCN56ewDQoNCiMjIyAz44CB5pWw5o2u5ZCI5bm24oCU4oCU57q15ZCR6L+e5o6lDQoNCuaVsOaNruWQiOW5tueahOaWueazleW+iOWkmu+8jOWfuuacrOWHveaVsOWMheS4reaciW1lcmdl44CBY2JpbmQvcmJpbmTvvIzku6Xlj4rkuIDkupvkuJPkuJrnmoTljIVwbHly44CBZHBseXLjgIFkYXRhLnRhYmxl562JDQpyYmluZC9jYmluZOWvueaVsOaNruWQiOW5tueahOimgeaxguavlOi+g+S4peagvO+8muWQiOW5tueahOWPmOmHj+WQjeW/hemhu+S4gOiHtO+8m+aVsOaNruetiemVv++8m+aMh+agh+mhuuW6j+W/hemhu+S4gOiHtOOAgg0Kc3FsZGblsLHkuI3kvJrov5nkuYjoi5vliLvvvIzlubblj4LnhafkuobkuIDkupvpm4blkIjmn6Xor6LnmoTmlrnms5UNCg0KIyMjI++8iDHvvInlubbigJTigJR1bmlvbg0KYGBge3J9DQpVTklPTjM8LXNxbGRmKCJzZWxlY3QgKiBmcm9tIG9uZSB1bmlvbiBzZWxlY3QgKiBmcm9tIHR3byIpICANCiAgICPlkIjlubblkI7ljrvph40scmJpbmTmmK/lkIjlubblkI7kuI3ljrvph40gIA0KVU5JT05fYWxsPC1zcWxkZigic2VsZWN0ICogZnJvbSBvbmUgdW5pb24gYWxsIHNlbGVjdCAqIGZyb20gdHdvIikgIA0KICAgI2FsbOWPr+S7peaUr+aMge+8jOWQiOW5tuWQjuS4jeWOu+mHjSAgDQpgYGANCnJiaW5kL2NiaW5k5piv5bCG5pWw5o2u5LiA6IKh6ISR5a2Q5YWo6YOo5biW5Zyo5LiA6LW377yM5Y+q5ZCI5bm25LiN5Y676YeN77ybc3FsZGbliJnlj6/ku6Xoh6rooYzpgInmi6nvvIzor63ms5Xnu5PmnoTvvJoNCnNlbGVjdCAqIGZyb20g5pWw5o2u6ZuGMSB1bmlvbiAoYWxsKSBzZWxlY3QgKiBmcm9tIOaVsOaNrumbhjINCuWFtuS4reeahGFsbOS7o+ihqOS4jeWOu+mHje+8jOS4gOi1t+WKoOi/m+adpeOAgg0KDQojIyMj77yIMu+8ieW3rihleGNlcHQp44CB5Lqk77yISW50ZXJzZWN077yJDQoNCuW3rumbhuWwseaYr+aJvuS4pOS4quaVsOaNrumbhueahOS4jeWQjOeahOaVsOaNru+8jOiAjOS4lOaYr+aVsOaNrumbhjHkuK3vvIzljrvmjonph43lpI3nmoTmlbDlgLzvvJvlubbpm4bliJnmmK/kuKTkuKrmlbDmja7pm4bnmoTph43lkIjvvIjljrvph43lj6/ku6XnlKjvvInkuYvlpITjgIINCg0KYGBge3J9DQojRVhDRVBUX+W3rumbhiAgDQogICAj5LiN5a2Y5ZyoYWxsICANCkVYQ0VQVDwtc3FsZGYoInNlbGVjdCAqIGZyb20gb25lIEVYQ0VQVCBzZWxlY3QgKiBmcm9tIHR3byIpICANCiAgDQojSU5URVJTRUNU4oCU4oCU5Lqk6ZuGICANCklOVEVSU0VDVDwtc3FsZGYoInNlbGVjdCAqIGZyb20gb25lIElOVEVSU0VDVCBzZWxlY3QgKiBmcm9tIHR3byIpICANCmBgYA0KDQojIyMgNOOAgeaVsOaNruWQiOW5tuKAlOKAlOaoquWQkei/nuaOpQ0KDQrmqKrlkJHov57mjqXmnInkuInnp43nsbvlnovvvJrkuqTlj4nov57mjqXvvIjnrJvljaHlsJTkuZjnp6/vvIzlpKfkubHngpbmiYDmnInmlbDmja7ph43mlrDmjpLliJfnu4TlkIjlkIjlubbotbfmnaXvvIzkuIDoiKzlnKjlrp7pqozorr7orqHmtonlj4rlhajmjpLliJfnmoTml7blgJnlj6/ku6Xlvojlpb3lnLDkvb/nlKjvvInjgIHlhoXov57mjqXvvIjnrZvpgInljLnphY3liLDnmoTmlbDmja7vvInjgIHlpJbov57mjqXjgIINCg0KIyMjIyDvvIgx77yJ5YaF6L+e5o6l4oCU4oCU5Yy56YWN5Yiw5a6M5YWo5LiA6Ie055qEDQpgYGB7cn0NCmlubmVyMTwtIG1lcmdlKHRhYmxlMSwgdGFibGUyLCBieSA9ICJpZCIsIGFsbCA9IEYpO2lubmVyMSAgI+etm+mAieebuOWQjGlk77yMRuS4uuWPqui/nuaOpeWMuemFjeWIsOeahO+8jFTkuLrmsqHmnInljLnphY3liLDnmoTotYvlgLxOQSAgDQojICAgaWQgYSBiICANCiMgMSAgMyBjIGUgIA0KaW5uZXIyPC1pbm5lcl9qb2luKHRhYmxlMSwgdGFibGUyLCBieSA9ICJpZCIpO2lubmVyMiAgICPkuI5tZXJnZeWujOWFqOS4gOiHtCAgDQojICAgaWQgYSBiICANCiMgMSAgMyBjIGUgIA0KaW5uZXIzPC1zcWxkZigic2VsZWN0ICogZnJvbSB0YWJsZTEgYXMgYSBpbm5lciBqb2luIHRhYmxlMiBhcyBiIG9uIGEuaWQ9Yi5pZCIpO2lubmVyMyAj5YaF6L+e5o6lICANCiMgICBpZCBhIGlkIGIgIA0KIyAxICAzIGMgIDMgZSAgDQppbm5lcjQ8LXNxbGRmKCJzZWxlY3QgKiBmcm9tIHRhYmxlMSBhcyBhLHRhYmxlMiBhcyBiIHdoZXJlIGEuaWQ9Yi5pZCIpO2lubmVyNCAgI+esm+WNoeWwlOenryAgDQojICAgaWQgYSBpZCBiICANCiMgMSAgMyBjICAzIGUgIA0KYGBgDQrljLnphY3liLDlrozlhajkuIDoh7TjgIHnm7jlkIznmoTvvIzln7rnoYDljIVtZXJnZT1kcGx5cueahGlubmVyX2pvaW49c3FsZGbljIXkuK3nmoRpbm5lciBqb2lu44CC5b2T54S26L6T5Ye657uT5p6c5Lit77yMc3FsZGbkuK3kvJrouablh7rmnaXkuKTkuKppZO+8jOWPr+S7pei/m+ihjOWIoOmZpOOAgg0K5YW25Litc3Fs5YyF5Lit55qESW5uZXIgam9pbuivreazlee7k+aehOS4uu+8mg0Kc2VsZWN0ICogZnJvbSDmlbDmja7pm4YxIGFzIGEgICAgICBpbm5lciBqb2luICAg5pWw5o2u6ZuGMiAgYXMgYiBvbiBhLuaMh+agh+WQjeensD1iLuaMh+agh+WQjeensCANCg0KIyMjI++8iDLvvInlt6bov57mjqXigJTigJTmnIDmnInmlYjvvIzku6XmlbDmja7pm4Yx5Li65YeG77yM5Yy56YWN5Yiw55qEK+S4uuWMuemFjeWIsOeahA0KYGBge3J9DQpsZWZ0MTwtIG1lcmdlKHRhYmxlMSwgdGFibGUyLCBieSA9ICJpZCIsIGFsbC54ID0gVFJVRSk7bGVmdDEgICPmjInnhadpZOi/nuaOpeaJgOacieS/oeaBr+WMheaLrOi/m+WOuyAgDQojICAgaWQgYSAgICBiICANCiMgMSAgMSBhIDxOQT4gIA0KIyAyICAyIGIgPE5BPiAgDQojIDMgIDMgYyAgICBlIA0KDQpsZWZ0MjwtbGVmdF9qb2luKHRhYmxlMSwgdGFibGUyLCBieSA9ICJpZCIpO2xlZnQyICANCiMgICBpZCBhICAgIGIgIA0KIyAxICAxIGEgPE5BPiAgDQojIDIgIDIgYiA8TkE+ICANCiMgMyAgMyBjICAgIGUgIA0KDQpsZWZ0Mzwtc3FsZGYoInNlbGVjdCAqIGZyb20gdGFibGUxIGFzIGEgbGVmdCBqb2luIHRhYmxlMiBhcyBiIG9uIGEuaWQ9Yi5pZCIpO2xlZnQzICANCiMgICBpZCBhIGlkICAgIGIgIA0KIyAxICAxIGEgTkEgPE5BPiAgDQojIDIgIDIgYiBOQSA8TkE+ICANCiMgMyAgMyBjICAzICAgIGUgDQpgYGANCuWfuuehgOWMheS4reeahG1lcmdl77yM5b2TYWxsPUblsLHmmK/lhoXov57mjqXvvIxhbGw9VOWwseaYr+WFqOi/nuaOpe+8jGFsbC54PVTlsLHmmK/lt6bogZTnu5PvvIxhbGwueT1U5bCx5piv5Y+z6L+e5o6l77yIbWVyZ2Xlh73mlbDpppbpgIlhbGw9VCzlhajov57mjqXvvInvvJtkcGx5cuS4reeahGxlZnRfam9pbuS5n+WPr+S7peWunueOsG1lcmdlLGFsbD1U5pWI5p6cDQpzcWxkZuS4reeahOivreazlee7k+aehO+8mg0Kc2VsZWN0ICogZnJvbSDmlbDmja7pm4YxIGFzIGEgbGVmdCBqb2luIOaVsOaNrumbhjJhcyBiIG9uIGEu5oyH5qCH5ZCN56ewPWIu5oyH5qCH5ZCN56ewDQoNCiMjIyA144CB5pWw5o2u5Y676YeNDQoNCuino+ivu++8mmRpc3RpbmN06LefdW5pcXVl5Y676YeN5Yqf6IO95beu5LiN5aSa77yM6K+t5rOV54m554K577yaDQpzZWxlY3QgRElTVElOQ1Qg5oyH5qCH5ZCN56ewIGZyb20g5pWw5o2u6ZuGDQoNCmBgYHtyfQ0KI+WIoOmZpOmHjeWkjeeahOihjCovICANCnNxbGRmKCJzZWxlY3QgRElTVElOQ1QgIHllYXIgZnJvbSBzYWxlIikgIA0KYGBgDQoNCiMjIyA2LiDmibnph4/or7vlhaXmlofku7blpLnkuK3nmoTmlofmnKzmlofku7bvvIgqLnR4dO+8ie+8jOW5tueUn+aIkOWQjeensOOAgeaWh+aho+aVsOaNruahhg0KDQrku6PnoIHmgJ3ot6/vvJrlhYjpgY3ljobmlofku7blpLnkuK3miYDmnIl0eHTvvIhsaXN0LmZpbGVz77yJ44CB5p6E6YCg5paH5pys6K+75YWl5Ye95pWw77yIcmVhZC50eHTvvInjgIHmib7mlofmnKzlkI3lrZfvvIhsaXN0LmZpbGVz77yJ44CB54S25ZCO55Sf5oiQ5pWw5o2u5qGG77yIYXMuZGF0YS5mcmFtZe+8iQ0KDQpgYGB7cn0NCiMj5om56YeP6K+75YWldHh05paH5Lu277yM5bm25bCG5paH5pys5pS+5YWl5ZCM5LiA5Liq5pWw5o2u5qGGICANCnJldmlld3BhdGggPC0gIkY6L1Lor63oqIAvUuivreiogOS4juaWh+acrOaMluaOmC/mg4XmhJ/liIbmnpAv5pWw5o2uL3Jhd2RhdGEvcmV2aWV3X3NlbnRpbWVudC90cmFpbjIiICANCmNvbXBsZXRlcGF0aCA8LSBsaXN0LmZpbGVzKHJldmlld3BhdGgsIHBhdHRlcm4gPSAiKi50eHQkIiwgZnVsbC5uYW1lcyA9IFRSVUUpICANCiAgDQojIyMjIyPmibnph4/or7vlhaXmlofmnKwgIA0KcmVhZC50eHQgPC0gZnVuY3Rpb24oeCkgeyAgDQogIGRlcyA8LSByZWFkTGluZXMoeCkgICAgICAgICAgICAgICAgICAgI+avj+ihjOivu+WPliAgDQogIHJldHVybihwYXN0ZShkZXMsIGNvbGxhcHNlID0gIiIpKSAgICAgI+ayoeaciXJldHVybuWImei/lOWbnuacgOWQjuS4gOS4quWHveaVsOWvueixoSAgDQp9ICANCnJldmlldyA8LSBsYXBwbHkoY29tcGxldGVwYXRoLCByZWFkLnR4dCkgIA0KI+WmguaenOeoi+W6j+itpuWRiu+8jOi/memHjOWPr+iDveaYr+mDqOWIhuaWh+S7tuacgOWQjuS4gOihjOayoeacieaNouihjOWvvOiHtO+8jOS4jeeUqOaLheW/g+OAgiAgDQogIA0KIyMjIyMjbGlzdOi9rOaVsOaNruahhiAgDQpkb2NuYW1lIDwtIGxpc3QuZmlsZXMocmV2aWV3cGF0aCwgcGF0dGVybiA9ICIqLnR4dCQiKSAgDQpyZXZpZXdkZiA8LSBhcy5kYXRhLmZyYW1lKGNiaW5kKGRvY25hbWUsIHVubGlzdChyZXZpZXcpKSwgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgc3RyaW5nc0FzRmFjdG9ycyA9IEYpICAgDQojIOWFtuS4re+8jGxpc3QuZmlsZXPvvIjvvInkuK3vvIxmdWxsLm5hbWVzPVTku6Pooajor7vlhaXmlofku7Yr5L+h5oGv77yMZnVsbC5uYW1lcz1G5Luj6KGo6K+75YWl5paH5Lu25ZCN5a2X44CCDQpgYGANCg0KDQoNCg0KIyMgMy4gbG9hZCBwYWNrYWdlIGluIGEgc2FmZSB3YXkNCg0KYGBge3IgbG9hZCBwYWNrYWdlIGluIGEgc2FmZSB3YXl9DQojIExvYWQgZGF0YS50YWJsZSBwYWNrYWdlDQppZighc3VwcHJlc3NXYXJuaW5ncyhyZXF1aXJlKCdkYXRhLnRhYmxlJykpKQ0Kew0KICAgIGluc3RhbGwucGFja2FnZXMoJ2RhdGEudGFibGUnKQ0KICAgIHJlcXVpcmUoJ2RhdGEudGFibGUnKQ0KfQ0KDQpgYGANCg0KDQoNCg0KIyMgNC4gSW5wdXQgRGF0YSAtPiBtYW51cHVsYXRpb24gLT4gT3V0cHV0IGRhdGENCg0K5pWw5o2u5aSE55CG55qE5rWB56iL77ya5pWw5o2u6L6T5YWlLT4g5aSE55CGIC0+IOe7k+aenOi+k+WHug0KDQpgYGB7ciBkdXBsaWNhdGVkIGV4MX0NCiMgUmVjb3JkIEN1cnJlbnQgRGF0ZSBhbmQgdGltZQ0KRGF0ZVRpbWUgPC0gZm9ybWF0KFN5cy50aW1lKCksICIlWS0lbS0lZCAlSC0lTS0lUyIpDQoNCiMgbG9hZCBzdG9wX3dvcmQgZmlsZSwgb25lIGxpbmUgYXMgb25lIGVsZW1lbnQsIA0KIyBjaGFyYWN0ZXIgdmVjdG9yDQpzdG9wX3dvcmRfZmlsZV9wYXRoIDwtIGZpbGUuY2hvb3NlKCkNCiMgc3RvcF93b3JkX2ZpbGVfcGF0aA0KIyBbMV0gIkU6XFwwMy1Eb3dubG9hZFxcR2l0aHViXFx4aWFuZ3hpbmc5OC5naXRodWIuaW9cXFJfTGVhcm5pbmdcXHN0b3Bfd29yZHNfZHVwbGljYXRlZF9ub191bmlxdWUudXRmOC50eHQiDQoNCnN0b3Bfd29yZF9maWxlX2RpcmVjdG9yeSA8LSBkaXJuYW1lKHN0b3Bfd29yZF9maWxlX3BhdGgpDQojIHN0b3Bfd29yZF9maWxlX2RpcmVjdG9yeQ0KIyBbMV0gIkU6LzAzLURvd25sb2FkL0dpdGh1Yi94aWFuZ3hpbmc5OC5naXRodWIuaW8vUl9MZWFybmluZyINCg0KIyBzY2FuIGFuZCByZWFkIHN0b3Bfd29yZHNfZHVwbGljYXRlZF9ub191bmlxdWUudXRmOC50eHQNCnN0b3Bfd29yZCA8LSBzY2FuKHN0b3Bfd29yZF9maWxlX3BhdGgsIHNlcD0iXG4iLCB3aGF0PSIiLCBlbmNvZGluZz0iVVRGLTgiKQ0KDQojIOWIoOaOieaJgOacieWIl+S4iumDvemHjeWkjeeahOW5tui1i+WAvOe7meaWsOeahOWPmOmHjw0KIyAoc3RvcF93b3JkX3VuaXF1ZSA8LSBzdG9wX3dvcmRbIWR1cGxpY2F0ZWQoc3RvcF93b3JkKV0pDQpzdG9wX3dvcmRfdW5pcXVlIDwtIHN0b3Bfd29yZFshZHVwbGljYXRlZChzdG9wX3dvcmQpXQ0KDQojIOS/neWtmOWOu+mZpOmHjeWkjeWQjueahOWQkemHj+WIsOaWsOeahOaWh+S7tg0KbmV3X2ZpbGVfbmFtZSA8LSBwYXN0ZSgic3RvcF93b3Jkc191bmlxdWUtIixEYXRlVGltZSwiLnV0ZjgudHh0Iiwgc2VwID0gIiIpDQoNCiMgVVRGOCBFbmNvZGluZw0Kd3JpdGVMaW5lcyhzdG9wX3dvcmRfdW5pcXVlLCAiRTovMDMtRG93bmxvYWQvR2l0aHViL3N0b3Bfd29yZF91bmlxdWUudHh0IiwgdXNlQnl0ZXM9VCkNCg0KcmVhZExpbmVzKCJFOi8wMy1Eb3dubG9hZC9HaXRodWIvc3RvcF93b3JkX3VuaXF1ZS50eHQiLCBlbmNvZGluZz0iVVRGLTgiKQ0KYGBgDQoNCiMjIOeUqFLor63oqIDliIbmnpDogYrlpKnorrDlvZUNCg0KPiBbaHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMTIwMTE3N10oaHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMTIwMTE3NykNCg0KIyMjIOaVsOaNruWkhOeQhg0KYGBge3J9DQpsaWJyYXJ5KFJTUUxpdGUpDQpsaWJyYXJ5KHBseXIpDQojIC8v6L+e5o6lU1FMaXRsZeaVsOaNruW6kw0KDQpjb25uIDwtIGRiQ29ubmVjdChkYkRyaXZlcigiU1FMaXRlIiksIGRibmFtZT0iTU0uc3FsaXRlIikNCiMgLy/orr7nva7ov57mjqXlh73mlbANCg0KZG9Db3VudFF1ZXJ5IDwtIGZ1bmN0aW9uKGNvbm4sdGFibGUpew0KICAgIHF1ZXJ5IDwtIHBhc3RlKCJTRUxFQ1QgQ09VTlQobmFtZSkgRlJPTSAiLHRhYmxlLHNlcCA9IiIpDQogICAgdCA8LSBkYkdldFF1ZXJ5KGNvbm4scXVlcnkpICAgIHJldHVybih0KQ0KfQ0KDQp0YWJsZV9uYW1lIDwtIGRiR2V0UXVlcnkoY29ubiwgIlNFTEVDVCBuYW1lIEZST00gc3FsaXRlX21hc3RlciB3aGVyZSB0eXBlPSd0YWJsZScgYW5kIG5hbWUgbGlrZSAnQ2hhdF8lJyBvcmRlciBieSBuYW1lIikNCiMgLy/lj5blh7rmiYDmnInooajlkI3vvIznlLHkuo7kuI3kvJrpgY3ljobvvIzlj6rog73mjInnhafmnIDnrKjnmoTlip7ms5XvvIzorqHnrpflk6rkuKrooajnmoTmlbDmja7ph4/mnIDlpJrvvIzljbPmmK/lkoznlLfnm4blj4vnmoTogYrlpKnorrDlvZXooajvvIzlpoLmnpzkuI3mmK/lkoznlLfnm4blj4vnmoTogYrlpKnooajvvIzmraTmlrnms5XmmK/mib7kuI3lh7rmnaUNCg0KY291bnRzIDwtIG51bWVyaWMoMClmb3IgKGkgaW4gMTpsZW5ndGgodGFibGVfbmFtZSkgKXsNCiAgICBjb3VudCA8LSBkb0NvdW50UXVlcnkoY29ubix0YWJsZV9uYW1lW2ldKQ0KICAgIGNvdW50c1tpXSA8LWNvdW50W1sxXV0gICAgDQp9DQojIC8v6K6h566X6KGo6ZW/DQp0YWJsZV9jb3VudCA8LSBkYXRhLmZyYW1lKGNvdW50cykNCg0KIyAvL+aOkuW6j++8jOihqOmVv+acgOWkp+eahOihqO+8jOWNs+aYr+WSjOeUt+aci+WPi+eahOiBiuWkqeiusOW9leihqA0KdGFibGVfY291bnQxIDwtIHRhYmxlX2NvdW50W29yZGVyKHRhYmxlX2NvdW50JGNvdW50cyxkZWNyZWFzaW5nPVRSVUUpLF0NCg0KIyAvL+aPkOWPluWIsOiBiuWkqeWGheWuuQ0KbWVzc2FnZSA8LSBkYkdldFF1ZXJ5KGNvbm4sICJTRUxFQ1QgKiBGUk9NIENoYXRfWFhYWFhYWFhYWCAiKQ0KYGBgDQoNCiMjIyDmlofmnKzliIbmnpANCg0KYGBge3J9DQpsaWJyYXJ5KGppZWJhUkQpDQpsaWJyYXJ5KGppZWJhUikNCg0KbGlicmFyeShkYXRhLnRhYmxlKQ0KbGlicmFyeShzdHJpbmdyKQ0KDQpjdXR0ZXI9d29ya2VyKCkNCndlY2hhdF9jb250ZW50ID1tZXNzYWdlDQp3ZWNoYXRfY29udGVudCA8LSBhcy5jaGFyYWN0ZXIod2VjaGF0X3dvcmQkVjEpDQojIC8vL+eUseS6juaVsOaNrumHj+i/h+Wkp++8jOS4jeefpemBk+S4uuS7gOS5iOWPqueUqGN1dGVy5peg5rOV5oqK5omA5pyJ5pWw5o2u6YO96YGN5Y6G5Yiw77yM5peg5aWI5Y+q6IO95YaZ566A5Y2V55qE5Ye95pWw5q+P5LiA5p2h6YGN5Y6G5YiH5YmyDQoNCmN1dF95IDwtIGZ1bmN0aW9uICh5KXsNCiAgICB5PWdzdWIoIlxcLiIsIiIseSkNCiAgICBjdXR0ZXJbYXMuY2hhcmFjdGVyKHkpXQ0KfQ0KIyAvL+mBjeWOhuWIh+WJsuavj+S4gOadoeiBiuWkqeWGheWuuQ0KeS5vdXQgPC0gc2FwcGx5KHdlY2hhdF9jb250ZW50LGN1dF95LFVTRS5OQU1FUyA9IEYpDQoNCiMgLy/ljrvpmaTmlbDlrZcNCnkub3V0PC1nc3ViKCJbMC05XSs/IiwiIix5Lm91dCkNCg0KIyAvLyDljrvpmaTlgZzmraLor40NCnMgPC0gcmVhZC5jc3YoJ3N0b3B3b3Jkcy5jc3YnKQ0Kc3RvcHdvcmRzIDwtIGMoTlVMTClmb3IgKGkgaW4gMTpsZW5ndGgocykpDQp7DQogICAgc3RvcHdvcmRzW2ldIDwtIHNbaV0NCn0NCnkub3V0IDwtIGZpbHRlcl9zZWdtZW50KHkub3V0LHN0b3B3b3JkcykNCg0KIyAvL+mBjeWOhuiuoeaVsOWQjuWGjee7hOWQiOWIsOS4gOi1tw0Kd2VjaGF0X2NvbnRlbnRfd2hvbGUgPC0gYXMuYXJyYXkoMCkNCmZvciAoaSBpbiAxOmxlbmd0aCh5Lm91dCkpew0KICAgIHRhYmxlX2NvbnRlbnQgPC0gY291bnQoeS5vdXRbW2ldXSkNCiAgICB3ZWNoYXRfY29udGVudF93aG9sZSA8LSByYmluZCh3ZWNoYXRfY29udGVudF93aG9sZSx0YWJsZV9jb250ZW50KQ0KfQ0KDQojIC8v5pyA5ZCO6K6h5pWwDQp3ZWNoYXRfY29udGVudF93aG9sZSA8LSBjb3VudCh3ZWNoYXRfY29udGVudF93aG9sZSwieCIpDQoNCiMgLy/ku47lpKfliLDlsI/mjpLliJcNCndlY2hhdF9jb250ZW50X3dob2xlPC0gd2VjaGF0X2NvbnRlbnRfd2hvbGVbb3JkZXIod2VjaGF0X2NvbnRlbnRfd2hvbGUkZnJlcSxkZWNyZWFzaW5nPVRSVUUpLF0NCg0KIyAvL+aPkOWPluWJjTEwMDDmnaHlgZror43kupENCndlY2hhdF93b3Jkc19maW5hbCA8LSB0YWJsZV9jb250ZW50X3dob2xlX2ZpbmFsWzE6MTAwMCxdDQoNCiMgLy/popzoibLku47nsonliLDnmb3lh73mlbANCmNsdWZ1bmMgPC0gY29sb3JSYW1wUGFsZXR0ZShjKCJwaW5rIiwid2hpdGUiKSkNCg0KIyAvL+W9ouaIkOivjeS6kSANCndvcmRjbG91ZDIod2VjaGF0X3dvcmRzX2ZpbmFsLCBmb250RmFtaWx5ID0gIkhZVGFuZ1RhbmdDdVRpSiIsIGZpZ1BhdGggPSAibG92ZS5qcGciLCBzaXplPTEsIGNvbG9yPWNsdWZ1bmMoMTAwMCkpDQpgYGANCg0KDQojIyMgZGJDb25uZWN0DQpgYGB7cn0NCmNvbiA8LSBEQkk6OmRiQ29ubmVjdChvZGJjOjpvZGJjKCksDQogICAgICAgICAgICAgICAgICAgICAgICBEcml2ZXIgICAgPSAiU1FMIFNlcnZlciIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgU2VydmVyICAgID0gW015IFNlcnZlcl0sDQogICAgICAgICAgICAgICAgICAgICAgICBEYXRhYmFzZSAgPSBbTXkgRGF0YWJhc2VdLA0KICAgICAgICAgICAgICAgICAgICAgICAgVUlEICAgICAgID0gW015IFVzZXIgSURdLA0KICAgICAgICAgICAgICAgICAgICAgICAgUFdEICAgICAgID0gW015IFBhc3N3b3JkXSwNCiAgICAgICAgICAgICAgICAgICAgICAgIFBvcnQgICAgICA9IDE0MzMpDQoNCmBgYA0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2sgUl9TUUxfUk9EQkNfU1FMREYiDQphdXRob3I6ICJTdG9uZV9Ib3UiDQpkYXRlOiAiYHIgU3lzLkRhdGUoKWAiDQpvdXRwdXQ6DQogIGh0bWxfbm90ZWJvb2s6DQogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMNCiAgICB0aGVtZTogcmVhZGFibGUNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogNA0KLS0tDQoNCiMgUiBOb3RlYm9vayBSX1NRTF9ST0RCQ19TUUxERg0KDQojIyAxLiBST0RCQw0KDQpDUkFOIOmHjOmdoueahOWMhSBST0RCQyDmj5DkvpvkuoYgT0RCQ+eahOiuv+mXruaOpeWPo++8mg0KDQoqIG9kYmNDb25uZWN0IOaIliBvZGJjRHJpdmVyQ29ubmVjdO+8iOWcqFdpbmRvd3Plm77lvaLljJbnlYzpnaLkuIvvvIzlj6/ku6XpgJrov4flr7nor53moYbpgInmi6nmlbDmja7lupPvvIkg5Y+v5Lul5omT5byA5LiA5Liq6L+e5o6l77yM6L+U5Zue5LiA5Liq55So5LqO6ZqP5ZCO5pWw5o2u5bqT6K6/6Zeu55qE5o6n5Yi277yIaGFuZGxl77yJ44CCIOaJk+WNsOS4gOS4qui/nuaOpeS8mue7meWHuk9EQkPov57mjqXnmoTkuIDkupvnu4boioLvvIzogIzosIPnlKggb2RiY0dldEluZm8g5Lya57uZ5Ye65a6i5oi356uv5ZKM5pyN5Yqh5Zmo55qE5LiA5Lqb57uG6IqC5L+h5oGv44CCDQoNCiog5Zyo5LiA5Liq6L+e5o6l5Lit55qE6KGo55qE57uG6IqC5L+h5oGv5Y+v5Lul6YCa6L+H5Ye95pWwIHNxbFRhYmxlcyDojrflvpfjgIINCg0KKiDlh73mlbAgc3FsU2F2ZSDkvJrmioogUiDmlbDmja7moYblpI3liLbliLDkuIDkuKrmlbDmja7lupPnmoTooajkuK3vvIwg6ICM5Ye95pWwIHNxbEZldGNoIOS8muaKiuS4gOS4quaVsOaNruW6k+S4reeahOihqOaLt+i0neWIsCDkuIDkuKogUiDnmoTmlbDmja7moYbkuK3jgIINCg0KKiDpgJrov4dzcWxRdWVyeei/m+ihjOafpeivou+8jOi/lOWbnueahOe7k+aenOaYryBSIOeahOaVsOaNruahhuOAgu+8iHNxbENvcHnmiorkuIDkuKog5p+l6K+i5Lyg57uZ5pWw5o2u5bqT77yM6L+U5Zue57uT5p6c5Zyo5pWw5o2u5bqT5Lit5Lul6KGo55qE5pa55byP5L+d5a2Y44CC77yJIOS4gOenjeavlOi+g+WlveeahOaOp+WItuaWueW8j+aYr+mmluWFiOiwg+eUqCBvZGJjUXVlcnnvvIwg54S25ZCOIOeUqCBzcWxHZXRSZXN1bHRzIOWPluW+l+e7k+aenOOAguWQjuiAheWPr+eUqOS6juS4gOS4quW+queOr+S4rSDmr4/mrKHojrflvpfmnInpmZDooYzvvIzlsLHlpoLlh73mlbAgc3FsRmV0Y2hNb3JlIOeahOWKn+iDveOAgg0KDQoqIOi/nuaOpeWPr+S7pemAmui/h+iwg+eUqOWHveaVsCBjbG9zZSDmiJYgb2RiY0Nsb3NlIOadpeWFs+mXreOAgiDmsqHmnIkgUiDlr7nosaHlr7nlupTmiJbkuI3lnKggUiDkvJror53lkI7pnaLnmoTov57mjqXkuZ/lj6/ku6XosIPnlKjov5nkuKTkuKrlh73mlbDmnaXlhbPpl63vvIwg5L2G5Lya5pyJ6K2m5ZGK5L+h5oGv44CCDQoNCg0KIyMjIDEuUuS4reWuieijhVJPREJD5YyFDQoNCmluc3RhbGwucGFja2FnZXMoIlJPREJDIikNCg0KIyMjIDIu5ZyoV2luZG93c+ezu+e7n+S4i+WuieijhU15U1FM55qET0RCQ+mpseWKqA0KDQrms6jmhI/ljLrliIYzMuS9jeWSjDY05L2N54mI5pys77ybDQoNCmh0dHA6Ly9kZXYubXlzcWwuY29tL2Rvd25sb2Fkcy9jb25uZWN0b3Ivb2RiYw0KDQojIyMgMy5PREJD55qE57O757uf6YWN572uDQoNCuWcqFdpbmRvd3Pmk43kvZzns7vnu5/kuIvvvJrmjqfliLbpnaLmnb8tPueuoeeQhuW3peWFty0+5pWw5o2u5rqQ77yIT0RCQ++8iS0+5Y+M5Ye7LT7mt7vliqAtPumAieS4rW15c3FsIE9EQkMgZHJpdmVy5LiA6aG5DQoNCuWhq+WGme+8mmRhdGEgc291cmNlIG5hbWUg5LiA6aG55aGr5YWl5L2g6KaB5L2/55So55qE5ZCN5a2X77yM6Ieq5bex6ZqP5L6/5ZG95ZCN77yM5L6L5aaC77yabXlzcWxfZGF0YTsNCg0KZGVzY3JpcHRpb27kuIDpobnpmo/mhI/loavlhpnvvIzkvovlpoJteWRhdGENCg0KVENQL0lQIFNlcnZlciDloavlhplNeVNRTOaVsOaNruW6k+eahElQ5Zyw5Z2A77yM5aaC77yaMTI3LjAuMC4xDQoNCnVzZXIg5aGr5YaZ5L2g55qEbXlzcWznlKjmiLflkI0NCg0KcGFzc3dvcmQg5aGr5YaZ5L2g55qEbXlzcWzlr4bnoIENCg0K54S25ZCO5pWw5o2u5bqT6YeM5Lya5Ye6546w5L2g55qEbXlzcWzph4znmoTmiYDmnInmlbDmja7lupPvvIzpgInmi6nkuIDkuKrmlbDmja7lupPjgIINCg0KIyMjIDQuIOaJk+W8gFLnjq/looPmtYvor5UNCg0KYGBge3J9DQojUuS7o+eggSDmn6Xor6LnpLrkvosNCmxpYnJhcnkoUk9EQkMpDQpjaGFubmVsPC1vZGJjQ29ubmVjdCgibXlzcWxfZGF0YSIsIHVpZD0iYmFpZHVfaW5kZXgiLCBwd2Q9IioqKioqKiIpICAjIDY0IOS9jU9EQkPvvIwqKioq5pu/5o2i5Li66L6T5YWl5a+G56CBDQpzcWxLZXl3b3JkID0gIlNFTEVDVCAqIEZST00gQkFJRFVfSU5ERVggV0hFUkUgY29sX2tleXdvcmQgPSAn5p2O5piT5bOwJyBBTkQgY29sX2RhdGU+PScyMDE1LTAxLTAxJyINCmRhdGFLZXl3b3JkPXNxbFF1ZXJ5KGNoYW5uZWwsc3FsS2V5d29yZCkNCmtleXdvcmRMaXN0PC1kYXRhS2V5d29yZFtbImNvbF9rZXl3b3JkIl1dDQprZXl3b3JkTGlzdDwtYXMuY2hhcmFjdGVyKGtleXdvcmRMaXN0KQ0KYGBgDQoNCg0KDQojIyMgNS4gUk9EQkPmk43kvZxNeVNRTOaVsOaNruW6k+eahOWFtuS7luWHveaVsA0KDQpgYGB7cn0NCiMg5Ye95pWw5ZCN56ewICMg5Ye95pWw5o+P6L+wDQpvZGJjQ29ubmVjdChkc24sIHVpZD0iIiwgcHdkPSIiKSAgICMg5bu656uL5bm25omT5byA6L+e5o6lIA0Kc3FsRmV0Y2goY2hhbm5lbCwgc3FsdGFibGUpICAjIOS7juaVsOaNruW6k+ivu+WPluaVsOaNruihqO+8jOW5tui/lOWbnuS4gOS4quaVsOaNruahhuWvueixoQ0Kc3FsUXVlcnkoY2hhbm5lbCwgcXVlcnkpICAgIyDlkJHmlbDmja7lupPmj5DkuqTkuIDkuKrmn6Xor6LvvIzlubbov5Tlm57nu5PmnpwNCnNxbFNhdmUoY2hhbm5lbCwgbXlkZiwgdGFibGVuYW1lID0gc3F0YWJsZSwgYXBwZW5kID0gRkFMU0UpICAjIOWwhuS4gOS4quaVsOaNruahhuWGmeWFpeaIluabtOaWsChhcHBlbmQ9VHJ1ZSnliLDmlbDmja7lupMNCnNxbERyb3AoY2hhbm5lbCwgc3F0YWJsZSkgICMg5LuO5pWw5o2u5bqT5Yig6Zmk5LiA5Liq6KGoDQpzcWxDbGVhcihjaGFubmVsLCBzcXRhYmxlKSAgICMg5Yig6Zmk6KGo5Lit55qE5YaF5a65DQpzcWxUYWJsZXMoY2hhbm5lbCkgICMg6L+U5Zue5pWw5o2u5bqT5Lit6KGo55qE5L+h5oGvDQpzcWxDb2x1bW5zKGNoYW5uZWwsIHNxdGFibGUpICAjIOi/lOWbnuaVsOaNruW6k+ihqHNxdGFibGXliJfnmoTkv6Hmga8NCmNsb3NlKGNoYW5uZWwpICAjIOWFs+mXrei/nuaOpQ0KYGBgDQoNCiMjIyA2LiBST0RCQyBFeGFtcGxlDQoNCg0KYGBge3IgUk9EQkN9DQojIGh0dHA6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI2OTE3MzgzL2FydGljbGUvZGV0YWlscy81MTEwMDczNg0KI+WuieijhVJPREJD5YyFICANCmluc3RhbGwucGFja2FnZXMoIlJPREJDIikgICANCmxpYnJhcnkoUk9EQkMpICANCm15Y29uPC1vZGJjQ29ubmVjdCgibXlkc24iLHVpZD0icm9vdCIscHdkPSIwODI0MDhTUSIpICANCiPpgJrov4fkuIDkuKrmlbDmja7mupDlkI3np7DvvIhteWRzbu+8ieWSjOeUqOaIt+WQje+8iHVzZXLvvInku6Xlj4rlr4bnoIHvvIhycGx577yM5aaC5p6c5rKh5pyJ6K6+572u77yM5Y+v5Lul55u05o6l5b+955Wl77yJ5omT5byA5LqG5LiA5LiqT0RCQ+aVsOaNruW6k+i/nuaOpSAgDQogIA0KZGF0YShVU0FycmVzdHMpICANCiPlsIZS6Ieq5bim55qEIlVTQXJyZXN0cyLooajlhpnov5vmlbDmja7lupPph4wgIA0Kc3FsU2F2ZShteWNvbixVU0FycmVzdHMscm93bmFtZXM9InN0YXRlIixhZGRQSz1UUlVFKSAgDQoj5bCG5pWw5o2u5rWB5L+d5a2Y77yM6L+Z5pe25omT5byAU1FMIFNlcnZlcuWwseWPr+S7peeci+WIsOaWsOW7uueahFVTQXJyZXN0c+ihqOS6hiAgDQpybShVU0FycmVzdHMpICANCiPmuIXpmaRVU0FycmVzdHPlj5jph48gIA0KDQoNCnNxbFRhYmxlcyhteWNvbik7I+afpeeci+aVsOaNruS4reeahOihqCANCmRhdGE8LXNxbEZldGNoKG15Y29uLCJVU0FycmVzdHMiKSMg5p+l55yL6KGo55qE5YaF5a6577yM5a2Y5Yiw5pWw5o2u5qGG6YeMIA0KICANCnNxbEZldGNoKG15Y29uLCAiVVNBcnJlc3RzIiAscm93bmFtZXM9InN0YXRlIikgIA0KI+i+k+WHulVTQXJyZXN0c+ihqOS4reeahOWGheWuuSAgDQpzcWxRdWVyeShteWNvbiwic2VsZWN0ICogZnJvbSBVU0FycmVzdHMiKSAgDQoj5a+5VVNBcnJlc3Rz6KGo5omn6KGM5LqGU1FM6K+t5Y+lc2VsZWN077yM5bm25bCG57uT5p6c6L6T5Ye6ICANCiAgDQpzcWxEcm9wKGNoYW5uZWwsIlVTQXJyZXN0cyIpICANCiPliKDpmaRVU0FycmVzdHPooaggIA0KY2xvc2UobXljb24pICANCiPlhbPpl63ov57mjqUgIA0KYGBgDQoNCiMjIyBzcWxTYXZl5Ye95pWwDQoNCmBgYHtyIHNxbFNhdmV9DQpzcWxTYXZlKGNoYW5uZWwsIGRhdCwgdGFibGVuYW1lID0gTlVMTCwgYXBwZW5kID0gRkFMU0UsICANCiAgICAgICAgcm93bmFtZXMgPSBUUlVFLCBjb2xuYW1lcyA9IEZBTFNFLCB2ZXJib3NlID0gRkFMU0UsICANCiAgICAgICAgc2FmZXIgPSBUUlVFLCBhZGRQSyA9IEZBTFNFLCB0eXBlSW5mbywgdmFyVHlwZXMsICANCiAgICAgICAgZmFzdCA9IFRSVUUsIHRlc3QgPSBGQUxTRSwgbmFzdHJpbmcgPSBOVUxMKSAgDQpgYGANCg0K5YW25Lit6L+Z5Liq5Ye95pWw55qE5L2/55So6L+Y5piv5b6I6K6y56m255qE77yM5Y+C5pWw55qE6K6k6K+G5b6I6YeN6KaB44CCDQoNCmFwcGVuZOS7o+ihqOaYr+WQpui/veWKoO+8jOm7mOiupOS4jei/veWKoO+8jOWmguaenOS4gOW8oOW3sue7j+acieaVsOaNrueahOihqO+8jOWwseWPr+S7peeUqGFwcGVuZOi/veWKoOaWsOeahOaVsOaNru+8jOmcgOimgeWQjOagt+eahGNvbHVtbu+8jOS4gOiIrOW8gOS4qui/meS4quWwseihjOOAgg0KDQpyb3duYW1lc++8jOWPr+S7peaYr+mAu+i+keWAvO+8jOS5n+WPr+S7peaYr+Wtl+espuWei+OAgg0KDQpjb2xuYW1lc++8jOWIl+WQje+8mw0KDQp2ZXJib3Nl77yM6buY6K6k5Li6RkFMU0XvvIzmmK/lkKblj5HpgIHor63lj6XliLBS55WM6Z2i77yM5aaC5p6cVFJVRe+8jOmCo+S5iOavj+adoeS4iuS8oOaVsOaNruWwseS8muWHuueOsOWcqOWRveS7pOagj+ebruiHtOS5i+S4reOAgg0KDQphZGRQSyzmmK/lkKblsIZyb3duYW1lc+aMh+WumuS4uuS4u+mUruOAgg0KDQojIyMgc3FsVXBkYXRl5Ye95pWwDQpgYGB7ciBzcWxVcGRhdGV9DQpzcWxVcGRhdGUoY2hhbm5lbCwgZGF0LCB0YWJsZW5hbWUgPSBOVUxMLCBpbmRleCA9IE5VTEwsICANCiAgICAgICAgICB2ZXJib3NlID0gRkFMU0UsIHRlc3QgPSBGQUxTRSwgbmFzdHJpbmcgPSBOVUxMLCAgDQogICAgICAgICAgZmFzdCA9IFRSVUUpICANCmBgYA0KDQojIyBSIENvbm5lY3Qgd2l0aCBNWVNRTA0KDQpgYGB7cn0NCiMgbG9hZCBwYWNrYWdlcw0KDQpsaWJyYXJ5KCJSTXlTUUwiKQ0KbGlicmFyeSgibWFncml0dHIiKQ0KDQojIGNvbm5lY3QNCmNvbm4gPC0gZGJDb25uZWN0KA0KICBNeVNRTCgpLCPmlbDmja7lupPlubPlj7DnsbvlnosNCiAgZGJuYW1lID0gInRlc3QyIiwj5pWw5o2u5bqT5ZCN56ewDQogIHVzZXJuYW1lID0gInJvb3QiLCPnmbvlvZXotKblj7fvvIhNeVNRTOWIneWni+WuieijheaXtuiuvue9rueahOi0puWPt++8iQ0KICBwYXNzd29yZCA9ICIwODI0MDhTUeKAnCwj55m75b2V5a+G56CB77yITXlTUUzliJ3lp4vlronoo4Xml7borr7nva7nmoTlr4bnoIENCiAgaG9zdD0iMTI3LjAuMC4xIiwj5Zyw5Z2ADQogIHBvcnQ9MzMwNiAgICPnq6/lj6Plj7cNCikNCg0KY29ubiA8LSBkYkNvbm5lY3QoTXlTUUwoKSwgZGJuYW1lID0gInRlc3QyIiwgdXNlcm5hbWU9InJvb3QiLCBwYXNzd29yZD0iMDgyNDA4U1EiLCBob3N0PSIxMjcuMC4wLjEiLCBwb3J0PTMzMDYpDQoNCnN1bW1hcnkoY29ubikgICAgICAj5p+l55yL6L+e5o6l5L+h5oGv77yaDQojIDxNeVNRTENvbm5lY3Rpb246MCwwPg0KIyAgIFVzZXI6ICAgcm9vdCANCiMgICBIb3N0OiAgIDEyNy4wLjAuMSANCiMgICBEYm5hbWU6IHRlc3QyIA0KIyAgIENvbm5lY3Rpb24gdHlwZTogMTI3LjAuMC4xIHZpYSBUQ1AvSVAgDQojIA0KIyBSZXN1bHRzOg0KDQoNCiPmn6XnnIvov57mjqXor6bnu4bkv6Hmga/vvIjliJfooajlvaLlvI/vvIkNCmRiR2V0SW5mbyhjb25uKSAgICANCiMgJGhvc3QNCiMgWzFdICIxMjcuMC4wLjEiDQojIA0KIyAkdXNlcg0KIyBbMV0gInJvb3QiDQojIA0KIyAkZGJuYW1lDQojIFsxXSAidGVzdDIiDQojIA0KIyAkY29uVHlwZQ0KIyBbMV0gIjEyNy4wLjAuMSB2aWEgVENQL0lQIg0KIyANCiMgJHNlcnZlclZlcnNpb24NCiMgWzFdICIxMC4zLjgtTWFyaWFEQiINCiMgDQojICRwcm90b2NvbFZlcnNpb24NCiMgWzFdIDEwDQojIA0KIyAkdGhyZWFkSWQNCiMgWzFdIDgNCiMgDQojICRyc0lkDQojIGxpc3QoKQ0KDQoNCmRiTGlzdFRhYmxlcyhjb25uKSAj5p+l55yL6K+l5pWw5o2u5bqT6L+e5o6l5YaF55qE6KGo5L+h5oGvDQojIFsxXSAidXNhcnJlc3RzIg0KDQpkYkRpc2Nvbm5lY3QoY29ubikgI+WFs+mXrei/nuaOpSjmlbDmja7pgJrorq/lrozmiJDkuYvlkI7lho3ov5DooYwpDQojIA0KIyBS6K+t6KiA5LiOTXlTUUzmlbDmja7lupPor7vlhpnvvJoNCihteWRhdGEgPC0gaXJpcykNCmRiV3JpdGVUYWJsZSgNCiAgICAgICAgICBjb25uID0gY29ubiwgICAgICAj6L+e5o6l5ZCN56ewDQogICAgICAgICAgbmFtZSA9ICJteWRhdGEiLCAgI+aMh+WumuWvvOWFpeWQjueahOihqOWQjQ0KICAgICAgICAgIHZhbHVlID0gaXJpcywgICAgICPmjIflrpropoHlr7zlhaXnmoRS5YaF5a2Y56m66Ze05pWw5o2u5a+56LGhDQogICAgICAgICAgcm93Lm5hbWVzID0gRkFMU0UgI+W/veeVpeihjOWQjQ0KICAgICAgICAgICkgICAgICANCiPlhpnooagNCmRiTGlzdFRhYmxlcyhjb25uKQ0KIyAnYmlydGhkYXlzJyAnY29tcGFueScgJ2RhdGFhbmFseXN0JyAnZm9vZHJhbmtpbmcnICdmb29kdHlwZXMnICdteWRhdGEnICdvcmRlcmluZm8nICdzdHJfZGF0ZScgJ3VzZXJpbmZvJw0KDQpteWRhdGExIDwtIGRiUmVhZFRhYmxlKCANCiAgICAgICAgIGNvbm4gPSBjb25uLCAgICAgICAj6L+e5o6l5ZCN56ewDQogICAgICAgICBuYW1lID0gIm15ZGF0YSIgICAgI+aVsOaNruW6k+S4reeahOihqOWQjQ0KICAgICAgICAgICkgICAgICAgICAgICAgICAgICPor7vooaggIA0KaGVhZChteWRhdGExLDEwKSANCg0KDQpkYldyaXRlVGFibGUoY29ubiwgInRhYmxlbmFtZSIsIGRhdGEpICPlhpnooagNCmRiUmVhZFRhYmxlKGNvbm4sICJ0YWJsZW5hbWUiKSAgI+ivu+ihqA0KZGJEaXNjb25uZWN0KGNvbm4pICPlhbPpl63ov57mjqUNCg0KDQojIOS7peS4iuivu+WGmemDveaYr+S4gOasoeaAp+aTjeS9nO+8jOS4jeiDveWcqOivu+WGmeeahOWQjOaXtuaJp+ihjOadoeS7tuetm+mAieetieatpemqpO+8jOmAmuW4uOaIkeS7rOmcgOimgeS9v+eUqOafpeivouaWueW8j+adpeiOt+WPluaMh+WumuadoeS7tueahOaVsOaNruW5tui/lOWbnuaVsOaNruahhuOAgg0KcmVzdWx0MSA8LSBkYlNlbmRRdWVyeShjb25uID0gY29ubiwgIA0KICAgICAgICAgICAgICAgICAgICAgICBzdGF0ZW1lbnQgPSAiU0VMRUNUICogZnJvbSBteWRhdGEgd2hlcmUgYFNlcGFsLkxlbmd0aGAgYmV0d2VlbiA0IGFuZCA1IA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhbmQgU3BlY2llcyA9ICdzZXRvc2EnICINCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI+afpeivouadoeS7tg0KICAgICAgICAgICAgICAgICAgICAgICkgJT4lIGRiRmV0Y2goKQ0KICAgICAgICAgICAgICAgICAgICAgICPlsIbmn6Xor6Lnu5Pmnpzov5Tlm57mlbDmja7moYYNCmhlYWQocmVzdWx0MSwxMCkNCmRiQ2xlYXJSZXN1bHQocmVzdWx0MSkgICAj5riF6Zmk5p+l6K+iKOmHiuaUvuWGheWtmCkNCg0KIyDov5nkuIDlj6XmuIXpmaTnmoTmmK/mn6Xor6LvvIzljbPkuIrkuIDlj6XkuK3nmoRkYlNlbmRRdWVyeemDqOWIhu+8iOW4g+WMheWQq+WQjumdoueahGRiRmV0Y2jvvIzmiJHlj6rmmK/kuLrkuobmlrnkvr/kuIDmrKHmgKfovpPlh7rkuobvvInjgIINCg0KZGJSZW1vdmVUYWJsZShjb25uLCJteWRhdGEiKSAgICPliKDpmaTooaggICAgDQogZGJMaXN0VGFibGVzKGNvbm4pICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCidiaXJ0aGRheXMnICdjb21wYW55JyAnZGF0YWFuYWx5c3QnICdmb29kcmFua2luZycgJ2Zvb2R0eXBlcycgJ29yZGVyaW5mbycgJ3N0cl9kYXRlJyAndXNlcmluZm8nDQpkYkRpc2Nvbm5lY3QoY29ubikgICAgICAgICAgICAgI+aWreW8gOi/nuaOpQ0KYGBgDQoNCg0KIyMgMi4gc3FsZGbljIUNCg0KIyMjIDHjgIFTUUzln7rmnKznibnngrkNCg0KU1FM6K+t5Y+l6K+t5Y+l54m554K577ya5YWI5YWo5bGA6YCJ5oup77yM5YaN5bGA6YOo6YCJ5oupDQpTZWxlY3QgKiBmcm9tIHNhbGUgd2hlcmUgeWVhcj0yMDEwIGFuZCAuLi4NCg0Kd2hlcmXlkI7pnaLlj6/ku6XmjqXlvojlpJrvvIzmnInmr5TovoPov5DnrpfnrKbvvIznrpfmlbDov5DnrpfnrKbvvIzpgLvovpHov5DnrpfnrKbjgIINCuavlOi+g+i/kOeul+espuWPt++8mj0o562J5LqO77yM5LiN5piv5Y+M5byV5Y+3Ke+8myE977yI5LiN562J5LqO77yJ77ybPu+8jDzvvIw+Pe+8jDw9DQrnrpfmlbDov5DnrpfnrKbvvJoq77yML++8jCvvvIwtDQrpgLvovpHov5DnrpfnrKbvvJomJihhbmQs5LiOKe+8jCB8fO+8iG9y77yM5oiW77yJIO+8jCHvvIgsbm906Z2e77yJDQoNCiMjIyAy44CB5pWw5o2u562b6YCJ5LiO5o6S5bqPDQoNCuaVsOaNruetm+mAieWPr+S7peaciXN1YnNldOWHveaVsO+8jOaOkuW6j+aciW9yZGVyL3NvcnTlh73mlbANCg0KYGBge3Igc3FsZGZ9DQpsaWJyYXJ5KHNxbGRmKQ0KDQpzcWxkZigic2VsZWN0ICogZnJvbSB0X2RhdGEiLGRibmFtZT0idGVzdCIsZHJ2PSJNeVNRTCIsdXNlcj0icm9vdCIscGFzc3dvcmQ9IiIsaG9zdD0iMTI3LjAuMC4xIixwb3J0PTMzMDYpDQoNCiMg6L+e5o6l5ZCO77yMU1FM5p+l6K+i6K+t5Y+l5ZCO6Z2i55qE5Y+C5pWw5Z2H5Y+v55yB55Wl77yM5L6L5aaC77yaDQpzcWxkZigic2VsZWN0ICogZnJvbSB0X2RhdGEgbGltaXQgMCwxMCIpDQoNCiPpgInmi6nooajkuK3mjIflrprliJcqLyAgDQpzcWxkZigic2VsZWN0IHllYXIsbWFya2V0LHNhbGUscHJvZml0IGZyb20gc2FsZSIpICANCiAgDQoj6YCJ5oup5ruh6Laz5p2h5Lu255qE6KGMKi8gIA0Kc3FsZGYoInNlbGVjdCAqIGZyb20gc2FsZSB3aGVyZSB5ZWFyPTIwMTIgYW5kIG1hcmtldD0n5LicJyIpICANCiAgICPor63lj6XnibnngrnvvIzlhYjmir3lj5blhajlsYDmlbDmja7vvIznhLblkI7lho3miafooYzlsYDpg6jpgInmi6kgIA0KICAgI+Wtl+espuWNleW8leWPt++8jOWIh+iusCAgDQogIA0KI+WvueihjOi/m+ihjOaOkuW6jyovICANCnNxbGRmKCJzZWxlY3QgeWVhcixtYXJrZXQsc2FsZSxwcm9maXQgIA0KICAgICAgZnJvbSBzYWxlICANCiAgICAgIG9yZGVyIGJ5IHllYXIiKSAgDQpgYGANCuaVsOaNruetm+mAie+8mnNxbGRm5Y+v5Lul5omn6KGM6YCJ5oup6KGo5Lit5oyH5a6a5oyH5qCH44CB5ruh6Laz5p2h5Lu255qE6KGM77yI5rOo5oSP77ya5oq95Y+W5ruh6Laz5p2h5Lu255qE6KGM55qE5a2X56ym5pe277yM5a2X56ym5Z6L6ZyA6KaB55So5Y2V5byV5Y+377yJ77yM6K+t5rOV57uT5p6E5piv77yaDQpzZWxlY3QgIOaMh+agh+WQjeensCBmcm9tIOaVsOaNrumbhiB3aGVyZSDmn5DmjIfmoIc95p2h5Lu2ICANCg0K5o6S5bqPb3JkZXLvvJrmjInnhafmn5Dlj5jph4/mjpLluo/vvIzor63ms5Xnu5PmnoTvvJoNCnNlbGVjdCDmjIfmoIflkI3np7DvvIjmiJblhajpg6jvvIlmcm9tIOaVsOaNrumbhiBvcmRlciBieSDmjIfmoIflkI3np7ANCg0KIyMjIDPjgIHmlbDmja7lkIjlubbigJTigJTnurXlkJHov57mjqUNCg0K5pWw5o2u5ZCI5bm255qE5pa55rOV5b6I5aSa77yM5Z+65pys5Ye95pWw5YyF5Lit5pyJbWVyZ2XjgIFjYmluZC9yYmluZO+8jOS7peWPiuS4gOS6m+S4k+S4mueahOWMhXBseXLjgIFkcGx5cuOAgWRhdGEudGFibGXnrYkNCnJiaW5kL2NiaW5k5a+55pWw5o2u5ZCI5bm255qE6KaB5rGC5q+U6L6D5Lil5qC877ya5ZCI5bm255qE5Y+Y6YeP5ZCN5b+F6aG75LiA6Ie077yb5pWw5o2u562J6ZW/77yb5oyH5qCH6aG65bqP5b+F6aG75LiA6Ie044CCDQpzcWxkZuWwseS4jeS8mui/meS5iOiLm+WIu++8jOW5tuWPgueFp+S6huS4gOS6m+mbhuWQiOafpeivoueahOaWueazlQ0KDQojIyMj77yIMe+8ieW5tuKAlOKAlHVuaW9uDQpgYGB7cn0NClVOSU9OMzwtc3FsZGYoInNlbGVjdCAqIGZyb20gb25lIHVuaW9uIHNlbGVjdCAqIGZyb20gdHdvIikgIA0KICAgI+WQiOW5tuWQjuWOu+mHjSxyYmluZOaYr+WQiOW5tuWQjuS4jeWOu+mHjSAgDQpVTklPTl9hbGw8LXNxbGRmKCJzZWxlY3QgKiBmcm9tIG9uZSB1bmlvbiBhbGwgc2VsZWN0ICogZnJvbSB0d28iKSAgDQogICAjYWxs5Y+v5Lul5pSv5oyB77yM5ZCI5bm25ZCO5LiN5Y676YeNICANCmBgYA0KcmJpbmQvY2JpbmTmmK/lsIbmlbDmja7kuIDogqHohJHlrZDlhajpg6jluJblnKjkuIDotbfvvIzlj6rlkIjlubbkuI3ljrvph43vvJtzcWxkZuWImeWPr+S7peiHquihjOmAieaLqe+8jOivreazlee7k+aehO+8mg0Kc2VsZWN0ICogZnJvbSDmlbDmja7pm4YxIHVuaW9uIChhbGwpIHNlbGVjdCAqIGZyb20g5pWw5o2u6ZuGMg0K5YW25Lit55qEYWxs5Luj6KGo5LiN5Y676YeN77yM5LiA6LW35Yqg6L+b5p2l44CCDQoNCiMjIyPvvIgy77yJ5beuKGV4Y2VwdCnjgIHkuqTvvIhJbnRlcnNlY3TvvIkNCg0K5beu6ZuG5bCx5piv5om+5Lik5Liq5pWw5o2u6ZuG55qE5LiN5ZCM55qE5pWw5o2u77yM6ICM5LiU5piv5pWw5o2u6ZuGMeS4re+8jOWOu+aOiemHjeWkjeeahOaVsOWAvO+8m+W5tumbhuWImeaYr+S4pOS4quaVsOaNrumbhueahOmHjeWQiO+8iOWOu+mHjeWPr+S7peeUqO+8ieS5i+WkhOOAgg0KDQpgYGB7cn0NCiNFWENFUFRf5beu6ZuGICANCiAgICPkuI3lrZjlnKhhbGwgIA0KRVhDRVBUPC1zcWxkZigic2VsZWN0ICogZnJvbSBvbmUgRVhDRVBUIHNlbGVjdCAqIGZyb20gdHdvIikgIA0KICANCiNJTlRFUlNFQ1TigJTigJTkuqTpm4YgIA0KSU5URVJTRUNUPC1zcWxkZigic2VsZWN0ICogZnJvbSBvbmUgSU5URVJTRUNUIHNlbGVjdCAqIGZyb20gdHdvIikgIA0KYGBgDQoNCiMjIyA044CB5pWw5o2u5ZCI5bm24oCU4oCU5qiq5ZCR6L+e5o6lDQoNCuaoquWQkei/nuaOpeacieS4ieenjeexu+Wei++8muS6pOWPiei/nuaOpe+8iOesm+WNoeWwlOS5mOenr++8jOWkp+S5seeCluaJgOacieaVsOaNrumHjeaWsOaOkuWIl+e7hOWQiOWQiOW5tui1t+adpe+8jOS4gOiIrOWcqOWunumqjOiuvuiuoea2ieWPiuWFqOaOkuWIl+eahOaXtuWAmeWPr+S7peW+iOWlveWcsOS9v+eUqO+8ieOAgeWGhei/nuaOpe+8iOetm+mAieWMuemFjeWIsOeahOaVsOaNru+8ieOAgeWklui/nuaOpeOAgg0KDQojIyMjIO+8iDHvvInlhoXov57mjqXigJTigJTljLnphY3liLDlrozlhajkuIDoh7TnmoQNCmBgYHtyfQ0KaW5uZXIxPC0gbWVyZ2UodGFibGUxLCB0YWJsZTIsIGJ5ID0gImlkIiwgYWxsID0gRik7aW5uZXIxICAj562b6YCJ55u45ZCMaWTvvIxG5Li65Y+q6L+e5o6l5Yy56YWN5Yiw55qE77yMVOS4uuayoeacieWMuemFjeWIsOeahOi1i+WAvE5BICANCiMgICBpZCBhIGIgIA0KIyAxICAzIGMgZSAgDQppbm5lcjI8LWlubmVyX2pvaW4odGFibGUxLCB0YWJsZTIsIGJ5ID0gImlkIik7aW5uZXIyICAgI+S4jm1lcmdl5a6M5YWo5LiA6Ie0ICANCiMgICBpZCBhIGIgIA0KIyAxICAzIGMgZSAgDQppbm5lcjM8LXNxbGRmKCJzZWxlY3QgKiBmcm9tIHRhYmxlMSBhcyBhIGlubmVyIGpvaW4gdGFibGUyIGFzIGIgb24gYS5pZD1iLmlkIik7aW5uZXIzICPlhoXov57mjqUgIA0KIyAgIGlkIGEgaWQgYiAgDQojIDEgIDMgYyAgMyBlICANCmlubmVyNDwtc3FsZGYoInNlbGVjdCAqIGZyb20gdGFibGUxIGFzIGEsdGFibGUyIGFzIGIgd2hlcmUgYS5pZD1iLmlkIik7aW5uZXI0ICAj56yb5Y2h5bCU56evICANCiMgICBpZCBhIGlkIGIgIA0KIyAxICAzIGMgIDMgZSAgDQpgYGANCuWMuemFjeWIsOWujOWFqOS4gOiHtOOAgeebuOWQjOeahO+8jOWfuuehgOWMhW1lcmdlPWRwbHly55qEaW5uZXJfam9pbj1zcWxkZuWMheS4reeahGlubmVyIGpvaW7jgILlvZPnhLbovpPlh7rnu5PmnpzkuK3vvIxzcWxkZuS4reS8mui5puWHuuadpeS4pOS4qmlk77yM5Y+v5Lul6L+b6KGM5Yig6Zmk44CCDQrlhbbkuK1zcWzljIXkuK3nmoRJbm5lciBqb2lu6K+t5rOV57uT5p6E5Li677yaDQpzZWxlY3QgKiBmcm9tIOaVsOaNrumbhjEgYXMgYSAgICAgIGlubmVyIGpvaW4gICDmlbDmja7pm4YyICBhcyBiIG9uIGEu5oyH5qCH5ZCN56ewPWIu5oyH5qCH5ZCN56ewIA0KDQojIyMj77yIMu+8ieW3pui/nuaOpeKAlOKAlOacgOacieaViO+8jOS7peaVsOaNrumbhjHkuLrlh4bvvIzljLnphY3liLDnmoQr5Li65Yy56YWN5Yiw55qEDQpgYGB7cn0NCmxlZnQxPC0gbWVyZ2UodGFibGUxLCB0YWJsZTIsIGJ5ID0gImlkIiwgYWxsLnggPSBUUlVFKTtsZWZ0MSAgI+aMieeFp2lk6L+e5o6l5omA5pyJ5L+h5oGv5YyF5ous6L+b5Y67ICANCiMgICBpZCBhICAgIGIgIA0KIyAxICAxIGEgPE5BPiAgDQojIDIgIDIgYiA8TkE+ICANCiMgMyAgMyBjICAgIGUgDQoNCmxlZnQyPC1sZWZ0X2pvaW4odGFibGUxLCB0YWJsZTIsIGJ5ID0gImlkIik7bGVmdDIgIA0KIyAgIGlkIGEgICAgYiAgDQojIDEgIDEgYSA8TkE+ICANCiMgMiAgMiBiIDxOQT4gIA0KIyAzICAzIGMgICAgZSAgDQoNCmxlZnQzPC1zcWxkZigic2VsZWN0ICogZnJvbSB0YWJsZTEgYXMgYSBsZWZ0IGpvaW4gdGFibGUyIGFzIGIgb24gYS5pZD1iLmlkIik7bGVmdDMgIA0KIyAgIGlkIGEgaWQgICAgYiAgDQojIDEgIDEgYSBOQSA8TkE+ICANCiMgMiAgMiBiIE5BIDxOQT4gIA0KIyAzICAzIGMgIDMgICAgZSANCmBgYA0K5Z+656GA5YyF5Lit55qEbWVyZ2XvvIzlvZNhbGw9RuWwseaYr+WGhei/nuaOpe+8jGFsbD1U5bCx5piv5YWo6L+e5o6l77yMYWxsLng9VOWwseaYr+W3puiBlOe7k++8jGFsbC55PVTlsLHmmK/lj7Pov57mjqXvvIhtZXJnZeWHveaVsOmmlumAiWFsbD1ULOWFqOi/nuaOpe+8ie+8m2RwbHly5Lit55qEbGVmdF9qb2lu5Lmf5Y+v5Lul5a6e546wbWVyZ2UsYWxsPVTmlYjmnpwNCnNxbGRm5Lit55qE6K+t5rOV57uT5p6E77yaDQpzZWxlY3QgKiBmcm9tIOaVsOaNrumbhjEgYXMgYSBsZWZ0IGpvaW4g5pWw5o2u6ZuGMmFzIGIgb24gYS7mjIfmoIflkI3np7A9Yi7mjIfmoIflkI3np7ANCg0KIyMjIDXjgIHmlbDmja7ljrvph40NCg0K6Kej6K+777yaZGlzdGluY3Tot591bmlxdWXljrvph43lip/og73lt67kuI3lpJrvvIzor63ms5XnibnngrnvvJoNCnNlbGVjdCBESVNUSU5DVCDmjIfmoIflkI3np7AgZnJvbSDmlbDmja7pm4YNCg0KYGBge3J9DQoj5Yig6Zmk6YeN5aSN55qE6KGMKi8gIA0Kc3FsZGYoInNlbGVjdCBESVNUSU5DVCAgeWVhciBmcm9tIHNhbGUiKSAgDQpgYGANCg0KIyMjIDYuIOaJuemHj+ivu+WFpeaWh+S7tuWkueS4reeahOaWh+acrOaWh+S7tu+8iCoudHh077yJ77yM5bm255Sf5oiQ5ZCN56ew44CB5paH5qGj5pWw5o2u5qGGDQoNCuS7o+eggeaAnei3r++8muWFiOmBjeWOhuaWh+S7tuWkueS4reaJgOaciXR4dO+8iGxpc3QuZmlsZXPvvInjgIHmnoTpgKDmlofmnKzor7vlhaXlh73mlbDvvIhyZWFkLnR4dO+8ieOAgeaJvuaWh+acrOWQjeWtl++8iGxpc3QuZmlsZXPvvInjgIHnhLblkI7nlJ/miJDmlbDmja7moYbvvIhhcy5kYXRhLmZyYW1l77yJDQoNCmBgYHtyfQ0KIyPmibnph4/or7vlhaV0eHTmlofku7bvvIzlubblsIbmlofmnKzmlL7lhaXlkIzkuIDkuKrmlbDmja7moYYgIA0KcmV2aWV3cGF0aCA8LSAiRjovUuivreiogC9S6K+t6KiA5LiO5paH5pys5oyW5o6YL+aDheaEn+WIhuaekC/mlbDmja4vcmF3ZGF0YS9yZXZpZXdfc2VudGltZW50L3RyYWluMiIgIA0KY29tcGxldGVwYXRoIDwtIGxpc3QuZmlsZXMocmV2aWV3cGF0aCwgcGF0dGVybiA9ICIqLnR4dCQiLCBmdWxsLm5hbWVzID0gVFJVRSkgIA0KICANCiMjIyMjI+aJuemHj+ivu+WFpeaWh+acrCAgDQpyZWFkLnR4dCA8LSBmdW5jdGlvbih4KSB7ICANCiAgZGVzIDwtIHJlYWRMaW5lcyh4KSAgICAgICAgICAgICAgICAgICAj5q+P6KGM6K+75Y+WICANCiAgcmV0dXJuKHBhc3RlKGRlcywgY29sbGFwc2UgPSAiIikpICAgICAj5rKh5pyJcmV0dXJu5YiZ6L+U5Zue5pyA5ZCO5LiA5Liq5Ye95pWw5a+56LGhICANCn0gIA0KcmV2aWV3IDwtIGxhcHBseShjb21wbGV0ZXBhdGgsIHJlYWQudHh0KSAgDQoj5aaC5p6c56iL5bqP6K2m5ZGK77yM6L+Z6YeM5Y+v6IO95piv6YOo5YiG5paH5Lu25pyA5ZCO5LiA6KGM5rKh5pyJ5o2i6KGM5a+86Ie077yM5LiN55So5ouF5b+D44CCICANCiAgDQojIyMjIyNsaXN06L2s5pWw5o2u5qGGICANCmRvY25hbWUgPC0gbGlzdC5maWxlcyhyZXZpZXdwYXRoLCBwYXR0ZXJuID0gIioudHh0JCIpICANCnJldmlld2RmIDwtIGFzLmRhdGEuZnJhbWUoY2JpbmQoZG9jbmFtZSwgdW5saXN0KHJldmlldykpLCAgIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJpbmdzQXNGYWN0b3JzID0gRikgICANCiMg5YW25Lit77yMbGlzdC5maWxlc++8iO+8ieS4re+8jGZ1bGwubmFtZXM9VOS7o+ihqOivu+WFpeaWh+S7tivkv6Hmga/vvIxmdWxsLm5hbWVzPUbku6Pooajor7vlhaXmlofku7blkI3lrZfjgIINCmBgYA0KDQoNCg0KDQojIyAzLiBsb2FkIHBhY2thZ2UgaW4gYSBzYWZlIHdheQ0KDQpgYGB7ciBsb2FkIHBhY2thZ2UgaW4gYSBzYWZlIHdheX0NCiMgTG9hZCBkYXRhLnRhYmxlIHBhY2thZ2UNCmlmKCFzdXBwcmVzc1dhcm5pbmdzKHJlcXVpcmUoJ2RhdGEudGFibGUnKSkpDQp7DQogICAgaW5zdGFsbC5wYWNrYWdlcygnZGF0YS50YWJsZScpDQogICAgcmVxdWlyZSgnZGF0YS50YWJsZScpDQp9DQoNCmBgYA0KDQoNCg0KDQojIyA0LiBJbnB1dCBEYXRhIC0+IG1hbnVwdWxhdGlvbiAtPiBPdXRwdXQgZGF0YQ0KDQrmlbDmja7lpITnkIbnmoTmtYHnqIvvvJrmlbDmja7ovpPlhaUtPiDlpITnkIYgLT4g57uT5p6c6L6T5Ye6DQoNCmBgYHtyIGR1cGxpY2F0ZWQgZXgxfQ0KIyBSZWNvcmQgQ3VycmVudCBEYXRlIGFuZCB0aW1lDQpEYXRlVGltZSA8LSBmb3JtYXQoU3lzLnRpbWUoKSwgIiVZLSVtLSVkICVILSVNLSVTIikNCg0KIyBsb2FkIHN0b3Bfd29yZCBmaWxlLCBvbmUgbGluZSBhcyBvbmUgZWxlbWVudCwgDQojIGNoYXJhY3RlciB2ZWN0b3INCnN0b3Bfd29yZF9maWxlX3BhdGggPC0gZmlsZS5jaG9vc2UoKQ0KIyBzdG9wX3dvcmRfZmlsZV9wYXRoDQojIFsxXSAiRTpcXDAzLURvd25sb2FkXFxHaXRodWJcXHhpYW5neGluZzk4LmdpdGh1Yi5pb1xcUl9MZWFybmluZ1xcc3RvcF93b3Jkc19kdXBsaWNhdGVkX25vX3VuaXF1ZS51dGY4LnR4dCINCg0Kc3RvcF93b3JkX2ZpbGVfZGlyZWN0b3J5IDwtIGRpcm5hbWUoc3RvcF93b3JkX2ZpbGVfcGF0aCkNCiMgc3RvcF93b3JkX2ZpbGVfZGlyZWN0b3J5DQojIFsxXSAiRTovMDMtRG93bmxvYWQvR2l0aHViL3hpYW5neGluZzk4LmdpdGh1Yi5pby9SX0xlYXJuaW5nIg0KDQojIHNjYW4gYW5kIHJlYWQgc3RvcF93b3Jkc19kdXBsaWNhdGVkX25vX3VuaXF1ZS51dGY4LnR4dA0Kc3RvcF93b3JkIDwtIHNjYW4oc3RvcF93b3JkX2ZpbGVfcGF0aCwgc2VwPSJcbiIsIHdoYXQ9IiIsIGVuY29kaW5nPSJVVEYtOCIpDQoNCiMg5Yig5o6J5omA5pyJ5YiX5LiK6YO96YeN5aSN55qE5bm26LWL5YC857uZ5paw55qE5Y+Y6YePDQojIChzdG9wX3dvcmRfdW5pcXVlIDwtIHN0b3Bfd29yZFshZHVwbGljYXRlZChzdG9wX3dvcmQpXSkNCnN0b3Bfd29yZF91bmlxdWUgPC0gc3RvcF93b3JkWyFkdXBsaWNhdGVkKHN0b3Bfd29yZCldDQoNCiMg5L+d5a2Y5Y676Zmk6YeN5aSN5ZCO55qE5ZCR6YeP5Yiw5paw55qE5paH5Lu2DQpuZXdfZmlsZV9uYW1lIDwtIHBhc3RlKCJzdG9wX3dvcmRzX3VuaXF1ZS0iLERhdGVUaW1lLCIudXRmOC50eHQiLCBzZXAgPSAiIikNCg0KIyBVVEY4IEVuY29kaW5nDQp3cml0ZUxpbmVzKHN0b3Bfd29yZF91bmlxdWUsICJFOi8wMy1Eb3dubG9hZC9HaXRodWIvc3RvcF93b3JkX3VuaXF1ZS50eHQiLCB1c2VCeXRlcz1UKQ0KDQpyZWFkTGluZXMoIkU6LzAzLURvd25sb2FkL0dpdGh1Yi9zdG9wX3dvcmRfdW5pcXVlLnR4dCIsIGVuY29kaW5nPSJVVEYtOCIpDQpgYGANCg0KIyMg55SoUuivreiogOWIhuaekOiBiuWkqeiusOW9lQ0KDQo+IFtodHRwczovL3podWFubGFuLnpoaWh1LmNvbS9wLzMxMjAxMTc3XShodHRwczovL3podWFubGFuLnpoaWh1LmNvbS9wLzMxMjAxMTc3KQ0KDQojIyMg5pWw5o2u5aSE55CGDQpgYGB7cn0NCmxpYnJhcnkoUlNRTGl0ZSkNCmxpYnJhcnkocGx5cikNCiMgLy/ov57mjqVTUUxpdGxl5pWw5o2u5bqTDQoNCmNvbm4gPC0gZGJDb25uZWN0KGRiRHJpdmVyKCJTUUxpdGUiKSwgZGJuYW1lPSJNTS5zcWxpdGUiKQ0KIyAvL+iuvue9rui/nuaOpeWHveaVsA0KDQpkb0NvdW50UXVlcnkgPC0gZnVuY3Rpb24oY29ubix0YWJsZSl7DQogICAgcXVlcnkgPC0gcGFzdGUoIlNFTEVDVCBDT1VOVChuYW1lKSBGUk9NICIsdGFibGUsc2VwID0iIikNCiAgICB0IDwtIGRiR2V0UXVlcnkoY29ubixxdWVyeSkgICAgcmV0dXJuKHQpDQp9DQoNCnRhYmxlX25hbWUgPC0gZGJHZXRRdWVyeShjb25uLCAiU0VMRUNUIG5hbWUgRlJPTSBzcWxpdGVfbWFzdGVyIHdoZXJlIHR5cGU9J3RhYmxlJyBhbmQgbmFtZSBsaWtlICdDaGF0XyUnIG9yZGVyIGJ5IG5hbWUiKQ0KIyAvL+WPluWHuuaJgOacieihqOWQje+8jOeUseS6juS4jeS8mumBjeWOhu+8jOWPquiDveaMieeFp+acgOesqOeahOWKnuazle+8jOiuoeeul+WTquS4quihqOeahOaVsOaNrumHj+acgOWkmu+8jOWNs+aYr+WSjOeUt+ebhuWPi+eahOiBiuWkqeiusOW9leihqO+8jOWmguaenOS4jeaYr+WSjOeUt+ebhuWPi+eahOiBiuWkqeihqO+8jOatpOaWueazleaYr+aJvuS4jeWHuuadpQ0KDQpjb3VudHMgPC0gbnVtZXJpYygwKWZvciAoaSBpbiAxOmxlbmd0aCh0YWJsZV9uYW1lKSApew0KICAgIGNvdW50IDwtIGRvQ291bnRRdWVyeShjb25uLHRhYmxlX25hbWVbaV0pDQogICAgY291bnRzW2ldIDwtY291bnRbWzFdXSAgICANCn0NCiMgLy/orqHnrpfooajplb8NCnRhYmxlX2NvdW50IDwtIGRhdGEuZnJhbWUoY291bnRzKQ0KDQojIC8v5o6S5bqP77yM6KGo6ZW/5pyA5aSn55qE6KGo77yM5Y2z5piv5ZKM55S35pyL5Y+L55qE6IGK5aSp6K6w5b2V6KGoDQp0YWJsZV9jb3VudDEgPC0gdGFibGVfY291bnRbb3JkZXIodGFibGVfY291bnQkY291bnRzLGRlY3JlYXNpbmc9VFJVRSksXQ0KDQojIC8v5o+Q5Y+W5Yiw6IGK5aSp5YaF5a65DQptZXNzYWdlIDwtIGRiR2V0UXVlcnkoY29ubiwgIlNFTEVDVCAqIEZST00gQ2hhdF9YWFhYWFhYWFhYICIpDQpgYGANCg0KIyMjIOaWh+acrOWIhuaekA0KDQpgYGB7cn0NCmxpYnJhcnkoamllYmFSRCkNCmxpYnJhcnkoamllYmFSKQ0KDQpsaWJyYXJ5KGRhdGEudGFibGUpDQpsaWJyYXJ5KHN0cmluZ3IpDQoNCmN1dHRlcj13b3JrZXIoKQ0Kd2VjaGF0X2NvbnRlbnQgPW1lc3NhZ2UNCndlY2hhdF9jb250ZW50IDwtIGFzLmNoYXJhY3Rlcih3ZWNoYXRfd29yZCRWMSkNCiMgLy8v55Sx5LqO5pWw5o2u6YeP6L+H5aSn77yM5LiN55+l6YGT5Li65LuA5LmI5Y+q55SoY3V0ZXLml6Dms5XmiormiYDmnInmlbDmja7pg73pgY3ljobliLDvvIzml6DlpYjlj6rog73lhpnnroDljZXnmoTlh73mlbDmr4/kuIDmnaHpgY3ljobliIflibINCg0KY3V0X3kgPC0gZnVuY3Rpb24gKHkpew0KICAgIHk9Z3N1YigiXFwuIiwiIix5KQ0KICAgIGN1dHRlclthcy5jaGFyYWN0ZXIoeSldDQp9DQojIC8v6YGN5Y6G5YiH5Ymy5q+P5LiA5p2h6IGK5aSp5YaF5a65DQp5Lm91dCA8LSBzYXBwbHkod2VjaGF0X2NvbnRlbnQsY3V0X3ksVVNFLk5BTUVTID0gRikNCg0KIyAvL+WOu+mZpOaVsOWtlw0KeS5vdXQ8LWdzdWIoIlswLTldKz8iLCIiLHkub3V0KQ0KDQojIC8vIOWOu+mZpOWBnOatouivjQ0KcyA8LSByZWFkLmNzdignc3RvcHdvcmRzLmNzdicpDQpzdG9wd29yZHMgPC0gYyhOVUxMKWZvciAoaSBpbiAxOmxlbmd0aChzKSkNCnsNCiAgICBzdG9wd29yZHNbaV0gPC0gc1tpXQ0KfQ0KeS5vdXQgPC0gZmlsdGVyX3NlZ21lbnQoeS5vdXQsc3RvcHdvcmRzKQ0KDQojIC8v6YGN5Y6G6K6h5pWw5ZCO5YaN57uE5ZCI5Yiw5LiA6LW3DQp3ZWNoYXRfY29udGVudF93aG9sZSA8LSBhcy5hcnJheSgwKQ0KZm9yIChpIGluIDE6bGVuZ3RoKHkub3V0KSl7DQogICAgdGFibGVfY29udGVudCA8LSBjb3VudCh5Lm91dFtbaV1dKQ0KICAgIHdlY2hhdF9jb250ZW50X3dob2xlIDwtIHJiaW5kKHdlY2hhdF9jb250ZW50X3dob2xlLHRhYmxlX2NvbnRlbnQpDQp9DQoNCiMgLy/mnIDlkI7orqHmlbANCndlY2hhdF9jb250ZW50X3dob2xlIDwtIGNvdW50KHdlY2hhdF9jb250ZW50X3dob2xlLCJ4IikNCg0KIyAvL+S7juWkp+WIsOWwj+aOkuWIlw0Kd2VjaGF0X2NvbnRlbnRfd2hvbGU8LSB3ZWNoYXRfY29udGVudF93aG9sZVtvcmRlcih3ZWNoYXRfY29udGVudF93aG9sZSRmcmVxLGRlY3JlYXNpbmc9VFJVRSksXQ0KDQojIC8v5o+Q5Y+W5YmNMTAwMOadoeWBmuivjeS6kQ0Kd2VjaGF0X3dvcmRzX2ZpbmFsIDwtIHRhYmxlX2NvbnRlbnRfd2hvbGVfZmluYWxbMToxMDAwLF0NCg0KIyAvL+minOiJsuS7jueyieWIsOeZveWHveaVsA0KY2x1ZnVuYyA8LSBjb2xvclJhbXBQYWxldHRlKGMoInBpbmsiLCJ3aGl0ZSIpKQ0KDQojIC8v5b2i5oiQ6K+N5LqRIA0Kd29yZGNsb3VkMih3ZWNoYXRfd29yZHNfZmluYWwsIGZvbnRGYW1pbHkgPSAiSFlUYW5nVGFuZ0N1VGlKIiwgZmlnUGF0aCA9ICJsb3ZlLmpwZyIsIHNpemU9MSwgY29sb3I9Y2x1ZnVuYygxMDAwKSkNCmBgYA0KDQoNCiMjIyBkYkNvbm5lY3QNCmBgYHtyfQ0KY29uIDwtIERCSTo6ZGJDb25uZWN0KG9kYmM6Om9kYmMoKSwNCiAgICAgICAgICAgICAgICAgICAgICAgIERyaXZlciAgICA9ICJTUUwgU2VydmVyIiwgDQogICAgICAgICAgICAgICAgICAgICAgICBTZXJ2ZXIgICAgPSBbTXkgU2VydmVyXSwNCiAgICAgICAgICAgICAgICAgICAgICAgIERhdGFiYXNlICA9IFtNeSBEYXRhYmFzZV0sDQogICAgICAgICAgICAgICAgICAgICAgICBVSUQgICAgICAgPSBbTXkgVXNlciBJRF0sDQogICAgICAgICAgICAgICAgICAgICAgICBQV0QgICAgICAgPSBbTXkgUGFzc3dvcmRdLA0KICAgICAgICAgICAgICAgICAgICAgICAgUG9ydCAgICAgID0gMTQzMykNCg0KYGBgDQoNCiMjIyDlj4LogIPmlofnq6DvvJoNCg0KMeOAgVLor63oqIDov57mjqVNeXNxbOaVsOaNruW6k+eahOatpemqpOWPiueugOWNleS9v+eUqG15c3Fs5pWw5o2u5bqT5Lit55qE5pWw5o2u77yI5a2m5Lmg56yU6K6w77yJLmh0dHA6Ly93d3cuZGF0YWd1cnUuY24vdGhyZWFkLTI4OTQxMS0xLTEuaHRtbA0KDQoy44CBUuivreiogOi/nuaOpW15U1FM5pWw5o2u5bqT5q2l6aqkLiBodHRwOi8vYmxvZy5zaW5hLmNvbS5jbi9zL2Jsb2dfYWIzZmJmMWIwMTAxa29tai5odG1sDQoNCjPjgIFS6L+e5o6lTXlTUUzmlbDmja7lupPmlrnms5XlpIflv5guIGh0dHA6Ly93d3cuci1ibG9nZ2Vycy5jb20vbGFuZy9jaGluZXNlLzEyNDcNCg==</div>
 
 
 
