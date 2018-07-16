@@ -26,20 +26,83 @@ CRAN 里面的包 RODBC 提供了 ODBC的访问接口：
 
 * 连接可以通过调用函数 close 或 odbcClose 来关闭。 没有 R 对象对应或不在 R 会话后面的连接也可以调用这两个函数来关闭， 但会有警告信息。
 
+
+### 1.R中安装RODBC包
+
+install.packages("RODBC")
+
+### 2.在Windows系统下安装MySQL的ODBC驱动
+
+注意区分32位和64位版本；
+
+http://dev.mysql.com/downloads/connector/odbc
+
+### 3.ODBC的系统配置
+
+在Windows操作系统下：控制面板->管理工具->数据源（ODBC）->双击->添加->选中mysql ODBC driver一项
+
+填写：data source name 一项填入你要使用的名字，自己随便命名，例如：mysql_data;
+
+description一项随意填写，例如mydata
+
+TCP/IP Server 填写MySQL数据库的IP地址，如：127.0.0.1
+
+user 填写你的mysql用户名
+
+password 填写你的mysql密码
+
+然后数据库里会出现你的mysql里的所有数据库，选择一个数据库。
+
+### 4. 打开R环境测试
+
+```{r}
+#R代码 查询示例
+library(RODBC)
+channel<-odbcConnect("mysql_data", uid="baidu_index", pwd="******")  # 64 位ODBC，****替换为输入密码
+sqlKeyword = "SELECT * FROM BAIDU_INDEX WHERE col_keyword = '李易峰' AND col_date>='2015-01-01'"
+dataKeyword=sqlQuery(channel,sqlKeyword)
+keywordList<-dataKeyword[["col_keyword"]]
+keywordList<-as.character(keywordList)
+```
+
+
+
+### 5. RODBC操作MySQL数据库的其他函数
+
+```{r}
+# 函数名称 # 函数描述
+odbcConnect(dsn, uid="", pwd="")   # 建立并打开连接 
+sqlFetch(channel, sqltable)  # 从数据库读取数据表，并返回一个数据框对象
+sqlQuery(channel, query)   # 向数据库提交一个查询，并返回结果
+sqlSave(channel, mydf, tablename = sqtable, append = FALSE)  # 将一个数据框写入或更新(append=True)到数据库
+sqlDrop(channel, sqtable)  # 从数据库删除一个表
+sqlClear(channel, sqtable)   # 删除表中的内容
+sqlTables(channel)  # 返回数据库中表的信息
+sqlColumns(channel, sqtable)  # 返回数据库表sqtable列的信息
+close(channel)  # 关闭连接
+```
+
+### 6. RODBC Example
+
+
 ```{r RODBC}
 # http://blog.csdn.net/sinat_26917383/article/details/51100736
 #安装RODBC包  
 install.packages("RODBC")   
 library(RODBC)  
-mycon<-odbcConnect("mydsn",uid="user",pwd="rply")  
+mycon<-odbcConnect("mydsn",uid="root",pwd="082408SQ")  
 #通过一个数据源名称（mydsn）和用户名（user）以及密码（rply，如果没有设置，可以直接忽略）打开了一个ODBC数据库连接  
   
 data(USArrests)  
-#将R自带的“USArrests”表写进数据库里  
+#将R自带的"USArrests"表写进数据库里  
 sqlSave(mycon,USArrests,rownames="state",addPK=TRUE)  
 #将数据流保存，这时打开SQL Server就可以看到新建的USArrests表了  
 rm(USArrests)  
 #清除USArrests变量  
+
+
+sqlTables(mycon);#查看数据中的表 
+data<-sqlFetch(mycon,"USArrests")# 查看表的内容，存到数据框里 
   
 sqlFetch(mycon, "USArrests" ,rownames="state")  
 #输出USArrests表中的内容  
@@ -80,6 +143,110 @@ sqlUpdate(channel, dat, tablename = NULL, index = NULL,
           fast = TRUE)  
 ```
 
+## R Connect with MYSQL
+
+```{r}
+# load packages
+
+library("RMySQL")
+library("magrittr")
+
+# connect
+conn <- dbConnect(
+  MySQL(),#数据库平台类型
+  dbname = "test2",#数据库名称
+  username = "root",#登录账号（MySQL初始安装时设置的账号）
+  password = "082408SQ“,#登录密码（MySQL初始安装时设置的密码
+  host="127.0.0.1",#地址
+  port=3306   #端口号
+)
+
+conn <- dbConnect(MySQL(), dbname = "test2", username="root", password="082408SQ", host="127.0.0.1", port=3306)
+
+summary(conn)      #查看连接信息：
+# <MySQLConnection:0,0>
+#   User:   root 
+#   Host:   127.0.0.1 
+#   Dbname: test2 
+#   Connection type: 127.0.0.1 via TCP/IP 
+# 
+# Results:
+
+
+#查看连接详细信息（列表形式）
+dbGetInfo(conn)    
+# $host
+# [1] "127.0.0.1"
+# 
+# $user
+# [1] "root"
+# 
+# $dbname
+# [1] "test2"
+# 
+# $conType
+# [1] "127.0.0.1 via TCP/IP"
+# 
+# $serverVersion
+# [1] "10.3.8-MariaDB"
+# 
+# $protocolVersion
+# [1] 10
+# 
+# $threadId
+# [1] 8
+# 
+# $rsId
+# list()
+
+
+dbListTables(conn) #查看该数据库连接内的表信息
+# [1] "usarrests"
+
+dbDisconnect(conn) #关闭连接(数据通讯完成之后再运行)
+# 
+# R语言与MySQL数据库读写：
+(mydata <- iris)
+dbWriteTable(
+          conn = conn,      #连接名称
+          name = "mydata",  #指定导入后的表名
+          value = iris,     #指定要导入的R内存空间数据对象
+          row.names = FALSE #忽略行名
+          )      
+#写表
+dbListTables(conn)
+# 'birthdays' 'company' 'dataanalyst' 'foodranking' 'foodtypes' 'mydata' 'orderinfo' 'str_date' 'userinfo'
+
+mydata1 <- dbReadTable( 
+         conn = conn,       #连接名称
+         name = "mydata"    #数据库中的表名
+          )                 #读表  
+head(mydata1,10) 
+
+
+dbWriteTable(conn, "tablename", data) #写表
+dbReadTable(conn, "tablename")  #读表
+dbDisconnect(conn) #关闭连接
+
+
+# 以上读写都是一次性操作，不能在读写的同时执行条件筛选等步骤，通常我们需要使用查询方式来获取指定条件的数据并返回数据框。
+result1 <- dbSendQuery(conn = conn,  
+                       statement = "SELECT * from mydata where `Sepal.Length` between 4 and 5 
+                                   and Species = 'setosa' "
+                                   #查询条件
+                      ) %>% dbFetch()
+                      #将查询结果返回数据框
+head(result1,10)
+dbClearResult(result1)   #清除查询(释放内存)
+
+# 这一句清除的是查询，即上一句中的dbSendQuery部分（布包含后面的dbFetch，我只是为了方便一次性输出了）。
+
+dbRemoveTable(conn,"mydata")   #删除表    
+ dbListTables(conn)                             
+'birthdays' 'company' 'dataanalyst' 'foodranking' 'foodtypes' 'orderinfo' 'str_date' 'userinfo'
+dbDisconnect(conn)             #断开连接
+```
+
 
 ## 2. sqldf包
 
@@ -98,6 +265,13 @@ where后面可以接很多，有比较运算符，算数运算符，逻辑运算
 数据筛选可以有subset函数，排序有order/sort函数
 
 ```{r sqldf}
+library(sqldf)
+
+sqldf("select * from t_data",dbname="test",drv="MySQL",user="root",password="",host="127.0.0.1",port=3306)
+
+# 连接后，SQL查询语句后面的参数均可省略，例如：
+sqldf("select * from t_data limit 0,10")
+
 #选择表中指定列*/  
 sqldf("select year,market,sale,profit from sale")  
   
@@ -280,4 +454,113 @@ writeLines(stop_word_unique, "E:/03-Download/Github/stop_word_unique.txt", useBy
 readLines("E:/03-Download/Github/stop_word_unique.txt", encoding="UTF-8")
 ```
 
+## 用R语言分析聊天记录
 
+> [https://zhuanlan.zhihu.com/p/31201177](https://zhuanlan.zhihu.com/p/31201177)
+
+### 数据处理
+```{r}
+library(RSQLite)
+library(plyr)
+# //连接SQLitle数据库
+
+conn <- dbConnect(dbDriver("SQLite"), dbname="MM.sqlite")
+# //设置连接函数
+
+doCountQuery <- function(conn,table){
+    query <- paste("SELECT COUNT(name) FROM ",table,sep ="")
+    t <- dbGetQuery(conn,query)    return(t)
+}
+
+table_name <- dbGetQuery(conn, "SELECT name FROM sqlite_master where type='table' and name like 'Chat_%' order by name")
+# //取出所有表名，由于不会遍历，只能按照最笨的办法，计算哪个表的数据量最多，即是和男盆友的聊天记录表，如果不是和男盆友的聊天表，此方法是找不出来
+
+counts <- numeric(0)for (i in 1:length(table_name) ){
+    count <- doCountQuery(conn,table_name[i])
+    counts[i] <-count[[1]]    
+}
+# //计算表长
+table_count <- data.frame(counts)
+
+# //排序，表长最大的表，即是和男朋友的聊天记录表
+table_count1 <- table_count[order(table_count$counts,decreasing=TRUE),]
+
+# //提取到聊天内容
+message <- dbGetQuery(conn, "SELECT * FROM Chat_XXXXXXXXXX ")
+```
+
+### 文本分析
+
+```{r}
+library(jiebaRD)
+library(jiebaR)
+
+library(data.table)
+library(stringr)
+
+cutter=worker()
+wechat_content =message
+wechat_content <- as.character(wechat_word$V1)
+# ///由于数据量过大，不知道为什么只用cuter无法把所有数据都遍历到，无奈只能写简单的函数每一条遍历切割
+
+cut_y <- function (y){
+    y=gsub("\\.","",y)
+    cutter[as.character(y)]
+}
+# //遍历切割每一条聊天内容
+y.out <- sapply(wechat_content,cut_y,USE.NAMES = F)
+
+# //去除数字
+y.out<-gsub("[0-9]+?","",y.out)
+
+# // 去除停止词
+s <- read.csv('stopwords.csv')
+stopwords <- c(NULL)for (i in 1:length(s))
+{
+    stopwords[i] <- s[i]
+}
+y.out <- filter_segment(y.out,stopwords)
+
+# //遍历计数后再组合到一起
+wechat_content_whole <- as.array(0)
+for (i in 1:length(y.out)){
+    table_content <- count(y.out[[i]])
+    wechat_content_whole <- rbind(wechat_content_whole,table_content)
+}
+
+# //最后计数
+wechat_content_whole <- count(wechat_content_whole,"x")
+
+# //从大到小排列
+wechat_content_whole<- wechat_content_whole[order(wechat_content_whole$freq,decreasing=TRUE),]
+
+# //提取前1000条做词云
+wechat_words_final <- table_content_whole_final[1:1000,]
+
+# //颜色从粉到白函数
+clufunc <- colorRampPalette(c("pink","white"))
+
+# //形成词云 
+wordcloud2(wechat_words_final, fontFamily = "HYTangTangCuTiJ", figPath = "love.jpg", size=1, color=clufunc(1000))
+```
+
+
+### dbConnect
+```{r}
+con <- DBI::dbConnect(odbc::odbc(),
+                        Driver    = "SQL Server", 
+                        Server    = [My Server],
+                        Database  = [My Database],
+                        UID       = [My User ID],
+                        PWD       = [My Password],
+                        Port      = 1433)
+
+```
+
+### 参考文章：
+
+1、R语言连接Mysql数据库的步骤及简单使用mysql数据库中的数据（学习笔记）.http://www.dataguru.cn/thread-289411-1-1.html
+
+2、R语言连接mySQL数据库步骤. http://blog.sina.com.cn/s/blog_ab3fbf1b0101komj.html
+
+3、R连接MySQL数据库方法备忘. http://www.r-bloggers.com/lang/chinese/1247

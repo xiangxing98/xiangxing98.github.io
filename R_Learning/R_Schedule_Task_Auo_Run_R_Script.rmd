@@ -37,7 +37,9 @@ Rscript F:\cs\windowsCode.R
 
 ## 2.方法2
 
-如果你想编写一个命令脚本，如UNIX或OS X系统的shell脚本，或Windows系统中的批处理脚本，并且你希望在这些脚本中执行R代码。使用带有CMD BATCH子命令的方式运行R程序，并给出脚本文件名和输出文件名：`CMD BATCH scriptfile outputfile`, CMD BATCH子命令把R转到批处理模式，它读取脚本文件scriptfile并且把输出写入输出文件outputfile。这个运行过程中不与用户交互。
+如果你想编写一个命令脚本，如UNIX或OS X系统的shell脚本，或Windows系统中的批处理脚本，并且你希望在这些脚本中执行R代码。
+
+使用带有CMD BATCH子命令的方式运行R程序，并给出脚本文件名和输出文件名：`CMD BATCH scriptfile outputfile`, CMD BATCH子命令把R转到批处理模式，它读取脚本文件scriptfile并且把输出写入输出文件outputfile。这个运行过程中不与用户交互。
 
 你可能会根据具体情况使用命令行选项，调整R的批处理过程。例如，使用--quiet选项来避免启动信息，否则将使输出信息混乱：在R窗口中`CMD BATCH --quiet myScript.R results.out`
 
@@ -119,7 +121,56 @@ x <- as.numeric(argv[1])
 
 > 参考图书： R语言经典实例
 
-## 3. load package in a safe way
+## 3. Scheduling R scripts in Windows
+
+> https://users.humboldt.edu/doug/blog/2016/09/14/20160914.html
+
+2016-09-14 22:17 PDT
+
+I need to schedule several R scripts on a Windows 2012 server. I've had to figure out how to do this in the past, but did not take great notes on how to set it up. So here I am hopefully putting together some useable notes on how to schedule an R script in Windows. I found a useful YouTube video on how to do this. You can find it here: https://www.youtube.com/watch?v=UDKy5_SQy2o
+
+The basic steps are to:
+
+### Add R to the scheduling user's local PATH environment variable.
+
+In Windows 7 you can type "environment" into the search path and you should see a program titled "Edit environment variables for your account."
+
+Create the new variable PATH for the user that will be running the scheduled task. I recommend using an account with administrative priveleges. Add the path to your preferred R installation's bin to the local PATH variable for the administrative user. 
+
+Example:
+```{bat}
+# C:\Program Files\R\R-3.3.1\bin
+```
+
+
+
+### Write an R script to perform a task that is to be performed on a schedule.
+
+When writing the R-script keep the following in mind:
+Make sure that any libraries used in the R-script are installed for the user under which the task will be scheduled.
+
+Set the working directory within the R-script to make referencing directories easier.
+
+### Create a batch script to run your R script. 
+
+Example content:
+
+```{bat}
+# echo off
+# R CMD BATCH D:\path\to\my\script.R 
+```
+
+      
+Use Windows Task Scheduler to run the batch script with the desired start trigger and frequency. From my experience, an administrator account should be used to author and run the scheduled task. 
+
+If you are having trouble with your R script running when triggered, checkout the .Rout file in a text editor to observe any errors from R.
+
+Douglas R. Saucedo 
+Copy Right 2016
+
+
+
+## 4. load package in a safe way
 
 ```{r load package in a safe way}
 # Load data.table package
@@ -130,6 +181,8 @@ if(!suppressWarnings(require('data.table')))
 }
 
 ```
+
+### Schedule Run R Script
 
 ```{bat}
 echo R CMD BATCH 和 Rscript 使用前都要先添加环境变量
@@ -182,7 +235,7 @@ pause
 ```
 
 
-## 4. Input Data -> manupulation -> Output data
+## 5. Input Data -> manupulation -> Output data
 
 数据处理的流程：数据输入-> 处理 -> 结果输出
 
@@ -213,6 +266,98 @@ new_file_name <- paste("stop_words_unique-",DateTime,".utf8.txt", sep = "")
 save(stop_word_unique, file = paste(stop_word_file_directory, new_file_name,sep = "/"))
 # ?save()
 ```
+
+
+## 6. taskscheduleR Package
+
+> Jan Wijffels 2017-11-16
+
+> https://cran.r-project.org/web/packages/taskscheduleR/vignettes/taskscheduleR.html
+
+Schedule R scripts/processes with the Windows task scheduler. This allows R users working on Windows to automate R processes on specific timepoints from R itself.
+
+### Basic usage
+
+The package allows to
+
+* Get the list of scheduled tasks
+
+* Remove a task
+
+* Add a task
+
+  + A task is basically a script with R code which is run through Rscript
+  
+  + You can schedule tasks ‘ONCE’, ‘MONTHLY’, ‘WEEKLY’, ‘DAILY’, ‘HOURLY’, ‘MINUTE’, ‘ONLOGON’, ‘ONIDLE’
+
+  + The task log contains the stdout & stderr of the Rscript which was run on that timepoint. This log can be found at the same folder as the R script
+  
+### Example usage:
+
+```{r}
+library(taskscheduleR)
+myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
+
+myscript <-
+  system.file("F:/Github/xiangxing98.github.io/R_Learning/", 
+              "Schedule_Task_Run_R_Script.r", 
+              package = "taskscheduleR")
+
+
+## run script once within 10 seconds
+taskscheduler_create(
+  taskname = "myfancyscript",
+  rscript = myscript,
+  schedule = "ONCE",
+  starttime = format(Sys.time() + 10, "%H:%M")
+  )
+
+## Run every day at the same time on 09:10, starting from tomorrow on
+## Mark: change the format of startdate to your locale if needed (e.g. US: %m/%d/%Y)
+taskscheduler_create(taskname = "myfancyscriptdaily", rscript = myscript, 
+                     schedule = "DAILY", starttime = "09:10", startdate = format(Sys.Date()+1, "%d/%m/%Y"))
+
+## Run every week on Sunday at 09:10
+taskscheduler_create(taskname = "myfancyscript_sun", rscript = myscript, 
+                     schedule = "WEEKLY", starttime = "09:10", days = 'SUN')
+
+## Run every 5 minutes, starting from 10:40
+taskscheduler_create(taskname = "myfancyscript_5min", rscript = myscript,
+                     schedule = "MINUTE", starttime = "10:40", modifier = 5)
+
+## Run every minute, giving some command line arguments
+taskscheduler_create(taskname = "myfancyscript_withargs_a", rscript = myscript,
+                     schedule = "MINUTE", rscript_args = "productxyz 20160101")
+taskscheduler_create(taskname = "myfancyscript_withargs_b", rscript = myscript,
+                     schedule = "MINUTE", rscript_args = c("productabc", "20150101"))
+
+## get a data.frame of all tasks
+tasks <- taskscheduler_ls()
+str(tasks)
+
+## delete the tasks
+taskscheduler_delete(taskname = "myfancyscript")
+taskscheduler_delete(taskname = "myfancyscriptdaily")
+taskscheduler_delete(taskname = "myfancyscript_sun")
+taskscheduler_delete(taskname = "myfancyscript_5min")
+taskscheduler_delete(taskname = "myfancyscript_withargs_a")
+taskscheduler_delete(taskname = "myfancyscript_withargs_b")
+```
+
+When the task has run, you can look at the log which contains everything from stdout and stderr. The log file is located at the directory where the R script is located.
+
+```{r}
+## log file is at the place where the helloworld.R script was located
+system.file("extdata", "helloworld.log", package = "taskscheduleR")
+```
+
+### RStudio addin
+
+If you work with RStudio as editor, you can also just use the RStudio addin. In recent versions of RStudio (0.99.893 or later), select Addins and next select ‘Schedule R scripts on Windows’. This will allow you to select a script to be scheduled at your specified timepoints. The script will be copied to the Rscript repo folder and will be launched from there each time.
+
+
+
+
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 

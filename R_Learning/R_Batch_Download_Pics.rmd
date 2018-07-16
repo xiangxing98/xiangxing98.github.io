@@ -1,0 +1,126 @@
+---
+title: "R_Batch_Download_Pics"
+author: "Stone_Hou"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    number_sections: yes
+    theme: readable
+    toc: yes
+    toc_depth: 4
+  html_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+# R_Batch_Download_Pics
+
+> [用R语言抓取网页图片——从此高效存图告别手工时代](https://zhuanlan.zhihu.com/p/24981760)
+ 
+## Packages
+
+## Load downloader package
+
+```{r Load package}
+# ?rm()
+rm(list=ls())
+
+
+# Load downloader package
+if(!suppressWarnings(require('downloader')))
+{
+    install.packages('downloader')
+    require('downloader')
+}
+```
+
+## Other Packages
+
+```{r}
+library(rvest)
+library(downloader)
+library(stringr)
+library(dplyr)
+```
+
+
+## Try Download
+```{r}
+
+# one pic only
+# url<-"https://pic4.zhimg.com/2db250e935ca4f1b8b2b546c60104067_b.jpg"
+# download(url,"D:/R/Image/picturebbb.jpg", mode = "wb")
+
+# get images url
+url <- 'https://www.zhihu.com/question/19647535'
+link<- read_html(url) %>% 
+      html_nodes("div.RichContent-inner") %>%
+      html_nodes("img") %>% 
+      html_attr("src")
+head(link, 10)
+
+# 匹配之后，只保留了完整的图片网址，这就是我们最终要的结果。
+pat = "https"
+link <- grep(pat, link, value = TRUE)
+head(link, 10)
+
+#新建文件夹
+dir.create("F:/Images/") 
+# 现在可以使用一个for循环来自动执行图片批量下载任务。
+# 一个循环批处理所有下载任务
+for(i in 1:length(link)) 
+{
+ download(link[i],paste("F:/Images/picture",i,".jpg",sep = ""), mode = "wb")
+}  
+```
+
+## Simple Case
+
+就是有些公开的图片网站图片存储结构非常规则，分页存储，单页中单个div结构下的一组图片名称是按照数字顺序编号的：
+比如：
+
+     http：//################.1.jpg
+     http：//################.2.jpg
+     http：//################.3.jpg
+     http：//################.4.jpg
+     ………………………………………
+     http：//################.n.jpg
+如果你碰到这种存储方式的图片网页，那你真的太幸运了，不用再傻乎乎的去从网页地址的html结构中一步一步的去定位图片地址了，直接使用for循环遍历完所有的图片网址，然后直接传递给download函数批量下载就OK了。
+
+```{r}
+
+#自己定位到网页最后一个子页面，查看下最大的图片编号是多少。
+for(n in 1:50){   
+     link<- c(paste("http：//################/",n,".jpg",sep=""),link)
+}
+
+for(i in 1:length(link)){
+ download(link[i],
+          paste("D:/R/Case/picture",i,".jpg",sep = ""), 
+          mode = "wb")
+}
+
+```
+
+这样完全避免了从网址中曾曾定位获取图片地址的麻烦，直接就可以获取全网页所有目标图片的地址，效率就更高了。
+
+## 快速实现了网页中的数据爬取
+
+```{r}
+install.packages(XML)#安装XML包
+
+library(XML) #载入XML包
+
+u<-"http://www.chinacustomsstat.com/aspx/1/NewData/Stat_Class.aspx?state=1&t=2&guid=7146" #写入表格所在的网址
+
+tbls<-readHTMLTable(u) #分析网页中的表格，如果网页包含多个表格，需要确定读取哪个表。可通过识别表的行数来确定，具体见R语言网页数据抓取的一个实例_戊甲_新浪博客
+
+pop<-readHTMLTable(u,which=1) #读取网页中的第一张表
+
+write.csv(pop,file="d:/pop.csv") #存储pop为CSV文档至D盘中
+```
+
+
+
+
+

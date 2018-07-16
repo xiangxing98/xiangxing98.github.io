@@ -34,12 +34,52 @@ output:
 - 通过分享来学习。
 包括自己写笔记、写博客、写书、翻译书，和同伴分享交流、培训新人。
 
+## 必备工具
+
+下载 R and RStudio.
+
+基础
+
+[Try R](http://tryr.codeschool.com/) 非常适合R语言初学者，简短的代码，并能提示错误，不会产生挫败感
+
+拓宽技能
+
+看这里 [The Beginner's Guide to R](https://www.computerworld.com/article/2497143/business-intelligence/business-intelligence-beginner-s-guide-to-r-introduction.html) 大概30页，帮助你安装R，加载数据，进行分析，画图等一些常见知识。.
+
+习惯养成
+
+R Style Guide 教你如何写可读性强的代码，便于分享.
+
+寻求帮助
+
+如果你想了解R函数与包 Rdocumentation.org, 就去找R文档。
+
+提出问题
+
+StackOverflow,这个网站就不说了吧，先去找看一下有没有类似的问题，一般有！！！，如果没有就提问，基本都会得到回应，请保持提问的态度和姿势！
+
+还有一个： CrossValidated Q&A community.
+
+R语言社区论坛
+
+R bloggers,去遨游吧，都是业内大牛
+
+深入研究
+
+如果你觉得你可以了, Advanced R 性能研究方向的，男神写的书.
+
+Shiny
+
+Shiny可以满足你骚，浪，爱得瑟的工具
+
+
 ## 阅读清单
 
 ### 一、初学入门：
 
-《R in Action》
+《R in Action》[r-in-action](https://livebook.manning.com/#!/book/r-in-action/)
 从统计角度入手，分高中低三部分由浅入深的讲解了如何用R来实现统计分析。
+
 
 《The Art of_R Programming》
 从程序编写的角度入手，对R的本身特点进行了清晰的介绍。
