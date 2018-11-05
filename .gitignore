@@ -11,29 +11,22 @@ build/
 doc/*.txt
 # ignore all .txt files in the doc/ directory
 doc/**/*.txt
-
 # For R Projects
 # History files
 .Rhistory
 .Rapp.history
-
 # Example code in package build process
 *-Ex.R
-
 # RStudio files
 .Rproj.user/
-
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
-
 #No. 18 Wenchang Avenue, Economic-Technological Development Area, Beijing, 100176, People's Republic of China
-
 # Windows:
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
 # Python:
 *.py[cod]
 *.so
@@ -41,10 +34,9 @@ Desktop.ini
 *.egg-info
 dist
 build
-
 # My configurations:
 db.ini
 deploy_key_rsa
-
 #https://github.com/github/gitignore
 .Rproj.user
+.RData
