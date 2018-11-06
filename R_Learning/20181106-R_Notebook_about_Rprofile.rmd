@@ -1,0 +1,335 @@
+---
+title: "R Notebook about Rprofile"
+output: 
+  html_notebook: 
+    number_sections: yes
+    toc: yes
+    toc_depth: 4
+---
+
+## 20181106-R_Notebook_about_Rprofile
+
+> [r<-安装|方案Windows R安装与配置](https://www.jianshu.com/p/5ef62e51d2f6)
+
+
+### 配置
+Windows R默认使用用户文档目录作为家目录（等同于Linux中的~），使用系统指定的临时目录作为临时目录，使用安装路径下的R版本/library目录作为R包存储目录。
+
+如果你什么都选择默认的，当你一时安装包过多，或者装了电脑管家之类的管理软件时，系统的临时目录经常会把RStudio锁死，导致不能进行读写。
+当你想要更新R版本时，你不得不面临重装所有包的举动（如果你使用几个月，装了几百个包~~），或者想其他办法解决。
+
+下面就是教你自己创建自定义的临时目录与包目录，这样上面情况都不会发生了。
+
+### 具体操作
+
+在安装好R和RStudio后，打开RStudio，在R控制台键入：Rprofile *~/.Rprofile*. 
+
+```{r edit_Rprofile}
+file.edit("~/.Rprofile")
+```
+
+在启动RStudio时，RStudio会首先执行里面的R代码，所以我们可以在这里用R代码进行配置。
+
+在该*~/.Rprofile*文档内添加内容：
+```{r}
+#--------------------------------------------
+# Set custom library and temp directory for R
+# NOTE: please only change following 2 paths
+#   Any Question, please email to 
+#       Shixiang Wang <w_shixiang@163.com>
+#--------------------------------------------
+.CUSTOM_LIB = "C:/Tools/R/R_Library" # set your custom library location
+.TMP = "C:/Tools/R/Rtmp"             # set a temp dir for R running
+                                     # please do not add '/' at the end !!!
+
+if(!dir.exists(.CUSTOM_LIB)){
+    dir.create(.CUSTOM_LIB)
+}
+
+.libPaths(c(.CUSTOM_LIB, .libPaths()))
+message("Using library: ", .libPaths()[1])
+
+
+if(dirname(tempdir()) != .TMP){
+    if(!dir.exists(.TMP)) dir.create(.TMP)
+    cat(paste0("TMPDIR = ", .TMP), file="~/.Renviron", sep = "\n")
+}
+message("Using temp directory: ", .TMP)
+
+#---------------------------------------------------
+# pacman is optional, you can delete following code
+# If you wanna use pacman, please read:
+#   <https://www.jianshu.com/p/cb16ded75672>
+# Basically, 
+# #1, you can use 'p_load' to load multiple package into R
+#       like p_load(data.table, dplyr)
+# #2, you can use 'p_get' just to install package
+# #3, you can use 'p_update' to update all packages
+#---------------------------------------------------
+if(!require(pacman)){
+    install.packages("pacman", dependencies = TRUE)
+}
+library(pacman)
+#----------------------------------------------------
+
+```
+
+你主要对下面的目录进行修改即可
+
+```{r}
+# set your custom library location
+.CUSTOM_LIB = "C:/Tools/R/R_Library" 
+
+# set a temp dir for R running
+.TMP = "C:/Tools/R/Rtmp"             
+
+# please do not add '/' at the end !!!
+```
+
+pacman [管理你的R包——pacman包介绍](https://www.jianshu.com/p/cb16ded75672) 那段代码是可选的，该包是library()函数的替代品，使用更简单。具体点击阅读我之前的文章。
+
+为了方便大家使用，我添加了一些必要注释，如果有问题可以评论或者email我。
+
+保存后重启RStudio或者点击菜单栏Session下的Restart R。
+
+
+
+
+### R无法对系统默认的临时目录进行读写操作。
+
+```
+Error in RStudioGD() : 
+  Shadow graphics device error: r error 4 (R code execution error)
+In addition: Warning messages:
+1: In grDevices:::png("C:/Users/ADMINI~1/AppData/Local/Temp/Rtmpe2OFDK/b93d7aaea7d247f9aec596ec8fbbc7db.png",  :
+  无法打开'C:/Users/ADMINI~1/AppData/Local/Temp/Rtmpe2OFDK/b93d7aaea7d247f9aec596ec8fbbc7db.png'文本写入
+2: In grDevices:::png("C:/Users/ADMINI~1/AppData/Local/Temp/Rtmpe2OFDK/b93d7aaea7d247f9aec596ec8fbbc7db.png",  :
+  opening device failed
+```
+
+为R创建一个临时目录，这样就跟系统的临时目录没关系了~~
+```{sh}
+dir.create("C:/Rtmp")
+cat("TMPDIR = C:\\\\Rtmp", file = "~/.Renviron", sep = "\n")
+```
+
+# 管理你的R包——pacman包介绍
+
+> https://www.jianshu.com/u/b6608e27dc74
+
+> Tyler W. Rinker & Dason Kurkiewicz
+
+**pacman**包是一个整合了基础包`library`相关函数的包，用于更方便地对R包进行管理。该包可以添加到**.Rprofile**以便于显式地指定该包的函数，增加工作效率。其中关键函数`p_load`可以很好地提升论坛提问与博文，它会自动加载包，如果没有找到，会自动安装缺失包。
+
+pacman包中的函数都以`p_xxx`的格式存在，其中`xxx`是函数执行的功能。比如`p_load`允许用户载入一个或多个包，用于替换`library`或`require`函数，如果包不在本地存在，它会自动为你安装。对于大多数的pacman函数，参数不需要指定为字符串。
+
+## 安装、载入、卸载、更新与删除
+
+**速查表**
+
+| Pacman 函数         | Base 等价                             | 描述               |
+| ------------------- | ------------------------------------- | ------------------ |
+| `p_load`            | `install.packages` + `library`        | 载入与安装包       |
+| `p_install`         | `install.packages`                    | 从CRAN安装包       |
+| `p_load_gh`         | NONE                                  | 载入和安装Github包 |
+| `p_install_gh`      | NONE                                  | 从Github安装包     |
+| `p_install_version` | `install.packages` & `packageVersion` | 安装包的最小版本   |
+| `p_temp`            | NONE                                  | 暂时安装包         |
+| `p_unload`          | `detach`                              | 从搜索路径卸下包   |
+| `p_update`          | `update.packages`                     | 更新过期包         |
+
+The heart of **pacman** is it's ability to reduce typing in package management actions. The functions in this section **act** on packages.
+
+### 安装和载入
+
+`p_load` 是通常使用的工具，可以安装、加载和更新包。函数形式如下
+
+```{r}
+p_load(..., char, install = TRUE, update = getOption("pac_update"), character.only = FALSE)
+```
+
+`...`参数传入包名，比如你需要用下面的方式安装一系列包：
+
+```{r}
+packs <- c("XML", "devtools", "RCurl", "fakePackage", "SPSSemulate")
+success <- suppressWarnings(sapply(packs, require, character.only = TRUE))
+install.packages(names(success)[!success])
+sapply(names(success)[!success], require, character.only = TRUE)
+```
+
+使用pacman可以简化为：
+
+```{r}
+pacman::p_load(XML, devtools, RCurl, fakePackage, SPSSemulate)
+```
+
+#### 仅安装
+
+有些用户想仅仅安装包，这可以使用`p_install`（别名为`p_get`）。
+
+```{r}
+p_install(dbConnect, qdap, reports)
+```
+
+#### 从Github安装和载入包
+
+**pacman**提供了从Github上安装和载入包的函数，其实就是基于**devtools**包的函数：
+
+**Note:** Packages are passed as character vector repository addresses in the form of `username/repo[/subdir][@ref|#pull]`.
+
+```{r}
+p_install_gh(c("Dasonk/githubSearch", "trinker/regexr", "hadley/httr@v0.4"))
+p_load_gh("Dasonk/githubSearch", "trinker/regexr", "hadley/httr@v0.4")
+```
+
+### 安装包最小版本
+
+有时候需要安装特定版本的包，可以使用：
+
+```{r}
+p_install_version(
+    c("pacman", "testthat"),
+    c("0.2.0", "0.9.1")
+)
+Version of pacman (v. 0.2.0) is suitable
+
+Version of testthat (v. 0.9.1) is suitable
+```
+
+### 暂时安装
+
+`p_temp`允许用户暂时安装一个包，线程一关闭即消失：
+
+```{r}
+p_temp(aprof)
+
+p_isinstalled(aprof)
+p_isloaded(aprof)
+p_temp(aprof)
+# trying URL 'http://cran.rstudio.com/bin/windows/contrib/3.1/aprof_0.2.zip'
+# Content type 'application/zip' length 34037 bytes (33 Kb)
+# opened URL
+# downloaded 33 Kb
+# 
+# package 'aprof' successfully unpacked and MD5 sums checked
+# 
+# The downloaded binary packages are in
+#         C:\Users\you\AppData\Local\Temp\RtmpYh6bSr\downloaded_packages
+# 
+# aprof installed
+# Loading required package: aprof
+
+p_isinstalled(aprof)
+# [1] FALSE
+p_isloaded(aprof)
+# aprof 
+#  TRUE 
+```
+
+### 卸载
+
+另一个好用的函数是可以将某个包从当前路径卸载（不是删除），但基本的R包不能被卸载（R启动就用到的包）。
+
+格式如下：
+
+```{r}
+p_unload(..., negate = FALSE, char, character.only = FALSE)
+```
+
+例子：
+
+```{r}
+p_load(lattice)
+p_isloaded(lattice)
+p_unload(lattice)
+p_isloaded(lattice)
+p_load(lattice)
+p_isloaded(lattice)
+lattice 
+   TRUE 
+p_unload(lattice)
+# The following packages have been unloaded:
+# lattice
+
+p_isloaded(lattice)
+lattice 
+  FALSE 
+```
+
+### 更新：
+
+```{r}
+p_update() 
+```
+
+有时候想只查询，不实际更新：
+
+```{r}
+p_update(FALSE) 
+```
+
+### 删除：
+
+```{r}
+p_delete(fakePackage, stats)
+p_delete(fakePackage, stats)
+# The following packages are a base install and will not be deleted:
+# stats
+
+# The following packages not found in library:
+# fakePackage
+```
+
+## 线程信息
+
+**速查表**
+
+| Pacman Function | Base Equivalent             | 描述             |
+| --------------- | --------------------------- | ---------------- |
+| `p_loaded`      | `.packages` & `sessionInfo` | 列出已加载包     |
+| `p_isloaded`    | NONE                        | 测试某包是否加载 |
+
+用法：
+
+```{r}
+p_loaded()
+```
+
+返回除了基础包的其他包，下面可以返回所有包：
+
+```{r}
+p_loaded(all = TRUE)
+```
+
+检查包：
+
+```{r}
+p_loaded(base, MASS)
+ # base  MASS 
+ # TRUE FALSE 
+p_isloaded(methods, stats)
+# methods   stats 
+#    TRUE    TRUE 
+```
+
+## 本地包信息
+
+**速查表**
+
+| Pacman Function                  | Base Equivalent                                  | 描述                           |
+| -------------------------------- | ------------------------------------------------ | ------------------------------ |
+| `p_author`                       | `packageDescription`                             | Author of Package              |
+| `p_citation`                     | `citation`                                       | Citation for Package           |
+| `p_data`                         | `data`                                           | List Package Data Sets         |
+| `p_depends` &`p_depends_reverse` | `package_dependencies` &`dependsOnPkgs`          | 包依赖或反向依赖               |
+| `p_exists`                       | `available.packages` &`list.files` + `.libPaths` | 检查包是否存在于本地或者是CRAN |
+| `p_functions`                    | `loadNamespace` + `getNamespaceExports`          | 包函数                         |
+| `p_help`                         | `help`                                           | HTML/PDF Manuals查看           |
+| `p_information`                  | `packageDescription`                             | 包信息                         |
+| `p_interactive`                  | NONE                                             | 交互式搜索包                   |
+| `p_news`                         | `news`                                           | 包NEWS                         |
+| `p_version`                      | `packageVersion` & `R.Version`                   | 包版本                         |
+| `p_vignette`                     | `browseVignettes`                                | 包 Vignettes查看               |
+
+内容有点多，想全部学习的，查看 <http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html>
+
