@@ -12,49 +12,45 @@ Git的使用简介（简单明了不废话）
 
 1.1、首先打开git的界面（一般git都是用命令操作比较多，安装好git之后，打开git.bash就可以了）之后设置一下全局变量（也就是你访问git时候的用户名和邮箱了），如果是公开的项目可以省略这一步。
 
-1. git config --global user.name "dufei"
-
-2. git config --global user.email "dufeizj@163.com"
-
+```bash
+git config --global user.name "dufei"
+git config --global user.email "dufeizj@163.com"
 git config --list
+```
 
 1.2、进入你想把项目存到本地的位置，比如我想存到本地D盘的GitTest文件夹中，那就使用Git.bash进入到这个文件夹（没有就创建一个），然后执行"git init"初始化这个文件夹（也就是在这个文件夹下创建一个.git文件夹，将一些配置信息放进来）
 
-1. cd d:/gittest
-
-2. git init
-
+```bash
+cd d:/gittest
+git init
 mkdir testgit
-
 cd testgit
-
 pwd
 
 git add .
-
 git add readme.txt
-
 git commit -m "add readme.txt"
-
 git status
-
 git diff readme.txt
 
 git add .
-
 git commit -m "modify readme.txt"
-
 git log
-
 git log –pretty=oneline
+```
 
 那如果要回退到前100个版本的话，使用上面的方法肯定不方便，我们可以使用下面的简便命令操作：
+
+```bash
 git reset --hard HEAD~100
+```
 
 如果想回退到上一个版本的命令如下操作：
-git reset --hard HEAD^
 
+```bash
+git reset --hard HEAD^
 cat readme.txt
+```
 
 git reset --hard 版本号 ，但是现在的问题假如我已经关掉过一次命令行或者333内容的版本号我并不知道呢？要如何知道增加3333内容的版本号呢？可以通过如下命令即可获取到版本号：git reflog 演示如下
 
@@ -77,25 +73,32 @@ Git的使用简介（简单明了不废话）
 
 2.1、打开终端，然后进入你项目所在的目录，执行如下命令，对目录初始化，这样就会在这个项目的文件夹下多了.git文件夹了，和上面类似。
 
-1. cd d:/gittest/WebTemplate
-
-2. git init
+```bash
+cd d:/gittest/WebTemplate
+git init
+```
 
 2.2、将当前项目下所有的文件添加到本地的git仓库的暂存区（如果只想共享一部分，那就不用.，就把对应的文件或者文件夹列出来就行，这里用add表示将当前文件放到暂存区，其实并没有提交）
 
-1. git add .
+```bash
+git add .
+```
 
 2.3、接下来提交暂存区文件到本地仓库，使用git commit命令，后面-m表示message，意思是提交本次修改的信息。
 
-1. git commit -m "inital commit"
+```bash
+git commit -m "inital commit"
+```
 
 2.4、将本地库与远程库进行关联，这时候假设你在远程库上已经有了一个仓库，比如我的WebTemplate项目的远程地址就是： ，那么关联操作命令如下：
 
-1. git remote add origin https://github.com/df19900725/WebTemplate.git
+git remote add origin https://github.com/df19900725/WebTemplate.git
 
 这里git remote表示对远程仓库的操作，origin是远程仓库本体（默认分支名称），add表示将远程的库加入，也就是关联的操作，接下来我们使用git remote -v命令查看关联结果发现已经关联上了：
 
-1. git remote -v
+```bash
+git remote -v
+```
 
 如下图所示
 
@@ -103,7 +106,9 @@ Git的使用简介（简单明了不废话）
 
 2.5、最后把本地文件进行提交即可
 
-1. git push origin master
+```bash
+git push origin master
+```
 
 git push表示提交代码的意思，origin表示远程的分支名称，master表示本地分支名称，上面代码就是说把本地的master分支推送到远程端，操作之后可以在远程看到了。
 
@@ -113,7 +118,9 @@ git push表示提交代码的意思，origin表示远程的分支名称，master
 
 3.1、查看远程分支
 
-1. git remote -v
+```bash
+git remote -v
+```
 
 如下图所示
 
@@ -123,14 +130,20 @@ Git的使用简介（简单明了不废话）
 
 3.2、将远程修改更新到本地
 
+```bash
 git fetch origin master
+```
+
+
 Git的使用简介（简单明了不废话）
 
 前面说过origin是远程仓库分支，master是本地分支，所以这个命令就是将远程分支更新到本地。
 
 3.3、合并远程与本地
 
-1. git merge origin/master
+```bash
+git merge origin/master
+```
 
 远程修改更新到本地之后要做merge操作才能看到最终修改。
 
@@ -138,17 +151,56 @@ Git的使用简介（简单明了不废话）
 
 当然git fetch -> git merge 操作可以使用git pull代替。这样只要执行一步就好了。
 
+```bash
 git pull
+```
+
+
 Git的使用简介（简单明了不废话）
 
 ## 四、将本地修改提交到远程
 
 提交本地修改到远程三步，第一步是add文件，表示要提交修改的文件，第二步commit代码到暂存区，第三步push代码到远程仓库，其实在第一小节我们已经说过了。
 
-1. git add README.md
-
-2. git commit README.md 'test'
-
-3. git push origin master
+```bash
+git add README.md
+git commit README.md 'test'
+git push origin master
+```
 
 如果是提交GitHub之类的可能还要用户名密码登录：
+
+
+
+## 五、删除将本地修改提交到远程
+
+### 删除单个文件
+
+如果只是删除本地的一个文件，通常是物理删除，然后git删除，再提交即可。
+
+```bash
+ rm test.txt
+ git status
+ git rm test.txt
+ git commit -m "remove test.txt"
+ git push 
+```
+
+### 还原那些误删的文件
+
+另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：
+
+```bash
+$ git checkout -- test.txt
+```
+
+`git checkout`其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+### 批量删除多个文件
+
+在项目根目录使用命令`git add -A`然后使用命令`git commit -m "del"` 再然后要使用 `git push`推送到远程服务器
+
+建议每一次add之后再次使用`git status`命令来查看是否已经stage了
+
+如果你要上传删除（全部上传）
+`git add --all`
