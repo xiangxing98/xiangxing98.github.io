@@ -39,4 +39,4 @@ db.ini
 deploy_key_rsa
 #https://github.com/github/gitignore
 .Rproj.user
-.RData
+*.RData
