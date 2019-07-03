@@ -1,6 +1,9 @@
-# Resume of #### ---Understruction
+# Resume of Stone_Hou ---Understruction
+
+> Stone_Hou @ 2019-07-03
 
 ## Write ahead
+
 Understruction
 I'm looking for a **Major Filed** job. My abilities is not limited in machine learning but my major work should be machine learning, this is really important.
 
