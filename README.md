@@ -2,20 +2,14 @@
 
 侯祥胡的Github 个人空间，分享一些计算机与程序设计方面的学习感悟。
 
-hello github
-
-This is [侯祥胡的Git Pages](https://xiangxing98.github.io "侯祥胡的Git Pages") link.
+Hello github，This is [侯祥胡的Git Pages](https://xiangxing98.github.io "侯祥胡的Git Pages") link.
 
 This is [Back to Xiangxing98 Github Profile](https://github.com/xiangxing98 "xiangxing98") inline link.
 
 <h4><a href="Configuring-a-remote-for-a-fork_Syncing-a-fork.html">Configuring-a-remote-for-a-fork_Syncing-a-fork.html</a></h4>
-
 <h4><a href="https://github.com/xiangxing98/">https://github.com/xiangxing98/</a></h4>
-
 <h4><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></h4>
-
 <h4><a href="https://xiangxing98.github.io/Git_CheatSheet">Git_CheatSheet</a></h4>
-
 ## Data Camp - data science
 This is [Data camp](http://www.datacamp.com "Data camp") inline link.
 - Improve your skills - and your career
@@ -91,4 +85,4 @@ git merge upstream/master
 ```
 git push origin master
 ```
-Test 2nd person to update
+Updated @ 2019-07-06
