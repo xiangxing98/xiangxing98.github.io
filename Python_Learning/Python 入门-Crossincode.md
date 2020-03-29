@@ -200,6 +200,7 @@ print，中文意思是打印，在 python 里它不是往纸上打印，而是�
 
 ```python
 print(你要打印的东西)
+print('hello world')
 ```
 
 这里一定要英文字符的括号，所有程序中出现的符号都必须是英文字符，注意别被你的输入法坑了。
@@ -501,6 +502,22 @@ print(you)
 
 今天是周五。我觉得吧，到周末了，大家应该远离一下电脑，多陪陪家人朋友，吃吃饭，出去走走。祝大家周末愉快！
 
+### 两数相加
+
+```python
+# 依次输入两个值，输出这两个值的和
+# 例：
+# 输入
+# 3
+# 4
+# 输出
+# 7
+
+a = int(input())
+b = int(input())
+print(a + b)
+```
+
 <div STYLE="page-break-after: always;"></div>
 
 ## 【Python 第6课】bool
@@ -749,6 +766,168 @@ PS：如果你对本课中的 bingo = False、bingo == False 和 bingo = True �
 ### \#======== 作业练习 ========#
 
 你可以在公众号**Crossin的编程教室**中的**课外辅导**栏目里找到一些 [练习题](http://mp.weixin.qq.com/mp/homepage?__biz=MjM5MDEyMDk4Mw==&hid=3&sn=08af41239ec5d518ac25edb0f9167cc0&scene=18#wechat_redirect)，学了 while 之后，你可以试一试完成 3~6 题。
+
+```python
+# 输出1到100
+
+# 例：
+# 1
+# 2
+# 3
+# ...
+# 100
+
+start_num = 1
+end_num = 100
+
+while start_num <= end_num:
+    print(start_num)
+    start_num = start_num + 1
+```
+
+#### 输出累计求和
+
+于是，利用变量、循环、累加，可以写一个程序，来完成传说中高斯大牛在小时候做过的题：
+
+1+2+3+...+100=?
+
+从1加到100等于多少？
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Sum100.py
+@Time    :   2020/03/28 23:56:07
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+# 输出1+2+3+...+100的和
+# 例：
+# 5050
+
+x = 1
+sum = 0
+
+while x <= 100:
+    sum += x
+    x += 1
+    print("1 to ", x ", the sum is: ", sum)
+
+print("Final Sum of 1 to 100 is: ", sum)
+
+```
+
+提示：你可以用一个变量a记录现在加到几了，再用一个变量b记录加出来的结果，通过while来判断是不是加到100了。
+
+####  输出等比数列前10项
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Output_Proportional_Sequence.py
+@Time    :   2020/03/29 09:05:39
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+# Proportional sequence output
+# 输入一个值，输出以这个值为公比，1为首项的等比数列前10项
+# 例：
+# 输入
+# 2
+# 输出
+# 1
+# 2
+# 4
+# 8
+# 16
+# 32
+# 64
+# 128
+# 256
+# 512
+
+print("Pls input Proportional number")
+
+q = int(input())
+n = 1
+an = 1
+
+while n <= 10:
+    print(an)
+    an *= q
+    n += 1
+
+```
+
+> **有时治愈，常常帮助，总是安慰**。--特鲁多
+
+#### 输出斐波纳契数列的前n项
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Output_Fibonacci_Series.py
+@Time    :   2020/03/29 09:26:04
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+
+# Test_Output_Fibonacci_Series
+# 输入一个大于等于3的值n，输出斐波纳契数列的前n项。
+# 注：斐波纳契数列：1,1,2,3,5,8,13,21...前两项为1，从第3项起，每一项是前两项的和
+
+# 例：
+# 输入
+# 7
+# 输出
+# 1
+# 1
+# 2
+# 3
+# 5
+# 8
+# 13
+
+print("Pls input Fibonacci Series number")
+
+n = int(input())
+x = 3
+a1 = 1
+a2 = 1
+print(a1)
+print(a2)
+
+while x <= n:
+    a3 = a1 + a2
+    print(a3)
+    a1 = a2
+    a2 = a3
+    x += 1
+
+```
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
@@ -1047,21 +1226,476 @@ print(count)
 
 ### \#======== 作业练习 ========#
 
-于是，利用变量、循环、累加，可以写一个程序，来完成传说中高斯大牛在小时候做过的题：
 
-1+2+3+...+100=?
 
-从1加到100等于多少？
+<div STYLE="page-break-after: always;"></div>
+
+## 【Python 第11课】逻辑判断
+
+> https://python666.cn/cls/lesson/12/
+
+之前粗略地提到 **bool 类型**的变量，又说到 if 和 while 的判断条件。有些同学反馈说没怎么理解，为什么一会儿是 bingo=False，一会又是 bingo==False，一会儿是 while 在条件为 True 的时候执行，一会儿又是 while 在 bingo==False 的时候执行。别急，你听我说。
+
+首先，要理解，一个逻辑表达式，其实最终是代表了一个bool类型的结果，比如：
 
 ```python
+1 < 3
+# 这个就像当于是一个True的值
 
+2 == 3
+# 这个就是False
 ```
 
-提示：你可以用一个变量a记录现在加到几了，再用一个变量b记录加出来的结果，通过while来判断是不是加到100了。
+把它们作为判断条件放到 if 或者 while 的后面，就是根据他们的值来决定要不要执行。
+
+同样的栗再来几颗：
+
+```python
+a = 1
+print(a > 3)  # False
+print(a == 2-1)  # True
+
+b = 3
+print(a+b == 2+2)  # True
+```
+
+比较容易搞混的，是bool变量的值和一个逻辑表达式的值，比如：
+
+```python
+a = False
+print(a)  #False
+print(a == False)  #True
+```
+
+虽然 a 本身的值是 False，但是 a==False 这个表达式的值是True。（说人话！）“a”是错的，但“a是错的”这句话是对的。
+
+回到上面那几个概念：
+
+```python
+bingo = False
+```
+
+把bingo设为一个值为False的变量
+
+```python
+bingo == False
+```
+
+判断bingo的值是不是False，如果是，那么这句话就是True
+
+while 在判断条件条件为 True 时执行循环，所以当 bingo==False 时，条件为 True，循环是要执行的。
+
+晕了没？谁刚学谁都晕。不晕的属于骨骼惊奇百年一遇的编程奇才，还不赶紧转行做程序员！
+
+逻辑这东西是初学编程的一大坑，我们后面还要在这个坑里挣扎很久。
+
+留个习题：
+
+```python
+a = True
+b = not a  # 不记得not请回顾 6.bool
+```
+
+想想下面这些逻辑运算的结果，然后用 print 输出看看你想的对不对：
+
+```python
+b
+print(b)
+# False
+
+not b
+# True
+
+a == b
+# False
+
+a != b
+# True
+
+a and b
+# False
+
+a or b
+# True
+
+1<2 and b==True
+# False
+```
+
+
+<div STYLE="page-break-after: always;"></div>
+
+## 【Python 第12课】for循环
+
+> https://python666.cn/cls/lesson/13/
+
+大家对 while 循环已经有点熟悉了吧？今天我们来讲另一种循环语句：
+
+**for ... in ...**
+
+同 while 一样，for 循环可以用来重复做一件事情。在某些场景下，它比 while 更好用。
+
+比如之前的一道习题：**输出1到100**（公众号中的练习题3）。
+
+我们用while来做，需要有一个值来记录已经做了多少次，还需要在 while 后面判断是不是到了100。
+
+如果用for循环，则可以这么写：
+
+```python
+for i in range(1, 101):
+   print(i)
+```
+
+解释一下，**range(1, 101)** 表示从1开始，到101为止（不包括101，注意这里和 randint 不一样），取其中所有的整数。
+
+**for i in range(1, 101)** 就是说，把这些数，依次赋值给变量i。
+
+相当于一个一个循环过去，第一次 i = 1，第二次 i = 2，……，直到 i = 100。当 i = 101 时跳出循环。
+
+所以，当你需要一个循环10次的循环，你就只需要写：
+
+```python
+for i in range(1, 11)
+```
+
+或者
+
+```python
+for i in range(0, 10)
+```
+
+区别在于前者i是从1到10，后者 i 是从0到9。当然，你也可以不用 i 这个变量名，换成其他合法的变量名也可以。
+
+比如一个循环n次的循环：
+
+```python
+for count in range(0, n)
+```
+
+for 循环的本质是对一个序列中的元素进行遍历。什么是序列，以后再说。先记住这个最简单的形式：
+
+```python
+for i in range(a, b)
+```
+
+就是从 a 循环至 b-1
+
+现在，你可以用 for 循环来改写 [习题3~习题6](http://mp.weixin.qq.com/mp/homepage?__biz=MjM5MDEyMDk4Mw==&hid=3&sn=08af41239ec5d518ac25edb0f9167cc0&scene=18#wechat_redirect) 了。（小程序无法跳转的话可从公众号内菜单进入习题）
+
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+<div STYLE="page-break-after: always;"></div>
+
+
+
+## 每日一题
+
+> https://res.crossincode.com/wechat/exercise.html
+
+### 找数字
+
+```python
+# 今天的坑： 
+# 有一个字符串 
+# text = "aAsmr3idd4bgs7Dlsf9eAF" 
+# 请将text字符串中的数字取出，并输出成一个新的字符串。 
+
+上一个坑，取出字符串中的数字，在论坛上出现了好几种方法。除了基本的遍历判断来做外，还有一些简便的python解法：
+
+1.正则
+''.join(re.findall(r'\d+',text))
+
+2.isdigit
+''.join([i for i in text if i.isdigit()])
+[i for i in test]这是一种生成list的方法，通过后面的if可以增加生成时的过滤条件。这种写法在python中很常用。
+
+3.filter
+filter(lambda x: x.isdigit(), text)
+filter是一个过滤器，其中的lambda表达式是过滤的条件。这个稍微高深了一点，有兴趣的同学可以去搜索一下“lambda表达式”。
+```
+
+### 查找文件
+
+```python
+# 找出指定文件夹中的所有以txt结尾的文件，包括所有嵌套的子文件夹。
+# 解决这个问题的好方法就是用os模块的walk方法，它可以遍历一个文件夹下的所有文件，包括嵌套的子文件夹。
+# 这里给一个示例代码：
+import os
+import fnmatch
+
+def findfile(inputdir):
+    txtlist = []
+    for parent, dirnames, filename in os.walk(inputdir):
+        print filename
+        for filenames in filename:
+            txtlist.append(filenames)
+    return fnmatch.filter(txtlist, '*.txt')
+
+# 这里还用到了fnmatch模块的filter方法，用了匹配符合规定的文件名。
+# 当然你也可以用字符串的endswith来做。
+```
+
+### 文字竖排
+
+```python
+# 把一段字符串用“右起竖排”的古文格式输出，并且拿竖线符号作为每一列的分割符。
+# 比如这段文字：
+"静夜思 李白床前明月光，疑似地上霜。举头望明月，低头思故乡。"
+
+输出结果：
+
+低┊举┊疑┊床┊静
+头┊头┊似┊前┊夜
+思┊望┊地┊明┊思
+故┊明┊上┊月┊ 
+乡┊月┊霜┊光┊李
+。┊，┊。┊，┊白
+
+# 你可以选择按标点划分成新队列，或者按照固定长度划分新队列，
+# 然后再按照元素在队列中的位置，重新整合成新队列输出。
+# 具体实现就不在微信里发了。
+```
+
+### 查找文件内容
+
+```python
+# 今天就是在之前“查找文件”的基础上，增加对文件内容的检索。
+
+# 仍然是设定某个文件夹，不同的是要再增加一个文本参数，然后列出这个文件夹（含所有子文件夹）里，
+# 所有文件内容包括这个搜索文本的文件。
+```
 
 
 
