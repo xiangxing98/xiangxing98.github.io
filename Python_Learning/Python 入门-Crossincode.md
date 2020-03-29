@@ -1299,27 +1299,31 @@ b = not a  # 不记得not请回顾 6.bool
 想想下面这些逻辑运算的结果，然后用 print 输出看看你想的对不对：
 
 ```python
+a = True
+b = not a  # 不记得not请回顾 6.bool
+
 b
 print(b)
 # False
 
-not b
+print(not b)
 # True
 
-a == b
+print(a == b)
 # False
 
-a != b
+print(a != b)
 # True
 
-a and b
+print(a and b)
 # False
 
-a or b
+print(a or b)
 # True
 
-1<2 and b==True
+print(1 < 2 and b == True)
 # False
+
 ```
 
 
@@ -1343,7 +1347,8 @@ a or b
 
 ```python
 for i in range(1, 101):
-   print(i)
+    print(i)
+
 ```
 
 解释一下，**range(1, 101)** 表示从1开始，到101为止（不包括101，注意这里和 randint 不一样），取其中所有的整数。
@@ -1382,10 +1387,275 @@ for i in range(a, b)
 
 现在，你可以用 for 循环来改写 [习题3~习题6](http://mp.weixin.qq.com/mp/homepage?__biz=MjM5MDEyMDk4Mw==&hid=3&sn=08af41239ec5d518ac25edb0f9167cc0&scene=18#wechat_redirect) 了。（小程序无法跳转的话可从公众号内菜单进入习题）
 
+### \#======== 作业练习 ========#
 
+#### 输出累计求和
+
+于是，利用变量、循环、累加，可以写一个程序，来完成传说中高斯大牛在小时候做过的题：
+
+1+2+3+...+100=?
+
+从1加到100等于多少？
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Sum100_for.py
+@Time    :   2020/03/29 10:25:34
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+# 输出1+2+3+...+100的和
+# 例：
+# 5050
+
+x = 1
+sum = 0
+
+for x in range(1, 101):
+    sum += x
+    x += 1
+    print("1 to ", x-1, ", the sum is: ", sum)
+
+print("Final Sum of 1 to 100 is: ", sum)
+
+```
+
+提示：你可以用一个变量a记录现在加到几了，再用一个变量b记录加出来的结果，通过while来判断是不是加到100了。
+
+####  输出等比数列前10项
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Output_Proportional_Sequence_for.py
+@Time    :   2020/03/29 10:28:38
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+# Proportional sequence output
+# 输入一个大于等于3的值n，输出斐波纳契数列的前n项。
+# # 注：斐波纳契数列：1,1,2,3,5,8,13,21...前两项为1，从第3项起，每一项是前两项的和
+
+# 例：
+# 输入
+# 7
+# 输出
+# 1
+# 1
+# 2
+# 3
+# 5
+# 8
+# 13
+
+print("Pls input Proportional number")
+
+q = int(input())
+n = 1
+an = 1
+
+for n in range(1, q):
+    print(an)
+    an *= q
+    n += 1
+
+```
+
+> **有时治愈，常常帮助，总是安慰**。--特鲁多
+
+#### 输出斐波纳契数列的前n项
+
+```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   Test_Output_Fibonacci_Series_for.py
+@Time    :   2020/03/29 10:31:04
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+
+# Test_Output_Fibonacci_Series
+# 输入一个大于等于3的值n，输出斐波纳契数列的前n项。
+# 注：斐波纳契数列：1,1,2,3,5,8,13,21...前两项为1，从第3项起，每一项是前两项的和
+
+# 例：
+# 输入
+# 7
+# 输出
+# 1
+# 1
+# 2
+# 3
+# 5
+# 8
+# 13
+
+print("Pls input Fibonacci Series number")
+
+n = int(float(input()))
+x = 3
+a1 = 1
+a2 = 1
+print(a1)
+print(a2)
+
+for x in range(1, n):
+    a3 = a1 + a2
+    print(a3)
+    a1 = a2
+    a2 = a3
+    x += 1
+
+```
 
 
 <div STYLE="page-break-after: always;"></div>
+
+## 【Python 第13课】字符串
+
+> https://python666.cn/cls/lesson/14/
+
+字符串就是一组字符的序列（序列！又见序列！还记得我在说 for 循环的时候就提到过的序列吗？今天仍然不去细说它。），它一向是编程中的常见问题。之前我们用过它，以后我们还要不停地用它。
+
+python中最常用的字符串表示方式是单引号（''）和双引号（""）。我还是要再说：一定得是英文标点！
+
+**'string'** 和 **"string"** 对于 Python 来说效果是一样的。
+
+可以直接输出一个字符串
+
+```python
+print('good')
+```
+
+也可以用一个变量来保存字符串，然后输出
+
+```python
+str = "bad"
+print(str)
+```
+
+如果你想表示一段带有英文单引号或者双引号的文字，那么表示这个字符串的引号就要与内容区别开。
+
+内容带有单引号，就用双引号表示
+
+```python
+"It's good"
+```
+
+反之亦然
+
+```python
+'You are a "BAD" man'
+```
+
+还有一种在字符串中表示引号的方法，就是用 **\**，可以不受引号的限制
+
+**\'** 表示单引号，**\"** 表示双引号
+
+```python
+'I\'m a \"good\" teacher'
+```
+
+**\** 被称作**转义字符**，除了用来表示引号，还有比如用
+
+- ***\*\n\** 表示字符串中的换行（相当于按一下回车键的效果）**
+- ***\*\t\** 表示字符串中的制表符（相当于按一下tab键的效果）**
+- ***\*\\*\* 表示字符串中的 \**\*\*** （因为单个斜杠被用来做转义了，所以真的要表示 \ 字符，就要两个斜杠）
+
+**\\** 还有个用处，就是用来在代码中换行，而不影响输出的结果：
+
+```python
+"this is the \
+same line"
+```
+
+这个字符串仍然只有一行，和
+
+```python
+"this is the same line"
+```
+
+是一样的，只是在代码中换了行。当你要写一行很长的代码时，这个会派上用场。
+
+python中还有一种表示字符串的方法：
+
+三个引号（'''）或者（"""）
+
+在三个引号中，你可以方便地使用单引号和双引号，并且可以直接换行
+
+```python
+'''
+"What's your name?" I asked.
+"I'm Han Meimei."
+'''
+```
+
+### \#======== 课后作业 =========#
+
+用print输出以下文字：
+
+```markup
+#1
+He said, "I'm yours!"
+
+#2
+\\_v_//
+
+#3
+Stay hungry,
+stay foolish.
+             -- Steve Jobs
+
+#4
+*
+***
+*****
+***
+*
+
+#5 
+输入一个大于等于1的值n，输出星号（*）组成的等腰三角形，底边长为n
+
+例：
+输入
+3
+输出
+  *
+ * *
+* * *
+
+
+n = input()
+for i in range(1, n+1): # n row
+   for j in range(0, n-i): # i row, need n-1 blank
+      print(' ',end='')
+   for j in range(0, i): # i row, need i *
+      print('*',end='')
+   print() # blank row
+```
+
+ 
 
 
 <div STYLE="page-break-after: always;"></div>
