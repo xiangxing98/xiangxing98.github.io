@@ -88,6 +88,8 @@ rows = int(input('输入列数：'))
 for i in range(1, rows):
     print('*'*i)
 
+
+
 # 打印等腰直角三角形
 print("-------------------\n打印等腰直角三角形\n")
 for i in range(1, 5):

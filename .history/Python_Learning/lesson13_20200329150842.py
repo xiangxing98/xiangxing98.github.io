@@ -50,44 +50,6 @@ stay foolish.\n\
 # ***
 # *
 
-# （1）先打印一个星号并换行
-print("-------------------")
-print("先打印一个星号并换行\n")
-print("*")
-print("\n-------------------")
-
-# （2）打印一行6个列星号
-print("-------------------")
-print("打印一行6个星号\n")
-for i in range(6):
-    print("*", end=" ")
-print("\n-------------------")
-
-# （3）打印6行1列星号
-print("-------------------")
-print("打印6行1列星号\n")
-for i in range(6):
-    print("*")
-print("\n-------------------")
-
-# （4）打印6行6列
-for i in range(6):
-    for j in range(6):
-        print("*", end=" ")
-        # 每打印一行就换行
-    print("")
-# * * * * * *
-# * * * * * *
-# * * * * * *
-# * * * * * *
-# * * * * * *
-# * * * * * *
-
-
-rows = int(input('输入列数：'))
-for i in range(1, rows):
-    print('*'*i)
-
 # 打印等腰直角三角形
 print("-------------------\n打印等腰直角三角形\n")
 for i in range(1, 5):
@@ -95,7 +57,6 @@ for i in range(1, 5):
         if j >= i:
             print("*")
     print("\n")
-
 print("-------------------\n")
 
 # Practice #05
@@ -110,8 +71,7 @@ print("-------------------\n")
 # * * *
 
 print("-------------------\n输出星号（*）组成的等腰三角形，底边长为n\n")
-# n = int(input())
-n = 8
+n = int(input())
 for i in range(1, n+1):  # n row
     for j in range(0, n-i):  # i row, need n-1 blank
         print(' ', end='')
@@ -245,8 +205,7 @@ print("-------------------\n")
 
 # 直角三角形
 print("-------------------\n打印直角三角形\n")
-# rows = int(input('输入列数：'))
-rows = 5
+rows = int(input('输入列数：'))
 for i in range(1, rows):
     print('*' * i)
 

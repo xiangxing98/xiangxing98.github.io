@@ -44,7 +44,7 @@ Why这个公众账号？
 
 好了，就这么多。不出意外的话，明天大家就能看到第一个Python程序了。还是那句话，希望我坚持下去的话，请推荐更多的人来关注，虽然只要还有一个人在听，我就尽力坚持，但更多的人听，我就更能坚持啦！
 
-<div STYLE="page-break-after: always;"></div>
+ <div STYLE="page-break-after: always;"></div>
 
 ## 【Python 第1课】安装
 
@@ -1526,6 +1526,7 @@ for x in range(1, n):
     x += 1
 
 ```
+
 
 <div STYLE="page-break-after: always;"></div>
 
