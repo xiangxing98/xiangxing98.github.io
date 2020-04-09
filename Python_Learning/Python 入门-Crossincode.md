@@ -1799,14 +1799,259 @@ for i in range(0, rows):
 ```
 
 
+<div STYLE="page-break-after: always;"></div>
 
+## 【Python 第14课】字符串格式化
 
-<div STYLE="page-break-after: always;"></div>
+> https://python666.cn/cls/lesson/15/
+
+我们在输出字符串的时候，如果想对输出的内容进行一些整理，比如把几段字符拼接起来，或者把一段字符插入到另一段字符中间，就需要用到**字符串的格式化输出**。
+
+先从简单的开始，如果你想把两段字符连起来输出
+
+```python
+str1 = 'good'
+str2 = 'bye'
+```
+
+你可以
+
+```python
+print(str1 + str2)
+```
+
+或者还可以把字符变量一个字符串相加
+
+```python
+print('very' + str1)
+print(str1 + ' and ' + str2)
+```
+
+但如果你想要把一个数字加到文字后面输出，比如这样
+
+```python
+num = 18
+print('My age is' + num)
+```
+
+程序就会报错。因为字符和数字不能直接用 **+** 相加。
+
+一种解决方法是，用str()把数字转换成字符串
+
+```python
+print('My age is' + str(18))
+```
+
+或
+
+```python
+num = 18
+print('My age is' + str(num))
+```
+
+还有一种方法，就是用 **%** 对字符串进行**格式化**
+
+```python
+num = 18
+print('My age is %d' % num)
+```
+
+输出的时候，原始字符串中的 **%d** 会被 **%** 后面的值替换。输出
+
+**My age is 18**
+
+这里，**%d** 只能用来替换整数。如果你想格式化的数值是小数，要用 **%f**
+
+```python
+print('Price is %f' % 4.99)
+```
+
+输出
+
+**Price is 4.990000**
+
+如果你想保留两位小数，需要在f前面加上条件：**%.2f**
+
+```python
+print('Price is %.2f' % 4.99)
+```
+
+输出
+
+**Price is 4.99**
+
+另外，可以用 **%s** 来替换一段字符串
+
+```python
+name = 'Crossin'
+print('%s is a good teacher.' % name)
+```
+
+输出
+
+**Crossin is a good teacher.**
 
+或者
 
+```python
+print('Today is %s.' % 'Friday' )
+```
+
+输出
+
+**Today is Friday.**
+
+注意区分：有引号的表示一段字符，没有引号的就是一个变量，这个变量可能是字符，也可能是数字，但一定要和%所表示的格式相一致。
+
+### \#======== 课后作业 =========#
+
+现在，试试看用字符串格式化改进一下之前你写的小游戏。
+
+比如你输了一个数字72，程序不仅只是告诉你大了还是小了，而是会回答你
+
+**72 is too small.**
+
+或者
+
+**Bingo, 72 is the right answer!**
+
+```python
+# Practice
+
+from random import randint
+num = randint(1, 100)
+
+print('Guess what I think?')
+bingo = False
+count = 0
+
+while bingo == False:
+    count += 1
+    answer = int(input())
+    if answer < num:
+        print(str(answer) + ' is too small! Guess Again')
+    if answer > num:
+        print(str(answer) + ' is too big! Guess Again')
+    if answer == num:
+        print('BINGO! ' + str(answer) + ' is the Right Answer,\
+            Stop Guessing, and Print Guess time Count')
+        bingo = True
+
+print('Your Guessing Count is %d' % count)
+
+```
+
 <div STYLE="page-break-after: always;"></div>
+
+## 【Python 第15课】循环的嵌套
+
+> https://python666.cn/cls/lesson/15/
+
+设想一样，如果我们要输出5个 *，用 for 循环可以这么写：
+
+```python
+for i in range(0, 5):
+    print('*')
+```
+
+如果想让这5个*在同一行，需要加上 end 参数，使得 print 之后不换行：
+
+```python
+for i in range(0, 5):
+    print('*', end=' ')
+```
+
+end 参数的作用是指定 print 结束之后的字符，默认是回车。你可以试试设置成不同字符的效果。
+
+现在，如果我想要这样一个图形，怎么办？
+
+```markup
+* * * * *
+* * * * *
+* * * * *
+* * * * *
+* * * * *
+```
+
+当然，你可以循环5次，每次输出一行 “*** \* \* \* \***” 。那如果再进一步，这样呢？
+
+```markup
+*
+**
+***
+****
+*****
+```
+
+除了你自己动手打好一个多行字符串外，也可以让程序帮我们解决这种问题，我们需要的是两个嵌套在一起的循环：
+
+```python
+for i in range(0, 3):
+    for j in range(0, 3):
+        print(i, j)
+```
+
+第二个 for 循环在第一个 for 循环的内部，表示每一次外层的循环中，都要进行一整遍内层的循环。
+
+print 里面用逗号分割，可以连续输出多个不同的值。
+
+看一下输出的结果：
+
+```markup
+0 0
+0 1
+0 2
+1 0
+1 1
+1 2
+2 0
+2 1
+2 2
+```
 
+内层循环中的 print 语句一共被执行了 9 次。
 
+i 从0到2循环了3次。对应于每一个 i 的值，j 又做了从0到2三次循环。所以3*3一共9次。
+
+所以如果要输出一个5*5的方阵图案，我们可以
+
+```python
+for i in range(0, 5):
+    for j in range(0, 5):
+        print('*', end=' ')
+    print()
+```
+
+注意：第二个 print 的缩进和内层的 for 是一样的，这表明它是不是内层 for 循环中的语句，每次 i 的循环中，它只会在内循环执行完之后执行一次。
+
+print 的括号里没有写任何东西，是起到换行的作用，这样，每输出5个*，就会换行。
+
+要输出第二个三角图案时，我们需要根据当前外层循环的序数，设置内层循环应当执行的次数。
+
+```python
+for i in range(0, 5):
+    for j in range(0, i+1):
+        print('*', end=' ')
+    print()
+```
+
+内层的j每次从0到 i+1 进行循环。
+
+这样，当第一次 i=0 时，j 就是 range(0,1)，只输出1个*。
+
+而当最后一次 i=4 时，j 就是 range(0,5)，输出5个*。
+
+### ==#====== 扩展阅读 =========#
+
+最后顺便说下，如果有同学用的是 PyCharm，或者其他第三方 IDE，可以通过 debug 中的 step 按钮，查看程序是怎样一行一行运行的。IDLE在这方面做得不太好，虽然也可以步进调试，但是很麻烦且不直观，所以就不推荐去用了。
+
+想了解这种执行方式的，可以查看 [如何在 Python 中使用断点调试](https://zhuanlan.zhihu.com/p/21304838)
+
+![img](https://cdn.py2china.cn/wechat/pystart/15-0.png)
+
+ 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 
@@ -2030,8 +2275,126 @@ for i in range(0, rows):
 
 
 <div STYLE="page-break-after: always;"></div>
+
+## 【Python 第61课】调试程序
+
+> https://python666.cn/cls/lesson/63/
+
+写代码，不可避免地会出现bug。很多人在初学编程的时候，当写完程序运行时，发现结果与自己预料中的不同，或者程序意外中止了，就一时没了想法，不知道该从何下手，只能反复重新运行程序，期待忽然有次结果就对了。
+
+今天我就来讲讲代码遇到问题时的一些简单处理方法。
+
+### 1. 读错误信息
+
+来看如下一个例程：
+
+```python
+import random
+a = 0
+for i in range(5):
+    b = random.choice(range(5))
+    a += i / b
+print (a)
+```
+
+这个程序中，i从0循环到4，每次循环中，b是0到4中的一个随机数。把i/b的结果累加到a上，最后输出结果。
+
+运行这段程序，有时候会输出结果，有时候却跳出错误信息：
+
+```bash
+Traceback (most recent call last):
+
+ File "C:\Users\Crossin\Desktop\py\test.py", line 5, in <module>
+
+  a += i / b
+
+ZeroDivisionError: integer division or modulo by zero
+
+```
+
+有些同学看见一段英文提示就慌了。其实没那么复杂，python的错误提示做得还是很标准的。
+
+它告诉我们错误发生在test.py文件中的第5行
 
+```python
+a += i / b
+```
 
+这一句上。
+
+这个错误是“ZeroDivisionError”，也就是除零错。
+
+“integer division or modulo by zero”，整数被0除或者被0模(取余数)。
+
+因为0不能作为除数，所以当b随机到0的时候，就会引发这个错误。
+
+知道了原因，就可以顺利地解决掉这个bug。
+
+以后在写代码的时候，如果遇到了错误，先别急着去改代码。试着去读一读错误提示，看看里面都说了些啥。
+
+### 2. 输出调试信息
+
+我们在所有课程的最开始就教了输出函数“print”。它是编程中最简单的调试手段。有的时候，仅从错误提示仍然无法判断出程序错误的原因，或者没有发生错误，但程序的结果就是不对。这种情况下，通过输出程序过程中的一些状态，可以帮助分析程序。
+
+把前面那个程序改造一下，加入一些与程序功能无关的输出语句：
+
+```python
+import random
+a = 0
+for i in range(5):
+    print ('i: %d' % i)
+    b = random.choice(range(5))
+    print ('b: %d' % b)
+    a += i / b
+    print ('a: %d' % a)
+    print ()
+print (a)
+```
+
+运行后的输出结果（每次结果都会不一样）：
+
+i: 0
+
+b: 3
+
+a: 0
+
+ 
+
+i: 1
+
+b: 3
+
+a: 0
+
+ 
+
+i: 2
+
+b: 3
+
+a: 0
+
+ 
+
+i: 3
+
+b: 0
+
+Traceback (most recent call last):
+
+ File "C:\Users\Crossin\Desktop\py\test.py", line 7, in <module>
+
+  a += i / b
+
+ZeroDivisionError: integer division or modulo by zero
+
+当b的值为0时，发生了除零错。这次可以更清晰地看出程序出错时的状态。
+
+在真实开发中，程序的结构可能会非常复杂。通过输出调试信息，可以有效地缩小范围、定位错误发生的位置，确认错误发生时的场景，进而找出错误原因。
+
+
+<div STYLE="page-break-after: always;"></div>
 
 ## 每日一题
 

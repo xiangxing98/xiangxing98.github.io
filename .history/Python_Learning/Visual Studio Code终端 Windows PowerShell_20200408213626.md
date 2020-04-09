@@ -34,36 +34,3 @@ PS C:\WINDOWS\system32>
 
 3.执行：set-ExecutionPolicy RemoteSigned即可
 
-位于命令管道位置 1 的 cmdlet Set-ExecutionPolicy
-请为以下参数提供值:
-ExecutionPolicy: RemoteSigned
-Set-ExecutionPolicy : 对注册表项“HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell”的访问被拒绝。 要   
-更改默认(LocalMachine)作用域的执行策略，请使用“以管理员身份运行”选项启动 Windows PowerShell。要更改当前用户的执行策略，请运行 "Set-ExecutionPolicy -Scope CurrentUser"。
-所在位置 行:1 字符: 1
-+ Set-ExecutionPolicy
-+ ~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : PermissionDenied: (:) [Set-ExecutionPolicy], UnauthorizedAccessException
-    + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.SetExecutionPolicyCommand
-
-Set-ExecutionPolicy -Scope CurrentUser
-Restricted
-
-conda init 
-
-If using 'conda activate' from a batch script, change your
-invocation to 'CALL conda.bat activate'.
-
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - cmd.exe
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.

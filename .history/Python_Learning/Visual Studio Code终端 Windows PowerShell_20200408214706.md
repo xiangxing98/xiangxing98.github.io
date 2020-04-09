@@ -48,22 +48,3 @@ Set-ExecutionPolicy : 对注册表项“HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Po
 Set-ExecutionPolicy -Scope CurrentUser
 Restricted
 
-conda init 
-
-If using 'conda activate' from a batch script, change your
-invocation to 'CALL conda.bat activate'.
-
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - cmd.exe
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
