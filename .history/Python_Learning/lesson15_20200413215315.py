@@ -49,7 +49,7 @@ for i in range(0, 3):
 # 1 2
 # 2 0
 # 2 1
-# 2 2
+# 2 2   
 
 #  5*5
 for i in range(0, 5):
@@ -72,7 +72,7 @@ print("---\n")
 
 for i in range(0, 5):
     for j in range(0, i+1):
-        print(' ', end='')
+        print(' ', end = '')
         # print('*', end='-')
     print('*', end='-')
 print()
