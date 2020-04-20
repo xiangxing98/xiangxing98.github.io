@@ -925,6 +925,8 @@ while x <= n:
 
 ```
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## 【Python 第9课】random
@@ -1221,6 +1223,8 @@ print(count)
 ```
 
 ### \#======== 作业练习 ========#
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
@@ -2045,6 +2049,8 @@ for i in range(0, 5):
 
 ![img](https://cdn.py2china.cn/wechat/pystart/15-0.png)
 
+
+
 ##【Python 第16课】字符串格式化2
 
 > https://python666.cn/cls/lesson/17/
@@ -2166,6 +2172,8 @@ bool('False')
 bool('')
 ```
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [Python 入门教程](https://python666.cn/cls/lesson/list)
@@ -2178,285 +2186,427 @@ bool('')
 
 ## [1.安装](https://python666.cn/cls/lesson/2)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [2.print](https://python666.cn/cls/lesson/3)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [3.IDE](https://python666.cn/cls/lesson/4)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [4.输入](https://python666.cn/cls/lesson/5)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [5.变量](https://python666.cn/cls/lesson/6)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [6.bool](https://python666.cn/cls/lesson/7)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [7.if](https://python666.cn/cls/lesson/8)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [8.while](https://python666.cn/cls/lesson/9)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [9.random](https://python666.cn/cls/lesson/10)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [10.变量2](https://python666.cn/cls/lesson/11)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [11.逻辑判断](https://python666.cn/cls/lesson/12)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [12.for循环](https://python666.cn/cls/lesson/13)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [13.字符串](https://python666.cn/cls/lesson/14)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [14.字符串格式化](https://python666.cn/cls/lesson/15)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [15.循环的嵌套](https://python666.cn/cls/lesson/16)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [16.字符串格式化2](https://python666.cn/cls/lesson/17)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [17.类型转换](https://python666.cn/cls/lesson/18)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [18.bool类型转换](https://python666.cn/cls/lesson/19)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [19.函数](https://python666.cn/cls/lesson/20)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [20.命令行常用命令](https://python666.cn/cls/lesson/21)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [21.函数的参数](https://python666.cn/cls/lesson/22)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [22.函数应用示例](https://python666.cn/cls/lesson/23)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [23.if, elif, else](https://python666.cn/cls/lesson/24)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [24.if的嵌套](https://python666.cn/cls/lesson/25)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [25.初探list](https://python666.cn/cls/lesson/26)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [26.操作list](https://python666.cn/cls/lesson/27)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [27.list切片](https://python666.cn/cls/lesson/28)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [28.字符串的分割](https://python666.cn/cls/lesson/29)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [29.连接list](https://python666.cn/cls/lesson/30)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [30.字符串的索引和切片](https://python666.cn/cls/lesson/31)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [31.读文件](https://python666.cn/cls/lesson/32)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [32.写文件](https://python666.cn/cls/lesson/33)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [33.处理文件中的数据](https://python666.cn/cls/lesson/34)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [34.break](https://python666.cn/cls/lesson/35)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [35.continue](https://python666.cn/cls/lesson/36)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [36.异常处理](https://python666.cn/cls/lesson/37)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [37.字典](https://python666.cn/cls/lesson/38)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [38.模块](https://python666.cn/cls/lesson/39)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [39.用文件保存游戏（1）](https://python666.cn/cls/lesson/40)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [40.用文件保存游戏（2）](https://python666.cn/cls/lesson/41)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [41.用文件保存游戏（3）](https://python666.cn/cls/lesson/42)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [42.函数的默认参数](https://python666.cn/cls/lesson/43)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [43.查天气（1）](https://python666.cn/cls/lesson/44)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [44.查天气（2）](https://python666.cn/cls/lesson/45)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [45.查天气（3）](https://python666.cn/cls/lesson/46)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [46.面向对象（1）](https://python666.cn/cls/lesson/48)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [47.面向对象（2）](https://python666.cn/cls/lesson/49)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [48.面向对象（3）](https://python666.cn/cls/lesson/50)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [49.面向对象（4）](https://python666.cn/cls/lesson/51)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [50.and-or技巧](https://python666.cn/cls/lesson/52)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [51.元组](https://python666.cn/cls/lesson/53)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [52.数学运算](https://python666.cn/cls/lesson/54)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [53.真值表](https://python666.cn/cls/lesson/55)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [54.正则表达式（1）](https://python666.cn/cls/lesson/56)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [55.正则表达式（2）](https://python666.cn/cls/lesson/57)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [56.正则表达式（3）](https://python666.cn/cls/lesson/58)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [57.正则表达式（4）](https://python666.cn/cls/lesson/59)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [58.正则表达式（5）](https://python666.cn/cls/lesson/60)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [59.随机数](https://python666.cn/cls/lesson/61)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [60.计时](https://python666.cn/cls/lesson/62)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [61.调试程序](https://python666.cn/cls/lesson/63)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [62.python 2 到 3 的新手坑](https://python666.cn/cls/lesson/64)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [63.python shell](https://python666.cn/cls/lesson/65)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [64.列表解析](https://python666.cn/cls/lesson/66)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [65.函数的参数传递（1）](https://python666.cn/cls/lesson/67)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [66.函数的参数传递（2）](https://python666.cn/cls/lesson/68)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [67.函数的参数传递（3）](https://python666.cn/cls/lesson/69)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [68.lambda 表达式](https://python666.cn/cls/lesson/70)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
 ## [69.变量的作用域](https://python666.cn/cls/lesson/71)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [70.map 函数](https://python666.cn/cls/lesson/72)
 
+
+
 <div STYLE="page-break-after: always;"></div>
 
 ## [71.reduce 函数](https://python666.cn/cls/lesson/73)
+
+
 
 <div STYLE="page-break-after: always;"></div>
 
@@ -2877,6 +3027,10 @@ def findfile(inputdir):
 # 仍然是设定某个文件夹，不同的是要再增加一个文本参数，然后列出这个文件夹（含所有子文件夹）里，
 # 所有文件内容包括这个搜索文本的文件。
 ```
+
+
+
+
 
 
 

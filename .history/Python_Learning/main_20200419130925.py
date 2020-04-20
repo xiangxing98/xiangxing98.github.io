@@ -22,7 +22,6 @@
 
 a = 12
 b = 13
-# 推荐
-a, b = b, a
+## 推荐
+a,b = b,a
 # 先生成一个元组(tuple)对象，然后unpack
-print(a, b)

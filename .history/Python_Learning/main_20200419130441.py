@@ -15,14 +15,11 @@
 # url = 'https://xiaoke-asset-prod.kaikeba.com/python_ai/demos/demo1.jpg'
 # ocr_word(url)
 
-# 不推荐
-# temp = a
-# a = b
-# b = a
+## 不推荐
+temp = a
+a = b
+b = a
 
-a = 12
-b = 13
-# 推荐
-a, b = b, a
+## 推荐
+a,b = b,a
 # 先生成一个元组(tuple)对象，然后unpack
-print(a, b)
