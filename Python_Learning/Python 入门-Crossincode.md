@@ -1,6 +1,6 @@
 # Get Started with Python-Python入门
 
-> [crossincode Python入门](https://res.crossincode.com/wechat/python.html), [Python 入门](https://python666.cn/cls/lesson/1/)
+> [crossincode Python入门](https://res.crossincode.com/wechat/python.html), [Python 入门](https://python666.cn/cls/lesson/1/)，[Python 入门教程](https://python666.cn/cls/lesson/list)
 
 [TOC]
 
@@ -2159,118 +2159,143 @@ bool(0) == False
 另外关于bool类型的转换，我们会专门再详细说明。大家可以先试试以下结果的值，自己摸索一下转换成bool类型的规律：
 
 ```python
-bool(-123)
-bool(0)
-bool('abc')
-bool('False')
-bool('')
+# bool
+print("----bool----")
+print(bool(-123))
+# True
+print(bool(0))
+# False
+print(bool('abc'))
+# True
+print(bool('False'))
+# True
+print(bool(''))
+# False
+print(bool(' '))
+# True
+
 ```
 
 <div STYLE="page-break-after: always;"></div>
 
-## [Python 入门教程](https://python666.cn/cls/lesson/list)
+## [【Python 第18课】bool类型转换](https://python666.cn/cls/lesson/19)
+
+> https://python666.cn/cls/lesson/19/
+
+昨天最后留的几句关于bool类型的转换，其中有一行：
+
+```python
+bool('False')
+```
+
+print 一下结果，会发现是 True。这是什么原因？
 
 
 
-<div STYLE="page-break-after: always;"></div>
-## [0.为什么选择 Python 入门？](https://python666.cn/cls/lesson/1)
+因为在python中，其他类型转成 bool 类型时，以下数值会被认为是False：
+
+- **为0的数字**，包括0，0.0
+- **空字符串**，包括''，""
+- 表示空值的 **None**
+- **空集合**，包括()，[]，{}
+
+其他的值都认为是True。
 
 
 
-<div STYLE="page-break-after: always;"></div>
-## [1.安装](https://python666.cn/cls/lesson/2)
+**None** 是 python 中的一个特殊值，表示什么都没有，它和 0、空字符、False、空集合 都不一样。关于集合，我们后面的课程再说。
+
+ 
+
+所以，'False' 是一个包含5个字符的字符串，不是空字符，当被转换成bool类型之后，就得到 True。
+
+同样 bool(' ') 的结果是 True，一个空格也不能算作空字符串。
+
+bool('') 才是False。
 
 
 
-<div STYLE="page-break-after: always;"></div>
-## [2.print](https://python666.cn/cls/lesson/3)
+在 if、while 等条件判断语句里，判断条件会自动进行一次bool的转换。比如
 
+```python
+a = '123'
+if a:
+    print('1. this is not a blank string')
 
+# 这在编程中是很常见的一种写法。效果等同于
+# equals to
+a = '123'
+if bool(a) == True:
+    print('2. this is not a blank string')
 
-<div STYLE="page-break-after: always;"></div>
-## [3.IDE](https://python666.cn/cls/lesson/4)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [4.输入](https://python666.cn/cls/lesson/5)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [5.变量](https://python666.cn/cls/lesson/6)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [6.bool](https://python666.cn/cls/lesson/7)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [7.if](https://python666.cn/cls/lesson/8)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [8.while](https://python666.cn/cls/lesson/9)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [9.random](https://python666.cn/cls/lesson/10)
-
-
-
-<div STYLE="page-break-after: always;"></div>
-## [10.变量2](https://python666.cn/cls/lesson/11)
-
-
+# equals to
+a = '123'
+if a != '':
+    print('3. this is not a blank string')
+```
 
 <div STYLE="page-break-after: always;"></div>
-## [11.逻辑判断](https://python666.cn/cls/lesson/12)
+## [【Python 第19课】函数](https://python666.cn/cls/lesson/20)
 
+数学上的函数，是指给定一个输入，就会有唯一输出的一种对应关系。编程语言里的函数跟这个意思差不多，但也有不同。
 
+编程中所说的函数，就是一堆语句组成的语句块，这个语句块有个名字，你可以在需要时反复地使用这块语句。它**有可能**需要输入，**有可能**会返回输出。
 
-<div STYLE="page-break-after: always;"></div>
-## [12.for循环](https://python666.cn/cls/lesson/13)
+ 
 
+举一个现实中的场景：我们去餐厅吃饭，跟服务员点了菜，过了一会儿，服务员把做好的菜端上来。
 
+1. 餐厅的厨房就可以看作是一个函数
+2. 我们点的菜单，就是给这个函数的参数（对函数来说就是输入）
+3. 厨师在厨房里做菜的过程就是这个函数的执行过程
+4. 做好的菜是返回结果，返回到我们的餐桌上（函数的返回值）
 
-<div STYLE="page-break-after: always;"></div>
-## [13.字符串](https://python666.cn/cls/lesson/14)
+ 
 
+我们之前已经用到过 python 里内建的函数，比如 input 和 range。
 
+ 
 
-<div STYLE="page-break-after: always;"></div>
-## [14.字符串格式化](https://python666.cn/cls/lesson/15)
+以 **range(1,10)** 为例，range 是这个函数的名称，后面括号里的1和10是 range 需要的参数。它有返回结果，就是一个从1到9的序列生成器（暂时你可以理解为，就是1~9九个数字）。
 
+ 
 
+再来看 **input()**，括号里面什么都没有，表示我们没有给参数。函数执行过程中，需要我们从控制台输入一个值。函数的返回结果就是我们输入的内容。
 
-<div STYLE="page-break-after: always;"></div>
-## [15.循环的嵌套](https://python666.cn/cls/lesson/16)
+ 
 
+PS：range 还可以接受1个或3个参数，input也可以接受1个字符串参数。可以等我之后几课来讲，或者尝试在网上搜索下“*python range 参数*”。
 
+ 
 
-<div STYLE="page-break-after: always;"></div>
-## [16.字符串格式化2](https://python666.cn/cls/lesson/17)
+如果我们要自己写一个函数，就需要去 **定义** 它。python里的关键字叫 def（define的缩写），格式如下：
 
+```python
+def sayHello():
+   print ('hello world!')
+```
 
+ 
 
-<div STYLE="page-break-after: always;"></div>
-## [17.类型转换](https://python666.cn/cls/lesson/18)
+sayHello 是这个函数的名字，后面的括号里是参数，这里没有，表示不需要参数。但括号和后面的冒号都不能少。下面缩进的代码块就是整个函数的内容，称作函数体。
 
+ 
 
+然后我们去调用这个函数，就是用函数名加上括号，有必要的话，括号里放参数：
 
-<div STYLE="page-break-after: always;"></div>
-## [18.bool类型转换](https://python666.cn/cls/lesson/19)
+```python
+sayHello()
+```
 
+ 
 
+得到和直接执行print ('hello world!')一样的结果。
 
-<div STYLE="page-break-after: always;"></div>
-## [19.函数](https://python666.cn/cls/lesson/20)
+ 
 
+![img](https://cdn.py2china.cn/wechat/pystart/19-0.png)
 
+ 
 
 <div STYLE="page-break-after: always;"></div>
 ## [20.命令行常用命令](https://python666.cn/cls/lesson/21)
@@ -2815,3 +2840,21 @@ value = int(input())
 - 字符串及编码相关有大变动，简单来说就是原来的str变成了新的bytes，原来的unicode变成了新的str。具体内容比较多，可以公众号回复 **编码**，有一篇专门讲3的字符编码问题
 
 变动不止这些，这里仅列出初学者比较常见的几个。更多问题可以给我们留言，或者在 bbs.crossincode.com 上发帖提问，看到后会回复。
+
+
+
+## 参考
+
+有时候看书难以理解的时候，就可以看看相关的视频或者学习网站增加理解，下面推荐几个学习的视频网站和学习网站
+
+**1.**[廖雪峰Python3教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)
+
+**2.**[Python快速教程 - Vamei - 博客园](https://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html)
+
+**3.**[实验楼 - 在线做实验，高效学编程](https://www.shiyanlou.com/)
+
+**4.**[python教程_python基础教程_python视频教程-慕课网](https://www.imooc.com/course/list%3Fc%3Dpython)
+
+**5.**[Python 基础教程 | 菜鸟教程](http://www.runoob.com/python/python-tutorial.html)
+
+**6.**[Python 官方文档](https://www.python.org/)

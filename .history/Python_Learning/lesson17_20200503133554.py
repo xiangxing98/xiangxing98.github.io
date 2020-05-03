@@ -29,40 +29,8 @@ print(a, type(a))
 # TypeError: can only concatenate str (not "int") to str
 # 发生异常: TypeError
 # can only concatenate str (not "int") to str
-# File "F:\Github\xiangxing98.github.io\Python_Learning\lesson17.py"
+# File "F:\Github\xiangxing98.github.io\Python_Learning\lesson17.py", 
 # line 28, in <module>
 # print('Hello'+1)
-print('Hello'+str(1))
-# Hello1
 
-# print('hello%d' % '123')
-# 发生异常: TypeError
-# %d format: a number is required, not str
-print("Change String to integer\n")
-print('hello%d' % int('123'))
-# hello123
-
-# Those statement all true
-print(int('123') == 123)
-# True
-print(float('3.3') == 3.3)
-# True
-print(str(111) == '111')
-# True
-# bool(0) == False
-print(bool(0) == False)
-
-# bool
-print("----bool----")
-print(bool(-123))
-# True
-print(bool(0))
-# False
-print(bool('abc'))
-# True
-print(bool('False'))
-# True
-print(bool(''))
-# False
-print(bool(' '))
-# True
+print('hello%d' % '123')

@@ -33,7 +33,6 @@ print(a, type(a))
 # line 28, in <module>
 # print('Hello'+1)
 print('Hello'+str(1))
-# Hello1
 
 # print('hello%d' % '123')
 # 发生异常: TypeError
@@ -50,19 +49,17 @@ print(float('3.3') == 3.3)
 print(str(111) == '111')
 # True
 # bool(0) == False
-print(bool(0) == False)
+print(if(bool(0): ))
 
 # bool
-print("----bool----")
-print(bool(-123))
+print("bool \n")
+bool(-123)
 # True
-print(bool(0))
+bool(0)
 # False
-print(bool('abc'))
+bool('abc')
 # True
-print(bool('False'))
+bool('False')
 # True
-print(bool(''))
+bool('')
 # False
-print(bool(' '))
-# True

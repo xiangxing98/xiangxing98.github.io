@@ -33,7 +33,6 @@ print(a, type(a))
 # line 28, in <module>
 # print('Hello'+1)
 print('Hello'+str(1))
-# Hello1
 
 # print('hello%d' % '123')
 # 发生异常: TypeError
