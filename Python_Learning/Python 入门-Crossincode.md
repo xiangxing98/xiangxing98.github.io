@@ -595,6 +595,101 @@ print(result)
 
 现在数数你手上的工具：**输入**、**输出**，用来记录数值的**变量**，还有可以比较数值大小的**逻辑运算**。用它们在你的python里折腾一番吧。
 
+### Python中的True, False条件判断
+
+在Python中如果condition为 ''，()，[]，{}，None，set()那么该条件为Flase,否则为True。
+
+```python
+# 在Python中如果condition为 ''，()，[]，{}，None，set()那么该条件为False,否则为True。
+ if (condition)：
+     doSomething()
+    
+# 1.针对字符串的测试
+condition1 = ''
+if condition1:
+    print('condition1 True')
+else:
+    print('condition1 False')
+# False
+    
+condition2 = 'test'
+if condition2:
+    print('condition2 True')
+else:
+    print('condition2 False')
+# True
+    
+# 2.针对原组的测试
+condition3 = ()
+if condition3:
+    print('condition3 True')
+else:
+    print('condition3 False')
+# False
+
+condition4 = (1, 2)
+if condition4:
+    print('condition4 True')
+else:
+    print('condition4 False')
+# True
+
+# 3.针对列表的测试
+condition5 = []
+if condition5:
+    print('condition5 True')
+else:
+    print('condition5 False')
+# False
+
+condition6 = ['a','b']
+if condition6:
+    print('condition6 True')
+else:
+    print('condition6 False')
+# True
+
+# 4.针对字典的测试
+condition7 = {}
+if condition7:
+    print('condition7 True')
+else:
+    print('condition7 False')
+# False
+condition8 = {'k':'v'}
+if condition8:
+    print('condition8 True')
+else:
+    print('condition8 False')
+# True
+
+# 5.针对None的测试
+condition9 = None
+if condition9:
+    print('condition9 True')
+else:
+    print('condition9 False')
+# False
+
+# 6.针对set()的测试
+condition10 = set()
+if condition10:
+    print('condition10 True')
+else:
+    print('condition10 False')
+# False
+
+condition11 = condition10.add('a')
+if condition11:
+    print('condition11 True')
+else:
+    print('condition11 False')
+# True
+
+```
+
+
+
 ### \#======== 课外的话 ========#
 
 闲扯还是要的。有同学问，为什么这个语言要叫python。这个嘛，它肯定不是我起的。python，读作“派森”（差不多啦），中文意思“巨蟒”。其实是一个喜剧团体用了“Monty Python”这个名字，而python的创造者（Guido van Rossum 老爷子）又是他们的电视节目《Monty Python and the Flying Circus》（巨蟒飞行马戏团）的粉丝。当他还在自娱自乐地折腾python的雏形时，就拿来命了名。所以，你要是发明了一种语言，也可以命名个 GoT、TBBT、zhenhuan 之类的。
@@ -2241,8 +2336,6 @@ if a != '':
 
 编程中所说的函数，就是一堆语句组成的语句块，这个语句块有个名字，你可以在需要时反复地使用这块语句。它**有可能**需要输入，**有可能**会返回输出。
 
- 
-
 举一个现实中的场景：我们去餐厅吃饭，跟服务员点了菜，过了一会儿，服务员把做好的菜端上来。
 
 1. 餐厅的厨房就可以看作是一个函数
@@ -2250,23 +2343,13 @@ if a != '':
 3. 厨师在厨房里做菜的过程就是这个函数的执行过程
 4. 做好的菜是返回结果，返回到我们的餐桌上（函数的返回值）
 
- 
-
 我们之前已经用到过 python 里内建的函数，比如 input 和 range。
-
- 
 
 以 **range(1,10)** 为例，range 是这个函数的名称，后面括号里的1和10是 range 需要的参数。它有返回结果，就是一个从1到9的序列生成器（暂时你可以理解为，就是1~9九个数字）。
 
- 
-
 再来看 **input()**，括号里面什么都没有，表示我们没有给参数。函数执行过程中，需要我们从控制台输入一个值。函数的返回结果就是我们输入的内容。
 
- 
-
 PS：range 还可以接受1个或3个参数，input也可以接受1个字符串参数。可以等我之后几课来讲，或者尝试在网上搜索下“*python range 参数*”。
-
- 
 
 如果我们要自己写一个函数，就需要去 **定义** 它。python里的关键字叫 def（define的缩写），格式如下：
 
@@ -2275,11 +2358,7 @@ def sayHello():
    print ('hello world!')
 ```
 
- 
-
 sayHello 是这个函数的名字，后面的括号里是参数，这里没有，表示不需要参数。但括号和后面的冒号都不能少。下面缩进的代码块就是整个函数的内容，称作函数体。
-
- 
 
 然后我们去调用这个函数，就是用函数名加上括号，有必要的话，括号里放参数：
 
@@ -2287,30 +2366,206 @@ sayHello 是这个函数的名字，后面的括号里是参数，这里没有�
 sayHello()
 ```
 
- 
-
 得到和直接执行print ('hello world!')一样的结果。
-
- 
 
 ![img](https://cdn.py2china.cn/wechat/pystart/19-0.png)
 
  
 
 <div STYLE="page-break-after: always;"></div>
-## [20.命令行常用命令](https://python666.cn/cls/lesson/21)
+## [【Python 第20课】命令行常用命令](https://python666.cn/cls/lesson/21)
 
+今天茬开话题，说一下命令行（Windows下叫“命令提示符”，Mac下叫“终端”）里的常用命令。已经熟悉同学可略过。
 
+打开命令行，我们会看到每行前面都有诸如
+
+```bash
+C:\Documents and Settings\Crossin>
+```
+
+或者
+
+```bash
+MyMacBook:~ crossin$
+```
+
+之类的。
+
+这个提示符表示了当前命令行所在目录。
+
+在这里，我们输入 python 并敲下回车，就可以进入python环境了。但今天我们暂时不这么做。
+
+第一个常用的命令是：
+
+**dir** （windows环境下）
+
+**ls** （mac环境下）
+
+dir 和 ls 的作用差不多，都是显示出当前目录下的文件和文件夹。
+
+具体效果可参见文末的附图。
+
+第二个常用命令是：
+
+```bash
+cd 目录名
+```
+
+通过 dir 或 ls 了解当前目录的结构之后，可以通过“cd 目录名”的方式，进入到当前目录下的子目录里。
+
+如果要跳回到上级目录，可以用命令：
+
+```bash
+cd ..
+```
+
+另外，Windows下如果要写换盘符，需要输入
+
+```bash
+盘符:
+```
+
+比如从c盘切换到d盘
+
+```bash
+C:\Documents and Settings\Crossin> d:
+```
+
+有了以上两个命令，就可以在文件目录的迷宫里游荡了。虽然没可视化的目录下的操作那么直观，但是会显得你更像个程序员。。。
+
+于是乎，再说个高阶玩法：现在你可以不用 idle 那套东西了，随便找个顺手的文本软件，把你的代码写好，保存好，最好是保存成 py 文件。
+
+然后在命令行下，通过使用 cd 命令进入到 py 文件保存的目录，再执行命令：
+
+```bash
+python 代码的文件名
+```
+
+就可以运行你写的程序了。
+
+演示如下：
+
+![img](https://cdn.py2china.cn/wechat/pystart/20-0.png)
+
+嗯，这才像个python程序员的样！
+
+注意：如果执行 python 命令时提示“不是内部或外部命令”，那么说明你的环境变量没有设置好。请参考 [1.安装](https://python666.cn/cls/lesson/2/) 课中最后一点**配置命令行**里的几点注意进行检查。
+
+其他常用命令，诸如 **拷贝文件、删除文件、新建文件夹** 之类的，请你自行在网上搜索相关资料。很容易的，比如你搜“mac 终端 常用命令”，就可以找到很多了。
+
+### \#======= 扩展阅读 ========#
+
+使用搜索引擎也是程序员的重要技能之一，所以现在你可以练习起来，推荐阅读下 [编程初学者如何使用搜索引擎](https://zhuanlan.zhihu.com/p/20683456)。
+
+学到这里，很多同学都已经写出来可以完整运行的代码，有了不小的成就感，希望能把程序发给别人运行。然而对方电脑上如果没装python就运行不了了。
+
+这里，我提供两篇关于如果把你的 python 程序打包成别人电脑上也可执行的 exe 文件的教程，稍稍有点复杂，想挑战的可以去试试：
+
+- [利用cx_Freeze将py文件打包成exe文件（图文全解）](https://bbs.crossincode.com/forum.php?mod=viewthread&tid=5486&extra=page%3d1)
+- [将打飞机游戏打包成 exe](https://mp.weixin.qq.com/s/sfg4aBPf1dZMrCh-sK_myA)
 
 <div STYLE="page-break-after: always;"></div>
-## [21.函数的参数](https://python666.cn/cls/lesson/22)
+## [【Python 第21课】函数的参数](https://python666.cn/cls/lesson/22)
 
+在19课里，我们讲了怎样定义一个自己的函数，但我们没有给他提供输入**参数**的功能。不能指定参数的函数就好比你去餐厅吃饭，服务员告诉你，不能点菜，有啥吃啥。这显然不能满足很多情况。
 
+所以，如果我们希望自己定义的函数里允许调用者提供一些参数，就把这些参数写在括号里，如果有多个参数，用逗号隔开，如：
+
+```python
+def sayHello(someone):
+   print(someone + ' says Hello!')
+```
+
+或者
+
+```python
+def plus(num1, num2):
+   print(num1+num2)
+```
+
+参数在函数中相当于一个变量，而这个变量的值是在调用函数的时候被赋予的。在函数内部，你可以像过去使用变量一样使用它。
+
+调用带参数的函数时，同样把需要传入的参数值放在括号中，用逗号隔开。要注意提供的参数值的数量和类型需要跟函数定义中的一致。如果这个函数不是你自己写的，你需要先了解它的参数类型，才能顺利调用它。
+
+比如上面两个函数，我们可以直接传入值：
+
+```python
+sayHello('Crossin')
+```
+
+还是注意，字符串类型的值不能少了引号。
+
+或者也可以传入变量：
+
+```python
+x = 3
+y = 4
+plus(x, y)
+```
+
+在这个函数被调用时，相当于做了num1=x, num2=y这么一件事。所以结果是输出了7。
+
+当函数结束后，这里的 num1、num2 就不再可以使用了，它们只存在于函数内部。关于这一点，后面我们会专门来细说。
+
+### \#======= 课外的话 =======#
+
+今天发现了一个iPad上的游戏，叫Cargo-Bot。这个游戏需要你用指令控制一个机械臂去搬箱子。游戏里蕴含了很多编程的思想，包括循环、函数调用、条件判断、寄存器、递归等等，挺有意思的。更厉害的是，这个游戏是用一个叫Codea的app直接在iPad上编写出来的。有iPad的同学不妨玩玩看，挑战一下你的“程商”。
+
+有些家长想让小孩子学编程，其实我觉得，比较小的孩子，玩一玩这种“编程思维”的游戏就足够了。
 
 <div STYLE="page-break-after: always;"></div>
-## [22.函数应用示例](https://python666.cn/cls/lesson/23)
+## [【Python 第22课】函数应用示例](https://python666.cn/cls/lesson/23)
 
+前两课稍稍介绍了一下函数，但光说概念还是有些抽象了，今天就来把之前那个小游戏用函数改写一下。
 
+我希望有这样一个函数，它比较两个数的大小。
+
+如果第一个数小了，就输出“too small”
+
+如果第一个数大了，就输出“too big”
+
+如果相等，就输出“bingo!”（意为：猜中了！）
+
+函数还有个**返回值**，当两数相等的时候返回True，不等就返回False。
+
+于是我们来定义这个函数：
+
+```python
+def isEqual(num1, num2):
+   if num1<num2:
+       print ('too small')
+       return False
+   if num1>num2:
+       print ('too big')
+       return False
+   if num1==num2:
+       print ('bingo!')
+       return True
+```
+
+这里说一下，**return** 是函数的结束语句，return 后面的值被作为这个函数的**返回值**。函数中任何地方的 return 被执行到的时候，这个函数就会立刻结束并跳出。
+
+注意：函数的 **返回值** 和我们前面说的 输出 是两回事。print 输出是将结果显示在控制台中，最终一定是转成字符类型；而 返回值，是将结果返回到调用函数的地方，可以是任何类型。
+
+然后在我们的小游戏里使用这个函数：
+
+```python
+from random import randint
+num = randint(1, 100)
+print('Guess what I think?')
+bingo = False
+while bingo == False:
+   answer = int(input())
+   bingo = isEqual(answer, num)
+```
+
+在 isEqual 函数内部，会输出 answer 和 num 的比较结果，如果相等的话，bingo 会得到返回值 True，否则 bingo 得到 False，循环继续。
+
+![img](https://cdn.py2china.cn/wechat/pystart/22-0.png)
+
+ 
+
+函数可以把某个功能的代码分离出来，在需要的时候重复使用，就像拼装积木一样，这会让程序结构更清晰。
 
 <div STYLE="page-break-after: always;"></div>
 ## [23.if, elif, else](https://python666.cn/cls/lesson/24)
