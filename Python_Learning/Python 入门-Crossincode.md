@@ -2531,16 +2531,36 @@ plus(x, y)
 于是我们来定义这个函数：
 
 ```python
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   lesson22.py
+@Time    :   2020/05/03 18:47:28
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# here put the import lib
+from random import randint
+
+
 def isEqual(num1, num2):
-   if num1<num2:
-       print ('too small')
-       return False
-   if num1>num2:
-       print ('too big')
-       return False
-   if num1==num2:
-       print ('bingo!')
-       return True
+    if num1 < num2:
+        print('too small')
+        return False
+    if num1 > num2:
+        print('too big')
+        return False
+    if num1 == num2:
+        print('bingo!')
+        return True
+
+# cd /f/Github/xiangxing98.github.io/Python_Learning
+# python lesson22.py
+
 ```
 
 这里说一下，**return** 是函数的结束语句，return 后面的值被作为这个函数的**返回值**。函数中任何地方的 return 被执行到的时候，这个函数就会立刻结束并跳出。
@@ -2551,12 +2571,17 @@ def isEqual(num1, num2):
 
 ```python
 from random import randint
+
+# Guess
 num = randint(1, 100)
 print('Guess what I think?')
 bingo = False
-while bingo == False:
-   answer = int(input())
-   bingo = isEqual(answer, num)
+while bingo is False:
+    answer = int(input())
+    bingo = isEqual(answer, num)
+
+# cd /f/Github/xiangxing98.github.io/Python_Learning
+# python lesson22.py
 ```
 
 在 isEqual 函数内部，会输出 answer 和 num 的比较结果，如果相等的话，bingo 会得到返回值 True，否则 bingo 得到 False，循环继续。
@@ -2568,14 +2593,159 @@ while bingo == False:
 函数可以把某个功能的代码分离出来，在需要的时候重复使用，就像拼装积木一样，这会让程序结构更清晰。
 
 <div STYLE="page-break-after: always;"></div>
-## [23.if, elif, else](https://python666.cn/cls/lesson/24)
+## [【Python 第23课】if, elif, else](https://python666.cn/cls/lesson/24)
 
+今天补充之前讲过的一个语句：**if**。为什么我跳要着讲，因为我的想法是先讲下最最基本的概念，让你能用起来，之后你熟悉了，再说些细节。
 
+关于 if，可以回顾 [7. if](https://python666.cn/cls/lesson/8/)。它除了我们之前讲的用法外，还可以配合 **elif** 和 **else** 使用，使程序的运行顺序更灵活。
+
+之前说的 if，是：“如果”条件满足，就做xxx，否则就不做。
+
+else 顾名思义，就是：“否则”就做yyy。
+
+![img](https://cdn.py2china.cn/wechat/pystart/23-0.png)
+
+当if后面的条件语句不满足时，与之相对应的 else 中的代码块将被执行。
+
+```python
+if a == 1:
+   print('right')
+else:
+   print('wrong')
+```
+
+elif 意为 else if，含义就是：“否则如果”条件满足，就做yyy。elif 后面需要有一个逻辑判断语句。
+
+![img](https://cdn.py2china.cn/wechat/pystart/23-1.png)
+
+当if条件不满足时，再去判断 elif 的条件，如果满足则执行其中的代码块：
+
+```python
+if a == 1:
+   print ('one')
+elif a == 2:
+   print ('two')
+```
+
+if, elif, else 可组成一个整体的条件语句。
+
+1. if 是**必须有**的；
+2. elif **可以没有，也可以有很多个**，每个elif条件不满足时会进入下一个elif判断；一旦满足，执行完就结束整个条件语句；
+3. else **可以没有，如果有的话只能有一个**，必须在条件语句的最后。
+
+```python
+# if-elif-else
+a = 4
+if a == 1:
+    print('one')
+elif a == 2:
+    print('two')
+elif a == 3:
+    print('three')
+else:
+    print('too many')
+# too many
+```
+
+我们昨天刚改写的小游戏中的函数 isEqual，用了三个条件判断，我们可以再改写成一个包含 if...elif...else 的结构：
+
+```python
+# if-elif-else example 2
+def isEqual(num1, num2):
+    if num1 < num2:
+        print('too small')
+        return False
+    elif num1 > num2:
+        print('too big')
+        return False
+    else:
+        print('bingo')
+        return True
+
+```
+
+![img](https://cdn.py2china.cn/wechat/pystart/23-2.png)
+
+运行效果和之前是一样的，不过代码逻辑更合理一点。
 
 <div STYLE="page-break-after: always;"></div>
-## [24.if的嵌套](https://python666.cn/cls/lesson/25)
+## [【Python 第24课】if的嵌套](https://python666.cn/cls/lesson/25)
 
+和 for 循环一样，if 也可以嵌套使用，即在一个 if/elif/else 的内部，再使用 if。这有点类似于电路的串联。
 
+```python
+if 条件1:
+   if 条件2:
+       语句1
+   else:
+       语句2
+else:
+   if 条件2:
+       语句3
+   else:
+       语句4
+```
+
+ 
+
+在上面这个两层if的结构中，当：
+
+条件1为True，条件2为True时，
+
+执行语句1；
+
+条件1为True，条件2为False时，
+
+执行语句2；
+
+条件1为False，条件2为True时，
+
+执行语句3；
+
+条件1为False，条件2为False时，
+
+执行语句4。
+
+ 
+
+假设需要这样一个程序：
+
+我们先向程序输入一个值x，再输入一个值y。(x,y)表示一个点的坐标。程序要告诉我们这个点处在坐标系的哪一个象限。
+
+x>=0，y>=0，则输出1；
+
+x<0，y>=0，则输出2；
+
+x<0，y<0，则输出3；
+
+x>=0，y<0，则输出4。
+
+ 
+
+你可以分别写4个if，也可以用if的嵌套：
+
+```python
+if y >= 0:
+   if x >= 0:
+       print (1)
+   else:
+       print (2)
+else:
+   if x < 0:
+       print (3)
+   else:
+       print (4)
+```
+
+ 
+
+从流程图上来看，应该是这样。
+
+![img](https://cdn.py2china.cn/wechat/pystart/24-0.png)
+
+ 
+
+是否从图中看出了两层 if 结构呢？
 
 <div STYLE="page-break-after: always;"></div>
 ## [25.初探list](https://python666.cn/cls/lesson/26)

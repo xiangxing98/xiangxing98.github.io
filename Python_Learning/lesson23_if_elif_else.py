@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 # !/usr/bin/env python
 '''
-@File    :   lesson21.py
-@Time    :   2020/05/03 18:40:46
+@File    :   lesson23_if_elif_else.py
+@Time    :   2020/05/03 22:20:22
 @Author  :   Stone_Hou
 @Version :   1.0
 @Contact :   xiangxing985529@163.com
@@ -10,27 +10,48 @@
 @Desc    :   None
 '''
 
-
 # here put the import lib
-def sayHello(someone):
-    print(someone + ' says Hello!')
+# if-else
+a = 2
+if a == 1:
+    print('right')
+else:
+    print('wrong')
+# wrong
+
+# elif
+a = 2
+if a == 1:
+    print('one')
+elif a == 2:
+    print('two')
+# two
+
+# if-elif-else
+a = 4
+if a == 1:
+    print('one')
+elif a == 2:
+    print('two')
+elif a == 3:
+    print('three')
+else:
+    print('too many')
+# two
 
 
-# Define Another Function
-def plus(num1, num2):
-    print(num1+num2)
+# if-elif-else example 2
+def isEqual(num1, num2):
+    if num1 < num2:
+        print('too small')
+        return False
+    elif num1 > num2:
+        print('too big')
+        return False
+    else:
+        print('bingo')
+        return True
 
-
-sayHello('Stone_Hou')
-# Stone_Hou says Hello!
-
-plus(1, 10)
-# 11
-
-x = 3
-y = 4
-plus(x, y)
-# 7
 
 # 在Python中如果condition为 ''，()，[]，{}，None，set()那么该条件为False,否则为True。
 # if (condition)：
