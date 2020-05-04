@@ -81,7 +81,7 @@ def isEqual(num1, num2):
         return True
 
 
-# Guess
+# Guess what i input
 
 # 我们需要有一个变量来记录本次游戏所用的轮数：
 times = 0
