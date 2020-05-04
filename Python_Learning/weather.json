@@ -1,0 +1,59 @@
+{
+    "data": {
+        "yesterday": {
+            "date": "3日星期日",
+            "high": "高温 34℃",
+            "fx": "南风",
+            "low": "低温 24℃",
+            "fl": "<![CDATA[<3级]]>",
+            "type": "多云"
+        },
+        "city": "长沙",
+        "forecast": [
+            {
+                "date": "4日星期一",
+                "high": "高温 34℃",
+                "fengli": "<![CDATA[<3级]]>",
+                "low": "低温 23℃",
+                "fengxiang": "南风",
+                "type": "多云"
+            },
+            {
+                "date": "5日星期二",
+                "high": "高温 29℃",
+                "fengli": "<![CDATA[<3级]]>",
+                "low": "低温 21℃",
+                "fengxiang": "西北风",
+                "type": "小雨"
+            },
+            {
+                "date": "6日星期三",
+                "high": "高温 28℃",
+                "fengli": "<![CDATA[<3级]]>",
+                "low": "低温 22℃",
+                "fengxiang": "东风",
+                "type": "小雨"
+            },
+            {
+                "date": "7日星期四",
+                "high": "高温 32℃",
+                "fengli": "<![CDATA[<3级]]>",
+                "low": "低温 24℃",
+                "fengxiang": "南风",
+                "type": "多云"
+            },
+            {
+                "date": "8日星期五",
+                "high": "高温 33℃",
+                "fengli": "<![CDATA[<3级]]>",
+                "low": "低温 21℃",
+                "fengxiang": "北风",
+                "type": "阵雨"
+            }
+        ],
+        "ganmao": "相对今天出现了较大幅度降温，较易发生感冒，体质较弱的朋友请注意适当防护。",
+        "wendu": "30"
+    },
+    "status": 1000,
+    "desc": "OK"
+}

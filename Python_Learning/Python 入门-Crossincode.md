@@ -3893,7 +3893,7 @@ d = {}
 ![img](https://cdn.py2china.cn/wechat/pystart/37-0.png)
 
 <div STYLE="page-break-after: always;"></div>
-## [【Python 第38课】模块/库](https://python666.cn/cls/lesson/39)
+## [【Python 第38课】模块/库/包管理](https://python666.cn/cls/lesson/39)
 
 > 如果说我比别人看得更远些,那是因为我站在了巨人的肩上。-- 牛顿
 
@@ -4158,6 +4158,31 @@ geojson：GeoJSON 的 Python 绑定及工具。
 geopy：Python 地址编码工具箱。
 GeoIP2：GeoIP2 Webservice 客户端与数据库 Python API。
 django-countries：一个 Django 应用程序，提供用于表格的国家选择功能，国旗图标静态文件以及模型中的国家字段。
+
+### 包管理
+
+```bash
+# 使用pip可以查看已经安装的Python软件包及其版本：
+# 命令行中:
+"c:\program files\python37\python.exe" -m pip install --upgrade pip
+pip freeze
+pip list
+pydoc modules
+
+# 进入python环境, 在交互式解释器中输入
+help("modules")
+# 效果跟在命令行下输入 pydoc modules是一样的
+# 还有一种方法:
+import sys
+sys.modules.keys()
+
+# 还有一个方法:
+# python -m pydoc -p 1234
+# pydoc server ready at http://localhost:1234/
+# 然后在网页中输入:http://localhost:1234/
+```
+
+
 
 
 <div STYLE="page-break-after: always;"></div>
