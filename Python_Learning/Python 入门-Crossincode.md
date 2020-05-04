@@ -2973,7 +2973,7 @@ list中的每个元素都对应一个递增的序号。与现实中习惯的序�
 要访问l中的第 1 个元素365，只要用 l[0] 就可以了。依次类推，
 
 ```python
-print (l[1])
+print(l[1])
 ```
 
 就会输出 'everyday'
@@ -3271,7 +3271,7 @@ join的格式有些奇怪，它不是list的方法，而是字符串的方法。
 s = ';'
 li = ['apple', 'pear', 'orange']
 fruit = s.join(li)
-print (fruit)
+print(fruit)
 ```
 
 得到结果 **'apple;pear;orange'**。
@@ -3320,8 +3320,8 @@ for c in word:
 通过[]加索引的方式，访问字符串中的某个字符。
 
 ```python
-print (word[0])
-print (word[-2])
+print(word[0])
+print(word[-2])
 ```
 
 与list不同的是，字符串**不能**通过索引访问去更改其中的字符。
@@ -3337,9 +3337,9 @@ word[1] = 'a'
 通过两个参数，截取一段子串，具体规则和list相同。
 
 ```python
-print (word[5:7])
-print (word[:-5])
-print (word[:])
+print(word[5:7])
+print(word[:-5])
+print(word[:])
 ```
 
 ### **4. 连接字符**
@@ -3392,7 +3392,7 @@ data = f.read()
 ```python
 f = open('data.txt')
 data = f.read()
-print (data)
+print(data)
 f.close()
 ```
 
@@ -3507,7 +3507,7 @@ lines = f.readlines()
 f.close()
 ```
 
-提示：在程序中，经常使用print来查看数据的中间状态，可以便于你理解程序的运行。比如这里你可以print (lines)，看一下内容被存成了什么格式。
+提示：在程序中，经常使用print来查看数据的中间状态，可以便于你理解程序的运行。比如这里你可以print(lines)，看一下内容被存成了什么格式。
 
 3.对每一条数据进行处理。按照空格，把姓名、每次的成绩分割开：
 
@@ -3564,20 +3564,20 @@ f.close()
 results = []
  
 for line in lines:
-   # print (line)
+   # print(line)
    data = line.split()
-   # print (data)
+   # print(data)
 
    sum = 0
    score_list = data[1:]
    for score in score_list:
        sum += int(score)
    result = '%s \t: %d\n' % (data[0], sum)
-   # print (result)
+   # print(result)
    
    results.append(result)
 
-# print (results)
+# print(results)
 output = open('result.txt', 'w', encoding='gbk')
 output.writelines(results)
 output.close()
@@ -3620,7 +3620,7 @@ for i in range(10):
 
 ```python
 if answer < 0:
-   print ('Exit game...')
+   print('Exit game...')
    break
 ```
 
@@ -3634,11 +3634,92 @@ break是彻底地跳出循环，而continue只是略过本次循环的余下内�
 在我们前面写的那个统计分数的程序里，如果发现有成绩不足60分，就不记入总成绩。当然，你可以用if判断来实现这个效果。但我们今天要说另一种方法：continue。
 
 ```python
+"""
 for score in data[1:]:
    point = int(score)
    if point < 60:
        continue
    sum += point
+"""
+
+# -*- encoding: utf-8 -*-
+# !/usr/bin/env python
+'''
+@File    :   lesson35_continue.py
+@Time    :   2020/05/04 17:59:43
+@Author  :   Stone_Hou
+@Version :   1.0
+@Contact :   xiangxing985529@163.com
+@License :   (C)Copyright 2010-2020, Stone_Hou
+@Desc    :   None
+'''
+
+# Read File
+f = open('scores.txt', encoding='utf-8')
+# f = open('scores.txt', encoding='gbk')
+# UnicodeDecodeError: 'gbk' codec can't decode byte 0xa4 in position 4:
+# illegal multibyte sequence
+
+# 取得文件中的数据
+lines = f.readlines()
+print(lines)
+# ['刘备 23 35 44 47 51\n', '关羽 60 77 68\n', '张飞 97 99 89 91\n', '诸葛亮 100']
+f.close()
+
+results = []
+
+# 对每一条数据进行处理。按照空格，把姓名、每次的成绩分割开：
+for line in lines:
+    data = line.split()
+    print(data)
+    # ['刘备', '23', '35', '44', '47', '51']
+    # ['关羽', '60', '77', '68']
+    # ['张飞', '97', '99', '89', '91']
+    # ['诸葛亮', '100']
+
+    # 如何把一个学生的几次成绩合并，并保存起来呢？我的做法是：
+    # 对于每一条数据，都新建一个字符串，把学生的名字和算好的总成绩保存进去。
+    # 最后再把这些字符串一起保存到文件中：
+    sum = 0
+    score_list = data[1:]  # 学生各门课的成绩列表
+
+    for score in score_list:
+        point = int(score)  # 字符串转化为整数，
+        if point < 60:      # 有成绩不足60分，跳出循环，不记入总成绩
+            continue
+        sum += point        # 求和
+    result = '%s\t: %d\n' % (data[0], sum)  # 名字和总分
+    print(result)
+
+    # 这里几个要注意的点：
+    # 对于每一行分割的数据，data[0]是姓名，data[1:]是所有成绩组成的列表。
+    # 每次循环中，sum都要先清零。
+    # score是一个字符串，为了做计算，需要转成整数值int。
+    # result中，我加了一个制表符\t和换行符\n，让输出的结果更好看些。
+
+    # 得到一个学生的总成绩后，把它添加到一个list中。
+    results.append(result)
+    # results需要在整个for循环之前初始化 results = []
+
+print(results)
+# 原来的： ['刘备\t: 200\n', '关羽\t: 205\n', '张飞\t: 376\n', '诸葛亮\t: 100\n']
+# ['刘备\t: 0\n', '关羽\t: 205\n', '张飞\t: 376\n', '诸葛亮\t: 100\n']
+
+# 最后，全部成绩处理完毕后，把results中的内容保存至文件。
+# 因为results是一个字符串组成的list，这里我们直接用writelines方法：
+output = open('result2.txt', 'w', encoding='utf8')
+output.writelines(results)
+output.close()
+
+'''
+# Reference:
+https://www.cnblogs.com/xingchuxin/p/10433444.html
+
+# Running Code:
+cd /f/Github/xiangxing98.github.io/Python_Learning
+python lesson35_continue.py
+'''
+
 ```
 
 ![img](https://cdn.py2china.cn/wechat/pystart/35-0.png)
@@ -3652,16 +3733,16 @@ i = 0
 while i < 5:
    i += 1
    for j in range(3):
-       print (j)
+       print(j)
        if j == 2:
            break
    for k in range(3):
        if k == 2:
            continue
-       print (k)
+       print(k)
    if i > 3:
        break
-   print (i)
+   print(i)
 ```
 
 <div STYLE="page-break-after: always;"></div>
@@ -3672,7 +3753,7 @@ while i < 5:
 比如我们写了一句：
 
 ```python
-print (int('0.5'))
+print(int('0.5'))
 ```
 
 运行后程序得到错误提示：
@@ -3681,11 +3762,11 @@ Traceback (most recent call last):
 
  File "C:/Python37/test.py", line 1, in <module>
 
-  print (int('0.5'))
+  print(int('0.5'))
 
 ValueError: invalid literal for int() with base 10: '0.5'
 
-意思是，在test.py这个文件，第1行，print (int('0.5'))这里，你拿了一个不是10进制能够表示的字符，我没法把它转成int值。
+意思是，在test.py这个文件，第1行，print(int('0.5'))这里，你拿了一个不是10进制能够表示的字符，我没法把它转成int值。
 
 上面的错误可以避免，但在实际的应用中，有很多错误是开发者无法控制的，例如用户输入了一个不合规定的值，或者需要打开的文件不存在。这些情况被称作“异常”，一个好的程序需要能处理可能发生的异常，避免程序因此而中断。
 
@@ -3693,7 +3774,7 @@ ValueError: invalid literal for int() with base 10: '0.5'
 
 ```python
 f = open('non-exist.txt')
-print ('File opened!')
+print('File opened!')
 f.close()
 ```
 
@@ -3709,12 +3790,14 @@ IOError: [Errno 2] No such file or directory: 'non-exist.txt'
 
 ```python
 try:
-   f = open('non-exist.txt')
-   print ('File opened!')
-   f.close()
-except:
-   print ('File not exists.')
-print ('Done')
+    f = open('non-exist.txt')
+    print('File opened!')
+    f.close()
+except OSError:
+    print('File not exists.')
+print('Python Open File Execute Done!, Pls Check Result.')
+
+# do not use bare except, specify exception instead
 ```
 
 当程序在try内部打开文件引发异常时，会跳过try中剩下的代码，直接跳转到except中的语句处理异常。于是输出了“File not exists.”。如果文件被顺利打开，则会输出“File opened!”，而不会去执行except中的语句。
@@ -3759,7 +3842,7 @@ score = {
 python字典中的键/值对没有顺序，我们无法用索引访问字典中的某一项，而是要用键来访问。
 
 ```python
-print (score['段誉'])
+print(score['段誉'])
 ```
 
 注意，如果你的键是字符串，通过键访问的时候就需要加引号，如果是数字作为键则不用。
@@ -3776,7 +3859,7 @@ score.get('慕容复')
 
 ```python
 for name in score:
-   print (score[name])
+   print(score[name])
 ```
 
 注意，遍历的变量中存储的是字典的键。
@@ -3810,7 +3893,7 @@ d = {}
 ![img](https://cdn.py2china.cn/wechat/pystart/37-0.png)
 
 <div STYLE="page-break-after: always;"></div>
-## [【Python 第38课】模块](https://python666.cn/cls/lesson/39)
+## [【Python 第38课】模块/库](https://python666.cn/cls/lesson/39)
 
 > 如果说我比别人看得更远些,那是因为我站在了巨人的肩上。-- 牛顿
 
@@ -3845,19 +3928,237 @@ dir(random)
 
 ```python
 from math import pi
-print (pi)
+print(pi)
 ```
 
 为了便于理解和避免冲突，你还可以给引入的方法换个名字：
 
 ```python
 from math import pi as math_pi
-print (math_pi)
+print(math_pi)
 ```
 
 ![img](https://cdn.py2china.cn/wechat/pystart/38-0.png)
 
 想要了解python有哪些常用库，可自行搜索。我在群共享里上传了一份中文版的python标准库的非官方文档，供参考。
+
+### Python常用库
+
+#### 环境管理
+
+管理 Python 版本和环境的工具
+p：非常简单的交互式 python 版本管理工具。
+pyenv：简单的 Python 版本管理工具。
+Vex：可以在虚拟环境中执行命令。
+virtualenv：创建独立 Python 环境的工具。
+virtualenvwrapper：virtualenv 的一组扩展。
+buildout：在隔离环境初始化后使用声明性配置管理。
+
+#### 包管理
+
+管理包和依赖的工具。
+pip：Python 包和依赖关系管理工具。
+pip-tools：保证 Python 包依赖关系更新的一组工具。
+pipenv：Python 官方推荐的新一代包管理工具。
+poetry: 可完全取代 setup.py 的包管理工具。
+conda：跨平台，Python 二进制包管理工具。
+Curdling：管理 Python 包的命令行工具。
+wheel：Python 分发的新标准，意在取代 eggs。
+
+#### 包仓库
+
+本地 PyPI 仓库服务和代理。
+[warehouse](https://pypi.org/)：下一代 PyPI。
+bandersnatch：PyPA 提供的 PyPI 镜像工具。
+devpi：PyPI 服务和打包/测试/分发工具。
+localshop：本地 PyPI 服务（自定义包并且自动对 PyPI 镜像）。
+
+#### 分发
+
+打包为可执行文件以便分发。
+PyInstaller：将 Python 程序转换成独立的执行文件（跨平台）
+cx_Freeze：将python程序转换为带有一个动态链接库的可执行文件。
+dh-virtualenv：构建并将 virtualenv 虚拟环境作为一个 Debian 包来发布。
+Nuitka：将脚本、模块、包编译成可执行文件或扩展模块。
+py2app：将 Python 脚本变为独立软件包（Mac OS X）。
+py2exe：将 Python 脚本变为独立软件包（Windows）。
+pynsist：一个用来创建 Windows 安装程序的工具，可以在安装程序中打包 Python 本身。
+
+#### 构建工具
+
+将源码编译成软件。
+buildout：一个构建系统，从多个组件来创建，组装和部署应用。
+BitBake：针对嵌入式 Linux 的类似 make 的构建工具。
+fabricate：对任何语言自动找到依赖关系的构建工具。
+PlatformIO：多平台命令行构建工具。
+PyBuilder：纯 Python 实现的持续化构建工具。
+SCons：软件构建工具。
+
+#### 交互式解析器
+
+交互式 Python 解析器。
+IPython：功能丰富的工具，非常有效的使用交互式 Python。
+[bpython](http://hao.importnew.com/bpython/)：界面丰富的 Python 解析器。
+ptpython：高级交互式 Python 解析器， 构建于 [python-prompt-toolkit](https://github.com/jonathanslenders/python-prompt-toolkit) 之上。
+
+#### 文件
+
+文件管理和 MIME（多用途的网际邮件扩充协议）类型检测。
+aiofiles：基于 asyncio，提供文件异步操作。
+imghdr：（Python 标准库）检测图片类型。
+mimetypes：（Python 标准库）将文件名映射为 MIME 类型。
+path.py：对 os.path 进行封装的模块。
+pathlib：（Python3.4+ 标准库）跨平台的、面向对象的路径操作库。
+python-magic：文件类型检测的第三方库 libmagic 的 Python 接口。
+Unipath：用面向对象的方式操作文件和目录
+watchdog：管理文件系统事件的 API 和 shell 工具。
+
+#### 日期和时间
+
+操作日期和时间的类库。
+arrow：更好的 Python 日期时间操作类库。
+Chronyk：Python 3 的类库，用于解析手写格式的时间和日期。
+dateutil：Python datetime 模块的扩展。
+delorean：解决 Python 中有关日期处理的棘手问题的库。
+maya：人性化的时间处理库。
+moment：一个用来处理时间和日期的 Python 库。灵感来自于 Moment.js
+pendulum：一个比 arrow 更具有明确的，可预测的行为的时间操作库。
+PyTime：一个简单易用的 Python 模块，用于通过字符串来操作日期/时间。
+pytz：现代以及历史版本的世界时区定义。将时区数据库引入 Python。
+when.py：提供用户友好的函数来帮助用户进行常用的日期和时间操作。
+
+#### 文本处理
+
+用于解析和操作文本的库。
+通用
+[chardet](http://hao.importnew.com/chardet/)：字符编码检测器，兼容 Python2 和 Python3。
+difflib：(Python 标准库)帮助我们进行差异化比较。
+ftfy：让 Unicode 文本更完整更连贯。
+fuzzywuzzy：模糊字符串匹配。
+Levenshtein：快速计算编辑距离以及字符串的相似度。
+pangu.py：在中日韩语字符和数字字母之间添加空格。
+pypinyin：汉字拼音转换工具 Python 版。
+shortuuid：一个生成器库，用以生成简洁的，明白的，URL 安全的 UUID。
+[simplejson](https://github.com/simplejson/simplejson)：Python 的 JSON 编码、解码器。
+unidecode：Unicode 文本的 ASCII 转换形式 。
+uniout：打印可读的字符，而不是转义的字符串。
+xpinyin：一个用于把汉字转换为拼音的库。
+yfiglet-figlet：[pyfiglet -figlet](https://github.com/pwaller/pyfiglet) 的 Python 实现。
+flashtext: 一个高效的文本查找替换库。
+Slug 化
+awesome-slugify：一个 Python slug 化库，可以保持 Unicode。
+python-slugify：Python slug 化库，可以把 unicode 转化为 ASCII。
+unicode-slugify：一个 slug 工具，可以生成 unicode slugs ,需要依赖 Django 。
+解析器
+phonenumbers：解析，格式化，储存，验证电话号码。
+PLY：lex 和 yacc 解析工具的 Python 实现。
+Pygments：通用语法高亮工具。
+pyparsing：生成通用解析器的框架。
+python-nameparser：把一个人名分解为几个独立的部分。
+python-user-agents：浏览器 user agent 解析器。
+sqlparse：一个无验证的 SQL 解析器。
+
+#### 特殊文本格式处理
+
+一些用来解析和操作特殊文本格式的库。
+通用
+tablib：一个用来处理中表格数据的模块。
+Office
+Marmir：把输入的 Python 数据结构转换为电子表单。
+openpyxl：一个用来读写 Excel 2010 xlsx/xlsm/xltx/xltm 文件的库。
+pyexcel：一个提供统一 API，用来读写，操作 Excel 文件的库。
+python-docx：读取，查询以及修改 Microsoft Word 2007/2008 docx 文件。
+relatorio：模板化 OpenDocument 文件。
+unoconv：在 LibreOffice/OpenOffice 支持的任意文件格式之间进行转换。
+XlsxWriter：一个用于创建 Excel .xlsx 文件的 Python 模块。
+xlwings：一个使得在 Excel 中方便调用 Python 的库（反之亦然），基于 BSD 协议。
+[xlwt](http://hao.importnew.com/xlwt/)：读写 Excel 文件的数据和格式信息
+PDF
+PDFMiner：一个用于从 PDF 文档中抽取信息的工具。
+PyPDF2：一个可以分割，合并和转换 PDF 页面的库。
+ReportLab：快速创建富文本 PDF 文档。
+Markdown
+Mistune：快速并且功能齐全的纯 Python 实现的 Markdown 解析器。
+Python-Markdown：John Gruber's Markdown 的 Python 版实现。
+Python-Markdown2：纯 Python 实现的 Markdown 解析器，比 Python-Markdown 更快，更准确，可扩展。
+YAML
+PyYAML：Python 版本的 YAML 解析器。
+CSV
+csvkit：用于转换和操作 CSV 的工具。
+Archive
+unp：一个用来方便解包归档文件的命令行工具。
+
+#### 自然语言处理
+
+用来处理人类语言的库。
+[NLTK](http://hao.importnew.com/nltk/)：一个先进的平台，用以构建处理人类语言数据的 Python 程序。
+jieba：中文分词工具。
+langid.py：独立的语言识别系统。
+Pattern：Python 网络信息挖掘模块。
+SnowNLP：一个用来处理中文文本的库。
+TextBlob：为进行普通自然语言处理任务提供一致的 API。
+TextGrocery：一简单高效的短文本分类工具，基于 LibLinear 和 Jieba。
+thulac:清华大学自然语言处理与社会人文计算实验室研制推出的一套中文词法分析工具包
+
+#### 文档
+
+用以生成项目文档的库。
+[Sphinx](http://hao.importnew.com/sphinx/)：Python 文档生成器。
+awesome-sphinxdoc：
+MkDocs：对 Markdown 友好的文档生成器。
+pdoc：一个可以替换 Epydoc 的库，可以自动生成 Python 库的 API 文档。
+Pycco：文学编程（literate-programming）风格的文档生成器。
+readthedocs：一个基于 Sphinx/MkDocs 的在线文档托管系统，对开源项目免费开放使用。
+
+#### 配置
+
+用来保存和解析配置的库。
+config：[logging](https://docs.python.org/2/library/logging.html) 模块作者写的分级配置模块。
+ConfigObj：INI 文件解析器，带验证功能。
+ConfigParser：(Python 标准库) INI 文件解析器。
+profig：通过多种格式进行配置，具有数值转换功能。
+python-decouple：将设置和代码完全隔离。
+
+#### 下载器
+
+用来进行下载的库.
+s3cmd：一个用来管理 Amazon S3 和 CloudFront 的命令行工具。
+s4cmd：超级 S3 命令行工具，性能更加强劲。
+you-get：一个 YouTube/Youku/Niconico 视频下载器，使用 Python3 编写。
+youtube-dl：一个小巧的命令行程序，用来下载 YouTube 视频。
+
+#### 图像处理
+
+用来操作图像的库.
+[pillow](http://hao.importnew.com/pillow/)：Pillow 是一个更加易用版的 [PIL](http://www.pythonware.com/products/pil/)。
+hmap：图像直方图映射。
+imgSeek：一个使用视觉相似性搜索一组图片集合的项目。
+nude.py：裸体检测。
+pyBarcode：不借助 PIL 库在 Python 程序中生成条形码。
+pygram：类似 Instagram 的图像滤镜。
+python-qrcode：一个纯 Python 实现的二维码生成器。
+Quads：基于四叉树的计算机艺术。
+scikit-image：一个用于（科学）图像处理的 Python 库。
+thumbor：一个小型图像服务，具有剪裁，尺寸重设和翻转功能。
+wand：[MagickWand](http://www.imagemagick.org/script/magick-wand.php)的 Python 绑定。MagickWand 是 ImageMagick 的 C API 。
+face_recognition：简单易用的 python 人脸识别库。
+
+#### Video
+
+用来操作视频和 GIF 的库。
+moviepy：一个用来进行基于脚本的视频编辑模块，适用于多种格式，包括动图 GIFs。
+scikit-video：SciPy 视频处理常用程序。
+
+#### 地理位置
+
+地理编码地址以及用来处理经纬度的库。
+GeoDjango：世界级地理图形 web 框架。
+GeoIP：MaxMind GeoIP Legacy 数据库的 Python API。
+geojson：GeoJSON 的 Python 绑定及工具。
+geopy：Python 地址编码工具箱。
+GeoIP2：GeoIP2 Webservice 客户端与数据库 Python API。
+django-countries：一个 Django 应用程序，提供用于表格的国家选择功能，国旗图标静态文件以及模型中的国家字段。
+
 
 <div STYLE="page-break-after: always;"></div>
 ## [【Python 第39课】用文件保存游戏（1）](https://python666.cn/cls/lesson/40)
@@ -3919,7 +4220,7 @@ else:
 然后，在让玩家开始猜数字前，输出他之前的成绩信息：
 
 ```python
-print ('你已经玩了%d次，最少%d轮猜出答案，平均%.2f轮猜出答案' % (game_times, min_times, avg_times))
+print('你已经玩了%d次，最少%d轮猜出答案，平均%.2f轮猜出答案' % (game_times, min_times, avg_times))
 ```
 
 %.2f这样的写法我们以前也用过，作用是保留两位小数。
@@ -4071,7 +4372,7 @@ for n in scores:
 
 ```python
 def hello(name):
-   print ('hello ' + name)
+   print('hello ' + name)
 ```
 
 然后我们去调用这个函数：
@@ -4088,7 +4389,7 @@ hello world
 
 ```python
 def hello(name = 'world'):
-   print ('hello ' + name)
+   print('hello ' + name)
 ```
 
 当你没有提供参数值时，这个参数就会使用默认值；如果你提供了，就用你给的。
@@ -4258,8 +4559,8 @@ print(dic_city)
 你可能会觉得json格式的字符串和字典是一样的，但如果你用type方法看一下它们的类型：
 
 ```python
-print (type(req.text))
-print (type(req.json()))
+print(type(req.text))
+print(type(req.json()))
 ```
 
 就知道区别在哪里了。
@@ -4290,7 +4591,7 @@ try:
    ###
    ###
 except:
-   print ('查询失败')
+   print('查询失败')
 ```
 
 ![img](https://cdn.py2china.cn/wechat/pystart/45-0.png)
@@ -4355,7 +4656,7 @@ class MyClass:
     pass
 
 mc = MyClass()
-print (mc)
+print(mc)
 ```
 
 关键字class加上类名用来创建一个类。之后缩进的代码块是这个类的内部。在这里，我们用pass语句，表示一个空的代码块。
@@ -4375,10 +4676,10 @@ class MyClass:
     name = 'Sam'
 
     def sayHi(self):
-        print ('Hello %s' % self.name)
+        print('Hello %s' % self.name)
 
 mc = MyClass()
-print (mc.name)
+print(mc.name)
 mc.name = 'Lily'
 mc.sayHi()
 ```
@@ -4414,7 +4715,7 @@ Hello Lily
 speed = 60.0
 distance = 100.0
 time = distance / speed
-print (time)
+print(time)
 ```
 
 面向对象的方法：
@@ -4424,7 +4725,7 @@ class Car:
     speed = 0
     def drive(self, distance):
         time = distance / self.speed
-        print (time)
+        print(time)
 
 car = Car()
 car.speed = 60.0
@@ -4441,18 +4742,18 @@ car.drive(100.0)
 speed1 = 60.0
 distance1 = 100.0
 time1 = distance1 / speed1
-print (time1)
+print(time1)
 
 distance2 = 200.0
 time2 = distance2 / speed1
-print (time2)
+print(time2)
 
 speed2 = 150.0
 time3 = distance1 / speed2
-print (time3)
+print(time3)
 
 time4 = distance2 / speed2
-print (time4)
+print(time4)
 ```
 
 面向对象的方法：
@@ -4462,7 +4763,7 @@ class Car:
     speed = 0
     def drive(self, distance):
         time = distance / self.speed
-        print (time)
+        print(time)
 
 car1 = Car()
 car1.speed = 60.0
@@ -4504,7 +4805,7 @@ class Vehicle:
         self.speed = speed
         
     def drive(self, distance):
-        print ('need %f hour(s)' % (distance / self.speed))
+        print('need %f hour(s)' % (distance / self.speed))
         
 class Bike(Vehicle):
     pass
@@ -4516,7 +4817,7 @@ class Car(Vehicle):
         
     def drive(self, distance):
         Vehicle.drive(self, distance)
-        print ('need %f fuels' % (distance * self.fuel))
+        print('need %f fuels' % (distance * self.fuel))
 
 b = Bike(15.0)
 c = Car(80.0, 0.012)
@@ -4549,9 +4850,9 @@ Car类中，我们又重新定义了__init__和drive函数，这样会覆盖掉�
 a = "heaven"
 b = "hell"
 c = True and a or b
-print (c)
+print(c)
 d = False and a or b
-print (d)
+print(d)
 ```
 
 输出：
@@ -4572,15 +4873,15 @@ hell
 
 ```python
 if a > 0:
-    print ("big")
+    print("big")
 else:
-    print ("small")
+    print("small")
 ```
 
 就可以直接写成：
 
 ```python
-print ((a > 0) and "big" or "small")
+print((a > 0) and "big" or "small")
 ```
 
 然而不幸的是，如果直接这么用，有一天你会踩到坑的。和c语言中的?:表达式不同，这里的and or语句是利用了python中的逻辑运算实现的。当a本身是个假值（如0，""）时，结果就不会像你期望的那样。
@@ -4591,7 +4892,7 @@ print ((a > 0) and "big" or "small")
 a = ""
 b = "hell"
 c = True and a or b
-print (c)
+print(c)
 ```
 
 得到的结果不是""而是"hell"。因为""和"hell"做or的结果是"hell"。
@@ -4602,7 +4903,7 @@ print (c)
 a = ""
 b = "hell"
 c = (True and [a] or [b])[0]
-print (c)
+print(c)
 ```
 
 由于[a]是一个非空列表，所以它决不会为假。即使a是0或者''或者其它假值，列表[a]也为真，因为它有一个元素。
@@ -4634,16 +4935,16 @@ geeks = ('Sheldon', 'Leonard', 'Rajesh', 'Howard')
 都是元组的实例。它有和list同样的索引、切片、遍历等操作（参见25～27课）：
 
 ```python
-print (postion[0])
+print(postion[0])
 for g in geeks:
-    print (g)
-print (geeks[1:3])
+    print(g)
+print(geeks[1:3])
 ```
 
 其实我们之前一直在用元组，就是在print语句中：
 
 ```python
-print ('%s is %d years old' % ('Mike', 23))
+print('%s is %d years old' % ('Mike', 23))
 ```
 
 ('Mike', 23)就是一个元组。这是元组最常见的用处。
@@ -4659,8 +4960,8 @@ def get_pos(n):
 
 ```python
 x, y = get_pos(50)
-print (x)
-print (y)
+print(x)
+print(y)
 ```
 
 这就是我们在开头那句代码中使用的方式。
@@ -4669,8 +4970,8 @@ print (y)
 
 ```python
 pos = get_pos(50)
-print (pos[0])
-print (pos[1])
+print(pos[0])
+print(pos[1])
 ```
 
 <div STYLE="page-break-after: always;"></div>
@@ -4869,9 +5170,9 @@ import re
 text = "Hi, I am Shirley Hilton. I am his wife."
 m = re.findall(r"hi", text)
 if m:
-    print (m)
+    print(m)
 else:
-    print ('not match')
+    print('not match')
 ```
 
 暂时先不解释这其中代码的具体含义，你只要去更改text和findall中的字符串，就可以用它来检测正则表达式的实际效果。
@@ -4904,16 +5205,16 @@ r"hi"
 这里字符串前面加了r，是raw的意思，它表示对字符串不进行转义。为什么要加这个？你可以试试print "\bhi"和r"\bhi"的区别。
 
 ```python
->>> print ("\bhi")
+>>> print("\bhi")
 hi
->>> print (r"\bhi")
+>>> print(r"\bhi")
 \bhi
 ```
 
 可以看到，不加r的话，\b就没有了。因为python的字符串碰到“\”就会转义它后面的字符。如果你想在字符串里打“\”，则必须要打“\\”。
 
 ```python
->>> print ("\\bhi")
+>>> print("\\bhi")
 \bhi
 ```
 
@@ -5246,12 +5547,12 @@ time.time()
 ```python
 import time
 starttime = time.time()
-print ('start:%f' % starttime)
+print('start:%f' % starttime)
 for i in range(10):
-    print (i)
+    print(i)
 endtime = time.time()
-print ('end:%f' % endtime)
-print ('total time:%f' % (endtime-starttime))
+print('end:%f' % endtime)
+print('total time:%f' % (endtime-starttime))
 ```
 
 在程序中的不同位置调用time.time()就可以得到运行到那个地方的时间，了解不同部分消耗的时间。
@@ -5268,9 +5569,9 @@ time.sleep(secs)
 
 ```python
 import time
-print (1)
+print(1)
 time.sleep(3)
-print (2)
+print(2)
 ```
 
 在抓取网页的时候，适当让程序sleep一下，可以减少短时间内的请求，提高请求的成功率。
@@ -5292,7 +5593,7 @@ a = 0
 for i in range(5):
     b = random.choice(range(5))
     a += i / b
-print (a)
+print(a)
 ```
 
 这个程序中，i从0循环到4，每次循环中，b是0到4中的一个随机数。把i/b的结果累加到a上，最后输出结果。
@@ -5337,13 +5638,13 @@ a += i / b
 import random
 a = 0
 for i in range(5):
-    print ('i: %d' % i)
+    print('i: %d' % i)
     b = random.choice(range(5))
-    print ('b: %d' % b)
+    print('b: %d' % b)
     a += i / b
-    print ('a: %d' % a)
-    print ()
-print (a)
+    print('a: %d' % a)
+    print()
+print(a)
 ```
 
 运行后的输出结果（每次结果都会不一样）：
@@ -5503,7 +5804,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 以最简单的 print 方法为例：
 
 ```python
->>> print ('hello world')
+>>> print('hello world')
 hello world
 >>>
 ```
@@ -5528,7 +5829,7 @@ python shell 可以非常方便的运行 python 语句，这一点对调试、�
 
 ```python
 >>> if 2 > 1:
-... print ('right')
+... print('right')
 ...
 right
 >>>
@@ -5543,7 +5844,7 @@ right
 用一个文本编辑器新建一个文件，在里面输入：
 
 ```python
-print ("hello world")
+print("hello world")
 ```
 
 保存这个文件为 hello.py。注意，有些同学可能会习惯命名为 print.py，请不要这么做。不要以任何 python 的内置方法或者你会使用到的模块名来命名你自己的代码文件。
@@ -5585,7 +5886,7 @@ list_2 = []
 for i in list_1:
     if i % 2 == 0:
         list_2.append(i)
-print (list_2)
+print(list_2)
 ```
 
 输出
@@ -5601,7 +5902,7 @@ print (list_2)
 ```python
 list_1 = [1, 2, 3, 5, 8, 13, 22]
 list_2 = [i for i in list_1 if i % 2 == 0]
-print (list_2)
+print(list_2)
 ```
 
 输出
@@ -5632,7 +5933,7 @@ print (list_2)
 先说下上次课最后留的那题，我自己的解法：
 
 ```python
-print (';'.join([str(i) for i in range(1,101) if i % 2 == 0 and i % 3 == 0 and i % 5 == 0]))
+print(';'.join([str(i) for i in range(1,101) if i % 2 == 0 and i % 3 == 0 and i % 5 == 0]))
 ```
 
 另外，关于上次说的 List Comprehension，我在文中称之为“列表综合”，这是引自《简明 Python 教程》的翻译。也有同学表示叫做“列表解析”或“列表表达式”。都是一个意思，其实在写这课之前，我从来都不去“叫”它，只知道这么用而已。
@@ -5645,7 +5946,7 @@ print (';'.join([str(i) for i in range(1,101) if i % 2 == 0 and i % 3 == 0 and i
 
 ```python
 def func(arg1, arg2):
-    print (arg1, arg2)
+    print(arg1, arg2)
 ```
 
 调用
@@ -5684,7 +5985,7 @@ func4(**kargs)
 
 ```python
 def func(arg1=1, arg2=2, arg3=3):
-    print (arg1, arg2, arg3)
+    print(arg1, arg2, arg3)
 ```
 
 调用
@@ -5758,7 +6059,7 @@ def calcSum(*args):
     sum = 0
     for i in args:
         sum += i
-    print (sum)
+    print(sum)
 ```
 
 调用：
@@ -5784,8 +6085,8 @@ calcSum()
 ```python
 def printAll(*args):
     for i in args:
-        print (i, end=' ')
-    print ()
+        print(i, end=' ')
+    print()
 ```
 
 调用：
@@ -5822,7 +6123,7 @@ func(**kargs)
 ```python
 def printAll(**kargs):
     for k in kargs:
-        print (k, ':', kargs[k])
+        print(k, ':', kargs[k])
         
 printAll(a=1, b=2, c=3)
 printAll(x=4, y=5)
@@ -5844,7 +6145,7 @@ x : 4
 
 ```python
 def func(x, y=5, *a, **b):
-    print (x, y, a, b)
+    print(x, y, a, b)
 
 func(1)
 func(1,2)
@@ -5908,8 +6209,8 @@ lambda 表达可以被看做是一种匿名函数。它可以让你快速定义�
 def sum(a, b, c):
     return a + b + c
 
-print (sum(1, 2, 3))
-print (sum(4, 5, 6))
+print(sum(1, 2, 3))
+print(sum(4, 5, 6))
 ```
 
 输出：
@@ -5924,8 +6225,8 @@ print (sum(4, 5, 6))
 ```python
 sum = lambda a, b, c: a + b + c
 
-print (sum(1, 2, 3))
-print (sum(4, 5, 6))
+print(sum(1, 2, 3))
+print(sum(4, 5, 6))
 ```
 
 输出：
@@ -5954,7 +6255,7 @@ def fn(x):
     return lambda y: x + y
 
 a = fn(2)
-print (a(3))
+print(a(3))
 ```
 
 输出：
@@ -5990,13 +6291,13 @@ lambda 表达式其实只是一种编码风格，这种写法更加 pythonic。�
 
 ```python
 def func(x):
-    print ('X in the beginning of func(x): ', x)
+    print('X in the beginning of func(x): ', x)
     x = 2
-    print ('X in the end of func(x): ', x)
+    print('X in the end of func(x): ', x)
 
 x = 50
 func(x)
-print ('X after calling func(x): ', x)
+print('X after calling func(x): ', x)
 ```
 
 输出：
@@ -6017,9 +6318,9 @@ X after calling func(x): 50
 
 ```python
 def func():
-    print (y)
+    print(y)
     y = 2
-    print (y)
+    print(y)
 ```
 
 报错：
@@ -6057,13 +6358,13 @@ x = func(x)
 ```python
 def func():
     global x
-    print ('X in the beginning of func(x): ', x)
+    print('X in the beginning of func(x): ', x)
     x = 2
-    print ('X in the end of func(x): ', x)
+    print('X in the end of func(x): ', x)
 
 x = 50
 func()
-print ('X after calling func(x): ', x)
+print('X after calling func(x): ', x)
 ```
 
 输出：
@@ -6080,13 +6381,13 @@ X after calling func(x): 2
 
 ```python
 def func():
-    print ('X in the beginning of func(x): ', x)
+    print('X in the beginning of func(x): ', x)
     # x = 2
-    print ('X in the end of func(x): ', x)
+    print('X in the end of func(x): ', x)
 
 x = 50
 func()
-print ('X after calling func(x): ', x)
+print('X after calling func(x): ', x)
 ```
 
 输出：
@@ -6123,7 +6424,7 @@ lst_1 = [1,2,3,4,5,6]
 lst_2 = []
 for item in lst_1:
     lst_2.append(item * 2)
-print (lst_2)
+print(lst_2)
 ```
 
 Python 程序员大概会这么写：
@@ -6131,7 +6432,7 @@ Python 程序员大概会这么写：
 ```python
 lst_1 = [1,2,3,4,5,6]
 lst_2 = [i * 2 for i in lst_1]
-print (lst_2)
+print(lst_2)
 ```
 
 这是我在《【Python 第65课】列表综合》里说到的方法。
@@ -6188,7 +6489,7 @@ map 可以看作是把一个序列根据某种规则，映射到另一个序列�
 sum = 0
 for i in range(1, 101):
     sum += i
-print (sum)
+print(sum)
 ```
 
 如果用 reduce 函数，就可以写成：
@@ -6199,7 +6500,7 @@ from functools import reduce
 lst = range(1, 101)
 def add(x, y):
     return x + y
-print (reduce(add, lst))
+print(reduce(add, lst))
 ```
 
 解释一下：

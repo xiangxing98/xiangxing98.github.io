@@ -1,25 +1,14 @@
 # -*- encoding: utf-8 -*-
 # !/usr/bin/env python
 '''
-@File    :   lesson33_Handle_Data_in_File.py
-@Time    :   2020/05/04 15:33:39
+@File    :   lesson35_continue.py
+@Time    :   2020/05/04 17:59:43
 @Author  :   Stone_Hou
 @Version :   1.0
 @Contact :   xiangxing985529@163.com
 @License :   (C)Copyright 2010-2020, Stone_Hou
 @Desc    :   None
 '''
-
-
-# here put the import lib
-
-"""
-scores.txt
-刘备 23 35 44 47 51
-关羽 60 77 68
-张飞 97 99 89 91
-诸葛亮 100
-"""
 
 # Read File
 f = open('scores.txt', encoding='utf-8')
@@ -51,7 +40,10 @@ for line in lines:
     score_list = data[1:]  # 学生各门课的成绩列表
 
     for score in score_list:
-        sum += int(score)  # 字符串转化为整数，求和
+        point = int(score)  # 字符串转化为整数，
+        if point < 60:      # 有成绩不足60分，跳出循环，不记入总成绩
+            continue
+        sum += point        # 求和
     result = '%s\t: %d\n' % (data[0], sum)  # 名字和总分
     print(result)
 
@@ -66,46 +58,33 @@ for line in lines:
     # results需要在整个for循环之前初始化 results = []
 
 print(results)
-# ['刘备\t: 200\n', '关羽\t: 205\n', '张飞\t: 376\n', '诸葛亮\t: 100\n']
+# 原来的： ['刘备\t: 200\n', '关羽\t: 205\n', '张飞\t: 376\n', '诸葛亮\t: 100\n']
+# ['刘备\t: 0\n', '关羽\t: 205\n', '张飞\t: 376\n', '诸葛亮\t: 100\n']
 
 # 最后，全部成绩处理完毕后，把results中的内容保存至文件。
 # 因为results是一个字符串组成的list，这里我们直接用writelines方法：
-output = open('result.txt', 'w', encoding='utf8')
+output = open('result2.txt', 'w', encoding='utf8')
 output.writelines(results)
 output.close()
 
-
-"""
-# FUll code
-
-f = open('scores.txt', encoding='gbk')
-lines = f.readlines()
-# print(lines)
-f.close()
-
-results = []
-
-for line in lines:
-   # print (line)
-   data = line.split()
-   # print (data)
-
-   sum = 0
-   score_list = data[1:]
-   for score in score_list:
-       sum += int(score)
-   result = '%s \t: %d\n' % (data[0], sum)
-   # print (result)
-
-   results.append(result)
-
-# print (results)
-output = open('result.txt', 'w', encoding='gbk')
-output.writelines(results)
-output.close()
-
-"""
-
+# test
+i = 0
+while i < 5:
+    i += 1
+    for j in range(3):
+        print(j)
+        if j == 2:
+            print("====")
+            break
+    for k in range(3):
+        if k == 2:
+            print("----")
+            continue
+        print(k)
+    if i > 3:
+        print("++++")
+        break
+    print(i)
 
 '''
 # Reference:
@@ -113,5 +92,5 @@ https://www.cnblogs.com/xingchuxin/p/10433444.html
 
 # Running Code:
 cd /f/Github/xiangxing98.github.io/Python_Learning
-python lesson33_Handle_Data_in_File.py
+python lesson35_continue.py
 '''
