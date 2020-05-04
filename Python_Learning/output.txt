@@ -1,0 +1,2 @@
+a string you want to writeI will be in a file.
+So cool!
