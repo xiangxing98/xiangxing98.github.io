@@ -1,16 +1,34 @@
 # -*- encoding: utf-8 -*-
 # !/usr/bin/env python
 '''
-@File    :   lesson13.py
+@File    :   lesson13_Character_String.py
 @Time    :   2020/03/29 11:43:27
 @Author  :   Stone_Hou
 @Version :   1.0
 @Contact :   xiangxing985529@163.com
 @License :   (C)Copyright 2010-2020, Stone_Hou
 @Desc    :   None
+@Refer   :   https://github.com/xiangxing98
 '''
 
 # here put the import lib
+# 字符串
+# python中最常用的字符串表示方式是单引号（''）和双引号（""）
+
+print('good')
+# good
+
+str = "bad"
+print(str)
+# bad
+
+print('I\'m a \"good\" teacher')
+# I'm a "good" teacher
+
+# \ 被称作转义字符，除了用来表示引号，还有比如用
+# \n 表示字符串中的换行（相当于按一下回车键的效果）
+# \t 表示字符串中的制表符（相当于按一下tab键的效果）
+# \\ 表示字符串中的 \ （因为单个斜杠被用来做转义了，所以真的要表示 \ 字符，就要两个斜杠）
 
 # Practice #01
 print('He said,"I\'m yours!"')
@@ -255,3 +273,12 @@ for i in range(1, rows):
         print("*", end="")
     print("")
 print("-------------------\n")
+
+'''
+# Reference:
+https://www.cnblogs.com/xingchuxin/p/10433444.html
+
+# Running Code:
+cd /f/Github/xiangxing98.github.io/Python_Learning
+python lesson13_Character_String.py
+'''

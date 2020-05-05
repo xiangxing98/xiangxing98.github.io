@@ -141,3 +141,12 @@ else:
 
 # cd /f/Github/xiangxing98.github.io/Python_Learning
 # python lesson23_if_elif_else.py
+
+'''
+# Reference:
+https://www.cnblogs.com/xingchuxin/p/10433444.html
+
+# Running Code:
+cd /f/Github/xiangxing98.github.io/Python_Learning
+python lesson23_if_elif_else.py
+'''

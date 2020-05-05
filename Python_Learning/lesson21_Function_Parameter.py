@@ -1,32 +1,37 @@
 # -*- encoding: utf-8 -*-
 # !/usr/bin/env python
 '''
-@File    :   lesson21.py
+@File    :   lesson21_Function_Parameter.py
 @Time    :   2020/05/03 18:40:46
 @Author  :   Stone_Hou
 @Version :   1.0
 @Contact :   xiangxing985529@163.com
 @License :   (C)Copyright 2010-2020, Stone_Hou
 @Desc    :   None
+@Refer   :   https://github.com/xiangxing98
 '''
 
 
 # here put the import lib
+# 定义的函数里允许调用者提供一些参数
 def sayHello(someone):
     print(someone + ' says Hello!')
 
 
-# Define Another Function
+# Define Another Function，多个参数
 def plus(num1, num2):
     print(num1+num2)
 
 
+# 调用函数，传入参数
 sayHello('Stone_Hou')
 # Stone_Hou says Hello!
 
+# 调用函数，传入多个参数
 plus(1, 10)
 # 11
 
+# 调用函数，传入多个参数
 x = 3
 y = 4
 plus(x, y)
@@ -118,5 +123,11 @@ else:
     print('condition11 False')
 # True
 
-# cd /f/Github/xiangxing98.github.io/Python_Learning
-# python lesson20.py
+'''
+# Reference:
+https://www.cnblogs.com/xingchuxin/p/10433444.html
+
+# Running Code:
+cd /f/Github/xiangxing98.github.io/Python_Learning
+python lesson21_Function_Parameter.py
+'''

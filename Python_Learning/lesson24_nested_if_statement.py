@@ -91,9 +91,11 @@ if __name__ == '__main__':
     main()
 
 
-"""
-Reference:
+'''
+# Reference:
 https://www.cnblogs.com/xingchuxin/p/10433444.html
-"""
-# cd /f/Github/xiangxing98.github.io/Python_Learning
-# python lesson24_nested_if_statement.py
+
+# Running Code:
+cd /f/Github/xiangxing98.github.io/Python_Learning
+python lesson24_nested_if_statement.py
+'''
