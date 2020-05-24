@@ -180,6 +180,17 @@ Python 3.7.3 (v3.7.3:ef4ec6ed12, Mar 25 2019, 22:22:05) [MSC v.1916 64 bit (AMD6
 
 好了，今天就这么多，快去试试你的python，输出一行“Hello World”吧。完成的同学可以截个屏发给我。欢迎各种建议、讨论和闲聊，当然更欢迎你把这里分享给更多的朋友。
 
+### Python 环境变量
+
+下面几个重要的环境变量，它应用于Python：
+
+| 变量名        | 描述                                                         |
+| :------------ | :----------------------------------------------------------- |
+| PYTHONPATH    | PYTHONPATH是Python搜索路径，默认我们import的模块都会从PYTHONPATH里面寻找。 |
+| PYTHONSTARTUP | Python启动后，先寻找PYTHONSTARTUP环境变量，然后执行此变量指定的文件中的代码。 |
+| PYTHONCASEOK  | 加入PYTHONCASEOK的环境变量, 就会使python导入模块的时候不区分大小写. |
+| PYTHONHOME    | 另一种模块搜索路径。它通常内嵌于的PYTHONSTARTUP或PYTHONPATH目录中，使得两个模块库更容易切换。 |
+
 <div STYLE="page-break-after: always;"></div>
 
 ## 【Python 第2课】print
@@ -6730,18 +6741,32 @@ def findfile(inputdir):
 # 所有文件内容包括这个搜索文本的文件。
 ```
 
+## Package
+
+```python
+import sys
+listone = sys.path
+print("添加sit-package前import搜索路径为：")
+print("list")
+sys.path.append("你的sit-package路径")
+print("添加sit-package后import搜索路径为：")
+print("list")
+```
+
 ## 参考资源列表
 
 有时候看书难以理解的时候，就可以看看相关的视频或者学习网站增加理解，下面推荐几个学习的视频网站和学习网站
 
-**1.**[廖雪峰Python3教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)
+**1.** [廖雪峰Python3教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)
 
-**2.**[Python快速教程 - Vamei - 博客园](https://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html)
+**2.** [Python快速教程 - Vamei - 博客园](https://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html)
 
-**3.**[实验楼 - 在线做实验，高效学编程](https://www.shiyanlou.com/)
+**3.** [实验楼 - 在线做实验，高效学编程](https://www.shiyanlou.com/)
 
-**4.**[python教程_python基础教程_python视频教程-慕课网](https://www.imooc.com/course/list%3Fc%3Dpython)
+**4.** [python教程_python基础教程_python视频教程-慕课网](https://www.imooc.com/course/list%3Fc%3Dpython)
 
-**5.**[Python 基础教程 | 菜鸟教程](http://www.runoob.com/python/python-tutorial.html)
+**5.** [Python 基础教程 | 菜鸟教程](http://www.runoob.com/python/python-tutorial.html)
 
-**6.**[Python 官方文档](https://www.python.org/)
+**6.** [Python 官方文档-Python 官网：https://www.python.org/](https://www.python.org/)
+
+**7.** [Python文档下载地址：https://www.python.org/doc/](https://www.python.org/doc/) 

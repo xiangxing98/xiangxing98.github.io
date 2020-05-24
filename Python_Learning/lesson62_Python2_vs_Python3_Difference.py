@@ -12,12 +12,18 @@
 '''
 
 # here put the import lib
+import sys
 
 # Python2
 # print 'this is version 2'
 # print('this is version 2')
 
 # Python3
+# python -V
+# Python 3.7.0b4
+# print('Python', python_version())
+print(sys.version)
+# 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)]
 print('this is version 3')
 
 # Python2不换行输出是加上逗号：
