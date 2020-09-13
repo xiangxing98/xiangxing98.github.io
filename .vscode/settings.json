@@ -11,5 +11,8 @@
     "cSpell.words": [
         "time",
         "zhichengjiu"
-    ]
+    ],
+    "python.linting.flake8Enabled": false,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
