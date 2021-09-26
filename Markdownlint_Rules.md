@@ -49,7 +49,7 @@ when skipped - especially for accessibility scenarios. More information:
 
 [Markdownlint Rules md002](#md002)
 
-## ~~MD002 - First heading should be a top-level heading~~
+## MD002 - First heading should be a top-level heading~~
 
 Tags: headings, headers
 
@@ -241,7 +241,7 @@ Rationale: Violations of this rule can lead to improperly rendered content.
 
 [Markdownlint Rules md006](#md006)
 
-## ~~MD006 - Consider starting bulleted lists at the beginning of the line~~
+## MD006 - Consider starting bulleted lists at the beginning of the line~~
 
 Tags: bullet, ul, indentation
 
