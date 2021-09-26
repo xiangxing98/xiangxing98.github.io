@@ -7,7 +7,7 @@ as well as examples of documents that break the rule and corrected
 versions of the examples. Any rule whose heading is ~~struck through~~ is
 deprecated, but still provided for backward-compatibility.
 
-<a name="md001"></a>
+[Markdownlint Rules md001](#md001)
 
 ## MD001 - Heading levels should only increment by one level at a time
 
@@ -47,7 +47,7 @@ Rationale: Headings represent the structure of a document and can be confusing
 when skipped - especially for accessibility scenarios. More information:
 <https://www.w3.org/WAI/tutorials/page-structure/headings/>.
 
-<a name="md002"></a>
+[Markdownlint Rules md002](#md002)
 
 ## ~~MD002 - First heading should be a top-level heading~~
 
@@ -83,7 +83,7 @@ cases where an h1 is added externally.
 Rationale: The top-level heading often acts as the title of a document. More
 information: <https://cirosantilli.com/markdown-style-guide#top-level-header>.
 
-<a name="md003"></a>
+[Markdownlint Rules md003](#md003)
 
 ## MD003 - Heading style
 
@@ -133,7 +133,7 @@ that the usage is consistent within the document.
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md004"></a>
+[Markdownlint Rules md004](#md004)
 
 ## MD004 - Unordered list style
 
@@ -183,7 +183,7 @@ dash:
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md005"></a>
+[Markdownlint Rules md005](#md005)
 
 ## MD005 - Inconsistent indentation for list items at the same level
 
@@ -239,7 +239,7 @@ the same ending column:
 
 Rationale: Violations of this rule can lead to improperly rendered content.
 
-<a name="md006"></a>
+[Markdownlint Rules md006](#md006)
 
 ## ~~MD006 - Consider starting bulleted lists at the beginning of the line~~
 
@@ -286,7 +286,7 @@ or the tab key is used to indent. Starting a list 1 space in means that the
 indent of the first nested list is less than the indent of the second level (3
 characters if you use 4 space tabs, or 1 character if you use 2 space tabs).
 
-<a name="md007"></a>
+[Markdownlint Rules md007](#md007)
 
 ## MD007 - Unordered list indentation
 
@@ -333,7 +333,7 @@ and <http://support.markedapp.com/discussions/problems/21-sub-lists-not-indentin
 
 Note: See [Prettier.md](Prettier.md) for compatibility information.
 
-<a name="md009"></a>
+[Markdownlint Rules md009](#md009)
 
 ## MD009 - Trailing spaces
 
@@ -384,7 +384,7 @@ to allow this (even when `strict` is `true`):
 Rationale: Except when being used to create a line break, trailing whitespace
 has no purpose and does not affect the rendering of content.
 
-<a name="md010"></a>
+[Markdownlint Rules md010](#md010)
 
 ## MD010 - Hard tabs
 
@@ -430,7 +430,7 @@ parameter to the number x. The default value would be 1.
 Rationale: Hard tabs are often rendered inconsistently by different editors and
 can be harder to work with than spaces.
 
-<a name="md011"></a>
+[Markdownlint Rules md011](#md011)
 
 ## MD011 - Reversed link syntax
 
@@ -463,7 +463,7 @@ For (example)[^1]
 
 Rationale: Reversed links are not rendered as usable links.
 
-<a name="md012"></a>
+[Markdownlint Rules md012](#md012)
 
 ## MD012 - Multiple consecutive blank lines
 
@@ -502,7 +502,7 @@ consecutive blank lines.
 Rationale: Except in a code block, blank lines serve no purpose and do not
 affect the rendering of content.
 
-<a name="md013"></a>
+[Markdownlint Rules md013](#md013)
 
 ## MD013 - Line length
 
@@ -553,7 +553,7 @@ rules. Still, some languages do not lend themselves to short lines.
 Rationale: Extremely long lines can be difficult to work with in some editors.
 More information: <https://cirosantilli.com/markdown-style-guide#line-wrapping>.
 
-<a name="md014"></a>
+[Markdownlint Rules md014](#md014)
 
 ## MD014 - Dollar signs used before commands without showing output
 
@@ -610,7 +610,7 @@ are omitted when they are not needed. See
 <https://cirosantilli.com/markdown-style-guide#dollar-signs-in-shell-code>
 for more information.
 
-<a name="md018"></a>
+[Markdownlint Rules md018](#md018)
 
 ## MD018 - No space after hash on atx style heading
 
@@ -640,7 +640,7 @@ space:
 
 Rationale: Violations of this rule can lead to improperly rendered content.
 
-<a name="md019"></a>
+[Markdownlint Rules md019](#md019)
 
 ## MD019 - Multiple spaces after hash on atx style heading
 
@@ -671,7 +671,7 @@ space:
 Rationale: Extra space has no purpose and does not affect the rendering of
 content.
 
-<a name="md020"></a>
+[Markdownlint Rules md020](#md020)
 
 ## MD020 - No space inside hashes on closed atx style heading
 
@@ -703,7 +703,7 @@ Note: this rule will fire if either side of the heading is missing spaces.
 
 Rationale: Violations of this rule can lead to improperly rendered content.
 
-<a name="md021"></a>
+[Markdownlint Rules md021](#md021)
 
 ## MD021 - Multiple spaces inside hashes on closed atx style heading
 
@@ -737,7 +737,7 @@ spaces.
 Rationale: Extra space has no purpose and does not affect the rendering of
 content.
 
-<a name="md022"></a>
+[Markdownlint Rules md022](#md022)
 
 ## MD022 - Headings should be surrounded by blank lines
 
@@ -783,7 +783,7 @@ Rationale: Aside from aesthetic reasons, some parsers, including `kramdown`, wil
 not parse headings that don't have a blank line before, and will parse them as
 regular text.
 
-<a name="md023"></a>
+[Markdownlint Rules md023](#md023)
 
 ## MD023 - Headings must start at the beginning of the line
 
@@ -812,7 +812,7 @@ Some text
 Rationale: Headings that don't start at the beginning of the line will not be
 parsed as headings, and will instead appear as regular text.
 
-<a name="md024"></a>
+[Markdownlint Rules md024](#md024)
 
 ## MD024 - Multiple headings with the same content
 
@@ -858,7 +858,7 @@ in changelogs):
 Rationale: Some markdown parsers generate anchors for headings based on the
 heading name; headings with the same content can cause problems with that.
 
-<a name="md025"></a>
+[Markdownlint Rules md025](#md025)
 
 ## MD025 - Multiple top-level headings in the same document
 
@@ -905,7 +905,7 @@ serves as the title for the document. If this convention is in use, then there
 can not be more than one title for the document, and the entire document
 should be contained within this heading.
 
-<a name="md026"></a>
+[Markdownlint Rules md026](#md026)
 
 ## MD026 - Trailing punctuation in heading
 
@@ -944,7 +944,7 @@ like `&copy;`, `&#169;`, and `&#x000A9;` is ignored by this rule.
 Rationale: Headings are not meant to be full sentences. More information:
 <https://cirosantilli.com/markdown-style-guide#punctuation-at-the-end-of-headers>
 
-<a name="md027"></a>
+[Markdownlint Rules md027](#md027)
 
 ## MD027 - Multiple spaces after blockquote symbol
 
@@ -971,7 +971,7 @@ To fix, remove any extraneous space:
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md028"></a>
+[Markdownlint Rules md028](#md028)
 
 ## MD028 - Blank line inside blockquote
 
@@ -1014,7 +1014,7 @@ Rationale: Some markdown parsers will treat two blockquotes separated by one
 or more blank lines as the same blockquote, while others will treat them as
 separate blockquotes.
 
-<a name="md029"></a>
+[Markdownlint Rules md029](#md029)
 
 ## MD029 - Ordered list item prefix
 
@@ -1112,7 +1112,7 @@ item as intended:
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md030"></a>
+[Markdownlint Rules md030](#md030)
 
 ## MD030 - Spaces after list markers
 
@@ -1189,7 +1189,7 @@ Rationale: Violations of this rule can lead to improperly rendered content.
 
 Note: See [Prettier.md](Prettier.md) for compatibility information.
 
-<a name="md031"></a>
+[Markdownlint Rules md031](#md031)
 
 ## MD031 - Fenced code blocks should be surrounded by blank lines
 
@@ -1240,7 +1240,7 @@ Disabling this behavior for lists can be useful if it is necessary to create a
 Rationale: Aside from aesthetic reasons, some parsers, including kramdown, will
 not parse fenced code blocks that don't have blank lines before and after them.
 
-<a name="md032"></a>
+[Markdownlint Rules md032](#md032)
 
 ## MD032 - Lists should be surrounded by blank lines
 
@@ -1281,7 +1281,7 @@ Some text
 Rationale: Aside from aesthetic reasons, some parsers, including kramdown, will
 not parse lists that don't have blank lines before and after them.
 
-<a name="md033"></a>
+[Markdownlint Rules md033](#md033)
 
 ## MD033 - Inline HTML
 
@@ -1309,7 +1309,7 @@ Rationale: Raw HTML is allowed in markdown, but this rule is included for
 those who want their documents to only include "pure" markdown, or for those
 who are rendering markdown documents in something other than HTML.
 
-<a name="md034"></a>
+[Markdownlint Rules md034](#md034)
 
 ## MD034 - Bare URL used
 
@@ -1356,7 +1356,7 @@ The use of quotes around a bare link will _not_ trigger this rule, either:
 Rationale: Without angle brackets, the URL isn't converted into a link by many
 markdown parsers.
 
-<a name="md035"></a>
+[Markdownlint Rules md035](#md035)
 
 ## MD035 - Horizontal rule style
 
@@ -1400,7 +1400,7 @@ is allowed.
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md036"></a>
+[Markdownlint Rules md036](#md036)
 
 ## MD036 - Emphasis used instead of a heading
 
@@ -1446,7 +1446,7 @@ Rationale: Using emphasis instead of a heading prevents tools from inferring
 the structure of a document. More information:
 <https://cirosantilli.com/markdown-style-guide#emphasis-vs-headers>.
 
-<a name="md037"></a>
+[Markdownlint Rules md037](#md037)
 
 ## MD037 - Spaces inside emphasis markers
 
@@ -1486,7 +1486,7 @@ aren't surrounded by spaces. This rule attempts to detect where
 they were surrounded by spaces, but it appears that emphasized text was
 intended by the author.
 
-<a name="md038"></a>
+[Markdownlint Rules md038](#md038)
 
 ## MD038 - Spaces inside code span elements
 
@@ -1527,7 +1527,7 @@ markers from an embedded backtick:
 
 Rationale: Violations of this rule can lead to improperly rendered content.
 
-<a name="md039"></a>
+[Markdownlint Rules md039](#md039)
 
 ## MD039 - Spaces inside link text
 
@@ -1551,7 +1551,7 @@ To fix this, remove the spaces surrounding the link text:
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md040"></a>
+[Markdownlint Rules md040](#md040)
 
 ## MD040 - Fenced code blocks should have a language specified
 
@@ -1590,7 +1590,7 @@ Rationale: Specifying a language improves content rendering by using the
 correct syntax highlighting for code. More information:
 <https://cirosantilli.com/markdown-style-guide#option-code-fenced>.
 
-<a name="md041"></a>
+[Markdownlint Rules md041](#md041)
 
 ## MD041 - First line in a file should be a top-level heading
 
@@ -1637,7 +1637,7 @@ To disable the use of front matter by this rule, specify `""` for `front_matter_
 Rationale: The top-level heading often acts as the title of a document. More
 information: <https://cirosantilli.com/markdown-style-guide#top-level-header>.
 
-<a name="md042"></a>
+[Markdownlint Rules md042](#md042)
 
 ## MD042 - No empty links
 
@@ -1671,7 +1671,7 @@ But non-empty fragments will not:
 
 Rationale: Empty links do not lead anywhere and therefore don't function as links.
 
-<a name="md043"></a>
+[Markdownlint Rules md043](#md043)
 
 ## MD043 - Required heading structure
 
@@ -1738,7 +1738,7 @@ simplicity, a file may use any supported heading style.
 Rationale: Projects may wish to enforce a consistent document structure across
 a set of similar content.
 
-<a name="md044"></a>
+[Markdownlint Rules md044](#md044)
 
 ## MD044 - Proper names should have the correct capitalization
 
@@ -1768,7 +1768,7 @@ Set the `code_blocks` parameter to `false` to disable this rule for code blocks.
 
 Rationale: Incorrect capitalization of proper names is usually a mistake.
 
-<a name="md045"></a>
+[Markdownlint Rules md045](#md045)
 
 ## MD045 - Images should have alternate text (alt text)
 
@@ -1801,7 +1801,7 @@ Guidance for writing alternate text is available from the [W3C](https://www.w3.o
 Rationale: Alternate text is important for accessibility and describes the
 content of an image for people who may not be able to see it.
 
-<a name="md046"></a>
+[Markdownlint Rules md046](#md046)
 
 ## MD046 - Code block style
 
@@ -1840,7 +1840,7 @@ that usage be consistent within the document (`consistent`).
 
 Rationale: Consistent formatting makes it easier to understand a document.
 
-<a name="md047"></a>
+[Markdownlint Rules md047](#md047)
 
 ## MD047 - Files should end with a single newline character
 
@@ -1873,7 +1873,7 @@ This file ends with a newline.
 Rationale: Some programs have trouble with files that do not end with a newline.
 More information: <https://unix.stackexchange.com/questions/18743/whats-the-point-in-adding-a-new-line-to-the-end-of-a-file>.
 
-<a name="md048"></a>
+[Markdownlint Rules md048](#md048)
 
 ## MD048 - Code fence style
 
