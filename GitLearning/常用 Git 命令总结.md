@@ -85,26 +85,66 @@ git ls-tree <commit>
 git show <blob>
 ```
 
-## 一、新建代码库
+## 一、新建本地代码库-本地代码库初始化
 
-```{bash}
+```bash
 # 查看环境变量内是否有git
 git
+git --version
 
 # ubuntu下安装git
 sudo apt-get install git  
+```
 
-# 在当前目录新建一个Git代码库，初始化git仓库
-git init
 
-# 新建一个目录，将其初始化为Git代码库
-git init [project-name]
+
+### 1.1 通过 git clone 实现-初始化本地仓库
+
+```bash
+# 先在桌面创建一个文件夹，在这里我创建的文件夹名称是 MAD_Repo
+cd Desktop/MAD_Repo 
 
 # 下载一个项目和它的整个代码历史
 git clone [project-path]
+
+#Gitee
+$ git clone https://gitee.com/yourname/repository
+$ git clone https://gitee.com/Cait7/learngit
+
+#Github
+$ git clone https://github.com/yourname/repository.git
+
+#yourname  您在码云或github注册的用户名
+#repository  您创建的远程仓库名称
 ```
 
-## 二、git配置
+
+
+### 1.2 通过init初始化本地项目
+
+```bash
+# 先在桌面创建一个文件夹，在这里我创建的文件夹名称是 MAD_Repo
+cd Desktop/MAD_Repo 
+# 在当前目录新建一个Git代码库目录，将其初始化为Git代码库
+git init [project-name]
+
+#Gitee
+$ cd d:/test //首先在文件系统中创建一个项目文件夹，然后在Git中 cd 到这个工程目录
+$ git init //初始化本地项目
+$ git remote add origin <远程仓库地址> //绑定远程仓库
+#注:地址形式为 https://gitee.com/yourname/test.git 或 git@gitee.com:yourname/test.git
+
+#Github
+$ cd d:/test
+$ git init
+$ git remote add origin <远程仓库地址>
+#注：地址形式为 https://github.com/yourname/test.git
+
+```
+
+## 二、本地git配置
+
+### 配置用户名与登陆邮件
 
 git配置文件根据作用域的不同分为三种：
 
@@ -132,6 +172,8 @@ git config
 ```
 
 Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
+
+name尽量和码云或GitHub保持一致，但email必须是码云或GitHub注册时使用的邮箱。命令不分前后，没有顺序。
 
 ```{bash}
 # 显示当前的Git配置
@@ -203,6 +245,55 @@ git add -f file
 # 查看哪个规则屏蔽了file文件
 git check-ignore -v file  
 ```
+
+### 获取SSHKey
+
+首先要在本地创建一个ssh key 这个的目的就是你现在需要在你电脑上获得一个密匙。
+
+按如下命令来生成sshkey:
+
+```python
+$ ssh-keygen -t rsa -C "youremail@youremail.com"  
+
+# Generating public/private rsa key pair...
+# 三次回车即可生成 ssh key
+```
+
+查看你的 public key
+
+```python
+$ cat ~/.ssh/id_rsa.pub
+# ssh-rsa AAAAB3NzaC1yc2E... youremail@youremail.com
+
+```
+
+并把他添加到Gitee（gitee.com [SSHKey添加地址](http://git.oschina.net/profile/sshkeys)）或者github
+
+添加后，在终端中输入
+
+```PYTHON
+#Gitee
+$ ssh -T git@gitee.com
+
+#GitHub
+$ ssh -T git@github.com
+```
+
+第一次绑定的时候输入上边的代码之后会提示是否continue,输入yes后程序会自动连接，如果要求登录，直接输入登录信息即可。
+
+再次执行上面的命令，检查是否成功连接，如果返回一下信息，则表示添加成功
+
+```python
+#Gitee
+Welcome to Gitee.com, YourName!
+ 
+#GitHub
+You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+
+
+
 
 ## 三、增加/删除文件
 
@@ -561,6 +652,23 @@ git push [remote] --all
 git clone git@github.com:GavinSimons/xxxxx.git
 ```
 
+### 把本地最新的代码更新到远程仓库
+
+```bash
+git add .    //指定更新内容    . 表示全部更新，test.txt 表示更新指定文件
+git commit -m "一些注释说明"     //添加更新说明
+git push origin master            //执行更新操作
+```
+
+### 从远程仓库同步最新版本到本地
+
+```bash
+$ cd d:/test
+$ git pull origin master
+```
+
+
+
 ## 九、代码回滚、撤销
 
 ```{bash}
@@ -664,6 +772,33 @@ git stash drop stash@{0}
 
 # 恢复stash0，并自动删除
 git stash pop stash@{0}
+
+# 清屏
+$ clear
+```
+
+## 相关Git报错问题
+
+fatal: unable to access ‘’: OpenSSL SSL
+
+Git报错：fatal: unable to access ‘’：OpenSSL SSL_connect was reset in connection to gitee.com:443
+
+解决方法：
+
+```
+git config --global http.sslVerify ``false
+```
+
+ 2：push不上去可以先pull下来试试
+
+```
+git pull origin master
+```
+
+ 3:强制推送，注意会强制删除原有仓库中的某些代码
+
+```
+git push -u origin master -f
 ```
 
 ## rebase
@@ -929,3 +1064,101 @@ git commit * -m "what I want told to someone"
 # 更新到远程服务器上
 git push origin master
 ```
+
+## 常用的git命令
+
+```bash
+git init                        #把当前目录变成git可以管理的仓库
+git add readme.txt              #添加一个文件，也可以添加文件夹
+git add -A                      #添加全部文件
+git rm test.txt                 #删除一个文件，也可以删除文件夹
+git commit -a -m "some commit"  #提交修改
+git status                      #查看是否还有未提交
+git log                         #查看最近日志
+git reset --hard HEAD^          #版本回退一个版本
+git reset --hard HEAD^^         #版本回退两个版本
+git reset --hard HEAD~100       #版本回退多个版本
+git remote add origin +地址     #远程仓库的提交（第一次链接）
+# git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+# git remote -v
+# git remote rm origin
+git push -u origin master       #仓库关联
+git push                        #远程仓库的提交（第二次及之后）
+
+# 先关联GitHub的远程库：注意，远程库的名称叫github，不叫origin了。
+# git remote add github git@github.com:michaelliao/learngit.git
+
+# 再关联Gitee的远程库：同样注意，远程库的名称叫gitee，不叫origin。
+# git remote add gitee git@gitee.com:liaoxuefeng/learngit.git
+
+# 现在，我们用git remote -v查看远程库信息，可以看到两个远程库：
+git remote -v
+gitee	git@gitee.com:liaoxuefeng/learngit.git (fetch)
+gitee	git@gitee.com:liaoxuefeng/learngit.git (push)
+github	git@github.com:michaelliao/learngit.git (fetch)
+github	git@github.com:michaelliao/learngit.git (push)
+
+# 如果要推送到GitHub，使用命令：
+# git push github master
+
+# 如果要推送到Gitee，使用命令：
+# git push gitee master
+
+# 这样一来，我们的本地库就可以同时与多个远程库互相同步：
+```
+
+更多的`git`命令，可以输入`git --help`查看
+
+或者访问`git`命令手册：https://git-scm.com/docs
+
+```bash
+git --help
+usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone             Clone a repository into a new directory
+   init              Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add               Add file contents to the index
+   mv                Move or rename a file, a directory, or a symlink
+   restore           Restore working tree files
+   rm                Remove files from the working tree and from the index
+   sparse-checkout   Initialize and modify the sparse-checkout
+
+examine the history and state (see also: git help revisions)
+   bisect            Use binary search to find the commit that introduced a bug
+   diff              Show changes between commits, commit and working tree, etc
+   grep              Print lines matching a pattern
+   log               Show commit logs
+   show              Show various types of objects
+   status            Show the working tree status
+
+grow, mark and tweak your common history
+   branch            List, create, or delete branches
+   commit            Record changes to the repository
+   merge             Join two or more development histories together
+   rebase            Reapply commits on top of another base tip
+   reset             Reset current HEAD to the specified state
+   switch            Switch branches
+   tag               Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch             Download objects and refs from another repository
+   pull              Fetch from and integrate with another repository or a local branch
+   push              Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
+
+
+```
+
