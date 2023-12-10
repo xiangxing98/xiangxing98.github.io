@@ -47,6 +47,32 @@ ssh-keygen -t rsa -C "xiangxing985529@163.com"
 
  cat /c/Users/xiang/.ssh/id_rsa.pub
 
+```
+$ ssh-keygen -t rsa -C "xiangxing985529@163.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Administrator/.ssh/id_rsa):
+Created directory '/c/Users/Administrator/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Administrator/.ssh/id_rsa
+Your public key has been saved in /c/Users/Administrator/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:g3gcgmqbB1l/ktMm9NJ/gkx2CcCBytoNBhhYNH4KOz0 xiangxing985529@163.com
+The key's randomart image is:
++---[RSA 3072]----+
+|+++ oo.          |
+|+. + ..          |
+|o.+.o...         |
+| B=oo+=o. .      |
+|=*Eo.B+OSo       |
+|o.=...@ +.       |
+| o .   o o .     |
+|  .       o      |
+|                 |
++----[SHA256]-----+
+```
+
+
 # 如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件.
 # 这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，
 # 可以放心地告诉任何人。
