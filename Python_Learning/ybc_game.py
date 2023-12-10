@@ -12,8 +12,13 @@ ybc_game.go()
 
 
 import ybc_game
+import random
 
 ybc_game.title('百变壮猿')
+bg_list = ["bg1", "bg2", "bg3", "bg4", "bg5"]
+face_list = ["face1", "face2", "face3", "face4", "face5"]
+hair_list = ["hair1", "hair2", "hair3", "hair4", "hair5"]
+dress_list = ["dress1", "dress2", "dress3", "dress4", "dress5"]
 
 bg = ybc_game.actor('bg1')
 face = ybc_game.actor('face1', [400, 310])
@@ -28,6 +33,9 @@ def update():
 
 def on_mouse_down():
     # 修改背景角色的image属性
-    bg.image = 'bg3'
+    bg.image = random.choice(bg_list)
+    face.image = random.choice(face_list)
+    hair.image = random.choice(hair_list)
+    dress.image = random.choice(dress_list)
     
 ybc_game.go()
