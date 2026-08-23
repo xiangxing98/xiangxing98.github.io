@@ -1,191 +1,505 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>侯祥胡-Stone_Hou's Github Space-Updated 2021/09/26</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper wrapper1024">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侯祥胡 | Stone_Hou — 半导体薄膜工艺工程师</title>
+  <meta name="description" content="侯祥胡（Stone_Hou），中芯国际北京厂区薄膜工艺资深工程师，15年+ PVD 工艺经验，专注 RRAM / TaN 工艺与国产材料量产验证。">
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      color: #1e293b;
+      background: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: #2563eb; text-decoration: none; transition: color .2s; }
+    a:hover { color: #1d4ed8; text-decoration: underline; }
+    img { max-width: 100%; height: auto; display: block; }
 
-      <div>
-        <h1>https://xiangxing98.github.io/</h1>
-        <p>Hello github, i'm coming, hope it's not too late. <a href="xiangxing98.github.io">xiangxing98@github</a></p>
-        <p class="view"><a href="https://github.com/xiangxing98">View the Project on GitHub <small>xiangxing98</small></a>  <a href="https://github.com/xiangxing98/xiangxing98.github.io">View On <strong>GitHub</strong></a></p>
+    /* ===== Layout ===== */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== Hero ===== */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #e2e8f0;
+      padding: 64px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(59,130,246,.15), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .hero-text h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .hero-text .subtitle { font-size: 1.05rem; color: #93c5fd; margin-bottom: 12px; font-weight: 500; }
+    .hero-text p { color: #cbd5e1; font-size: .95rem; max-width: 560px; }
+    .hero-links { margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-links a {
+      color: #bfdbfe;
+      font-size: .9rem;
+      padding: 6px 14px;
+      border: 1px solid rgba(147,197,253,.3);
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .hero-links a:hover { background: rgba(59,130,246,.15); color: #fff; text-decoration: none; border-color: #60a5fa; }
+
+    /* ===== Sticky Nav ===== */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e2e8f0;
+    }
+    nav ul { list-style: none; display: flex; gap: 8px; padding: 10px 0; flex-wrap: wrap; }
+    nav a {
+      font-size: .88rem; font-weight: 500; color: #475569;
+      padding: 6px 12px; border-radius: 6px; transition: all .2s;
+    }
+    nav a:hover { background: #eff6ff; color: #2563eb; text-decoration: none; }
+
+    /* ===== Sections ===== */
+    section { padding: 48px 0; }
+    section:nth-child(even) { background: #fff; }
+    .section-title {
+      font-size: 1.4rem; font-weight: 700; color: #0f172a;
+      margin-bottom: 24px; padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::before {
+      content: ""; width: 4px; height: 22px;
+      background: #2563eb; border-radius: 2px;
+    }
+
+    /* ===== About ===== */
+    .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+    .info-card {
+      background: #f8fafc; border-radius: 10px; padding: 20px;
+      border-left: 3px solid #2563eb;
+    }
+    .info-card .label { font-size: .8rem; color: #64748b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .info-card .value { font-size: 1rem; color: #1e293b; font-weight: 600; }
+
+    /* ===== Timeline ===== */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px;
+      width: 2px; background: #e2e8f0;
+    }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -24px; top: 8px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #2563eb; border: 2px solid #fff; box-shadow: 0 0 0 2px #2563eb;
+    }
+    .timeline-date { font-size: .82rem; color: #2563eb; font-weight: 600; margin-bottom: 4px; }
+    .timeline-content { color: #334155; }
+
+    /* ===== Notes Grid ===== */
+    .notes-category { margin-bottom: 32px; }
+    .notes-category h3 {
+      font-size: 1.1rem; color: #0f172a; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .notes-category h3 .badge {
+      font-size: .7rem; background: #dbeafe; color: #1d4ed8;
+      padding: 2px 8px; border-radius: 10px; font-weight: 600;
+    }
+    .notes-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+    .notes-list li {
+      background: #f8fafc; border-radius: 8px; padding: 12px 16px;
+      border: 1px solid #e2e8f0; transition: all .2s;
+      font-size: .9rem;
+    }
+    .notes-list li:hover { border-color: #93c5fd; background: #eff6ff; transform: translateY(-1px); }
+    .notes-list a { color: #1e40af; display: block; }
+    .notes-list a:hover { text-decoration: none; color: #1d4ed8; }
+    .note-date { font-size: .75rem; color: #94a3b8; margin-right: 6px; }
+
+    /* ===== Resources ===== */
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .resource-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 14px 16px; background: #f8fafc;
+      border-radius: 8px; border: 1px solid #e2e8f0;
+      transition: all .2s;
+    }
+    .resource-item:hover { border-color: #93c5fd; background: #eff6ff; }
+    .resource-item .icon { flex-shrink: 0; width: 28px; height: 28px; background: #dbeafe; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .85rem; color: #1d4ed8; font-weight: 700; }
+    .resource-item .info { flex: 1; }
+    .resource-item .info a { font-weight: 600; font-size: .9rem; color: #1e40af; }
+    .resource-item .info .desc { font-size: .78rem; color: #64748b; margin-top: 2px; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #0f172a; color: #94a3b8;
+      padding: 32px 0; text-align: center; font-size: .85rem;
+    }
+    footer a { color: #60a5fa; }
+    footer .footer-links { margin-bottom: 10px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+    /* ===== Tags ===== */
+    .tag-group { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px; }
+    .tag {
+      background: #eff6ff; color: #1d4ed8;
+      padding: 5px 12px; border-radius: 14px;
+      font-size: .82rem; font-weight: 500;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ===== Education ===== */
+    .edu-list { margin-top: 20px; display: grid; gap: 12px; }
+    .edu-item {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      background: #f8fafc; border-radius: 10px; padding: 16px 20px;
+      border-left: 3px solid #2563eb; gap: 16px; flex-wrap: wrap;
+    }
+    .edu-item .school { font-weight: 600; color: #0f172a; font-size: .95rem; }
+    .edu-item .major { font-size: .85rem; color: #64748b; margin-top: 2px; }
+    .edu-item .year { font-size: .82rem; color: #2563eb; font-weight: 600; white-space: nowrap; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 640px) {
+      .hero { padding: 40px 0 36px; }
+      .hero-inner { flex-direction: column; text-align: center; gap: 20px; }
+      .hero-text h1 { font-size: 1.6rem; }
+      .avatar { width: 96px; height: 96px; }
+      .hero-links { justify-content: center; }
+      section { padding: 32px 0; }
+      .notes-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div class="container hero-inner">
+      <img class="avatar" src="images/Avatar.png" alt="Stone_Hou 头像">
+      <div class="hero-text">
+        <h1>侯祥胡 <span style="font-weight:400;font-size:1.2rem;color:#94a3b8;">Stone_Hou</span></h1>
+        <div class="subtitle">中芯国际（SMIC）北京厂区 · 薄膜工艺资深工程师</div>
+        <p>15 年+ PVD 薄膜工艺经验，专注 RRAM 项目 TaN 工艺开发，致力于国产材料与制造平台的量产验证导入。终身学习者，R 语言 / 数据科学 / Git 技术笔记分享者。</p>
+        <div class="hero-links">
+          <a href="https://github.com/xiangxing98" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/祥胡-侯-9703b4123" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:Stone_Hou@smics.com">Email</a>
+          <a href="resume/Xianghu_Hou_Resume_20260816.html" target="_blank" rel="noopener">简历</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Nav ===== -->
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="#about">关于我</a></li>
+        <li><a href="#updates">职业历程</a></li>
+        <li><a href="#notes">学习笔记</a></li>
+        <li><a href="#resources">推荐资源</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== About ===== -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">关于我</h2>
+      <p style="color:#334155;margin-bottom:8px;">
+        我是 Stone_Hou（侯祥胡），任职于中芯国际（SMIC）北京厂区金属薄膜工艺部，拥有 <strong>15 年+</strong> 300mm 晶圆薄膜工艺研发与量产经验。目前担任技术专家，深耕 RRAM 存储器件工艺开发、TSV 先进封装以及全国产材料/设备平台的量产验证导入。
+      </p>
+      <p style="color:#334155;">
+        信奉业精于勤，注重数据驱动解决问题，坚持知行合一。工作之余持续学习 R 语言数据分析、Git 版本管理、数据可视化等技术，积累实战笔记并公开分享于此。
+      </p>
+
+      <div class="tag-group">
+        <span class="tag">300mm 晶圆制造</span>
+        <span class="tag">PVD / ALD / ECP</span>
+        <span class="tag">RRAM / TSV 先进封装</span>
+        <span class="tag">制程开发 &amp; 良率提升</span>
+        <span class="tag">国产化材料/设备验证</span>
+        <span class="tag">SPC / DOE / 数据分析</span>
       </div>
 
-      <img id="header_Avatar" src="images/Avatar.png" border=0 alt="Stone_Hou Avatar" title="Stone_Hou">
+      <div class="about-grid">
+        <div class="info-card">
+          <div class="label">所在企业</div>
+          <div class="value">中芯国际 SMIC（北京）</div>
+        </div>
+        <div class="info-card">
+          <div class="label">岗位</div>
+          <div class="value">金属薄膜工艺部 · 技术专家</div>
+        </div>
+        <div class="info-card">
+          <div class="label">从业年限</div>
+          <div class="value">15 年+（2011–至今）</div>
+        </div>
+        <div class="info-card">
+          <div class="label">技术方向</div>
+          <div class="value">PVD / ALD / ECP / RRAM</div>
+        </div>
+      </div>
 
-      <section>
-        <hr>
-        <h3>
-        <a id="welcome-to-xiangxing98-github-pages" class="anchor" href="#welcome-to-xiangxing98-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Xiangxing98 GitHub Pages.</h3>
-        <p>2015-04-14 19:20 stone hou, hello, github and world.</p>
-        <p>2016-08-13 update and add linkedin information</p>
-        <p>2017-05-06 update r learning progress.</p>
-        <p>I'm Stone_Hou,侯祥胡 a process engineer in PVD section, 10.5 years working experience in  thin film department of <a href="http://www.smics.com">SMIC</a>(beijing).</p>
-        <p><a href="https://www.linkedin.com/in/祥胡-侯-9703b4123">侯祥胡 linkedin Information</a></p>
-        <p>I Edit this page via HUAWEI T9501 D2,and PUSH this to github via SGit in 2015-04-13. 2017-05-30 updated.</p>
-        <hr>
-
-        <h3>2023-12-09 update</h3>
-        <p>立根国内一流平台，放眼全球，为国产材料与制造平台导入量产验证，躬身入局，挺膺负责</p>
-        <hr>
-
-        <h3>2024-12-21 update</h3>
-        <p>国产材料与制造平台导入量产验证完成，力保2025完美收关</p>
-        <hr>
-
-
-        <h3>2021-09-26 update</h3>
-        <p><a href="Markdownlint_Rules">Markdownlint_Rules.md</a></p>
-        <hr>
-
-        <h3>2018扬帆起航</h3>
-		<ol>
-          <li><a href="#">2018-07-02 no news is good news.</a></li>
-        </ol>
-
-
-        <h3>2017 Self Improvement/Lifelong Learning Progress--Git Learning</h3>
-        <ol>
-          <li><a href="GitLearning\001-Git_Note_Advanced">2017-05-30 GIT: Git_Note_Advanced-tag/branch/conflict/ignore</a></li>
-          <li><a href="GitLearning\Create-a-new-branch-with-git-and-manage-branches">2017-05-30 GIT: Create-a-new-branch-with-git-and-manage-branches</a></li>
-          <li><a href="GitLearning\Configuring_a_Remote_for_a_Forked_Repository_And_Synchronization">2017-05 GIT: 如何更新自己Fork的代码-全面版</a></li>
-          <li><a href="GitLearning\Update_Forked_Project_in_Github">2017-05 GIT: 如何更新自己Fork的代码-简洁版</a></li>
-          <li><a href="GitLearning\Git_CheatSheet">2017-05 GIT: Git_CheatSheet</a></li>
-        </ol>
-
-        <h3>Programming</h3>
-        <ol>
-          <li><a href="R_Learning\R_Programming_Coding_Skills.nb.html">2017-07 R_Programming_Coding_Skills</a></li>
-          <li><a href="Working_As_Data_Scientists">2017-05 Other: Working_As_Data_Scientists</a></li>
-          <li><a href="Collections/How_to_Find__Good_Software_and_App">2017/05/30 Other: How to Find good software and App,plus good tools for scholar writring.</a></li>
-          <li><a href="www_tech_tutorial.html">2017-05 www_tech_tutorial</a></li>
-        </ol>
-
-        <h3>2017 Self Improvement/Lifelong Learning Progress--R/Data Science Learning</h3>
-        <ol>
-          <li><a href="R_Learning\R_Mathematics_Calculation_Application.nb.html">2017-07 R_Mathematics_Calculation_Application</a></li>
-          <li><a href="R_Learning\R_an_introduction_to_stringr.nb.html">2017-07 R_an_introduction_to_stringr</a></li>
-          <li><a href="R_Learning\R_apply_sapply_lapply_tapply_mapply.nb.html">2017-07 R_apply_sapply_lapply_tapply_mapply</a></li>
-          <li><a href="R_Learning\R_Merge_Function_VS_Excel_Vlookup_Column_Match.nb.html">2017-07 R_Merge_Function_VS_Excel_Vlookup_Column_Match</a></li>
-          <li><a href="R_Learning\R_Date_time_Handle_R_Notebook.nb.html">2017-07 R_Date_time_Handle</a></li>
-          <li><a href="R_Learning\R_an_introduction_to_reshape2.nb.html">2017-07 R_an_introduction_to_reshape2</a></li>
-          <li><a href="R_Learning\ggplot2_plot_examples.nb.html">2017-07 R_ggplot2_plot_examples</a></li>
-          <li><a href="R_Learning\R_ggplot2_Learning_Road-Stone_Hou.nb.html">2017-07 R_ggplot2_Learning_Road-Stone_Hou</a></li>
-          <li><a href="R_Learning\R_Hypothesis_Test.nb.html">2017-07 R_Statistic_Test</a></li>
-          <li><a href="R_Learning\R_distribution_in_r_and_its_application.nb.html">2017-07 R_distribution_in_r_and_its_application</a></li>
-          <li><a href="R_Learning\R_Text_Mining_Chinese_Word_Segmentation.nb.html">2017-07 R_Text_Mining_Chinese_Word_Segmentation-WordCloud</a></li>
-          <li><a href="R_Learning\R_Reproducible.nb.html">2017-07 R_Reproducible</a></li>
-          <li><a href="R_Learning\R_fix_windows_warning_message_In_strsplit_input_string_1_is_invalid_in_this_locale.nb.html">2017-07 R_fix_windows_warning_message_In_strsplit_input_string_1_is_invalid_in_this_locale</a></li>
-
-          <hr/>
-
-          <li><a href="R_Learning\R_dplyr_Learning.nb.html">2017-06 R_dplyr_Learning</a></li>
-          <li><a href="R_Learning\Getting_And_Cleaning_Data">2017-06 Getting_And_Cleaning_Data</a></li>
-          <li><a href="R_Learning\R_Data_Manupulation_Basics">2017-06 R_Data_Manupulation_Basics</a></li>
-          <li><a href="R_Learning\R_Load_Package_In_A_Safe_Way">2017-06 R_Load_Package_In_A_Safe_Way</a></li>
-
-          <hr/>
-
-          <li><a href="R_Learning\data.table-Basics_Tutorial">2017-05 R_data.table-Basics_Tutorial</a></li>
-          <li><a href="R_Learning\data.table-data_analysis_with_data.table">2017-05 data.table-data_analysis_with_data.table</a></li>
-
-          <hr/>
-
-          <li><a href="R_Learning\R_Dataset_Conbine_Split_Delete.nb.html">2017 R_Dataset_Conbine_Split_Delete</a></li>
-          <li><a href="R_Learning\R_basics_about_r_data-structure.nb.html">2017 R_basics_about_r_data-structure</a></li>
-          <li><a href="free-introduction-to-r.html">2017-05 free-introduction-to-r from datacamp.com</a></li>
-          <li><a href="DailyDiary20160216.html">2016-02 DailyDiary20160216.html</a></li>
-        </ol>
-
-        <hr>
-        <h3>Good Site Recomended</h3>
-        <ol>
-          <li><a href="http://r4ds.had.co.nz/">R for Data Science by hadley</a></li>
-          <li><a href="http://tidyverse.org/">install.packages("tidyverse");library(tidyverse)</a></li>
-          <li><a href="http://blog.csdn.net/u014032673/article/category/2102319/27">R learning Blog</a></li>
-          <li><a href="http://blog.fens.me/">Conan-张丹-粉丝日志</a></li>
-          <li><a href="http://www.datacamp.com/">datacamp</a></li>
-          <li><a href="https://github.com/xiangxing98/">https://github.com/xiangxing98/</a></li>
-          <li><a href="https://3dwarehouse.sketchup.com/search.html?q=bookshelves&backendClass=entity">sketchup 3dwarehouse</a></li>
-          <li><a href="https://www.plob.org/">Public Library of Bioinfomatics</a></li>
-          <li><a href="https://bookdown.org/yihui/r-ninja/">谢一辉的R语言忍者秘笈</a> github site：<a href="https://github.com/yihui/r-ninja">r-ninja</a></li>
-          <li><a href="https://plot.ly/ggplot2/">plotly</a></li>
-          <li><a href="https://www.r-bloggers.com/">R news and tutorials R bloggers</a></li>
-          <li><a href="https://bookdown.org/">Write HTML, PDF, ePub, and Kindle books with R Markdown</a></li>
-        </ol>
-
-        <hr>
-        <h3>2017 plan</h3>
-        <ol>
-          <li>linux,Data visualize</li>
-          <li><a href="https://xiangxing98.github.io/select%20element%20in%20matrix">Select Element in matrix</a></li>
-          <li><a href="https://xiangxing98.github.io/Update_Forked_Project_in_Github">Update_Forked_Project_in_Github</a></li>
-          <li><a href="https://xiangxing98.github.io/Git_CheatSheet">Git_CheatSheet</a></li>
-        </ol>
-
-        <hr>
-        <h3>2016 plan</h3>
-        <ol>
-          <li>Rent a house @ beijing Done</li>
-          <li>R,Linux,Python,R start,Linux and python ongoing</li>
-          <li>Statistics ongoing</li>
-          <li>MOOC ongoing</li>
-          <li>SQL</li>
-          <li>VBA</li>
-          <li>Data Analysis & Data Visualization</li>
-          <li>DOE</li>
-          <li>Git & Programming, Data Structure</li>
-          <li>Update linkedin pages and working experience</li>
-          <li>PVD patent and newest papers, find ways to solving belljar peeling particle</li>
-          <li>3D Sketchup for IKEA like bookshelf,IKEA like bookcase</li>
-        </ol>
-
-    <pre>
-    #Draw Plot
-    par(mfrow=c(2,2))
-    curve(x^2-5*x+2, from=-10, to=10)#画二次函数图像
-    curve(x^3-3*x^2+7*x, from=-10, to=10)#画三次函数图像
-    curve(7*x, from=-3, to=3)#画指数函数图像
-    curve(log10(x), from=10, to=100)#画10为底的对数函数图像
-    par(mfrow=c(1,1))
-    #important
-    mtcars$car <- rownames(mtcars) #列的名称转换为单独的一列
-    mtcars <- mtcars[, c(12, 1:11)] #把列名换到第一列
-    </pre>
-        <p>
-        <img src="images/R-Curve-Plot.png" width="572" height="571" border="0" alt="R-Curve-Plot">
-        </p>
-
-        <h3>Below Nothing Update</h3>
-        <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-        <h3>
-        <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-        <p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-        <h3>
-        <a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-        <p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-        <h3>
-        <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-        <p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-        <h3>
-        <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-        <p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        <p> <a href="mailto:Stone_Hou@smics.com">Contact with Me</a> </p>
-      </section>
+      <h3 style="font-size:1.05rem;color:#0f172a;margin:28px 0 4px;font-weight:700;">教育经历</h3>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div>
+            <div class="school">北京科技大学 · 材料科学与工程 硕士</div>
+            <div class="major">新金属材料国家重点实验室｜课题：InGaN 化合物半导体光伏薄膜材料制备工艺与性能分析</div>
+          </div>
+          <div class="year">2008 – 2011</div>
+        </div>
+        <div class="edu-item">
+          <div>
+            <div class="school">湖南科技大学 · 材料科学与工程 学士</div>
+            <div class="major">机电学院｜课题：机械合金化制备 Fe-Si-Al 软磁合金</div>
+          </div>
+          <div class="year">2004 – 2008</div>
+        </div>
+      </div>
     </div>
-    <footer>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-  </body>
+  </section>
+
+  <!-- ===== Updates ===== -->
+  <section id="updates">
+    <div class="container">
+      <h2 class="section-title">职业历程与动态</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2025</div>
+          <div class="timeline-content"><strong>55RRAM 工艺开发与验证完成</strong> — 优化 TaO/TaN/ALD HfO 颗粒缺陷，提升良率，研发转量产累计出货晶圆 2000 片，支撑新型存储技术落地。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024-12</div>
+          <div class="timeline-content">国产材料与制造平台导入量产验证完成，力保 2025 完美收官。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024</div>
+          <div class="timeline-content"><strong>55HV Ramlite PVD 良率提升</strong> — 优化 BSA&amp;ECP、污染物管控与 OPC 修正，良率从 80% 提升至 92%，累计量产 5 万片以上。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2023-12</div>
+          <div class="timeline-content">立根国内一流平台，放眼全球，为国产材料与制造平台导入量产验证，躬身入局，挺膺负责。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2022 – 2025</div>
+          <div class="timeline-content"><strong>国产电镀铜添加剂迭代验证</strong> — 完成 6 个版本迭代，解决离线与在线数据偏差、缺陷适配问题；累计节约成本超 100 万美元，厘清蚀刻残留诱发电镀缺陷机理并落地方案。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2022</div>
+          <div class="timeline-content">晋升金属薄膜工艺部<strong>技术专家</strong>，全面负责 RRAM 工艺开发、TSV 先进封装及国产化验证项目。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2021 – 2025</div>
+          <div class="timeline-content"><strong>全国产 2.5D TSV 工艺开发</strong> — 国内首家完成全国产设备+国产材料 TSV BSA&amp;ECP 工艺通线验证与量产，300mm 晶圆累计出货 5 万片+，推进半导体国产化。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2021-09</div>
+          <div class="timeline-content">整理并发布 <a href="Markdownlint_Rules">Markdownlint_Rules.md</a> 规则文档。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2019 – 2020</div>
+          <div class="timeline-content">任主任工程师期间，电镀菜单优化使机台 WPH 提升 15%，年增产晶圆 360K 片；联合 IT 新增数十项制程监控参数，提前预警异常，年节约成本 10 万美金以上。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2017-05</div>
+          <div class="timeline-content">系统整理 Git 高级用法笔记与 R 语言数据科学学习系列，公开分享于个人主页。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2014 – 2017</div>
+          <div class="timeline-content"><strong>国内首家完成国产 Cu/Ta 靶材验证量产</strong>，每年节约靶材成本百万元；精通 SPC、DOE 实验设计，熟练使用 JMP/Excel/R 开展工艺数据分析。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2011</div>
+          <div class="timeline-content">入职中芯国际北京厂区金属薄膜工艺部，开启 300mm 晶圆薄膜工艺生涯。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2015-04</div>
+          <div class="timeline-content">Hello GitHub — 个人主页首次上线。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Notes ===== -->
+  <section id="notes">
+    <div class="container">
+      <h2 class="section-title">学习笔记</h2>
+
+      <!-- Git -->
+      <div class="notes-category">
+        <h3>Git 版本管理 <span class="badge">5 篇</span></h3>
+        <ul class="notes-list">
+          <li><a href="GitLearning/001-Git_Note_Advanced"><span class="note-date">2017-05</span>Git 高级用法：tag / branch / conflict / ignore</a></li>
+          <li><a href="GitLearning/Create-a-new-branch-with-git-and-manage-branches"><span class="note-date">2017-05</span>创建与管理 Git 分支</a></li>
+          <li><a href="GitLearning/Configuring_a_Remote_for_a_Forked_Repository_And_Synchronization"><span class="note-date">2017-05</span>Fork 仓库的远程配置与同步（全面版）</a></li>
+          <li><a href="GitLearning/Update_Forked_Project_in_Github"><span class="note-date">2017-05</span>更新 Fork 项目（简洁版）</a></li>
+          <li><a href="GitLearning/Git_CheatSheet"><span class="note-date">2017-05</span>Git 命令速查表 CheatSheet</a></li>
+        </ul>
+      </div>
+
+      <!-- R / Data Science -->
+      <div class="notes-category">
+        <h3>R 语言与数据科学 <span class="badge">25+ 篇</span></h3>
+        <ul class="notes-list">
+          <li><a href="R_Learning/R_Programming_Coding_Skills.nb.html"><span class="note-date">2017-07</span>R 编程技巧</a></li>
+          <li><a href="R_Learning/R_Mathematics_Calculation_Application.nb.html"><span class="note-date">2017-07</span>R 数学计算与应用</a></li>
+          <li><a href="R_Learning/R_an_introduction_to_stringr.nb.html"><span class="note-date">2017-07</span>stringr 字符串处理入门</a></li>
+          <li><a href="R_Learning/R_apply_sapply_lapply_tapply_mapply.nb.html"><span class="note-date">2017-07</span>apply 族函数详解</a></li>
+          <li><a href="R_Learning/R_Merge_Function_VS_Excel_Vlookup_Column_Match.nb.html"><span class="note-date">2017-07</span>R merge vs Excel Vlookup</a></li>
+          <li><a href="R_Learning/R_Date_time_Handle_R_Notebook.nb.html"><span class="note-date">2017-07</span>R 日期时间处理</a></li>
+          <li><a href="R_Learning/R_an_introduction_to_reshape2.nb.html"><span class="note-date">2017-07</span>reshape2 数据重塑入门</a></li>
+          <li><a href="R_Learning/ggplot2_plot_examples.nb.html"><span class="note-date">2017-07</span>ggplot2 绘图实例</a></li>
+          <li><a href="R_Learning/R_ggplot2_Learning_Road-Stone_Hou.nb.html"><span class="note-date">2017-07</span>ggplot2 学习路线</a></li>
+          <li><a href="R_Learning/R_Hypothesis_Test.nb.html"><span class="note-date">2017-07</span>R 假设检验</a></li>
+          <li><a href="R_Learning/R_distribution_in_r_and_its_application.nb.html"><span class="note-date">2017-07</span>R 概率分布及应用</a></li>
+          <li><a href="R_Learning/R_Text_Mining_Chinese_Word_Segmentation.nb.html"><span class="note-date">2017-07</span>R 中文文本挖掘与词云</a></li>
+          <li><a href="R_Learning/R_Reproducible.nb.html"><span class="note-date">2017-07</span>R 可复现研究</a></li>
+          <li><a href="R_Learning/R_fix_windows_warning_message_In_strsplit_input_string_1_is_invalid_in_this_locale.nb.html"><span class="note-date">2017-07</span>修复 Windows strsplit 编码警告</a></li>
+          <li><a href="R_Learning/R_dplyr_Learning.nb.html"><span class="note-date">2017-06</span>dplyr 数据处理学习</a></li>
+          <li><a href="R_Learning/Getting_And_Cleaning_Data"><span class="note-date">2017-06</span>获取与清洗数据</a></li>
+          <li><a href="R_Learning/R_Data_Manupulation_Basics"><span class="note-date">2017-06</span>R 数据操作基础</a></li>
+          <li><a href="R_Learning/R_Load_Package_In_A_Safe_Way"><span class="note-date">2017-06</span>R 安全加载包的方式</a></li>
+          <li><a href="R_Learning/data.table-Basics_Tutorial"><span class="note-date">2017-05</span>data.table 基础教程</a></li>
+          <li><a href="R_Learning/data.table-data_analysis_with_data.table"><span class="note-date">2017-05</span>data.table 数据分析</a></li>
+          <li><a href="R_Learning/R_Dataset_Conbine_Split_Delete.nb.html"><span class="note-date">2017</span>R 数据集合并/拆分/删除</a></li>
+          <li><a href="R_Learning/R_basics_about_r_data-structure.nb.html"><span class="note-date">2017</span>R 数据结构基础</a></li>
+          <li><a href="free-introduction-to-r.html"><span class="note-date">2017-05</span>DataCamp 免费 R 入门教程</a></li>
+          <li><a href="Working_As_Data_Scientists"><span class="note-date">2017-05</span>数据科学家工作笔记</a></li>
+          <li><a href="DailyDiary20160216.html"><span class="note-date">2016-02</span>学习日记</a></li>
+        </ul>
+      </div>
+
+      <!-- Other -->
+      <div class="notes-category">
+        <h3>其他技术笔记 <span class="badge">4 篇</span></h3>
+        <ul class="notes-list">
+          <li><a href="Markdownlint_Rules"><span class="note-date">2021-09</span>Markdownlint 规则整理</a></li>
+          <li><a href="Collections/How_to_Find__Good_Software_and_App"><span class="note-date">2017-05</span>如何找到好软件与学术写作工具</a></li>
+          <li><a href="www_tech_tutorial.html"><span class="note-date">2017-05</span>Web 技术教程</a></li>
+          <li><a href="select%20element%20in%20matrix"><span class="note-date">2017</span>矩阵元素选择</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Resources ===== -->
+  <section id="resources">
+    <div class="container">
+      <h2 class="section-title">推荐资源</h2>
+      <div class="resources-grid">
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="http://r4ds.had.co.nz/" target="_blank" rel="noopener">R for Data Science</a>
+            <div class="desc">Hadley Wickham 经典著作</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="http://tidyverse.org/" target="_blank" rel="noopener">Tidyverse</a>
+            <div class="desc">R 数据科学工具集</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="https://bookdown.org/yihui/r-ninja/" target="_blank" rel="noopener">R 语言忍者秘笈</a>
+            <div class="desc">谢益辉 著</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="https://www.r-bloggers.com/" target="_blank" rel="noopener">R-Bloggers</a>
+            <div class="desc">R 语言新闻与教程聚合</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="https://plot.ly/ggplot2/" target="_blank" rel="noopener">Plotly ggplot2</a>
+            <div class="desc">交互式可视化</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">R</div>
+          <div class="info">
+            <a href="https://bookdown.org/" target="_blank" rel="noopener">Bookdown</a>
+            <div class="desc">用 R Markdown 写书</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">学</div>
+          <div class="info">
+            <a href="http://www.datacamp.com/" target="_blank" rel="noopener">DataCamp</a>
+            <div class="desc">数据科学在线学习平台</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">博</div>
+          <div class="info">
+            <a href="http://blog.fens.me/" target="_blank" rel="noopener">粉丝日志</a>
+            <div class="desc">张丹（Conan）R 语言博客</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">生</div>
+          <div class="info">
+            <a href="https://www.plob.org/" target="_blank" rel="noopener">生物信息学公共图书馆</a>
+            <div class="desc">Public Library of Bioinformatics</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">3D</div>
+          <div class="info">
+            <a href="https://3dwarehouse.sketchup.com/" target="_blank" rel="noopener">SketchUp 3D Warehouse</a>
+            <div class="desc">3D 模型资源库</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <div class="icon">Git</div>
+          <div class="info">
+            <a href="https://github.com/xiangxing98/" target="_blank" rel="noopener">我的 GitHub</a>
+            <div class="desc">@xiangxing98</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://github.com/xiangxing98" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/祥胡-侯-9703b4123" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:Stone_Hou@smics.com">Email</a>
+      </div>
+      <p>&copy; 2015–2026 侯祥胡 Stone_Hou · Hosted on GitHub Pages</p>
+    </div>
+  </footer>
+
+</body>
 </html>

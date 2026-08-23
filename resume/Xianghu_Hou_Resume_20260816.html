@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历 - 侯祥胡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f7fa;
+            color: #2c3e50;
+            line-height: 1.65;
+            padding: 30px 0;
+        }
+        .resume-wrap {
+            width: 1080px;
+            min-height: 1520px;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 2px 16px rgba(0,40,80,0.1);
+            padding: 40px 50px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #19457c;
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .header-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #19457c;
+            flex-shrink: 0;
+        }
+        .header-left h1 {
+            font-size: 34px;
+            color: #12345c;
+            letter-spacing: 4px;
+        }
+        .header-left .target-job {
+            font-size: 17px;
+            color: #345b8c;
+            margin-top: 6px;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 15px;
+        }
+        .header-right p {
+            margin: 4px 0;
+        }
+        .section-title {
+            font-size: 19px;
+            color: #19457c;
+            font-weight: bold;
+            border-left: 5px solid #19457c;
+            padding-left: 12px;
+            margin: 28px 0 16px;
+        }
+        .edu-item, .work-item, .project-item {
+            margin-bottom: 20px;
+        }
+        .item-head {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 16px;
+            color: #1a3b66;
+            margin-bottom: 8px;
+        }
+        ul {
+            padding-left: 22px;
+            font-size: 15px;
+        }
+        li {
+            margin-bottom: 7px;
+        }
+        .skill-bar-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 30px;
+            font-size: 15px;
+        }
+        .skill-item {
+            width: 31%;
+        }
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom:4px;
+        }
+        .bar-bg {
+            width:100%;
+            height:8px;
+            background:#dde4ec;
+            border-radius:4px;
+        }
+        .bar-fill {
+            height:8px;
+            background:#19457c;
+            border-radius:4px;
+        }
+        .tag-group{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin:8px 0;
+        }
+        .tag{
+            background:#e8f0fa;
+            color:#19457c;
+            padding:4px 10px;
+            border-radius:14px;
+            font-size:14px;
+        }
+        .two-col{
+            display:flex;
+            gap:30px;
+        }
+        .col-left{
+            flex:2.3;
+        }
+        .col-right{
+            flex:1;
+        }
+        @media print {
+            body{padding:0;background:#fff;}
+            .resume-wrap{box-shadow:none;width:100%;padding:25px;}
+        }
+        @media (max-width:1100px){
+            .resume-wrap{width:96%;padding:25px;}
+            .skill-item{width:47%;}
+            .two-col{flex-direction:column;}
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-wrap">
+        <!--头部信息-->
+        <div class="header">
+            <div class="header-left">
+                <img class="header-avatar" src="../images/Avatar.png" alt="侯祥胡头像">
+                <div>
+                    <h1>侯祥胡</h1>
+                    <div class="target-job">求职目标：半导体薄膜工艺专家 / 薄膜工艺经理 / 工艺研发</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <p>电话：135-8197-4134</p>
+                <p>邮箱：13581974134@163.com</p>
+                <p>现居：北京市 通州区</p>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <span class="tag">300mm晶圆制造</span>
+            <span class="tag">PVD / ALD / ECP</span>
+            <span class="tag">RRAM / TSV先进封装</span>
+            <span class="tag">制程开发 & 量产良率提升</span>
+            <span class="tag">国产化材料/设备验证</span>
+            <span class="tag">SPC / DOE / 数据分析</span>
+        </div>
+
+        <!--教育经历-->
+        <h2 class="section-title">教育经历</h2>
+        <div class="edu-item">
+            <div class="item-head">
+                <span>北京科技大学｜材料科学与工程 硕士</span>
+                <span>2008 - 2011</span>
+            </div>
+            <ul>
+                <li>新金属材料国家重点实验室，师从朱洁教授；课题：化合物半导体光伏薄膜材料制备工艺与性能分析(InGaN)</li>
+            </ul>
+        </div>
+        <div class="edu-item">
+            <div class="item-head">
+                <span>湖南科技大学｜材料科学与工程 学士</span>
+                <span>2004 - 2008</span>
+            </div>
+            <ul>
+                <li>机电学院，师从郭世柏教授；课题：机械合金化制备Fe-Si-Al软磁合金</li>
+            </ul>
+        </div>
+
+        <div class="two-col">
+            <div class="col-left">
+                <!--工作经历-->
+                <h2 class="section-title">工作经历</h2>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜技术专家</span>
+                        <span>2022 - 2025</span>
+                    </div>
+                    <ul>
+                        <li>负责55RRAM工艺开发与验证，优化TaO/TaN/ALD HfO颗粒缺陷，提升良率，研发转量产累计出货晶圆2000片</li>
+                        <li>主导55HV Ramlite PVD工艺开发与良率提升；优化BSA&ECP、污染物管控与OPC修正，良率80%→92%，累计量产5万片以上</li>
+                        <li>主导国内首家全国产设备+国产材料2.5D TSV BSA&ECP工艺通线验证与量产，300mm晶圆累计出货5万片+</li>
+                        <li>国产电镀铜添加剂迭代验证（6个版本），解决离线与在线数据偏差、缺陷适配；累计节约成本超100万美元，厘清蚀刻残留诱发电镀缺陷机理并落地方案</li>
+                    </ul>
+                </div>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜助理技术专家</span>
+                        <span>2020 - 2021</span>
+                    </div>
+                    <ul>
+                        <li>产线质量问题攻关，优化退火工艺解决铜线山丘凸起缺陷；国产电镀添加剂前期评估导入验证</li>
+                        <li>先进封装TSV阻挡层/种子层PVD、电镀机台导入、工艺搭建与验证</li>
+                    </ul>
+                </div>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜主任工程师</span>
+                        <span>2019 - 2020</span>
+                    </div>
+                    <ul>
+                        <li>后段铜线大马士革PVD/ECP工艺维护、新平台工艺研发；电镀菜单优化，机台WPH提升15%，年增产晶圆360K</li>
+                        <li>联合IT新增数十项制程监控参数，提前预警异常，每年规避大量晶圆报废，节约成本10万美金以上</li>
+                        <li>优化电镀洗边宽度量测方案，检测产能提升300%，虚警下降50%，节省人力1~2人</li>
+                    </ul>
+                </div>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜助理主任工程师</span>
+                        <span>2017 - 2019</span>
+                    </div>
+                    <ul>
+                        <li>Sabre Next电镀制程维护、国产添加剂验证、新产品导入、量产工艺持续优化</li>
+                    </ul>
+                </div>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜工程师</span>
+                        <span>2014 - 2017</span>
+                    </div>
+                    <ul>
+                        <li>300mm产线国内首家完成国产Cu/Ta靶材验证量产，每年节约靶材成本百万元；精通SPC、DOE实验设计</li>
+                        <li>熟练使用JMP/Excel/R开展工艺数据分析；掌握VBA/SQL/R自动化批量数据处理</li>
+                    </ul>
+                </div>
+                <div class="work-item">
+                    <div class="item-head">
+                        <span>金属薄膜工艺部｜初级工程师</span>
+                        <span>2011 - 2014</span>
+                    </div>
+                    <ul>
+                        <li>掌握各类PVD薄膜沉积原理、薄膜表征；熟悉AMAT ENDURA / Sabre Next 磁控溅射设备</li>
+                    </ul>
+                </div>
+
+                <!--重点项目-->
+                <h2 class="section-title">重点项目</h2>
+                <div class="project-item">
+                    <div class="item-head">55RRAM工艺开发与验证 <span>2024-2025</span></div>
+                    <ul><li>技术：PVD / ALD / ECP；成果：完成工艺开发验证，顺利研发转量产，支撑新型存储技术落地</li></ul>
+                </div>
+                <div class="project-item">
+                    <div class="item-head">55HV Ramlite PVD良率提升 <span>2023-2024</span></div>
+                    <ul><li>技术：BSA+ECP、OPC优化；成果：良率80%提升至92%，稳定大规模量产</li></ul>
+                </div>
+                <div class="project-item">
+                    <div class="item-head">全国产2.5D TSV工艺开发 <span>2021-2025</span></div>
+                    <ul><li>技术：TSV阻挡层/种子层PVD、电镀；成果：国内首套全国产平台实现TSV批量量产，推进半导体国产化</li></ul>
+                </div>
+                <div class="project-item">
+                    <div class="item-head">国产电镀铜添加剂验证优化 <span>2022-2025</span></div>
+                    <ul><li>成果：多版本迭代完成产线适配，实现百万美元级持续降本，厘清关键缺陷形成机理</li></ul>
+                </div>
+            </div>
+            <div class="col-right">
+                <!--专业技能-->
+                <h2 class="section-title">专业技能</h2>
+                <div class="skill-bar-row">
+                    <div class="skill-item">
+                        <div class="skill-name"><span>PVD工艺</span><span>90%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>电镀ECP工艺</span><span>92%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>ALD工艺</span><span>85%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>工艺管控SPC/FDC</span><span>90%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>项目与团队管理</span><span>85%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>数据编程工具</span><span>75%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">主要成就</h2>
+                <ul>
+                    <li>2016-2026累计培养输送12名半导体工艺人才</li>
+                    <li>55HV Ramlite良率提升，创造显著量产效益</li>
+                    <li>国产电镀添加剂项目节约成本超100万美元</li>
+                    <li>国内率先完成全国产平台TSV工艺量产验证</li>
+                    <li>电镀工艺优化，年增产晶圆360K片</li>
+                    <li>国产Cu/Ta靶材导入，每年节省百万级采购成本</li>
+                </ul>
+
+                <h2 class="section-title">证书与奖项</h2>
+                <ul>
+                    <li>部门年度突出贡献奖 ×2</li>
+                    <li>公司级别贡献奖 ×1</li>
+                    <li>开发区 爱岗敬业员工</li>
+                </ul>
+
+                <h2 class="section-title">其他能力</h2>
+                <ul>
+                    <li>Excel/VBA、R、Python、SQL、Linux</li>
+                    <li>DOE实验设计、数据可视化、自动化分析</li>
+                    <li>标准化工艺文档编写、跨部门项目协调</li>
+                </ul>
+
+                <h2 class="section-title">自我评价</h2>
+                <ul style="font-size:14px;">
+                    <li>深耕300mm薄膜工艺十余年，兼具工艺研发、量产良率改善、国产化验证与团队管理经验；擅长PVD/ALD/大马士革电镀、RRAM存储、TSV先进封装工艺开发。</li>
+                    <li>信奉业精于勤，注重数据驱动解决问题，坚持知行合一；擅长跨部门资源统筹，持续追求良率提升、产能释放与生产成本优化。保持长期自主学习习惯，重视人才培养与经验沉淀。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
